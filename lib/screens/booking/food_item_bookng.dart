@@ -9,6 +9,7 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../home/food_details_screen.dart';
 import '../home/food_item_booking_confirmed.dart';
 import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';
@@ -57,7 +58,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                 height: 40,
               ),
               Container(
-                padding: EdgeInsets.only(left: 12, top: 20, bottom: 20),
+                padding: EdgeInsets.only(left: 12, top: 20, bottom: 20,),
                 child: const GeneralNewAppBar(
                   rightIcon: Resources.homeIconSvg,
                   title: Strings.labelBookings,
@@ -104,7 +105,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       if (index == 1) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return FoodProductAdvancePendingDetails();
+                          return FoodDetailScreen();
                         }));
                       } else if (index == 2) {
                         Navigator.push(context,

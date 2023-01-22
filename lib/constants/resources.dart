@@ -68,4 +68,7 @@ abstract class Resources {
   static const expHeaderBGPNG = 'assets/images/icons/exp_header_bg.png';
   static const expUploadImagePNG = 'assets/images/icons/gallery.png';
   static const expPlusPNG = 'assets/images/icons/plus.png';
+  static const expEditPenPNG = 'assets/images/icons/edit_pen.png';
+  static const expDeleteIconPNG = 'assets/images/icons/delete_icon.png';
+  static const expRepeatIconPNG = 'assets/images/icons/repeat.png';
 }

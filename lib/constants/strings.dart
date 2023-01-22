@@ -271,11 +271,14 @@ abstract class Strings {
   static const questionireLabel3 = "Tell us about your journey";
   static const questionireLabel4 = "Social media handles";
   static const questionireLabel5 = "Your Interests";
-  static const foodItemMainHeading = "BBQ Appetizer";
+  static const foodItemMainHeading = "BBQ Adventure";
   static const foodItemMenu = "Menu";
   static const foodItemDetails = "Details";
   static const foodItemSchedule = "Schedule";
+  static const foodItemMedia = "Media";
+
   static const foodDetailHeading = "Appetizer";
+  static const foodDetailHeading2 = "Main Course";
   static const foodProductTitle = "Sindhi Biryani";
   static const foodProductSubTitle = "Biryani";
   static const appCurrency = "Rs";
@@ -286,6 +289,8 @@ abstract class Strings {
   static const foodProductItemUsers = "2";
   static const foodProductItemQuantity = "Quantity";
   static const foodDetailAboutTitle = 'Experience';
+  static const mediaPhotos = 'Photos';
+  static const mediaVideos = 'Videos';
 
   static const nextButtonTitle = "NEXT";
   static const experienceScreenTitle = "04 Steps";
@@ -428,6 +433,7 @@ abstract class Strings {
   static const popularFoodDetailAppBarTitle = 'Experiences';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
+  static const foodDetailSubHost = 'Sub Host';
   static const foodDetailPreferenceCouple = 'Couple';
   static const foodDetailPreferenceFamily = 'Family';
   static const foodDetailPreferenceFnf = 'F&F';
