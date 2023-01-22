@@ -183,15 +183,15 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       styleType: ButtonStyleType.fill,
       onTap: () {
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ExperienceQuestionireScreen()),
-        );
         // Navigator.push(
         //   context,
-        //   // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-        //   MaterialPageRoute(builder: (context) => const LoungeHomeScreen()),
+        //   MaterialPageRoute(builder: (context) => const ExperienceQuestionireScreen()),
         // );
+        Navigator.push(
+          context,
+          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
+          MaterialPageRoute(builder: (context) => const LoungeHomeScreen()),
+        );
         //    viewModel.goToForgotPasswordScreen();
       },
     );

@@ -495,6 +495,9 @@ abstract class Strings {
   static const menuExperienceMealTitle = "Meal";
   static const menuExperienceFoodTitle = "Food";
   static const menuExperienceAddMoreTitle = "Add More";
+  static const okButtonTitle = "Okay";
+  static const cancelButtonTitle = "Cancel";
+  static const repeatPopupTitle = "Repeat ipsum dolor sit amet, conse ctetur adipiscing elit";
 
 
 

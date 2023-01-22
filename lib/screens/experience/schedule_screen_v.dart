@@ -7,6 +7,8 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
+import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_text.dart';
 // import '../show_off_time/show_off_time_screen.dart';
 
@@ -82,8 +84,6 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               ),
             ],
           ),
-
-
           Container(
             margin: EdgeInsetsDirectional.only(start: 40, bottom: 50),
             child: ListView.builder(
@@ -95,83 +95,81 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.edit,
-                                color: HexColor.fromHex("#ffffff"),
-                              ))
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 18.0, bottom: 10),
+                            child: InkWell(
+                              child: Image.asset(
+                                Resources.expEditPenPNG,
+                                height: 20,
+                              ),
+                              onTap: () {
+                                showConfirmationPopup(context);
+                              },
+                            ),
+                          )
                         ],
                       ),
-                      InkWell(
-                        onTap: () {
-
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                             Column(children: [
-
-                              GeneralText('MON'.toUpperCase(),
-                                  style: appTheme.typographies
-                                      .interFontFamily.headline6
-                                      .copyWith(
-                                      color:
-                                      HexColor.fromHex('#f1c452'),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700)),
-                              GeneralText('13',
-                                  style: appTheme.typographies
-                                      .interFontFamily.headline2
-                                      .copyWith(
-                                    color: HexColor.fromHex('#909094'),
-                                    fontSize: 40,
-                                  ))
-                            ]),
-                            SizedBox(
-                              width: 27,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(children: [
+                            GeneralText('MON'.toUpperCase(),
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: HexColor.fromHex('#f1c452'),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700)),
+                            GeneralText('13',
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  color: HexColor.fromHex('#909094'),
+                                  fontSize: 40,
+                                ))
+                          ]),
+                          SizedBox(
+                            width: 27,
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding:
+                                  EdgeInsets.only(left: 8, top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(children: [
+                                timeSelectorBox(appTheme,
+                                    showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme,
+                                    showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme,
+                                    showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                                timeSelectorBox(appTheme,
+                                    showSelectedTime: false),
+                                SizedBox(
+                                  width: 7,
+                                ),
+                              ]),
                             ),
-                            Expanded(
-                              child: Container(
-                                 width: double.infinity,
-                                padding: EdgeInsets.only(
-                                    left: 8, top: 10, bottom: 10),
-                                decoration: BoxDecoration(
-                                    color: HexColor.fromHex('#2b2b33'),
-                                    borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20))),
-                                child: Wrap(children: [
-                                  timeSelectorBox(appTheme,
-                                      showSelectedTime: false),
-                                  SizedBox(
-                                    width: 7,
-                                  ),
-                                  timeSelectorBox(appTheme,
-                                      showSelectedTime: false),
-                                  SizedBox(
-                                    width: 7,
-                                  ),
-                                  timeSelectorBox(appTheme,
-                                      showSelectedTime: false),
-                                  SizedBox(
-                                    width: 7,
-                                  ),
-                                  timeSelectorBox(appTheme,
-                                      showSelectedTime: false),
-                                  SizedBox(
-                                    width: 7,
-                                  ),
-                                ]),
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 10,
@@ -180,7 +178,6 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                   );
                 }),
           ),
-
           SizedBox(
             height: 37,
           ),
@@ -256,6 +253,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
       ),
     );
   }
+
   Widget timeSelectorBox(IAppThemeData appTheme,
       {bool showSelectedTime = false}) {
     return Container(
@@ -274,8 +272,78 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               : HexColor.fromHex('#2b2b33'),
           borderRadius: BorderRadius.circular(10)),
       padding:
-      EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+          EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
       margin: EdgeInsetsDirectional.only(bottom: 8),
+    );
+  }
+
+  showConfirmationPopup(BuildContext context) {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      isDismissible: true,
+      barrierLabel: 's',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 25,
+          ),
+          GeneralText('Are you Sure',
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25)),
+          SizedBox(
+            height: 25,
+          ),
+          GeneralText(Strings.repeatPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: Color(0xfffee4a4),
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14)),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _okButtonTitle(appTheme: appTheme),
+              SizedBox(
+                width: 10,
+              ),
+              _cancelTitle(appTheme: appTheme),
+            ],
+          ),
+          SizedBox(
+            height: 13,
+          ),
+        ],
+      ),
+      context: context,
+    );
+  }
+
+  Widget _okButtonTitle({required IAppThemeData appTheme}) {
+    return GeneralButton.button(
+      title: Strings.okButtonTitle.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        //    viewModel.goToForgotPasswordScreen();
+      },
+    );
+  }
+
+  Widget _cancelTitle({required IAppThemeData appTheme}) {
+    return GeneralButton.button(
+      title: Strings.cancelButtonTitle.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        //    viewModel.goToForgotPasswordScreen();
+      },
     );
   }
 }
