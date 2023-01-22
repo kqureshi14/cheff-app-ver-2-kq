@@ -13,14 +13,14 @@ import '../home/food_item_booking_confirmed.dart';
 import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';
 
-class FoodItemBooking extends StatefulWidget {
-  const FoodItemBooking({Key? key}) : super(key: key);
+class OrderHistoryScreen extends StatefulWidget {
+  const OrderHistoryScreen({Key? key}) : super(key: key);
 
   @override
-  State<FoodItemBooking> createState() => _FoodItemBookingState();
+  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
 }
 
-class _FoodItemBookingState extends State<FoodItemBooking> {
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   List<BookingProgress> bookingProgressStatus = [];
 
   @override
@@ -29,16 +29,16 @@ class _FoodItemBookingState extends State<FoodItemBooking> {
     bookingProgressStatus.addAll([
       BookingProgress(
           bookingStatusIcon: Resources.timeLapsePNG,
-          statusName: Strings.foodItemBookingApprovalPending),
+          statusName: Strings.bookingOrderCompleted),
       BookingProgress(
           bookingStatusIcon: Resources.hourglassPNG,
-          statusName: Strings.foodItemBookingAdvancePending),
-      BookingProgress(
-          bookingStatusIcon: Resources.confirmUserPNG,
-          statusName: Strings.foodItemBookingInProgress),
-      BookingProgress(
-          bookingStatusIcon: Resources.paymentPNG,
-          statusName: Strings.foodItemBookingBookingConfirmed),
+          statusName: Strings.bookingOrderDeclined),
+      // BookingProgress(
+      //     bookingStatusIcon: Resources.confirmUserPNG,
+      //     statusName: Strings.foodItemBookingInProgress),
+      // BookingProgress(
+      //     bookingStatusIcon: Resources.paymentPNG,
+      //     statusName: Strings.foodItemBookingBookingConfirmed),
     ]);
     super.initState();
   }

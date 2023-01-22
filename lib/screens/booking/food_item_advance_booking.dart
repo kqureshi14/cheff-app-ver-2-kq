@@ -991,7 +991,7 @@ class _FoodProductAdvancePendingDetailsState
       styleType: ButtonStyleType.fill,
       onTap: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodItemBooking()));
+            MaterialPageRoute(builder: (context) => OrderHistoryScreen()));
       },
     );
     // ExtoText(

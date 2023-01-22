@@ -4,6 +4,7 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../experience/experience_questionire_v.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
   const LoungeHomeScreen({Key? key}) : super(key: key);
@@ -272,32 +273,41 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                      width: 121,
-                                      padding: EdgeInsetsDirectional.only(
-                                          bottom: 10),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                              width: 27.6,
-                                              child: Image.asset(
-                                                  "assets/images/icons/experiences.png")),
-                                          SizedBox(
-                                            height: 9.2,
-                                          ),
-                                          GeneralText(
-                                            Strings.loungeExperiencesLabel,
-                                            style: appTheme.typographies
-                                                .interFontFamily.headline6
-                                                .copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: HexColor.fromHex(
-                                                  '#ffffff'),
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const ExperienceQuestionireScreen()),
+                                      );
+                                     //
+                                    },
+                                    child: Container(
+                                        width: 121,
+                                        padding: EdgeInsetsDirectional.only(
+                                            bottom: 10),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                                width: 27.6,
+                                                child: Image.asset(
+                                                    "assets/images/icons/experiences.png")),
+                                            SizedBox(
+                                              height: 9.2,
                                             ),
-                                          ),
-                                        ],
-                                      )),
+                                            GeneralText(
+                                              Strings.loungeExperiencesLabel,
+                                              style: appTheme.typographies
+                                                  .interFontFamily.headline6
+                                                  .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: HexColor.fromHex(
+                                                    '#ffffff'),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
                                   Container(
                                     width: 1,
                                     height: 121,

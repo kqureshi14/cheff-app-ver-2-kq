@@ -61,5 +61,11 @@ abstract class Resources {
   static const bookingCheckboxPNG = 'assets/images/icons/booking_checkbox.png';
   static const locationIconPNG = 'assets/images/icons/location.png';
   static const ringPNG = 'assets/images/icons/ring.png';
+  static const transparentRingPNG = 'assets/images/icons/transparent_ring.png';
   static const checkPNG = 'assets/images/icons/check.png';
+  static const expBackgroundPNG = 'assets/images/icons/exp_bg.png';
+  static const expLogoPNG = 'assets/images/icons/exp_logo.png';
+  static const expHeaderBGPNG = 'assets/images/icons/exp_header_bg.png';
+  static const expUploadImagePNG = 'assets/images/icons/gallery.png';
+  static const expPlusPNG = 'assets/images/icons/plus.png';
 }

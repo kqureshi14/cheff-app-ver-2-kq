@@ -288,6 +288,8 @@ abstract class Strings {
   static const foodDetailAboutTitle = 'Experience';
 
   static const nextButtonTitle = "NEXT";
+  static const experienceScreenTitle = "04 Steps";
+  static const experienceScreenButtonTitle = "Okay";
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
@@ -376,7 +378,7 @@ abstract class Strings {
   static const labelReviews = 'Reviews';
   static const labelPrivacyPolicy = 'Privacy Policy';
   static const labelTermsCond = 'Terms & Conditions';
-  static const labelBookings = 'Bookings';
+  static const labelBookings = 'History';
 
   static const labelTitleProfile = 'Profile';
 
@@ -389,9 +391,9 @@ abstract class Strings {
   static const foodItemBookingNoPersons = '2 Persons';
   static const foodItemBookingDateTime = '31 May @ 9 PM';
   static const foodItemBookingType = 'Couple';
-  static const foodItemBookingApprovalPending = 'APPROVAL PENDING';
+  static const bookingOrderCompleted = 'ORDER COMPLETED';
   static const foodItemBookingAdvancePendingHeader = 'ADVANCE PENDING';
-  static const foodItemBookingAdvancePending = 'ADVANCE PENDING';
+  static const bookingOrderDeclined = 'ORDER DECLINED';
   static const foodItemBookingInProgress = 'IN PROCESS';
   static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
@@ -423,7 +425,7 @@ abstract class Strings {
   static const foodItemAdvancePaymentValue = 'Rs. -1,000';
   static const bookingConfirmedDetailsLabel = 'Details';
 
-  static const popularFoodDetailAppBarTitle = 'Sindhi Biryani';
+  static const popularFoodDetailAppBarTitle = 'Experiences';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
   static const foodDetailPreferenceCouple = 'Couple';
@@ -465,4 +467,29 @@ abstract class Strings {
   static const loungeEarningLabel = "EARNINGS";
   static const loungeHistoryLabel = "HISTORY";
   static const loungeProfileLabel = "PROFILE";
+  static const createExperienceTitle = "Create your experience";
+  static const createExperienceTitleField = "Title";
+  static const createExperienceSubTitleField = "Describe your experience";
+  static const createExperienceWowFactorsTitle  = "Wow Factor";
+  static const createExperiencePreferenceTitle  = "Preference";
+  static const createExperiencePriceTitle  = "Price";
+  static const createExperiencePerItemTitle  = "Per Item";
+  static const createExperienceLabelTitle  = "Experience";
+  static const createExperienceLocationTitle  = "Location";
+  static const createExperienceHomeTitle  = "Home";
+  static const createExperienceOtherTitle  = "Other";
+  static const createExperienceSubHostTitle  = "Sub Host";
+  static const menuExperienceTitle = "Build your menu";
+  static const menuExperienceDishTitle = "Dish";
+  static const menuExperienceDescriptionTitle = "Description";
+  static const menuExperiencePriceTitle = "Price";
+  static const menuExperienceServingTitle = "Serving";
+  static const menuExperiencePictureTitle = "Picture";
+  static const menuExperienceUploadPictureTitle = "Upload Picture";
+  static const menuExperienceMealTitle = "Meal";
+  static const menuExperienceFoodTitle = "Food";
+  static const menuExperienceAddMoreTitle = "Add More";
+
+
+
 }

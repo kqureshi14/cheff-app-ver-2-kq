@@ -7,6 +7,7 @@ import '../../helpers/color_helper.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_rich_text.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../booking/food_item_bookng.dart';
 
 class PopularFoodDetails extends StatefulWidget {
   const PopularFoodDetails({Key? key}) : super(key: key);
@@ -40,6 +41,20 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: HexColor.fromHex("#212129"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const OrderHistoryScreen()),
+          );
+        },
+        backgroundColor: Color(0xffbb3127),
+        child: Icon(
+          Icons.add,
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
