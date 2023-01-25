@@ -5,7 +5,9 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../account_settings/user_profile_v.dart';
 import '../booking/food_item_bookng.dart';
+import '../earnings/earning_screen_v.dart';
 import '../experience/experience_questionire_v.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
@@ -327,39 +329,50 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     color: HexColor.fromHex(
                                                         "#e7f8f2"),
                                                   ),
-                                                  Container(
-                                                      width: 121,
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .only(bottom: 10),
-                                                      child: Column(
-                                                        children: [
-                                                          Container(
-                                                              width: 30.2,
-                                                              child: Image.asset(
-                                                                  "assets/images/icons/earnings.png")),
-                                                          SizedBox(
-                                                            height: 9.2,
-                                                          ),
-                                                          GeneralText(
-                                                            Strings
-                                                                .loungeEarningLabel,
-                                                            style: appTheme
-                                                                .typographies
-                                                                .interFontFamily
-                                                                .headline6
-                                                                .copyWith(
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: HexColor
-                                                                  .fromHex(
-                                                                      '#ffffff'),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const EarningScreen()),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                        width: 121,
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .only(
+                                                                    bottom: 10),
+                                                        child: Column(
+                                                          children: [
+                                                            Container(
+                                                                width: 30.2,
+                                                                child: Image.asset(
+                                                                    "assets/images/icons/earnings.png")),
+                                                            SizedBox(
+                                                              height: 9.2,
                                                             ),
-                                                          ),
-                                                        ],
-                                                      )),
+                                                            GeneralText(
+                                                              Strings
+                                                                  .loungeEarningLabel,
+                                                              style: appTheme
+                                                                  .typographies
+                                                                  .interFontFamily
+                                                                  .headline6
+                                                                  .copyWith(
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: HexColor
+                                                                    .fromHex(
+                                                                        '#ffffff'),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -417,38 +430,50 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                   color: HexColor.fromHex(
                                                       "#e7f8f2"),
                                                 ),
-                                                Container(
-                                                    width: 121,
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .only(bottom: 10),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                            width: 18.7,
-                                                            child: Image.asset(
-                                                                "assets/images/icons/people.png")),
-                                                        SizedBox(
-                                                          height: 9.2,
-                                                        ),
-                                                        GeneralText(
-                                                          Strings
-                                                              .loungeProfileLabel,
-                                                          style: appTheme
-                                                              .typographies
-                                                              .interFontFamily
-                                                              .headline6
-                                                              .copyWith(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: HexColor
-                                                                .fromHex(
-                                                                    '#ffffff'),
+                                                InkWell(
+                                                  onTap: () {
+                                                    //UserProfileScreen
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const UserProfileScreen()),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                      width: 121,
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .only(bottom: 10),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                              width: 18.7,
+                                                              child: Image.asset(
+                                                                  "assets/images/icons/people.png")),
+                                                          SizedBox(
+                                                            height: 9.2,
                                                           ),
-                                                        ),
-                                                      ],
-                                                    )),
+                                                          GeneralText(
+                                                            Strings
+                                                                .loungeProfileLabel,
+                                                            style: appTheme
+                                                                .typographies
+                                                                .interFontFamily
+                                                                .headline6
+                                                                .copyWith(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: HexColor
+                                                                  .fromHex(
+                                                                      '#ffffff'),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )),
+                                                ),
                                               ],
                                             ),
                                           ],

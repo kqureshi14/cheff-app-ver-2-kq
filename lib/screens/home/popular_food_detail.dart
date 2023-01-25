@@ -128,24 +128,25 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                       SizedBox(
                         height: 4,
                       ),
-                      GeneralText(
-                        Strings.popularFoodDetailSubTitle,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 12,
-                          color: HexColor.fromHex('#909094'),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
+                      // GeneralText(
+                      //   Strings.popularFoodDetailSubTitle,
+                      //   style: appTheme.typographies.interFontFamily.headline6
+                      //       .copyWith(
+                      //     fontSize: 12,
+                      //     color: HexColor.fromHex('#909094'),
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 4,
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
                             width: 13.9,
                             child: Image.asset('assets/images/icons/star.png',
-                                fit: BoxFit.fill),
+                                fit: BoxFit.fill,
+                            color: Colors.grey,),
                           ),
                           const SizedBox(
                             width: 5,
@@ -156,12 +157,12 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     fontSize: 14,
-                                    color: HexColor.fromHex('#8ea659')),
+                              color: Colors.grey,),
                           ),
                         ],
                       ),
                       const SizedBox(
-                        height: 11.7,
+                        height:37,
                       ),
                       GeneralText(
                         Strings.popularFoodDetailWowFactorTitle,

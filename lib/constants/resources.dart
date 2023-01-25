@@ -71,4 +71,8 @@ abstract class Resources {
   static const expEditPenPNG = 'assets/images/icons/edit_pen.png';
   static const expDeleteIconPNG = 'assets/images/icons/delete_icon.png';
   static const expRepeatIconPNG = 'assets/images/icons/repeat.png';
+  static const earningBG1PNG = 'assets/images/icons/earning_bg1.png';
+  static const earningBG2PNG = 'assets/images/icons/earning_bg2.png';
+  static const earningPaidPNG = 'assets/images/icons/earning_paid.png';
+  static const earningPendingPNG = 'assets/images/icons/earning_pending.png';
 }

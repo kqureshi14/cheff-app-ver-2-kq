@@ -410,10 +410,10 @@ abstract class Strings {
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
-  static const ratingPopupTitle = "Order Completed!";
+  static const ratingPopupTitle = "Rate Foodie";
   static const ratingPopupBtnTitle = "Submit";
   static const ratingPopupSubTitle =
-      "Kindly review your experience with Spicy Bites Bistro";
+      "Kindly review your experience with Syed Ali";
   static const generalPopupTitle = "We are sorry";
   static const generalSubTitle =
       "Your Experience has been canceled by our host";
@@ -431,6 +431,7 @@ abstract class Strings {
   static const bookingConfirmedDetailsLabel = 'Details';
 
   static const popularFoodDetailAppBarTitle = 'Experiences';
+  static const earningScreenAppBarTitle = 'Earnings';
   static const foodDetailPreferences = 'Preferences';
   static const foodDetailLocation = 'Location';
   static const foodDetailSubHost = 'Sub Host';
@@ -473,7 +474,7 @@ abstract class Strings {
   static const loungeEarningLabel = "EARNINGS";
   static const loungeHistoryLabel = "HISTORY";
   static const loungeProfileLabel = "PROFILE";
-  static const createExperienceTitle = "Create your experience";
+  static const createExperienceTitle = "Create your Experience";
   static const createExperienceTitleField = "Title";
   static const createExperienceSubTitleField = "Describe your experience";
   static const createExperienceWowFactorsTitle  = "Wow Factor";
@@ -499,6 +500,47 @@ abstract class Strings {
   static const cancelButtonTitle = "Cancel";
   static const repeatPopupTitle = "Repeat ipsum dolor sit amet, conse ctetur adipiscing elit";
 
+
+  static const userProfileDetailAddress =
+      "House # 23, Street 20, G-10/4, Islamabad";
+  static const userProfileDetailAddressPhone = "0300 5000000";
+  static const userProfileFloatingEditDetails = "Edit Details";
+  static const userProfileFloatingEditProfile = "Edit Profile";
+
+  static const foodieProfileAmbienceCategoryLabel = "Ambience";
+  static const foodieProfileFoodCategoryLabel = "Foodie";
+  static const foodieProfileCuisineCategoryLabel = "Cuisine";
+  static const foodieProfileInterestsCategoryLabel = "Interest";
+  static const foodieProfileHeader = "Details";
+  static const foodieProfileName = "Muhammad Irfan";
+  static const foodieProfileExperienceLabel = "Experience";
+  static const foodieProfileStatusLabel = "In Progress";
+  static const foodieProfileExperienceValue = "BBQ Experience";
+  static const foodieProfileLabel = "Foodie Profile";
+  static const foodieInfoLabel = "Foodie Info";
+  static const foodieInfoProfession = "Profession";
+  static const foodieInfoProfessionValue = "Student";
+  static const foodieInfoAgeLabel = "Age";
+  static const foodieInfoAgeValue = "21";
+  static const foodieInfoMobileLabel = "Mobile";
+  static const foodieInfoMobileValue = "0300 500000";
+  static const foodieInfoGenerateBill = "Generate Bill";
+  static const foodieProfileDecisionRequiredStatus = "Decision Required";
+  static const foodieProfileAcceptBtn = "Accept";
+  static const foodieProfileDeclineBtn = "Decline";
+  static const foodieProfileBookingConfirmedStatus = "Booking Confirmed";
+  static const foodieProfileStartBtn = "Start";
+  static const foodieProfileCancelBtn = "Cancel";
+  static const foodieProfileOrderCompleted = "Order Completed";
+  static const foodieProfileOrderDeclined = "Order Declined";
+  static const foodieProfileDeclineReasonLabel = "Decline Reason";
+  static const foodieProfileDeclineReasonValue = "Donec iaculis risus sit amet magna facilisis, vitae pretium ex maximus. Nunc eget purus congue, tempus libero quis, pretium massa. Integer vel lorem ut metus consectetur luctus.";
+
+  static const earningPaidLabel = "PAID";
+  static const earningPendingLabel = "PENDING";
+  static const earningThisMonthLabel = "This Month";
+  static const earningTotalEarningLabel = "Total Earning";
+  static const earningDescriptionLabel = "Advance Payment for BBQ Experiencefrom Ahmed Zia";
 
 
 }

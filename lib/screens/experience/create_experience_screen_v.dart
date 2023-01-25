@@ -88,9 +88,10 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 218,
+              height: 228,
               width: double.infinity,
-              child: Image.asset(Resources.expHeaderBGPNG),
+              child: Image.asset(Resources.expHeaderBGPNG,
+              fit: BoxFit.fill,),
             ),
             const SizedBox(
               height: 20,
