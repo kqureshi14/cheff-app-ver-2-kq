@@ -250,7 +250,7 @@ abstract class Strings {
       "Have that perfect dish, made by theperfect chef, just as you like!";
   static const getStartedButtonTitle = "Get Started";
 
-  static const letsGetTitle = "Let's get you";
+  static const letsGetTitle = "Let's get to know";
   static const signUpTitle = "each other";
   static const signFullNameLabel = "Full Name";
   static const signBrandNameLabel = "Brand Name";
