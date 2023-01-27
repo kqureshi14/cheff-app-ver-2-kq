@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -81,6 +82,7 @@ class _FoodieProfileOrderCompletedState
                           padding: const EdgeInsets.only(top: 30),
                           child: GeneralNewAppBar(
                             title: Strings.foodieProfileHeader,
+                            titleColor: Colors.white,
                             rightIcon: Resources.homeIconSvg,
                           ),
                         ),
@@ -153,8 +155,7 @@ class _FoodieProfileOrderCompletedState
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 19.5, end: 19.5, top: 5, bottom: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex("#b0c18b"),
                                   borderRadius: BorderRadius.circular(20)),
@@ -191,7 +192,7 @@ class _FoodieProfileOrderCompletedState
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileExperienceLabel,
@@ -235,7 +236,7 @@ class _FoodieProfileOrderCompletedState
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileLabel,
@@ -288,7 +289,7 @@ class _FoodieProfileOrderCompletedState
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 18.5),
+              padding: const EdgeInsets.only(left: 12,right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -838,7 +839,7 @@ class _FoodieProfileOrderCompletedState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.foodieInfoLabel,

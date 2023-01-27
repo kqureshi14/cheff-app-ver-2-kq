@@ -6,6 +6,7 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
@@ -83,6 +84,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                           padding: const EdgeInsets.only(top: 30),
                           child: GeneralNewAppBar(
                             title: Strings.foodieProfileHeader,
+                            titleColor: Colors.white,
                             rightIcon: Resources.homeIconSvg,
                           ),
                         ),
@@ -155,8 +157,8 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 19.5, end: 19.5, top: 5, bottom: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex("#b0c18b"),
                                   borderRadius: BorderRadius.circular(20)),
@@ -192,7 +194,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileExperienceLabel,
@@ -236,7 +238,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileLabel,
@@ -289,7 +291,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 18.5),
+            padding: const EdgeInsets.only(left: 12,right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -469,7 +471,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                        const EdgeInsetsDirectional.all(10),
+                                    const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -480,7 +482,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                                     ),
                                     child: Container(
                                       padding:
-                                          const EdgeInsetsDirectional.all(10),
+                                      const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -516,7 +518,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                        const EdgeInsetsDirectional.all(10),
+                                    const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -527,7 +529,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                                     ),
                                     child: Container(
                                       padding:
-                                          const EdgeInsetsDirectional.all(10),
+                                      const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -839,7 +841,7 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.foodieInfoLabel,
@@ -1131,13 +1133,91 @@ class _FoodieInProgressDetailState extends State<FoodieInProgressDetail> {
       title: Strings.foodieInfoGenerateBill.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FoodieProfileRequiredPending()));
+
+        _showCashReceivedPopup(context);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => FoodieProfileRequiredPending()));
       },
     );
   }
+}
+
+
+Future<dynamic> _showCashReceivedPopup(BuildContext context) async {
+  final appTheme = AppTheme.of(context).theme;
+
+  return DialogHelper.show(
+    context: context,
+    // dialogType: GeneralComponentStyle.success,
+    isDismissible: true,
+    barrierLabel: '',
+    // title: 'Verification\nCode',
+    body: Container(
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.all(8.0),
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Image.asset(Resources.reviewCheckPNG,height: 63,),
+          SizedBox(
+            height: 16,
+          ),
+          GeneralText(
+            Strings.cashPopupTitle,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                color: Color(0xff8ea659),
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 29,
+          ),
+          GeneralText(
+            Strings.cashSubPopupTitle,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w500),
+          ),
+
+          SizedBox(
+            height: 29,
+          ),
+          GeneralButton.button(
+            title: Strings.cashPopupBtnTitle.toUpperCase(),
+            styleType: ButtonStyleType.fill,
+            onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+              // );
+              //    viewModel.goToForgotPasswordScreen();
+            },
+          ),
+          SizedBox(
+            height: 12,
+          ),
+        ],
+      ),
+    ),
+    // body: GBottomSheet<String>(
+    //   bottomSheetTitle: Strings.chooseDateFormat,
+    //   list: ['7878,87,876'],
+    //   selectedItem: viewModel.getSelectedFormat(),
+    //   bottomSheetType: BottomSheetType.dateFormat,
+    // ),
+  );
 }
 
 class CustomModel {

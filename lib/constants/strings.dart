@@ -399,8 +399,9 @@ abstract class Strings {
   static const bookingOrderCompleted = 'ORDER COMPLETED';
   static const foodItemBookingAdvancePendingHeader = 'ADVANCE PENDING';
   static const bookingOrderDeclined = 'ORDER DECLINED';
-  static const foodItemBookingInProgress = 'IN PROCESS';
-  static const foodItemBookingBookingConfirmed = 'BOOKING CONFIRMED';
+  static const foodItemBookingInProgress = 'IN PROGRESS';
+  static const foodItemBookingDecisionRequired = 'DECISION REQUIRED';
+  static const foodItemBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
   static const foodItemAdvancePendingTermsCondition = 'Terms & Condition';
 
@@ -410,6 +411,23 @@ abstract class Strings {
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
+
+  static const infoPopupTitle = "Keep in mind";
+  static const infoPopupButtonTitle = "Okay";
+
+  static const foodieVerifiedPopupTitle = "Foodie Verified";
+  static const foodieVerifiedSubPopupTitle = "Lorem Ipsum has been the industry's Syed Ali";
+  static const foodieVerifiedPopupBtnTitle = "Okay";
+
+  static const foodieVerificationPopupTitle = "Foodie Verification";
+  static const foodieVerificationSubPopupTitle = "Lorem Ipsum has been the industry's standard dummy text ever since";
+  static const foodieVerificationPopupBtnTitle = "SUBMIT";
+  static const orderPopupTitle = "Order Accepted";
+  static const orderSubPopupTitle = "To confirm the order Foodie will pay advance as a next step";
+  static const orderPopupBtnTitle = "Okay";
+  static const cashPopupTitle = "Cash Recieved";
+  static const cashSubPopupTitle = "Full amount has been received";
+  static const cashPopupBtnTitle = "Okay";
   static const ratingPopupTitle = "Rate Foodie";
   static const ratingPopupBtnTitle = "Submit";
   static const ratingPopupSubTitle =

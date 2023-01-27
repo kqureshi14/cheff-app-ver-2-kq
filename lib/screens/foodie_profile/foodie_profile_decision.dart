@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
@@ -60,6 +62,19 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton:  Container(
+          margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              getAcceptButton(appTheme: appTheme),
+              // SizedBox(
+              //   width: 10,
+              // ),
+              getDeclineCash(appTheme: appTheme),
+            ],
+          ),
+        ),
         body: SingleChildScrollView(
           child: Stack(children: [
             Container(
@@ -82,6 +97,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                             padding: const EdgeInsets.only(top: 30),
                             child: GeneralNewAppBar(
                               title: Strings.foodieProfileHeader,
+                              titleColor: Colors.white,
                               rightIcon: Resources.homeIconSvg,
                             ),
                           ),
@@ -154,8 +170,8 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: Container(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: 19.5, end: 19.5, top: 5, bottom: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+
                                 decoration: BoxDecoration(
                                     color: HexColor.fromHex("#b0c18b"),
                                     borderRadius: BorderRadius.circular(20)),
@@ -191,7 +207,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                 height: 1,
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 7.2,
                               ),
                               GeneralText(
                                 Strings.foodieProfileExperienceLabel,
@@ -235,7 +251,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                 height: 1,
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 7.2,
                               ),
                               GeneralText(
                                 Strings.foodieProfileLabel,
@@ -272,22 +288,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                     ),
                   ],
                 )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    getAcceptButton(appTheme: appTheme),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
-                    getDeclineCash(appTheme: appTheme),
-                  ],
-                ),
-              ),
-            ),
+
           ],),
 
 
@@ -307,7 +308,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 18.5),
+            padding: const EdgeInsets.only(left: 12,right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -857,7 +858,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.foodieInfoLabel,
@@ -1114,10 +1115,11 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
       width: 159,
       title: Strings.foodieProfileAcceptBtn.toUpperCase(),
       styleType: ButtonStyleType.fill,
-
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
+
+        _showCashReceivedPopup(context);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
       },
     );
     // ExtoText(
@@ -1143,6 +1145,84 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
     //   style: appTheme.typographies.interFontFamily.headline2,
     // );
   }
+
+
+
+  Future<dynamic> _showCashReceivedPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.orderPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Color(0xff8ea659),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 29,
+            ),
+            GeneralText(
+              Strings.orderSubPopupTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 29,
+            ),
+            GeneralButton.button(
+              title: Strings.orderPopupBtnTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
 }
 
 class CustomModel {

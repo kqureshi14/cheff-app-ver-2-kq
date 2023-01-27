@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -84,103 +85,111 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
           shrinkWrap: true,
           itemCount: 3,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: EdgeInsets.only(bottom: 40),
-              padding: EdgeInsets.only(left: 33, bottom: 17),
-              decoration: BoxDecoration(
-                  color: HexColor.fromHex("#4b4b52"),
-                  borderRadius: BorderRadius.circular(30)),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Stack(children: [
-                  Positioned(
-                    right: -50,
-                    top: -40,
-                    child: Container(
-                      width: 173,
-                      padding: const EdgeInsetsDirectional.all(20),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'assets/images/icons/food_product_ring.png'),
-                          fit: BoxFit.fill,
+            return InkWell(
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return FoodDetailScreen();
+                    }));
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(left: 33, bottom: 17),
+                decoration: BoxDecoration(
+                    color: HexColor.fromHex("#4b4b52"),
+                    borderRadius: BorderRadius.circular(30)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Stack(children: [
+                    Positioned(
+                      right: -50,
+                      top: -40,
+                      child: Container(
+                        width: 173,
+                        padding: const EdgeInsetsDirectional.all(20),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/icons/food_product_ring.png'),
+                            fit: BoxFit.fill,
+                          ),
+                          // shape: BoxShape.circle,
                         ),
-                        // shape: BoxShape.circle,
-                      ),
-                      child: Image.asset(
-                        'assets/images/icons/food_product_experience.png',
-                        fit: BoxFit.fill,
-                        height: 150,
+                        child: Image.asset(
+                          'assets/images/icons/food_product_experience.png',
+                          fit: BoxFit.fill,
+                          height: 150,
+                        ),
                       ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 32.2,
-                      ),
-                      GeneralRichText(
-                        title: Strings.popularFoodDetailTitle,
-                        titleStyle:
-                            appTheme.typographies.interFontFamily.label11,
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      // GeneralText(
-                      //   Strings.popularFoodDetailSubTitle,
-                      //   style: appTheme.typographies.interFontFamily.headline6
-                      //       .copyWith(
-                      //     fontSize: 12,
-                      //     color: HexColor.fromHex('#909094'),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 4,
-                      // ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 13.9,
-                            child: Image.asset('assets/images/icons/star.png',
-                                fit: BoxFit.fill,
-                            color: Colors.grey,),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          GeneralText(
-                            Strings.popularFoodDetailReview,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    fontSize: 14,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 32.2,
+                        ),
+                        GeneralRichText(
+                          title: Strings.popularFoodDetailTitle,
+                          titleStyle:
+                              appTheme.typographies.interFontFamily.label11,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        // GeneralText(
+                        //   Strings.popularFoodDetailSubTitle,
+                        //   style: appTheme.typographies.interFontFamily.headline6
+                        //       .copyWith(
+                        //     fontSize: 12,
+                        //     color: HexColor.fromHex('#909094'),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 4,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 13.9,
+                              child: Image.asset('assets/images/icons/star.png',
+                                  fit: BoxFit.fill,
                               color: Colors.grey,),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height:37,
-                      ),
-                      GeneralText(
-                        Strings.popularFoodDetailWowFactorTitle,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                fontSize: 16,
-                                color: HexColor.fromHex(
-                                  '#ffffff',
-                                ),
-                                fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(
-                        height: 11.7,
-                      ),
-                      wowFactors(appTheme),
-                    ],
-                  )
-                ]),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            GeneralText(
+                              Strings.popularFoodDetailReview,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                      fontSize: 14,
+                                color: Colors.grey,),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height:37,
+                        ),
+                        GeneralText(
+                          Strings.popularFoodDetailWowFactorTitle,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                                  fontSize: 16,
+                                  color: HexColor.fromHex(
+                                    '#ffffff',
+                                  ),
+                                  fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 11.7,
+                        ),
+                        wowFactors(appTheme),
+                      ],
+                    )
+                  ]),
+                ),
               ),
             );
           }),

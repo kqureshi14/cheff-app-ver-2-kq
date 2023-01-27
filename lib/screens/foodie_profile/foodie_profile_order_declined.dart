@@ -77,10 +77,11 @@ class _FoodieProfileOrderDeclinedState
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 30),
                           child: GeneralNewAppBar(
                             title: Strings.foodieProfileHeader,
+                            titleColor: Colors.white,
                             rightIcon: Resources.homeIconSvg,
                           ),
                         ),
@@ -153,8 +154,8 @@ class _FoodieProfileOrderDeclinedState
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 19.5, end: 19.5, top: 5, bottom: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex("#b0c18b"),
                                   borderRadius: BorderRadius.circular(20)),
@@ -191,7 +192,7 @@ class _FoodieProfileOrderDeclinedState
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileExperienceLabel,
@@ -235,7 +236,7 @@ class _FoodieProfileOrderDeclinedState
                               height: 1,
                             ),
                             const SizedBox(
-                              width: 2,
+                              width: 7.2,
                             ),
                             GeneralText(
                               Strings.foodieProfileLabel,
@@ -292,7 +293,7 @@ class _FoodieProfileOrderDeclinedState
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 18.5),
+            padding: const EdgeInsets.only(left: 12,right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -842,7 +843,7 @@ class _FoodieProfileOrderDeclinedState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.foodieInfoLabel,

@@ -1,9 +1,11 @@
 import 'package:chef/theme/theme.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../home/popular_food_detail.dart';
@@ -230,11 +232,151 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       title: Strings.saveButtonLabel.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) {
-          return PopularFoodDetails();
-        }));
+        _showInfoPopup(context);
+
       },
     );
   }
+  Future<dynamic> _showInfoPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.infoPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 38,
+            ),
+            Row(
+              children: [
+                Image.asset(
+                  Resources.getSignUpLetsStartScreenTickPng,
+                  height: 15,
+                  color: const Color(0xfffee4a4),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: GeneralText(
+                    Strings.letsStartScreenLabel2,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                        color: const Color(0xfffee4a4),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 19,),
+            Row(
+              children: [
+                Image.asset(
+                  Resources.getSignUpLetsStartScreenTickPng,
+                  height: 15,
+                  color: const Color(0xfffee4a4),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: GeneralText(
+                    Strings.letsStartScreenLabel2,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                        color: const Color(0xfffee4a4),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 19,),
+
+            Row(
+              children: [
+                Image.asset(
+                  Resources.getSignUpLetsStartScreenTickPng,
+                  height: 15,
+                  color: const Color(0xfffee4a4),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: GeneralText(
+                    Strings.letsStartScreenLabel2,
+                    maxLines: 2,
+                    textAlign: TextAlign.start,
+                    style: appTheme.typographies.interFontFamily.headline4
+                        .copyWith(
+                        color: const Color(0xfffee4a4),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 49,
+            ),
+            GeneralButton.button(
+              title: Strings.infoPopupButtonTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return PopularFoodDetails();
+                    }));
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
 }

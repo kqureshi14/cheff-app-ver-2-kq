@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,7 @@ import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
+import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
@@ -24,7 +27,9 @@ class _FoodieProfileBookingConfirmedState
     extends State<FoodieProfileBookingConfirmed> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
-  bool checkValue = false;
+   final TextController _orderIDController = TextController();
+
+  dynamic group1Value;
 
   @override
   void initState() {
@@ -63,6 +68,19 @@ class _FoodieProfileBookingConfirmedState
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              getAcceptButton(appTheme: appTheme),
+              // SizedBox(
+              //   width: 10,
+              // ),
+              getDeclineCash(appTheme: appTheme),
+            ],
+          ),
+        ),
         body: SingleChildScrollView(
           child: Stack(
             children: [
@@ -86,6 +104,7 @@ class _FoodieProfileBookingConfirmedState
                               padding: const EdgeInsets.only(top: 30),
                               child: GeneralNewAppBar(
                                 title: Strings.foodieProfileHeader,
+                                titleColor: Colors.white,
                                 rightIcon: Resources.homeIconSvg,
                               ),
                             ),
@@ -160,11 +179,8 @@ class _FoodieProfileBookingConfirmedState
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Container(
-                                  padding: EdgeInsetsDirectional.only(
-                                      start: 19.5,
-                                      end: 19.5,
-                                      top: 5,
-                                      bottom: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+
                                   decoration: BoxDecoration(
                                       color: HexColor.fromHex("#b0c18b"),
                                       borderRadius: BorderRadius.circular(20)),
@@ -201,7 +217,7 @@ class _FoodieProfileBookingConfirmedState
                                   height: 1,
                                 ),
                                 const SizedBox(
-                                  width: 2,
+                                  width: 7.2,
                                 ),
                                 GeneralText(
                                   Strings.foodieProfileExperienceLabel,
@@ -245,7 +261,7 @@ class _FoodieProfileBookingConfirmedState
                                   height: 1,
                                 ),
                                 const SizedBox(
-                                  width: 2,
+                                  width: 7.2,
                                 ),
                                 GeneralText(
                                   Strings.foodieProfileLabel,
@@ -282,22 +298,7 @@ class _FoodieProfileBookingConfirmedState
                       ),
                     ],
                   )),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      getAcceptButton(appTheme: appTheme),
-                      // SizedBox(
-                      //   width: 10,
-                      // ),
-                      getDeclineCash(appTheme: appTheme),
-                    ],
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),
@@ -316,7 +317,7 @@ class _FoodieProfileBookingConfirmedState
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 18.5),
+            padding: const EdgeInsets.only(left: 12,right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -496,7 +497,7 @@ class _FoodieProfileBookingConfirmedState
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                        const EdgeInsetsDirectional.all(10),
+                                    const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -507,7 +508,7 @@ class _FoodieProfileBookingConfirmedState
                                     ),
                                     child: Container(
                                       padding:
-                                          const EdgeInsetsDirectional.all(10),
+                                      const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -543,7 +544,7 @@ class _FoodieProfileBookingConfirmedState
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                        const EdgeInsetsDirectional.all(10),
+                                    const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -554,7 +555,7 @@ class _FoodieProfileBookingConfirmedState
                                     ),
                                     child: Container(
                                       padding:
-                                          const EdgeInsetsDirectional.all(10),
+                                      const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -866,7 +867,7 @@ class _FoodieProfileBookingConfirmedState
                 height: 1,
               ),
               const SizedBox(
-                width: 2,
+                width: 7.2,
               ),
               GeneralText(
                 Strings.foodieInfoLabel,
@@ -1160,8 +1161,9 @@ class _FoodieProfileBookingConfirmedState
       styleType: ButtonStyleType.fill,
 
           onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodieProfileOrderDeclined()));
+            _showFoodieVerificationPopup(context);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => FoodieProfileOrderDeclined()));
       },
     );
     // ExtoText(
@@ -1176,8 +1178,9 @@ class _FoodieProfileBookingConfirmedState
       title: Strings.foodieProfileCancelBtn.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => FoodieProfileOrderCompleted()));
+        _showBottomSheet(context);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => FoodieProfileOrderCompleted()));
       },
     );
     // ExtoText(
@@ -1185,6 +1188,360 @@ class _FoodieProfileBookingConfirmedState
     //   style: appTheme.typographies.interFontFamily.headline2,
     // );
   }
+
+  _showBottomSheet(BuildContext context) {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.showBottomSheetDialog(
+      borderRadius: 20,
+      context: context,
+      body: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: Container(
+          padding: EdgeInsetsDirectional.only(
+            start: 25,
+            end: 28,
+            top: 41,
+          ),
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#212129"),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              )),
+          child: Column(
+            children: [
+              GeneralText(
+                Strings.bottomSheetTellUsWhyTitle,
+                maxLines: 2,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(children: [
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 0,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 1,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 2,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 3,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            color: HexColor.fromHex("#fbeccb"),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
+              SizedBox(
+                height: 42,
+              ),
+              GeneralButton.button(
+                title: Strings.generalButtonTitle.toUpperCase(),
+                styleType: ButtonStyleType.fill,
+                width: 151,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 12,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Future<dynamic> _showFoodieVerificationPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.foodieVerificationPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Color(0xfff1c452),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 29,
+            ),
+            GeneralText(
+              Strings.foodieVerificationSubPopupTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 33,
+            ),
+
+            GeneralTextInput(
+                height: 80,
+                controller: _orderIDController,
+                inputType: InputType.text,
+                backgroundColor:
+                appTheme.colors.textFieldFilledColor,
+                inputBorder: appTheme.focusedBorder,
+                valueStyle: const TextStyle(color: Colors.white),
+                hint: 'Enter Order ID',
+                hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.4),
+                    fontSize: 14),
+                // valueStyle: valueStyle,
+                onChanged: (newValue) {}),
+            SizedBox(
+              height: 48,
+            ),
+
+            GeneralButton.button(
+              title: Strings.foodieVerificationPopupBtnTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                Navigator.pop(context);
+                _showFoodieVerifiedPopup(context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
+  Future<dynamic> _showFoodieVerifiedPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.foodieVerifiedPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Color(0xff8ea659),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 29,
+            ),
+            GeneralText(
+              Strings.foodieVerifiedSubPopupTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 29,
+            ),
+            GeneralButton.button(
+              title: Strings.foodieVerifiedPopupBtnTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
 }
 
 class CustomModel {

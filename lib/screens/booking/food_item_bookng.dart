@@ -1,3 +1,4 @@
+import 'package:chef/screens/foodie_profile/foodie_profile_order_declined.dart';
 import 'package:chef/theme/app_theme_data/app_theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,10 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../foodie_profile/foodie_profile_booking_confirmed.dart';
+import '../foodie_profile/foodie_profile_decision.dart';
+import '../foodie_profile/foodie_profile_detail.dart';
+import '../foodie_profile/foodie_profile_order_completed.dart';
 import '../home/food_details_screen.dart';
 import '../home/food_item_booking_confirmed.dart';
 import 'booking_in_process_screen.dart';
@@ -34,12 +39,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       BookingProgress(
           bookingStatusIcon: Resources.hourglassPNG,
           statusName: Strings.bookingOrderDeclined),
-      // BookingProgress(
-      //     bookingStatusIcon: Resources.confirmUserPNG,
-      //     statusName: Strings.foodItemBookingInProgress),
-      // BookingProgress(
-      //     bookingStatusIcon: Resources.paymentPNG,
-      //     statusName: Strings.foodItemBookingBookingConfirmed),
+      BookingProgress(
+          bookingStatusIcon: Resources.confirmUserPNG,
+          statusName: Strings.foodItemBookingInProgress),
+      BookingProgress(
+          bookingStatusIcon: Resources.paymentPNG,
+          statusName: Strings.foodItemBookingDecisionRequired),
+      BookingProgress(
+          bookingStatusIcon: Resources.paymentPNG,
+          statusName: Strings.foodItemBookingConfirmed),
     ]);
     super.initState();
   }
@@ -102,22 +110,42 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       color: HexColor.fromHex("#4b4b52")),
                   child: InkWell(
                     onTap: () {
+
+                      if(index==0)
+                        {
+                          //
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return const FoodieProfileOrderCompleted();
+                              }));
+                        }
+
+
                       if (index == 1) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return FoodDetailScreen();
+                          return const FoodieProfileOrderDeclined();
                         }));
                       } else if (index == 2) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return FoodItemInProcessBooking();
-                        }));
+                              return FoodieInProgressDetail();
+                            }));
                       } else if (index == 3) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FoodProductBookingConfirmedDetails();
-                        }));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FoodieProfileRequiredPending()));
                       }
+                      else if (index == 4) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FoodieProfileBookingConfirmed()));
+                      }
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
                       // else{
                       //   _showGeneralPopup(context);
                       // }
@@ -496,7 +524,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 3) {
+    } else if (index == 3||index==4) {
       progressBar = Row(children: [
         Container(
           width: 12,
