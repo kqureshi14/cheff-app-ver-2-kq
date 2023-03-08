@@ -1,3 +1,4 @@
+import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +35,8 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GetStartedScreen()),
+                  // MaterialPageRoute(builder: (context) => GetStartedScreen()),
+                  MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
                 );
 
               },

@@ -1,45 +1,99 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/models/signup/questionire_response.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart';
+import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
 
 import '../../../helpers/color_helper.dart';
+import 'dart:developer' as developer;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpQuestionireScreen extends StatefulWidget {
-  @override
-  _SignUpQuestionireScreenState createState() =>
-      _SignUpQuestionireScreenState();
-}
+// class SignUpQuestionireScreen extends StatefulWidget {
+//   @override
+//   _SignUpQuestionireScreenState createState() =>
+//       _SignUpQuestionireScreenState();
+// }
+//
+// class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
 
-class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
+class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel> {
+  SignUpQuestionireScreen({Key? key}) : super(key: key);
+
 
   final TextController _journeyController = TextController();
-
-
   List<SocialMediaHandles> handlesList = [];
 
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    handlesList.addAll([
-      SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/instagram_1.png"),
-      SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/facebook.png"),
-      SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/twitter.png"),
-      SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/tiktok.png")
-    ]);
-    super.initState();
+  void loadQuestionList(
+      List<QuestionsList> questionsList,
+      ) {
+    for (int i = 0; i < questionsList.length; i++) {
+      developer.log(' Question id is ' + '${questionsList[i].name}');
+      // dropdownDetails[professionList[i].name] = professionList[i].id;
+    }
   }
+
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen({
+    required BuildContext context,
+    required ScreenSizeData screenSizeData,
+  }) {
     final appTheme = AppTheme.of(context).theme;
 
-    return Scaffold(
+    viewModel.loadQuestion(baseUrl: Api.baseURL, context: context);
+    return BlocBuilder<SignUpQuestionireScreenViewModel, SignUpQuestionireScreenState>(
+        bloc: viewModel,
+        builder: (_, state) => state.when(
+            // initialized:
+            //     (isBusy) =>
+            //     _initialized(),
+            loading: _loading,
+            loaded: (questionsList) => _displayLoadedData(
+                state: state,
+                appTheme: appTheme,
+                context: context,
+                questionList: questionsList,
+                screenSizeData: screenSizeData)));
+  }
+
+  Widget _initialized() {
+    return Container();
+  }
+
+  Widget _loading() => const GeneralLoading();
+
+
+
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //
+  //   handlesList.addAll([
+  //     SocialMediaHandles(
+  //         socialMediaName: Strings.userProfileSocialMediaHandle,
+  //         socialMediaIcon: "assets/images/icons/instagram_1.png"),
+  //     SocialMediaHandles(
+  //         socialMediaName: Strings.userProfileSocialMediaHandle,
+  //         socialMediaIcon: "assets/images/icons/facebook.png"),
+  //     SocialMediaHandles(
+  //         socialMediaName: Strings.userProfileSocialMediaHandle,
+  //         socialMediaIcon: "assets/images/icons/twitter.png"),
+  //     SocialMediaHandles(
+  //         socialMediaName: Strings.userProfileSocialMediaHandle,
+  //         socialMediaIcon: "assets/images/icons/tiktok.png")
+  //   ]);
+  //   super.initState();
+  // }
+
+
+  Widget _displayLoadedData({
+    state,
+    appTheme,
+    required BuildContext context,
+    required List<QuestionsList> questionList,
+    required ScreenSizeData screenSizeData,
+  }) {
+    final size = screenSizeData.size;
+    return  Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(  bottom: 12),
@@ -362,6 +416,9 @@ class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
       ),
     );
   }
+
+
+
   Widget socialMediaHandles(IAppThemeData appTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

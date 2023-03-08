@@ -1,22 +1,32 @@
+
+import 'dart:typed_data';
+
 import 'package:chef/helpers/helpers.dart';
+import 'package:chef/screens/sign_up/sign_up_screen_vm.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../sign_in/sign_in_screen_v.dart';
 
-enum Gender {
-  male,
-  female,
-}
+import 'dart:developer' as developer;
+import '../sign_up/sign_up_screen_m.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+// class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends BaseView<SignUpScreenViewModel> {
+  SignUpScreen({Key? key}) : super(key: key);
 
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
+  final baseURLs = [
+    // Api.prodURL,
+    Api.baseURL,
+    Api.devBaseURL,
+  ];
 
-class _SignUpScreenState extends State<SignUpScreen> {
+//   @override
+//   _SignUpScreenState createState() => _SignUpScreenState();
+// }
+//
+// class _SignUpScreenState extends State<SignUpScreen> {
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _brandController = TextController();
@@ -25,19 +35,97 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextController _townController = TextController();
   final TextController _cityController = TextController();
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen({
+    required BuildContext context,
+    required ScreenSizeData screenSizeData,
+  }) {
     final appTheme = AppTheme.of(context).theme;
 
+    // viewModel.loadProfessions(baseUrl: baseURLs[0], context: context);
+    // viewModel.initialize();
+    return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
+        bloc: viewModel..initialize(),
+        builder: (_, state) => state.when(
+            initialized:
+                (fullName, brandName, mobileNumber, address) =>
+                _initialized(),
+            loading: _loading,
+            loaded: () => _displayLoadedData(
+                state: state,
+                appTheme: appTheme,
+                context: context,
+                screenSizeData: screenSizeData)
+            ));
+  }
+
+  Widget _initialized() {
+    return Container();
+  }
+
+  Widget _loading() => const GeneralLoading();
+
+  Widget _displayLoadedData({
+    state,
+    appTheme,
+    required BuildContext context,
+    required ScreenSizeData screenSizeData,
+  }) {
+    final size = screenSizeData.size;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      bottomNavigationBar:
-      displayAlreadySignIn(appTheme),
+      bottomNavigationBar: displayAlreadySignIn(appTheme, context),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Stack(
+                children: [
+                  // screenSizeData.screenType == ScreenType.small ?
+                  _buildMobileView(
+                    context: context,
+                    state: state,
+                    appTheme: appTheme,
+                    size: size,
+                  ),
+                  //     : _buildTabletView(
+                  //   context: context,
+                  //   state: state,
+                  //   appTheme: appTheme,
+                  //   size: size,
+                  // ),
+                ],
+              )
+            // child:
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   final appTheme = AppTheme.of(context).theme;
+  //
+  //   return Scaffold(
+  //     backgroundColor: appTheme.colors.primaryBackground,
+  //     bottomNavigationBar:
+  //     displayAlreadySignIn(appTheme),
+  //     body: SingleChildScrollView(
+  //       child: SafeArea(
+  //         child: Container(
+  //           padding: const EdgeInsets.symmetric(horizontal: 30),
+  //           child:
+
+      Widget _buildMobileView({
+          required BuildContext context,
+          required SignUpScreenState state,
+          required IAppThemeData appTheme,
+          required Size size,
+          }) {
+        return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -77,19 +165,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                displayAgeGender(appTheme),
+                displayTownCity(appTheme),
                 const SizedBox(
                   height: 10,
                 ),
-
-
-
               ],
-            ),
-          ),
-        ),
-      ),
-    );
+        );
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
 
@@ -124,6 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+
   Widget displayBrandName(IAppThemeData appTheme) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -203,7 +290,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         GeneralTextInput(
             controller: _addressController,
-            inputType: InputType.digit,
+            inputType: InputType.text,
             suffix: Image.asset(Resources.locationIconPNG,height: 20,),
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
@@ -217,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget displayAgeGender(IAppThemeData appTheme) {
+  Widget displayTownCity(IAppThemeData appTheme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,7 +328,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 80,
                   textFieldWidth: 145,
                   controller: _townController,
-                  inputType: InputType.digit,
+                  inputType: InputType.text,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
                   inputBorder: appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
@@ -275,7 +362,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 80,
                   textFieldWidth: 145,
                   controller: _cityController,
-                  inputType: InputType.digit,
+                  inputType: InputType.text,
                   backgroundColor: appTheme.colors.textFieldFilledColor,
                   inputBorder: appTheme.focusedBorder,
                   valueStyle: const TextStyle(color: Colors.white),
@@ -292,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
 
-  Widget displayAlreadySignIn(IAppThemeData appTheme) {
+  Widget displayAlreadySignIn(IAppThemeData appTheme, BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
       child: Row(
@@ -317,7 +404,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           InkWell(
             onTap: () {
-              _showVerificationPopup(context);
+
+              developer.log(
+                  ' Here Collected data is ' + '${_nameController.text}');
+              developer.log(
+                  'Mobile Controller  ' + '${_mobileNumberController.text}');
+
+              developer.log(' Brand Controller  ' + '${_brandController.text}');
+
+              developer
+                  .log('Address is  ' + _addressController.text);
+
+              viewModel.saveChef(
+                name: _nameController.text,
+                brandName: _brandController.text,
+                mobileNumber: _mobileNumberController.text,
+                address: _addressController.text,
+                context: context,
+                baseUrl: baseURLs[0],
+              );
+
+
+
+              // _showVerificationPopup(context);
 
             },
             child: SvgPicture.asset(
