@@ -28,7 +28,7 @@ abstract class Api {
   static const apiVersion2 = 'node/api/v2';
   static const client = 'client/';
   static const rest = 'rest/';
-  static const baseURL = 'https://weburl.com/client/';
+  static const baseURL = 'http://18.202.117.137:8080/feyst-service/';
   static const devBaseURL = 'https://abc2.com/';
   static const dprBaseURL = 'https://abc.com/';
 
@@ -71,8 +71,6 @@ abstract class Api {
   static const chefSignUp = 'chef/save';
   static const loginAPI = 'chef/login';
   static const questionListAPI = 'question/list';
-
-
 
   // Workflow v3 api's endpoints
   static const moduleRecords = 'api/v3/module-record';

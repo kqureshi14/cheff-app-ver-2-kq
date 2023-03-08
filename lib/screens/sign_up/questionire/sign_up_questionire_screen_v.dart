@@ -15,16 +15,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //
 // class _SignUpQuestionireScreenState extends State<SignUpQuestionireScreen> {
 
-class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel> {
+class SignUpQuestionireScreen
+    extends BaseView<SignUpQuestionireScreenViewModel> {
   SignUpQuestionireScreen({Key? key}) : super(key: key);
-
 
   final TextController _journeyController = TextController();
   List<SocialMediaHandles> handlesList = [];
 
   void loadQuestionList(
-      List<QuestionsList> questionsList,
-      ) {
+    List<QuestionsList> questionsList,
+  ) {
     for (int i = 0; i < questionsList.length; i++) {
       developer.log(' Question id is ' + '${questionsList[i].name}');
       // dropdownDetails[professionList[i].name] = professionList[i].id;
@@ -39,7 +39,8 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
     final appTheme = AppTheme.of(context).theme;
 
     viewModel.loadQuestion(baseUrl: Api.baseURL, context: context);
-    return BlocBuilder<SignUpQuestionireScreenViewModel, SignUpQuestionireScreenState>(
+    return BlocBuilder<SignUpQuestionireScreenViewModel,
+            SignUpQuestionireScreenState>(
         bloc: viewModel,
         builder: (_, state) => state.when(
             // initialized:
@@ -59,9 +60,6 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
   }
 
   Widget _loading() => const GeneralLoading();
-
-
-
 
   // @override
   // void initState() {
@@ -84,7 +82,6 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
   //   super.initState();
   // }
 
-
   Widget _displayLoadedData({
     state,
     appTheme,
@@ -93,12 +90,12 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
     required ScreenSizeData screenSizeData,
   }) {
     final size = screenSizeData.size;
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(  bottom: 12),
+        padding: const EdgeInsets.only(bottom: 12),
         child: Container(
-          margin: EdgeInsets.only(left:32),
+          margin: EdgeInsets.only(left: 32),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -126,7 +123,6 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
                 child: SvgPicture.asset(
                   Resources.getSignInRightArrow,
                   color: Colors.grey,
-
                 ),
               ),
             ],
@@ -168,247 +164,262 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 32),
-           //   alignment: Alignment.center,
+              //   alignment: Alignment.center,
               //  padding: const EdgeInsets.only(left: 29),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GeneralText(
-                Strings.questionireLabel,
-                textAlign: TextAlign.start,
-                style: appTheme.typographies.interFontFamily.headline4
-                    .copyWith(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 27,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GeneralText(
-                    Strings.questionireLabel2,
-                    maxLines: 2,
+                    Strings.questionireLabel,
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w500),
+                    //style: appTheme.typographies.interFontFamily.headline4,
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 27,
                   ),
-                  Container(
-                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ),
-                        color: Colors.white),
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Image.asset(Resources.ringPNG,height: 22,),
-                        SizedBox(width: 15,),
-                        Expanded(child: GeneralText(
-                          Strings.letsStartScreenLabel2,
-                          maxLines: 3,
-                          textAlign: TextAlign.start,
-                          style: appTheme
-                              .typographies.interFontFamily.headline6
-                              .copyWith(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),)
-
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ),
-                        color: Color(0xfffee4a4)),
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Image.asset(Resources.checkPNG,height: 22,),
-                        SizedBox(width: 15,),
-                        Expanded(child: GeneralText(
-                          Strings.letsStartScreenLabel2,
-                          maxLines: 3,
-                          textAlign: TextAlign.start,
-                          style: appTheme
-                              .typographies.interFontFamily.headline6
-                              .copyWith(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),)
-
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          8,
-                        ),
-                        color: Colors.white),
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                      children: [
-                        Image.asset(Resources.ringPNG,height: 22,),
-                        SizedBox(width: 15,),
-                        Expanded(child: GeneralText(
-                          Strings.letsStartScreenLabel2,
-                          maxLines: 3,
-                          textAlign: TextAlign.start,
-                          style: appTheme
-                              .typographies.interFontFamily.headline6
-                              .copyWith(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),)
-
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 51,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GeneralText(
-                    Strings.questionireLabel3,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  GeneralTextInput(
-                      height: 80,
-
-                      controller: _journeyController,
-                      inputType: InputType.text,
-                      isMultiline: true,
-                      backgroundColor: appTheme.colors.textFieldFilledColor,
-                      inputBorder: appTheme.focusedBorder,
-                      valueStyle: const TextStyle(color: Colors.white),
-                      hint: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                      hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.4), fontSize: 14),
-                      // valueStyle: valueStyle,
-                      onChanged: (newValue) {}),
-                ],
-              ),
-              const SizedBox(
-                height: 36,
-              ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GeneralText(
-                    Strings.questionireLabel5,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Wrap(
-                    spacing: 10 ,
-                    runSpacing: 12,
-                    crossAxisAlignment: WrapCrossAlignment.start,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ChipsWidget(
-                        appTheme: appTheme,
-                        title: 'Sports',
+                      GeneralText(
+                        Strings.questionireLabel2,
+                        maxLines: 2,
+                        textAlign: TextAlign.start,
+                        style: appTheme.typographies.interFontFamily.headline4
+                            .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
                       ),
-                      ChipsWidget(
-                        appTheme: appTheme,
-                        title: 'Music',
+                      const SizedBox(
+                        height: 15,
                       ),
-                      ChipsWidget(
-                        appTheme: appTheme,
-                        title: 'Traveling',
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ),
+                            color: Colors.white),
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Resources.ringPNG,
+                              height: 22,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              child: GeneralText(
+                                Strings.letsStartScreenLabel2,
+                                maxLines: 3,
+                                textAlign: TextAlign.start,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      ChipsWidget(
-                        appTheme: appTheme,
-                        title: 'Movies',
+                      const SizedBox(
+                        height: 9,
                       ),
-                      ChipsWidget(
-                        appTheme: appTheme,
-                        title: 'Current Affairs',
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ),
+                            color: Color(0xfffee4a4)),
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Resources.checkPNG,
+                              height: 22,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              child: GeneralText(
+                                Strings.letsStartScreenLabel2,
+                                maxLines: 3,
+                                textAlign: TextAlign.start,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              8,
+                            ),
+                            color: Colors.white),
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              Resources.ringPNG,
+                              height: 22,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              child: GeneralText(
+                                Strings.letsStartScreenLabel2,
+                                maxLines: 3,
+                                textAlign: TextAlign.start,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-
-              socialMediaHandles(appTheme),
-
-              const SizedBox(
-                height: 40,
-              ),
-
-              Container(
-                height: 70,
-                padding: const EdgeInsets.symmetric(horizontal: 22),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GeneralText(
-                      Strings.labelProfilePicture,
-                      textAlign: TextAlign.center,
-                      style: appTheme.typographies.interFontFamily.headline4
-                          .copyWith(
-                              color: appTheme.colors.primaryBackground,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
+                  const SizedBox(
+                    height: 51,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GeneralText(
+                        Strings.questionireLabel3,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      GeneralTextInput(
+                          height: 80,
+                          controller: _journeyController,
+                          inputType: InputType.text,
+                          isMultiline: true,
+                          backgroundColor: appTheme.colors.textFieldFilledColor,
+                          inputBorder: appTheme.focusedBorder,
+                          valueStyle: const TextStyle(color: Colors.white),
+                          hint:
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                          hintStyle: TextStyle(
+                              color: Colors.white.withOpacity(0.4),
+                              fontSize: 14),
+                          // valueStyle: valueStyle,
+                          onChanged: (newValue) {}),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 36,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GeneralText(
+                        Strings.questionireLabel5,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                                color: const Color(0xfffbeccb),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 12,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: [
+                          ChipsWidget(
+                            appTheme: appTheme,
+                            title: 'Sports',
+                          ),
+                          ChipsWidget(
+                            appTheme: appTheme,
+                            title: 'Music',
+                          ),
+                          ChipsWidget(
+                            appTheme: appTheme,
+                            title: 'Traveling',
+                          ),
+                          ChipsWidget(
+                            appTheme: appTheme,
+                            title: 'Movies',
+                          ),
+                          ChipsWidget(
+                            appTheme: appTheme,
+                            title: 'Current Affairs',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  socialMediaHandles(appTheme),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    height: 70,
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GeneralText(
+                          Strings.labelProfilePicture,
+                          textAlign: TextAlign.center,
+                          style: appTheme.typographies.interFontFamily.headline4
+                              .copyWith(
+                                  color: appTheme.colors.primaryBackground,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w500),
+                        ),
+                        Image.asset(
+                          Resources.userProfilePicPng,
+                          height: 47,
+                        )
+                      ],
                     ),
-                    Image.asset(
-                      Resources.userProfilePicPng,
-                      height: 47,
-                    )
-                  ],
-                ),
-              ),
-
-              const SizedBox(
-                height: 120,
-              ),
-            ],
+                  ),
+                  const SizedBox(
+                    height: 120,
+                  ),
+                ],
               ),
             )
           ],
@@ -417,18 +428,15 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
     );
   }
 
-
-
   Widget socialMediaHandles(IAppThemeData appTheme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GeneralText(
           Strings.userProfileSocialMediaLabel,
-          style: appTheme.typographies.interFontFamily.headline6
-              .copyWith(
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: const Color(0xfffbeccb),
-              fontSize: 18,
+              fontSize: 18.0,
               fontWeight: FontWeight.bold),
         ),
         const SizedBox(
@@ -444,19 +452,19 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
               crossAxisSpacing: 20,
               childAspectRatio: 2.9,
             ),
-            itemCount: handlesList.length,//
+            itemCount: handlesList.length, //
 
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xfff1c452),width: 2),
+                    border: Border.all(color: Color(0xfff1c452), width: 2),
                     color: HexColor.fromHex("#4b4b52"),
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   children: [
                     Container(
-                 height:31,
+                      height: 31,
                       padding: const EdgeInsetsDirectional.all(6),
                       decoration: BoxDecoration(
                           color: HexColor.fromHex("#4b4b52"),
@@ -473,7 +481,7 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
                         handlesList[index].socialMediaName ?? "",
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                          fontSize: 14,
+                          fontSize: 14.0,
                           color: HexColor.fromHex('#ffffff'),
                         ),
                         maxLines: 2,
@@ -486,11 +494,7 @@ class SignUpQuestionireScreen extends BaseView<SignUpQuestionireScreenViewModel>
       ],
     );
   }
-
 }
-
-
-
 
 class ChipsWidget extends StatelessWidget {
   const ChipsWidget({
@@ -510,13 +514,13 @@ class ChipsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-       // width: widthContainer,
+        // width: widthContainer,
         child: GeneralText(
           title.capitalize(),
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: selected ? Colors.black : Colors.white,
-              fontSize: 15,
+              fontSize: 15.0,
               fontWeight: selected ? FontWeight.bold : FontWeight.w500),
         ),
         decoration: BoxDecoration(
@@ -533,6 +537,7 @@ class ChipsWidget extends StatelessWidget {
         ));
   }
 }
+
 class SocialMediaHandles {
   String? socialMediaName;
   String? socialMediaIcon;

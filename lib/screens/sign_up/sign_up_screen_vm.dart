@@ -17,12 +17,13 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         _storage = storage,
         _appService = appService,
         super(
-          const Initialized(fullName: '',
-              brandName: '',
-              mobileNumber: '',
-              address: '',
-              // town: '',
-              // city: '',
+          const Initialized(
+            fullName: '',
+            brandName: '',
+            mobileNumber: '',
+            address: '',
+            // town: '',
+            // city: '',
           ),
         );
 
@@ -50,6 +51,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   void initialize() {
     emit(const Loaded());
   }
+
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
   String updateUrl(String url) {
@@ -69,10 +71,10 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     String? brandName,
   }) =>
       emit(Initialized(
-          fullName: fullName ?? '',
-          mobileNumber: mobileNumber ?? '',
-          brandName: brandName ?? '',
-          address: address ?? '')
+              fullName: fullName ?? '',
+              mobileNumber: mobileNumber ?? '',
+              brandName: brandName ?? '',
+              address: address ?? '')
           .copyWith());
 
   bool _validateInput({
@@ -84,11 +86,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     // required String city,
   }) =>
       name.trim().isNotEmpty &&
-          brandName.trim().isNotEmpty &&
-          mobileNumber.trim().isNotEmpty &&
-          address.trim().isNotEmpty ;
-          // town.trim().isNotEmpty &&
-          // city.trim().isNotEmpty ;
+      brandName.trim().isNotEmpty &&
+      mobileNumber.trim().isNotEmpty &&
+      address.trim().isNotEmpty;
+  // town.trim().isNotEmpty &&
+  // city.trim().isNotEmpty ;
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -139,8 +141,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     if (isInputValid) {
       emit(const Loading());
       try {
-        final url =
-        ExtoURLHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
+        final url = ExtoURLHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
         signuprequest.T t = signuprequest.T(
           name: name,
           brandName: brandName,
@@ -153,10 +154,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         ).toJson();
         final response = await _network
             .post(
-          path: url,
-          data: signUpCredentials,
-          //   accessToken: false,
-        ).whenComplete(() {});
+              path: url,
+              data: signUpCredentials,
+              //   accessToken: false,
+            )
+            .whenComplete(() {});
 
         // final response = await _network.get(
         //   //below one is working
@@ -169,11 +171,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
 
           Toaster.infoToast(context: context, message: signupResponse.message);
 
-          await _cacheData(
-            context: context,
-            loginData: response.body,
-            baseUrl: baseUrl,
-          );
+          // await _cacheData(
+          //   context: context,
+          //   loginData: response.body,
+          //   baseUrl: baseUrl,
+          // );
           emit(const Loaded());
 
           developer.log(' Sign up Response is ' + signupResponse.message);
