@@ -35,8 +35,8 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
               onTap: (){
                 Navigator.push(
                   context,
-                  // MaterialPageRoute(builder: (context) => GetStartedScreen()),
-                  MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+                  MaterialPageRoute(builder: (context) => GetStartedScreen()),
+                  // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
                 );
 
               },
