@@ -64,10 +64,15 @@ abstract class Api {
   static const permission = '/permission';
 
   static const checkListById = '/checklistmaster';
-
   static const externalFields = '$apiVersion/external-fields';
-
   static const referenceTable = '$apiVersion/reference-table';
+
+  // static const professionalList = 'professional/list';
+  static const chefSignUp = 'chef/save';
+  static const loginAPI = 'chef/login';
+  static const questionListAPI = 'question/list';
+
+
 
   // Workflow v3 api's endpoints
   static const moduleRecords = 'api/v3/module-record';
