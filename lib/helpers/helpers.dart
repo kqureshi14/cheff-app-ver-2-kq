@@ -7,7 +7,7 @@ export 'string_helper.dart';
 export 'painter_helper.dart';
 export 'workspace_helper.dart';
 
-export 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_v.dart';
+export 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_v.dart';
 export 'package:chef/ui_kit/general_ui_kit.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter_svg/svg.dart';

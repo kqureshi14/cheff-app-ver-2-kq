@@ -1,7 +1,8 @@
 import 'package:chef/helpers/helpers.dart';
 
-import '../../models/signup/signup_request.dart' as signuprequest;
+// import '../../models/signup/signup_request.dart' as signuprequest;
 import 'package:chef/models/signup/signup_response.dart';
+import '../../helpers/data_request.dart' as signuprequest;
 
 import 'dart:developer' as developer;
 
@@ -141,15 +142,21 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     if (isInputValid) {
       emit(const Loading());
       try {
-        final url = ExtoURLHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
+        final url =
+            InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
+        // signuprequest.T t = signuprequest.T(
+        //   name: name,
+        //   brandName: brandName,
+        //   mobileNo: mobileNumber,
+        //   address: address,
+        // );
         signuprequest.T t = signuprequest.T(
           name: name,
           brandName: brandName,
           mobileNo: mobileNumber,
           address: address,
         );
-
-        final signUpCredentials = signuprequest.SignupRequest(
+        final signUpCredentials = signuprequest.DataRequest(
           t: t,
         ).toJson();
         final response = await _network

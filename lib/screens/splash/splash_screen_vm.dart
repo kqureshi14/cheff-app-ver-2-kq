@@ -10,6 +10,8 @@ import 'package:chef/screens/splash/splash_screen_m.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/helpers/enum_helper.dart';
 
+import '../../models/login/login_response.dart';
+
 @injectable
 class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
   SplashScreenViewModel({
@@ -43,30 +45,30 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
 
   void navigateToPage(LoginResponse authData) async {
     await _appService.loadPrefData();
-    if (authData.user.tenantId.isNotEmpty) {
-      final customerId = _storage.readString(key: PreferencesKeys.sCustomerId);
-      if (customerId.isNotEmpty) {
-        final workspaceId =
-            _storage.readString(key: PreferencesKeys.sWorkspaceId);
-        if (workspaceId.isNotEmpty) {
-          final projectId = _storage.readString(key: PreferencesKeys.projectId);
-          if (projectId.isNotEmpty) {
-            _appService.updateSearchDisplay(isSearchVisible: false);
-            _appService.updateSelectedNavId(id: NavigationDrawer.home);
-            // _navigationService.replace(route: HomeRoute());
-          } else {
-            _appService.updateSelectedNavId(id: NavigationDrawer.projects);
-          }
-        } else {
-          _appService.updateSelectedNavId(id: NavigationDrawer.workspace);
-          //   _navigationService.replace(route: WorkspaceRoute());
-        }
-      } else {
-        // _navigationService.replace(route: CustomerRoute());
-      }
-    } else {
-      // _navigationService.replace(route: LoginRoute());
-    }
+    // if (authData.t.id!=null) {
+    //   final customerId = _storage.readString(key: PreferencesKeys.sCustomerId);
+    //   if (customerId.isNotEmpty) {
+    //     final workspaceId =
+    //         _storage.readString(key: PreferencesKeys.sWorkspaceId);
+    //     if (workspaceId.isNotEmpty) {
+    //       final projectId = _storage.readString(key: PreferencesKeys.projectId);
+    //       if (projectId.isNotEmpty) {
+    //         _appService.updateSearchDisplay(isSearchVisible: false);
+    //         _appService.updateSelectedNavId(id: NavigationDrawer.home);
+    //         // _navigationService.replace(route: HomeRoute());
+    //       } else {
+    //         _appService.updateSelectedNavId(id: NavigationDrawer.projects);
+    //       }
+    //     } else {
+    //       _appService.updateSelectedNavId(id: NavigationDrawer.workspace);
+    //       //   _navigationService.replace(route: WorkspaceRoute());
+    //     }
+    //   } else {
+    //     // _navigationService.replace(route: CustomerRoute());
+    //   }
+    // } else {
+    //   // _navigationService.replace(route: LoginRoute());
+    // }
   }
 
   // void navigateToLogin() {

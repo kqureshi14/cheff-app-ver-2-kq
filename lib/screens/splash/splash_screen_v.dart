@@ -32,13 +32,12 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.push(
                   context,
-                  // MaterialPageRoute(builder: (context) => GetStartedScreen()),
-                  MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+                  MaterialPageRoute(builder: (context) => GetStartedScreen()),
+                  // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
                 );
-
               },
               child: SvgPicture.asset(
                 Resources.chefLogo,

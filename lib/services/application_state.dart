@@ -15,6 +15,8 @@ import 'package:chef/models/custom_forms/workflow_v3.dart' as workflow_v3;
 import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
     as cs;
 
+import '../models/login/login_response.dart';
+
 class ApplicationState extends Equatable {
   const ApplicationState({
     this.baseUrl,

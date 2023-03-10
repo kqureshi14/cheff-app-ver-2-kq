@@ -5,6 +5,8 @@ import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
 import 'package:chef/screens/username_profile/profile_information_screen_m.dart';
 
+import '../../models/login/login_response.dart';
+
 @injectable
 class ProfileInformationScreenViewModel
     extends BaseViewModel<ProfileInformationScreenState> {

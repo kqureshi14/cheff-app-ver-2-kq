@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 import 'package:chef/helpers/helpers.dart';
@@ -35,7 +34,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   final TextController _townController = TextController();
   final TextController _cityController = TextController();
 
-
   @override
   Widget buildScreen({
     required BuildContext context,
@@ -48,16 +46,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
         bloc: viewModel..initialize(),
         builder: (_, state) => state.when(
-            initialized:
-                (fullName, brandName, mobileNumber, address) =>
+            initialized: (fullName, brandName, mobileNumber, address) =>
                 _initialized(),
             loading: _loading,
             loaded: () => _displayLoadedData(
                 state: state,
                 appTheme: appTheme,
                 context: context,
-                screenSizeData: screenSizeData)
-            ));
+                screenSizeData: screenSizeData)));
   }
 
   Widget _initialized() {
@@ -97,13 +93,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   // ),
                 ],
               )
-            // child:
-          ),
+              // child:
+              ),
         ),
       ),
     );
   }
-
 
   // @override
   // Widget build(BuildContext context) {
@@ -119,66 +114,59 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   //           padding: const EdgeInsets.symmetric(horizontal: 30),
   //           child:
 
-      Widget _buildMobileView({
-          required BuildContext context,
-          required SignUpScreenState state,
-          required IAppThemeData appTheme,
-          required Size size,
-          }) {
-        return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 41,
-                ),
-                _getStartedTitle(appTheme: appTheme),
-                Center(
-                  child: GeneralText(
-                    Strings.signUpTitle,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const SizedBox(
-                  height: 27,
-                ),
-                displayFullName(appTheme),
-                const SizedBox(
-                  height: 24,
-                ),
-
-                displayBrandName(appTheme),
-                const SizedBox(
-                  height: 24,
-                ),
-                displayMobileNumber(appTheme),
-                const SizedBox(
-                  height: 24,
-                ),
-
-                displayAddress(appTheme),
-                const SizedBox(
-                  height: 24,
-                ),
-                displayTownCity(appTheme),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
-        );
+  Widget _buildMobileView({
+    required BuildContext context,
+    required SignUpScreenState state,
+    required IAppThemeData appTheme,
+    required Size size,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 41,
+        ),
+        _getStartedTitle(appTheme: appTheme),
+        Center(
+          child: GeneralText(
+            Strings.signUpTitle,
+            textAlign: TextAlign.center,
+            style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                color: Colors.white, fontSize: 28, fontWeight: FontWeight.w500),
+          ),
+        ),
+        const SizedBox(
+          height: 27,
+        ),
+        displayFullName(appTheme),
+        const SizedBox(
+          height: 24,
+        ),
+        displayBrandName(appTheme),
+        const SizedBox(
+          height: 24,
+        ),
+        displayMobileNumber(appTheme),
+        const SizedBox(
+          height: 24,
+        ),
+        displayAddress(appTheme),
+        const SizedBox(
+          height: 24,
+        ),
+        displayTownCity(appTheme),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
+    );
     //         ),
     //       ),
     //     ),
     //   ),
     // );
   }
-
-
 
   Widget displayFullName(IAppThemeData appTheme) {
     return Column(
@@ -272,6 +260,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       ],
     );
   }
+
   Widget displayAddress(IAppThemeData appTheme) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -291,7 +280,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         GeneralTextInput(
             controller: _addressController,
             inputType: InputType.text,
-            suffix: Image.asset(Resources.locationIconPNG,height: 20,),
+            suffix: Image.asset(
+              Resources.locationIconPNG,
+              height: 20,
+            ),
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
@@ -378,10 +370,9 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-
   Widget displayAlreadySignIn(IAppThemeData appTheme, BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -404,30 +395,31 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ),
           InkWell(
             onTap: () {
-
-              developer.log(
-                  ' Here Collected data is ' + '${_nameController.text}');
+              developer
+                  .log(' Here Collected data is ' + '${_nameController.text}');
               developer.log(
                   'Mobile Controller  ' + '${_mobileNumberController.text}');
 
               developer.log(' Brand Controller  ' + '${_brandController.text}');
 
-              developer
-                  .log('Address is  ' + _addressController.text);
+              developer.log('Address is  ' + _addressController.text);
 
-              viewModel.saveChef(
-                name: _nameController.text,
-                brandName: _brandController.text,
-                mobileNumber: _mobileNumberController.text,
-                address: _addressController.text,
-                context: context,
-                baseUrl: baseURLs[0],
-              );
+              // viewModel.saveChef(
+              //   name: _nameController.text,
+              //   brandName: _brandController.text,
+              //   mobileNumber: _mobileNumberController.text,
+              //   address: _addressController.text,
+              //   context: context,
+              //   baseUrl: baseURLs[0],
+              // );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SignUpQuestionireScreen()));
 
-
+              // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
 
               // _showVerificationPopup(context);
-
             },
             child: SvgPicture.asset(
               Resources.getRightArrow,
@@ -437,7 +429,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       ),
     );
   }
-
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return Center(
@@ -469,6 +460,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       style: appTheme.typographies.interFontFamily.headline2,
     );
   }
+
   Future<dynamic> _showVerificationPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;
     final TextController _otpController = TextController();
@@ -597,6 +589,4 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       // ),
     );
   }
-
-
 }

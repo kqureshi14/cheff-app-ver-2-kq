@@ -10,6 +10,8 @@ abstract class Api {
   static const headerTenantKey = 'X-TENANT-ID';
   static const headerProjectKey = 'X-PROJECT-ID';
   static const headerWorkspaceKey = 'X-WORKSPACE-ID';
+  static const headerAcceptKey = 'accept';
+  static const headerAcceptTypeValue = '*/*';
 
   static const defaultHedears = {headerContentTypeKey: headerContentTypeValue};
   static const authBearer = 'Bearer ';

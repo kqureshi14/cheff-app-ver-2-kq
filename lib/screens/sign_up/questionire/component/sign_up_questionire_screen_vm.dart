@@ -1,15 +1,16 @@
-
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/models/signup/questionire_request.dart' as questionirerequest;
+import 'package:chef/models/signup/questionire_request.dart'
+    as questionirerequest;
 import 'package:chef/models/signup/questionire_response.dart';
 
-import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart' as signupquestion;
+import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_m.dart'
+    as signupquestion;
 
 import 'dart:developer' as developer;
 
-
 @injectable
-class SignUpQuestionireScreenViewModel extends BaseViewModel<signupquestion.SignUpQuestionireScreenState> {
+class SignUpQuestionireScreenViewModel
+    extends BaseViewModel<signupquestion.SignUpQuestionireScreenState> {
   SignUpQuestionireScreenViewModel({
     required INavigationService navigation,
     required INetworkService network,
@@ -19,24 +20,18 @@ class SignUpQuestionireScreenViewModel extends BaseViewModel<signupquestion.Sign
         _network = network,
         _storage = storage,
         _appService = appService,
-        super(
-        const signupquestion.Loading()
-      );
+        super(const signupquestion.Loading());
 
   final INavigationService _navigation;
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
 
-
-
-
-
   Future<void> loadQuestion({
     required String baseUrl,
     required BuildContext context,
   }) async {
-    final url = ExtoURLHelpers.getRestApiURL(baseUrl + Api.questionListAPI);
+    final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.questionListAPI);
     final questionsDataRequest = questionirerequest.QuestionireRequest(
       t: questionirerequest.T(category: "CHEF_PROFILE"),
     ).toJson();
@@ -50,7 +45,6 @@ class SignUpQuestionireScreenViewModel extends BaseViewModel<signupquestion.Sign
     emit(signupquestion.Loaded(currentQuestionirData.t));
 
     // emit(Loaded(currentQuestionirData.t));
-
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;

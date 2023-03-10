@@ -9,6 +9,8 @@ import 'package:chef/helpers/url_helper.dart';
 import 'package:chef/models/models.dart';
 import 'package:chef/services/services.dart';
 
+import '../../models/login/login_response.dart';
+
 class NetworkCall extends INetworkService {
   NetworkCall({
     required IStorageService storage,
@@ -202,7 +204,7 @@ class NetworkCall extends INetworkService {
   Future<String> _loadBaseURL() async {
     final url = _appService.state.baseUrl ??
         _storage.readString(key: PreferencesKeys.sBaseUrl);
-    return ExtoURLHelpers.getRestApiURL(url);
+    return InfininURLHelpers.getRestApiURL(url);
   }
 
   dynamic _returnResponse(Response response) {
