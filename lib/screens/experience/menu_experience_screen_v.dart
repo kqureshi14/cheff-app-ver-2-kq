@@ -2,6 +2,7 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/experience/schedule_screen_v.dart';
 
 import '../../../helpers/color_helper.dart';
+import '../../setup.dart';
 
 class MenuExperienceScreen extends StatefulWidget {
   const MenuExperienceScreen({Key? key}) : super(key: key);
@@ -15,6 +16,9 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
   final TextController _dishController = TextController();
   final TextController _priceController = TextController();
   final TextController _servingController = TextController();
+
+  final _appService = locateService<ApplicationService>();
+
   final mealItems = <String>[
     'main course',
     'BBQ',
@@ -41,7 +45,7 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
             children: [
               InkWell(
                 onTap: () {
-                 Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInLeftArrow,
@@ -138,7 +142,10 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                               onChange: ({
                                 required String key,
                                 required dynamic value,
-                              }) {},
+                              }) {
+                                _appService.state.experienceHelper!
+                                    .mainCourseMeal = value;
+                              },
                             ),
                           ],
                         ),
@@ -176,7 +183,10 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                               onChange: ({
                                 required String key,
                                 required dynamic value,
-                              }) {},
+                              }) {
+                                _appService.state.experienceHelper!
+                                    .mainFoodMeal = value;
+                              },
                             ),
                           ],
                         ),
@@ -210,7 +220,9 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                       hintStyle: TextStyle(
                           color: Colors.white.withOpacity(0.4), fontSize: 14),
                       // valueStyle: valueStyle,
-                      onChanged: (newValue) {}),
+                      onChanged: (newValue) {
+                        _appService.state.experienceHelper!.dishName = newValue;
+                      }),
                   const SizedBox(
                     height: 26,
                   ),
@@ -239,7 +251,10 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                       hintStyle: TextStyle(
                           color: Colors.white.withOpacity(0.4), fontSize: 14),
                       // valueStyle: valueStyle,
-                      onChanged: (newValue) {}),
+                      onChanged: (newValue) {
+                        _appService.state.experienceHelper!.dishDescription =
+                            newValue;
+                      }),
                   SizedBox(
                     height: 25,
                   ),
@@ -265,7 +280,7 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                             GeneralTextInput(
                                 height: 51,
                                 controller: _priceController,
-                                inputType: InputType.text,
+                                inputType: InputType.digit,
                                 backgroundColor:
                                     appTheme.colors.textFieldFilledColor,
                                 inputBorder: appTheme.focusedBorder,
@@ -276,7 +291,10 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                     color: Colors.white.withOpacity(0.4),
                                     fontSize: 14),
                                 // valueStyle: valueStyle,
-                                onChanged: (newValue) {}),
+                                onChanged: (newValue) {
+                                  _appService.state.experienceHelper!
+                                      .dishPrice = double.parse(newValue);
+                                }),
                           ],
                         ),
                       ),
@@ -303,7 +321,7 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                             GeneralTextInput(
                                 height: 51,
                                 controller: _servingController,
-                                inputType: InputType.text,
+                                inputType: InputType.digit,
                                 backgroundColor:
                                     appTheme.colors.textFieldFilledColor,
                                 inputBorder: appTheme.focusedBorder,
@@ -314,7 +332,11 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                     color: Colors.white.withOpacity(0.4),
                                     fontSize: 14),
                                 // valueStyle: valueStyle,
-                                onChanged: (newValue) {}),
+                                onChanged: (newValue) {
+                                  _appService.state.experienceHelper!
+                                          .dishServingNoOfPerson =
+                                      int.parse(newValue);
+                                }),
                           ],
                         ),
                       ),

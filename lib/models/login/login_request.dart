@@ -16,9 +16,9 @@ class LoginRequest {
 
 class T {
   T({
-    required this.mobileNo,
+    this.mobileNo,
   });
-  String mobileNo;
+  String? mobileNo;
 
   factory T.fromJson(Map<String, dynamic> json) => T(
         mobileNo: json["mobileNumber"],

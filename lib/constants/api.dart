@@ -74,6 +74,10 @@ abstract class Api {
   static const loginAPI = 'chef/login';
   static const questionListAPI = 'question/list';
 
+  static const wowFactorAPI = 'wow-factor/list';
+
+  static const preferenceAPI = 'preference/list';
+
   // Workflow v3 api's endpoints
   static const moduleRecords = 'api/v3/module-record';
   static const templateId = '?templateId=';

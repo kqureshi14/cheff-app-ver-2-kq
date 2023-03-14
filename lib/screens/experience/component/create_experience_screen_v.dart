@@ -1,16 +1,22 @@
 import 'package:chef/helpers/helpers.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../helpers/color_helper.dart';
-import 'menu_experience_screen_v.dart';
+import '../../../../helpers/color_helper.dart';
+import '../../../helpers/experience_helper.dart';
+import '../../../models/preference.dart';
+import '../../../models/wow_factor/wow_factor_response.dart';
+import '../../../setup.dart';
+import '../menu_experience_screen_v.dart';
 
-class CreateExperienceScreen extends StatefulWidget {
-  const CreateExperienceScreen({Key? key}) : super(key: key);
+import 'dart:developer' as developer;
 
-  @override
-  _CreateExperienceScreenState createState() => _CreateExperienceScreenState();
-}
+import 'create_experience_screen_m.dart';
+import 'create_experience_screen_vm.dart';
 
-class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
+class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
+  CreateExperienceScreen({Key? key}) : super(key: key);
+
   final TextController _experienceController = TextController();
   final TextController _titleController = TextController();
   final TextController _priceController = TextController();
@@ -19,16 +25,67 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
   final TextController _nameController = TextController();
   final TextController _mobileController = TextController();
 
+  final _appService = locateService<ApplicationService>();
+  final _experienceHelper = ExperienceHelper();
+
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen({
+    required BuildContext context,
+    required ScreenSizeData screenSizeData,
+  }) {
     final appTheme = AppTheme.of(context).theme;
+    viewModel.initialize();
+    return BlocBuilder<CreateExperienceScreenViewModel,
+            CreateExperienceScreenState>(
+        bloc: viewModel,
+        builder: (_, state) => state.when(
+            // initialized:
+            //     (isBusy) =>
+            //     _initialized(),
+            loading: displayLoader,
+            loaded: (wowFactor, preferences) => _displayLoadedData(
+                  context,
+                  appTheme,
+                  state,
+                  wowFactor,
+                  preferences,
+                  // context: context,
+                  //    appTheme: appTheme,
+                  //  state: state,
+                  // questionList: questionsList,
+                  //  screenSizeData: screenSizeData
+                )));
+    //  );
+  }
+
+  Widget displayLoader() {
+    return const GeneralLoading();
+  }
+
+// class CreateExperienceScreen extends StatefulWidget {
+//   const CreateExperienceScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   _CreateExperienceScreenState createState() => _CreateExperienceScreenState();
+// }
+//
+// class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
+
+  _displayLoadedData(
+    BuildContext context,
+    appTheme,
+    state,
+    WowFactorResponse wowFactor,
+    PreferenceResponse preferences,
+  ) {
+    //final appTheme = AppTheme.of(context).theme;
 
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: Container(
-          margin: EdgeInsets.only(left: 32),
+          margin: const EdgeInsets.only(left: 32),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -47,11 +104,9 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MenuExperienceScreen()),
-                  );
+                  // _appService.state?.experienceHelper   =_experienceHelper;
+                  _appService.updateExperienceHelper(_experienceHelper);
+                  viewModel.saveExperience(context);
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInRightArrow,
@@ -90,8 +145,10 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
             Container(
               height: 228,
               width: double.infinity,
-              child: Image.asset(Resources.expHeaderBGPNG,
-              fit: BoxFit.fill,),
+              child: Image.asset(
+                Resources.expHeaderBGPNG,
+                fit: BoxFit.fill,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -109,7 +166,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
                             color: Colors.white,
-                            fontSize: 24,
+                            fontSize: 24.0,
                             fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
@@ -127,7 +184,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                           style: appTheme.typographies.interFontFamily.headline4
                               .copyWith(
                                   color: const Color(0xfffbeccb),
-                                  fontSize: 18,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
@@ -144,9 +201,14 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                             hint: 'Enter title',
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.4),
-                                fontSize: 14),
+                                fontSize: 14.0),
                             // valueStyle: valueStyle,
-                            onChanged: (newValue) {}),
+                            onChanged: (newValue) {
+                              _titleController.text = newValue;
+                              developer.log(' Title Controller is ' +
+                                  _titleController.text);
+                              _experienceHelper.titleExperience = newValue;
+                            }),
                       ],
                     ),
                   ),
@@ -154,7 +216,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                     height: 26,
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 29),
+                    margin: const EdgeInsets.only(right: 29),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -164,7 +226,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
                                   color: const Color(0xfffbeccb),
-                                  fontSize: 18,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
@@ -183,142 +245,22 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.4),
-                                fontSize: 14),
+                                fontSize: 14.0),
                             // valueStyle: valueStyle,
-                            onChanged: (newValue) {}),
+                            onChanged: (newValue) {
+                              _experienceHelper.experienceDetails = newValue;
+                            }),
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 36,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GeneralText(
-                        Strings.createExperienceWowFactorsTitle,
-                        textAlign: TextAlign.center,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                color: const Color(0xfffbeccb),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 12,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        children: [
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Hill View',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Rooftop',
-                            selected: true,
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Terrace',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Garden',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'CHistorical Monument',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Pet friendly',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Parking',
-                            selected: true,
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Wifi',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Movies',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Air Conditioning',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Candles',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Fireworks',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Kids Activities',
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
                   const SizedBox(
                     height: 44,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GeneralText(
-                        Strings.createExperiencePreferenceTitle,
-                        textAlign: TextAlign.center,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                                color: const Color(0xfffbeccb),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 12,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        children: [
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Males',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Females',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Couple',
-                            selected: true,
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Family',
-                          ),
-                          ChipsWidget(
-                            appTheme: appTheme,
-                            title: 'Friends & Family',
-                            selected: true,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  displayWowFactor(appTheme, wowFactor),
+                  displayPreferences(appTheme, preferences),
                   const SizedBox(
                     height: 50,
                   ),
@@ -333,7 +275,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: const Color(0xfffbeccb),
-                                    fontSize: 18,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
@@ -354,7 +296,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: const Color(0xff909094),
-                                    fontSize: 15,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
@@ -374,7 +316,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -390,7 +332,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                               child: GeneralTextInput(
                                   height: 51,
                                   controller: _priceController,
-                                  inputType: InputType.text,
+                                  inputType: InputType.digit,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -400,9 +342,13 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                   hint: 'Enter price',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14),
+                                      fontSize: 14.0),
                                   // valueStyle: valueStyle,
-                                  onChanged: (newValue) {}),
+                                  onChanged: (newValue) {
+                                    _experienceHelper.priceExperience =
+                                        double.parse(
+                                            newValue); // priceExperience
+                                  }),
                             ),
                             SizedBox(
                               width: 5,
@@ -411,7 +357,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                               child: GeneralTextInput(
                                   height: 51,
                                   controller: _personController,
-                                  inputType: InputType.text,
+                                  inputType: InputType.digit,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -421,9 +367,12 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                   hint: '02',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14),
+                                      fontSize: 14.0),
                                   // valueStyle: valueStyle,
-                                  onChanged: (newValue) {}),
+                                  onChanged: (newValue) {
+                                    _experienceHelper.personExperience =
+                                        int.parse(newValue);
+                                  }),
                             ),
                           ],
                         ),
@@ -444,7 +393,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: const Color(0xfffbeccb),
-                                    fontSize: 18,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
@@ -464,7 +413,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: const Color(0xff909094),
-                                    fontSize: 15,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
@@ -484,7 +433,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -510,9 +459,12 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                   hint: 'Enter Location',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14),
+                                      fontSize: 14.0),
                                   // valueStyle: valueStyle,
-                                  onChanged: (newValue) {}),
+                                  onChanged: (newValue) {
+                                    _experienceHelper.locationExperience =
+                                        newValue;
+                                  }),
                             ),
                           ],
                         ),
@@ -533,7 +485,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
                                     color: const Color(0xfffbeccb),
-                                    fontSize: 18,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
@@ -566,9 +518,12 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                   hint: 'Name',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14),
+                                      fontSize: 14.0),
                                   // valueStyle: valueStyle,
-                                  onChanged: (newValue) {}),
+                                  onChanged: (newValue) {
+                                    _experienceHelper.subHostName =
+                                        newValue; // subHostName
+                                  }),
                             ),
                             SizedBox(
                               width: 5,
@@ -577,7 +532,7 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                               child: GeneralTextInput(
                                   height: 51,
                                   controller: _mobileController,
-                                  inputType: InputType.text,
+                                  inputType: InputType.digit,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -587,9 +542,12 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
                                   hint: 'Mobile',
                                   hintStyle: TextStyle(
                                       color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14),
+                                      fontSize: 14.0),
                                   // valueStyle: valueStyle,
-                                  onChanged: (newValue) {}),
+                                  onChanged: (newValue) {
+                                    _experienceHelper.subHostMobileNumber =
+                                        newValue;
+                                  }),
                             ),
                           ],
                         ),
@@ -607,6 +565,188 @@ class _CreateExperienceScreenState extends State<CreateExperienceScreen> {
       ),
     );
   }
+}
+
+// Widget displayWowFactor(appTheme, WowFactorResponse wowFactor) {
+//   //String obj =wowFactor.t;
+//   //for(int i=0;i<)
+//   return Column(
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: [
+//       GeneralText(
+//         Strings.createExperienceWowFactorsTitle,
+//         textAlign: TextAlign.center,
+//         style: appTheme.typographies.interFontFamily.headline6.copyWith(
+//             color: const Color(0xfffbeccb),
+//             fontSize: 18.0,
+//             fontWeight: FontWeight.bold),
+//       ),
+//       const SizedBox(
+//         height: 15,
+//       ),
+//
+//   //     ListView.builder(
+//   // itemCount: wowFactor.t.length,
+//   // itemBuilder:
+//   // (BuildContext cxt,int index) => Wrap(
+//   // spacing: 10,
+//   // runSpacing: 12,
+//   // crossAxisAlignment: WrapCrossAlignment.start,
+//   // children: [
+//   //   displayChipWidget(appTheme, _titleName)
+//   // ],
+//   // )
+//   // )
+//       Wrap(
+//         spacing: 10,
+//         runSpacing: 12,
+//         crossAxisAlignment: WrapCrossAlignment.start,
+//         children: [
+//         //  for(var item in wowFactor.t.length)
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Hill View',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Rooftop',
+//             selected: true,
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Terrace',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Garden',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'CHistorical Monument',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Pet friendly',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Parking',
+//             selected: true,
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Wifi',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Movies',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Air Conditioning',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Candles',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Fireworks',
+//           ),
+//           ChipsWidget(
+//             appTheme: appTheme,
+//             title: 'Kids Activities',
+//           ),
+//         ],
+//       ),
+//     ],
+//   );
+// }
+
+Widget displayWowFactor(appTheme, WowFactorResponse wowFactor) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      GeneralText(
+        Strings.createExperienceWowFactorsTitle,
+        textAlign: TextAlign.center,
+        style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            color: const Color(0xfffbeccb),
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+
+      Wrap(
+        spacing: 10,
+        runSpacing: 12,
+        crossAxisAlignment: WrapCrossAlignment.start,
+        children: [
+          for (var item in wowFactor.t) displayChipWidget(appTheme, item.name),
+        ],
+      ),
+      //),
+    ],
+  );
+}
+
+Widget displayChipWidget(appTheme, String _titleName) {
+  return ChipsWidget(
+    appTheme: appTheme,
+    title: _titleName,
+  );
+}
+
+Widget displayPreferences(appTheme, PreferenceResponse preferences) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      GeneralText(
+        Strings.createExperiencePreferenceTitle,
+        textAlign: TextAlign.center,
+        style: appTheme.typographies.interFontFamily.headline6.copyWith(
+            color: const Color(0xfffbeccb),
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      Wrap(
+        spacing: 10,
+        runSpacing: 12,
+        crossAxisAlignment: WrapCrossAlignment.start,
+        children: [
+          for (var item in preferences.t)
+            displayChipWidget(appTheme, item.name),
+          // ChipsWidget(
+          //   appTheme: appTheme,
+          //   title: 'Males',
+          // ),
+          // ChipsWidget(
+          //   appTheme: appTheme,
+          //   title: 'Females',
+          // ),
+          // ChipsWidget(
+          //   appTheme: appTheme,
+          //   title: 'Couple',
+          //   selected: true,
+          // ),
+          // ChipsWidget(
+          //   appTheme: appTheme,
+          //   title: 'Family',
+          // ),
+          // ChipsWidget(
+          //   appTheme: appTheme,
+          //   title: 'Friends & Family',
+          //   selected: true,
+          // ),
+        ],
+      ),
+    ],
+  );
 }
 
 class ChipsWidget extends StatelessWidget {

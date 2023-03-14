@@ -15,6 +15,7 @@ import 'package:chef/models/custom_forms/workflow_v3.dart' as workflow_v3;
 import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
     as cs;
 
+import '../helpers/experience_helper.dart';
 import '../models/login/login_response.dart';
 
 class ApplicationState extends Equatable {
@@ -32,6 +33,7 @@ class ApplicationState extends Equatable {
     this.selectedNavId,
     this.searchVisible = true,
     this.module,
+    this.experienceHelper,
   });
 
   final LoginResponse? userInfo;
@@ -47,6 +49,7 @@ class ApplicationState extends Equatable {
   final NavigationDrawer? selectedNavId;
   final bool? searchVisible;
   final Module? module;
+  final ExperienceHelper? experienceHelper;
 
   ApplicationState copyWith({
     LoginResponse? userInfo,
@@ -62,6 +65,7 @@ class ApplicationState extends Equatable {
     NavigationDrawer? selectedNavId,
     bool? searchVisible,
     Module? module,
+    ExperienceHelper? experienceHelper,
   }) {
     return ApplicationState(
       userInfo: userInfo ?? this.userInfo,
@@ -77,6 +81,7 @@ class ApplicationState extends Equatable {
       selectedNavId: selectedNavId ?? this.selectedNavId,
       searchVisible: searchVisible ?? this.searchVisible,
       module: module ?? this.module,
+      experienceHelper: experienceHelper ?? this.experienceHelper,
     );
   }
 
@@ -94,6 +99,7 @@ class ApplicationState extends Equatable {
         selectedNavId,
         searchVisible,
         module,
+        experienceHelper,
       ];
 }
 
@@ -139,6 +145,10 @@ class ApplicationService extends Cubit<ApplicationState> {
 
   void updateSelectedNavId({required NavigationDrawer id}) {
     emit(state.copyWith(selectedNavId: id));
+  }
+
+  void updateExperienceHelper(ExperienceHelper experienceHelper) {
+    emit(state.copyWith(experienceHelper: experienceHelper));
   }
 
   void updateNewRecordAttachedFilesList(String id) {
