@@ -1,5 +1,5 @@
 abstract class PreferencesKeys {
-  static const sLoginData = 'login_data';
+  static const sLoginData = 'login_data_chef';
   static const sAccessTokenData = 'access_data';
   static const sAccessToken = 'access_token';
   static const sBaseUrl = 'base_url';

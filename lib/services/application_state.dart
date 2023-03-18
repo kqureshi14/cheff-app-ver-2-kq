@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chef/models/experience/experience_response.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,9 @@ import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
     as cs;
 
 import '../helpers/experience_helper.dart';
+import '../helpers/menu_helper.dart';
 import '../models/login/login_response.dart';
+import '../models/signup/signup_response.dart';
 
 class ApplicationState extends Equatable {
   const ApplicationState({
@@ -34,9 +37,13 @@ class ApplicationState extends Equatable {
     this.searchVisible = true,
     this.module,
     this.experienceHelper,
+    this.experienceResponse,
+    this.menuHelper,
   });
 
-  final LoginResponse? userInfo;
+  // final LoginResponse? userInfo;
+  final SignupResponse? userInfo;
+
   final AccessTokenData? accessTokenInfo;
   final String? tenantId;
   final String? workspaceId;
@@ -50,9 +57,12 @@ class ApplicationState extends Equatable {
   final bool? searchVisible;
   final Module? module;
   final ExperienceHelper? experienceHelper;
+  final ExperienceResponse? experienceResponse;
+  final MenuHelper? menuHelper;
 
   ApplicationState copyWith({
-    LoginResponse? userInfo,
+    // LoginResponse? userInfo,
+    SignupResponse? userInfo,
     AccessTokenData? accessTokenInfo,
     String? baseUrl,
     String? projectId,
@@ -66,6 +76,8 @@ class ApplicationState extends Equatable {
     bool? searchVisible,
     Module? module,
     ExperienceHelper? experienceHelper,
+    ExperienceResponse? experienceResponse,
+    MenuHelper? menuHelper,
   }) {
     return ApplicationState(
       userInfo: userInfo ?? this.userInfo,
@@ -82,6 +94,8 @@ class ApplicationState extends Equatable {
       searchVisible: searchVisible ?? this.searchVisible,
       module: module ?? this.module,
       experienceHelper: experienceHelper ?? this.experienceHelper,
+      experienceResponse: experienceResponse ?? this.experienceResponse,
+      menuHelper: menuHelper ?? this.menuHelper,
     );
   }
 
@@ -100,6 +114,8 @@ class ApplicationState extends Equatable {
         searchVisible,
         module,
         experienceHelper,
+        experienceResponse,
+        menuHelper,
       ];
 }
 
@@ -115,18 +131,43 @@ class ApplicationService extends Cubit<ApplicationState> {
   final IStorageService _storage;
 
   Future<void> loadPrefData() async {
+    // final baseURL = _storage.readString(key: PreferencesKeys.sBaseUrl);
+    // final loginInfo = _storage.readString(key: PreferencesKeys.sLoginData);
+    // final _accessTokenInfo =
+    //     _storage.readString(key: PreferencesKeys.sAccessTokenData);
+    // final userInfo = LoginResponse.fromJson(jsonDecode(loginInfo));
+    // var accessTokenInfo = AccessTokenData.empty();
+    // if (_accessTokenInfo != '') {
+    //   accessTokenInfo = AccessTokenData.fromJson(jsonDecode(_accessTokenInfo));
+    // }
+    // final projectId = _storage.readString(key: PreferencesKeys.projectId);
+    // final tenantId = _storage.readString(key: PreferencesKeys.sTenantId);
+    // final workspaceId = _storage.readString(key: PreferencesKeys.sWorkspaceId);
+    // final customerTokenLegacy =
+    //     _storage.readString(key: PreferencesKeys.sCustomerTokenLegacy);
+    //
+    // emit(
+    //   state.copyWith(
+    //     baseUrl: baseURL,
+    //     userInfo: userInfo,
+    //     accessTokenInfo: accessTokenInfo,
+    //     projectId: projectId,
+    //     tenantId: tenantId,
+    //     workspaceId: workspaceId,
+    //     customerTokenLegacy: customerTokenLegacy,
+    //   ),
+    // );
+
     final baseURL = _storage.readString(key: PreferencesKeys.sBaseUrl);
     final loginInfo = _storage.readString(key: PreferencesKeys.sLoginData);
     final _accessTokenInfo =
         _storage.readString(key: PreferencesKeys.sAccessTokenData);
-    final userInfo = LoginResponse.fromJson(jsonDecode(loginInfo));
+    //final userInfo = LoginResponse.fromJson(jsonDecode(loginInfo));
+    final userInfo = SignupResponse.fromJson(jsonDecode(loginInfo));
     var accessTokenInfo = AccessTokenData.empty();
     if (_accessTokenInfo != '') {
       accessTokenInfo = AccessTokenData.fromJson(jsonDecode(_accessTokenInfo));
     }
-    final projectId = _storage.readString(key: PreferencesKeys.projectId);
-    final tenantId = _storage.readString(key: PreferencesKeys.sTenantId);
-    final workspaceId = _storage.readString(key: PreferencesKeys.sWorkspaceId);
     final customerTokenLegacy =
         _storage.readString(key: PreferencesKeys.sCustomerTokenLegacy);
 
@@ -135,10 +176,6 @@ class ApplicationService extends Cubit<ApplicationState> {
         baseUrl: baseURL,
         userInfo: userInfo,
         accessTokenInfo: accessTokenInfo,
-        projectId: projectId,
-        tenantId: tenantId,
-        workspaceId: workspaceId,
-        customerTokenLegacy: customerTokenLegacy,
       ),
     );
   }
@@ -149,6 +186,14 @@ class ApplicationService extends Cubit<ApplicationState> {
 
   void updateExperienceHelper(ExperienceHelper experienceHelper) {
     emit(state.copyWith(experienceHelper: experienceHelper));
+  }
+
+  void updateMenuHelper(MenuHelper menuHelper) {
+    emit(state.copyWith(menuHelper: menuHelper));
+  }
+
+  void updateSaveExperience(ExperienceResponse experienceResponse) {
+    emit(state.copyWith(experienceResponse: experienceResponse));
   }
 
   void updateNewRecordAttachedFilesList(String id) {
@@ -266,7 +311,7 @@ class ApplicationService extends Cubit<ApplicationState> {
   void clearUserInfo() {
     emit(
       state.copyWith(
-        userInfo: LoginResponse.empty(),
+        userInfo: SignupResponse.empty(),
         tenantId: '',
         projectId: '',
         customerTokenLegacy: '',

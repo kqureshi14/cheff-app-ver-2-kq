@@ -14,6 +14,7 @@ import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 
 // import '../bottom_bar/bottom_bar.dart';
 import '../experience/component/create_experience_screen_v.dart';
+import '../experience/component/menu_experience_screen_v.dart';
 import '../home/home_screen_v.dart';
 // import '../sign_in/sign_in_screen_m.freezed.dart';
 
@@ -112,7 +113,8 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
     );
     final loginDecodedData = jsonDecode(loginData.toString());
     //final currentUser = LoginResponse.fromJson(loginDecodedData);
-    final currentUser = LoginResponseChef.fromJson(loginDecodedData);
+    // final currentUser = LoginResponseChef.fromJson(loginDecodedData);
+    // final currentUser = SignupResponse.fromJson(loginDecodedData);
     // await _storage.writeString(
     //   key: PreferencesKeys.sTenantId,
     //   data: currentUser.user.tenantId,
@@ -161,11 +163,11 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
           Toaster.infoToast(context: context, message: 'Welcome back');
 
-          // await _cacheData(
-          //   context: context,
-          //   loginData: response.body,
-          //   baseUrl: Api.baseURL,
-          // );
+          await _cacheData(
+            context: context,
+            loginData: response.body,
+            baseUrl: Api.baseURL,
+          );
 
           //  developer.log(' Sign up Response is ' + signupResponse.message);
 
@@ -175,6 +177,11 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
             context,
             MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
           );
+
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => MenuExperienceScreen()),
+          // );
         } else {
           Toaster.infoToast(
               context: context,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:chef/models/signup/signup_response.dart';
 import 'package:http/http.dart';
 
 import 'package:chef/constants/constants.dart';
@@ -151,16 +152,40 @@ class NetworkCall extends INetworkService {
       throw FetchDataException(Api.noConnection);
     }
   }
+  //
+  // //Future<LoginResponse> _loadAuthData() async {
+  // Future<SignupResponse> _loadAuthData() async {
+  //   //  late LoginResponse authData;
+  //   late SignupResponse authData;
+  //
+  //   // if (_appService.state.userInfo == null ||
+  //   //     _appService.state.userInfo == LoginResponse.empty()) {
+  //   if (_appService.state.userInfo == null ||
+  //       _appService.state.userInfo == SignupResponse.empty()) {
+  //     final userInfo = _storage.readString(key: PreferencesKeys.sLoginData);
+  //     //  authData = LoginResponse.fromJson(jsonDecode(userInfo));
+  //     authData = SignupResponse.fromJson(jsonDecode(userInfo));
+  //   } else {
+  //     authData = _appService.state.userInfo!;
+  //   }
+  //
+  //   return authData;
+  // }
 
   Future<LoginResponse> _loadAuthData() async {
+    // Future<SignupResponse> _loadAuthData() async {
     late LoginResponse authData;
+    // late SignupResponse authData;
 
     if (_appService.state.userInfo == null ||
         _appService.state.userInfo == LoginResponse.empty()) {
+      // if (_appService.state.userInfo == null ||
+      //     _appService.state.userInfo == SignupResponse.empty()) {
       final userInfo = _storage.readString(key: PreferencesKeys.sLoginData);
       authData = LoginResponse.fromJson(jsonDecode(userInfo));
+      // authData = SignupResponse.fromJson(jsonDecode(userInfo));
     } else {
-      authData = _appService.state.userInfo!;
+      //authData = _appService.state.userInfo!;
     }
 
     return authData;

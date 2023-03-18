@@ -1,17 +1,32 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/experience/schedule_screen_v.dart';
 
-import '../../../helpers/color_helper.dart';
-import '../../setup.dart';
+import '../../../../helpers/color_helper.dart';
+import '../../../helpers/menu_helper.dart';
+import '../../../setup.dart';
 
-class MenuExperienceScreen extends StatefulWidget {
-  const MenuExperienceScreen({Key? key}) : super(key: key);
+import '../../../models/dish/dish_response.dart' as dish;
+import '../../../models/meal/meal_response.dart' as meal;
+
+import 'dart:developer' as developer;
+
+class MenuManager extends StatefulWidget {
+  const MenuManager({
+    required meal.MealResponse mealResponse,
+    required dish.DishList dishResponse,
+    Key? key,
+  })  : _mealResponse = mealResponse,
+        _dishResponse = dishResponse,
+        super(key: key);
+
+  final meal.MealResponse _mealResponse;
+  final dish.DishList _dishResponse;
 
   @override
-  _MenuExperienceScreenState createState() => _MenuExperienceScreenState();
+  _MenuManagerState createState() => _MenuManagerState();
 }
 
-class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
+class _MenuManagerState extends State<MenuManager> {
   final TextController _descriptionController = TextController();
   final TextController _dishController = TextController();
   final TextController _priceController = TextController();
@@ -19,16 +34,44 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
 
   final _appService = locateService<ApplicationService>();
 
-  final mealItems = <String>[
-    'main course',
-    'BBQ',
-    'Salad',
-  ];
-  final foodItems = <String>[
-    'Kabab',
-    'Platter',
-    'Salad',
-  ];
+  MenuHelper menuHelper = MenuHelper();
+
+  // final mealItems = <String>[
+  //   'main course',
+  //   'BBQ',
+  //   'Salad',
+  // ];
+  // final foodItems = <String>[
+  //   'Kabab',
+  //   'Platter',
+  //   'Salad',
+  // ];
+
+  final mealItems = <String>[];
+  final foodItems = <String>[];
+
+  final mealMap = {};
+  final dishMap = {};
+
+  @override
+  void initState() {
+    loadItems();
+    _appService.updateMenuHelper(menuHelper);
+    super.initState();
+  }
+
+  void loadItems() {
+    for (int i = 0; i < widget._mealResponse.t.length; i++) {
+      mealItems.add(widget._mealResponse.t[i].name);
+      mealMap[widget._mealResponse.t[i].name] = widget._mealResponse.t[i].id;
+    }
+
+    for (int i = 0; i < widget._dishResponse.t.length; i++) {
+      foodItems.add(widget._dishResponse.t[i].name);
+
+      dishMap[widget._dishResponse.t[i].name] = widget._dishResponse.t[i].id;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +148,6 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                 ),
                 color: Color(0xff34343B),
               ),
-              //   alignment: Alignment.center,
-              //  padding: const EdgeInsets.only(left: 29),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -143,8 +184,7 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                 required String key,
                                 required dynamic value,
                               }) {
-                                _appService.state.experienceHelper!
-                                    .mainCourseMeal = value;
+                                menuHelper.selectedMealId = mealMap[value];
                               },
                             ),
                           ],
@@ -184,8 +224,7 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                 required String key,
                                 required dynamic value,
                               }) {
-                                _appService.state.experienceHelper!
-                                    .mainFoodMeal = value;
+                                menuHelper.selectedDishId = dishMap[value];
                               },
                             ),
                           ],
@@ -221,7 +260,9 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                           color: Colors.white.withOpacity(0.4), fontSize: 14),
                       // valueStyle: valueStyle,
                       onChanged: (newValue) {
-                        _appService.state.experienceHelper!.dishName = newValue;
+                        // _appService.state.experienceHelper!.dishName = newValue;
+
+                        menuHelper.selectedDishName = newValue;
                       }),
                   const SizedBox(
                     height: 26,
@@ -252,8 +293,10 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                           color: Colors.white.withOpacity(0.4), fontSize: 14),
                       // valueStyle: valueStyle,
                       onChanged: (newValue) {
-                        _appService.state.experienceHelper!.dishDescription =
-                            newValue;
+                        // _appService.state.experienceHelper!.dishDescription =
+                        //     newValue;
+
+                        menuHelper.givenDescription = newValue.trim();
                       }),
                   SizedBox(
                     height: 25,
@@ -292,8 +335,11 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                     fontSize: 14),
                                 // valueStyle: valueStyle,
                                 onChanged: (newValue) {
-                                  _appService.state.experienceHelper!
-                                      .dishPrice = double.parse(newValue);
+                                  // _appService.state.experienceHelper!
+                                  //     .dishPrice = double.parse(newValue);
+
+                                  menuHelper.givenPrice =
+                                      double.parse(newValue);
                                 }),
                           ],
                         ),
@@ -333,8 +379,11 @@ class _MenuExperienceScreenState extends State<MenuExperienceScreen> {
                                     fontSize: 14),
                                 // valueStyle: valueStyle,
                                 onChanged: (newValue) {
-                                  _appService.state.experienceHelper!
-                                          .dishServingNoOfPerson =
+                                  // _appService.state.experienceHelper!
+                                  //         .dishServingNoOfPerson =
+                                  //     int.parse(newValue);
+
+                                  menuHelper.dishServingNoOfPerson =
                                       int.parse(newValue);
                                 }),
                           ],

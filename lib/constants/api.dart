@@ -37,6 +37,11 @@ abstract class Api {
   //screen endpoints
   static const login = 'api/auth/login';
   static const logout = 'logout';
+
+  static const experienceSave = 'experience/save';
+
+  static const menuSave = 'experience-menu/save';
+
   static const accessToken = 'api/auth/access-token';
   static const refreshToken = '$apiVersion/refresh-token';
   static const customers = '$apiVersion/customer';
@@ -77,6 +82,8 @@ abstract class Api {
   static const wowFactorAPI = 'wow-factor/list';
 
   static const preferenceAPI = 'preference/list';
+  static const mealAPI = 'meal/list';
+  static const dishAPI = 'dish/list';
 
   // Workflow v3 api's endpoints
   static const moduleRecords = 'api/v3/module-record';

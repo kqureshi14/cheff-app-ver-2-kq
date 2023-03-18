@@ -1,9 +1,16 @@
+import 'package:chef/models/experience/experience_request.dart' as expreq;
+
+import '../../../helpers/experience_helper.dart';
 import '../../../helpers/helpers.dart';
+
+import '../../../models/experience/experience_request.dart'
+    as experience_request;
+import '../../../models/experience/experience_response.dart' as expresp;
 import '../../../models/preference.dart' as preference;
 import '../../../models/wow_factor/wow_factor_response.dart' as wowfactor;
 // import '../../../models/wow_factor/wow_factor_response.dart';
 import '../../../setup.dart';
-import '../menu_experience_screen_v.dart';
+import 'menu_experience_screen_v.dart';
 import 'create_experience_screen_m.dart' as create_experience;
 
 import 'dart:developer' as developer;
@@ -34,32 +41,178 @@ class CreateExperienceScreenViewModel
     loadWowFactors();
   }
 
-  void saveExperience(BuildContext context) {
+  void saveExperience(BuildContext context) async {
     final _appService = locateService<ApplicationService>();
     developer.log(' Ready to save');
+    developer
+        .log(' Chef Id User Id is  ' + '${_appService.state.userInfo!.userId}');
+
+    developer.log(' Chef Name is   ' + '${_appService.state.userInfo!.t.name}');
+
+    developer.log(' Chef Brand Name is   ' +
+        '${_appService.state.userInfo!.t.brandName}');
 
     developer.log(
-        ' Title ' + '${_appService.state.experienceHelper!.titleExperience}');
+        ' Chef Address is   ' + '${_appService.state.userInfo!.t.address}');
 
-    developer.log(' Experience Details ' +
-        '${_appService.state.experienceHelper!.experienceDetails}');
+    developer
+        .log(' Chef Id In T is   ' + '${_appService.state.userInfo!.t.id}');
+    ExperienceHelper experienceHelper = (_appService.state.experienceHelper)!;
+    developer.log(' Title ' + experienceHelper.titleExperience);
 
-    developer.log(' priceExperience Details ' +
-        '${_appService.state.experienceHelper!.priceExperience}');
+    developer.log(' Experience Details ' + experienceHelper.experienceDetails);
 
-    developer.log(' numberOfPerson Details ' +
-        '${_appService.state.experienceHelper!.numberOfPerson}');
+    developer.log(
+        ' priceExperience Details ' + '${experienceHelper.priceExperience}');
 
-    developer.log(' subHostName Details ' +
-        '${_appService.state.experienceHelper!.subHostName}');
+    developer
+        .log(' numberOfPerson Details ' + '${experienceHelper.numberOfPerson}');
 
-    developer.log(' SubHost Mobile Number  Details ' +
-        '${_appService.state.experienceHelper!.subHostMobileNumber}');
+    developer.log(' subHostName Details ' + '${experienceHelper.subHostName}');
+
+    developer.log(' selected WowFactors Number  Details ' +
+        '${experienceHelper.selectedWowFactors.values}');
+
+    developer.log(' selected PerferencesFactors Number  Details ' +
+        '${experienceHelper.selectedPerferencesFactors.values}');
+
     // Navigator.push(
     //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => const MenuExperienceScreen()),
+    //   MaterialPageRoute(builder: (context) => const MenuExperienceScreen()),
     // );
+
+    final url =
+        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+
+    //getList(experienceHelper.selectedWowFactors,'wow');
+    experience_request.T t = experience_request.T(
+      title: experienceHelper.titleExperience,
+      description: experienceHelper.experienceDetails,
+      persons: experienceHelper.numberOfPerson.toString(),
+      chefId: _appService.state.userInfo!.t.id,
+      chefAddress: _appService.state.userInfo!.t.address,
+      chefBrandName: _appService.state.userInfo!.t.address,
+      chefName: _appService.state.userInfo!.t.name,
+      locationId: 1,
+      price: experienceHelper.priceExperience.toInt(),
+      priceTypeId: 1,
+      subHostMobileNo: experienceHelper.subHostMobileNumber,
+      subHostName: experienceHelper.subHostName,
+      wowFactorId: 1,
+      preferenceId: 1,
+      experienceWowFactors:
+          getList(experienceHelper.selectedWowFactors, 'wow').toList(),
+      experiencePreferences: getPreferenceList(
+          experienceHelper.selectedPerferencesFactors, 'pref'),
+      // age: age.toString(),
+      // name: name,
+      // gender: gender,
+      // mobileNo: mobileNumber,
+      // professionalId: professionId,
+      // profileImageUrl: null,
+    );
+
+    final experienceData = experience_request.ExperienceRequest(
+      t: t,
+    ).toJson();
+
+    // final signUpCredentials = SignupRequest(
+    //   t: t,
+    // ).toJson();
+    final response = await _network
+        .post(
+          path: url,
+          data: experienceData,
+          //   accessToken: false,
+        )
+        .whenComplete(() {});
+
+    // final response = await _network.get(
+    //   //below one is working
+    //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
+    // );
+
+    if (response != null) {
+      developer.log(' Response of Signup body is ' + '${response.body}');
+
+      expresp.ExperienceResponse experienceResponse =
+          expresp.experienceResponseFromJson(response.body);
+      _appService.updateSaveExperience(experienceResponse);
+      //   SignupResponse signupResponse = signupResponseFromJson(response.body);
+//
+      //   Toaster.infoToast(context: context, message: signupResponse.message);
+
+      //   developer.log(' Sign up Response is ' + signupResponse.message);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MenuExperienceScreen()),
+      );
+    } else {
+      Toaster.infoToast(
+          context: context,
+          message: 'Something is wrong please content vendor');
+      developer.log(' Response of Create Experience is ' + '$response');
+    }
+  }
+
+  List<expreq.ExperienceWowFactor> getList(Map data, String type) {
+    // Map obj = experienceHelper.selectedWowFactors;
+
+    // developer.log(' In List wow factors are ' + '${obj.keys}');
+
+    List<expreq.ExperienceWowFactor> alignData = [];
+
+    data.forEach((key, value) {
+      Map _localEntry = {};
+
+      if (type == 'wow') {
+        expreq.ExperienceWowFactor dataHere =
+            expreq.ExperienceWowFactor(wowFactorId: value);
+        alignData.add(dataHere);
+      } else {
+        alignData.add(_localEntry['preferenceId'] = value);
+      }
+
+      //  data = data + value.toString();
+    });
+
+    developer.log('Data ready to send is ' + '${alignData.length}');
+    for (int i = 0; i < alignData.length; i++) {
+      developer.log(' Wow factor is ' + '${alignData[i]}');
+    }
+
+    return alignData;
+  }
+
+  List<expreq.ExperiencePreference> getPreferenceList(Map data, String type) {
+    // Map obj = experienceHelper.selectedWowFactors;
+
+    // developer.log(' In List wow factors are ' + '${obj.keys}');
+
+    List<expreq.ExperiencePreference> alignData = [];
+
+    data.forEach((key, value) {
+      Map _localEntry = {};
+      if (type == 'wow') {
+        alignData.add(_localEntry['wowFactorId'] = value);
+      } else {
+        //alignData.add(_localEntry['preferenceId'] = value);
+
+        expreq.ExperiencePreference dataHere =
+            expreq.ExperiencePreference(preferenceId: value);
+        alignData.add(dataHere);
+      }
+
+      //  data = data + value.toString();
+    });
+
+    developer
+        .log('Data ready to ExperiencePreference is ' + '${alignData.length}');
+    for (int i = 0; i < alignData.length; i++) {
+      developer.log(' ExperiencePreference factor is ' + '${alignData[i]}');
+    }
+
+    return alignData;
   }
 
   void loadWowFactors() async {

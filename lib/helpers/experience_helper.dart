@@ -28,6 +28,11 @@ class ExperienceHelper {
   late double dishPrice;
   late int dishServingNoOfPerson;
 
+  // final selectedWowFactors = {};
+  final selectedPerferencesFactors = {};
+
+  final selectedWowFactors = {};
+
   ExperienceHelper updateChecklist({
     required ExperienceHelper checkList,
     //required List<CheckListItem> itemList,
