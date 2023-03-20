@@ -10,17 +10,22 @@ import '../../../models/meal/meal_response.dart' as meal;
 
 import 'dart:developer' as developer;
 
+import '../component/menu_experience_screen_vm.dart';
+
 class MenuManager extends StatefulWidget {
   const MenuManager({
     required meal.MealResponse mealResponse,
     required dish.DishList dishResponse,
+    required MenuExperienceScreenViewModel viewModel,
     Key? key,
   })  : _mealResponse = mealResponse,
         _dishResponse = dishResponse,
+        _viewModel = viewModel,
         super(key: key);
 
   final meal.MealResponse _mealResponse;
   final dish.DishList _dishResponse;
+  final MenuExperienceScreenViewModel _viewModel;
 
   @override
   _MenuManagerState createState() => _MenuManagerState();
@@ -35,7 +40,7 @@ class _MenuManagerState extends State<MenuManager> {
   final _appService = locateService<ApplicationService>();
 
   MenuHelper menuHelper = MenuHelper();
-
+  //late MenuExperienceScreenViewModel viewModel;
   // final mealItems = <String>[
   //   'main course',
   //   'BBQ',
@@ -77,377 +82,343 @@ class _MenuManagerState extends State<MenuManager> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
 
-    return Scaffold(
-      backgroundColor: appTheme.colors.primaryBackground,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: Container(
-          margin: EdgeInsets.only(left: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: SvgPicture.asset(
-                  Resources.getSignInLeftArrow,
-                  color: Color(0xfff1c452),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SetupScheduleScreen()),
-                  );
-                },
-                child: SvgPicture.asset(
-                  Resources.getSignInRightArrow,
-                  color: Color(0xfff1c452),
-                ),
-              ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 218,
+            width: double.infinity,
+            child: Image.asset(Resources.expHeaderBGPNG),
           ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 218,
-              width: double.infinity,
-              child: Image.asset(Resources.expHeaderBGPNG),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 29),
+            child: GeneralText(
+              Strings.menuExperienceTitle,
+              textAlign: TextAlign.start,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 29),
-              child: GeneralText(
-                Strings.menuExperienceTitle,
-                textAlign: TextAlign.start,
-                style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 29),
+            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 19),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                10,
               ),
+              color: Color(0xff34343B),
             ),
-            const SizedBox(
-              height: 32,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 29),
-              padding: EdgeInsets.symmetric(horizontal: 19, vertical: 19),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.menuExperienceMealTitle,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GeneralDropdown(
+                            name: 'Select',
+                            items: mealItems,
+                            borderColor: appTheme.colors.textFieldBorderColor,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400),
+                            onChange: ({
+                              required String key,
+                              required dynamic value,
+                            }) {
+                              menuHelper.selectedMealId = mealMap[value];
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 14,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.menuExperienceFoodTitle,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GeneralDropdown(
+                            name: 'Select',
+                            items: foodItems,
+                            borderColor: appTheme.colors.textFieldBorderColor,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400),
+                            onChange: ({
+                              required String key,
+                              required dynamic value,
+                            }) {
+                              menuHelper.selectedDishId = dishMap[value];
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                color: Color(0xff34343B),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              Strings.menuExperienceMealTitle,
-                              textAlign: TextAlign.center,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: const Color(0xfffbeccb),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GeneralDropdown(
-                              name: 'Select',
-                              items: mealItems,
-                              borderColor: appTheme.colors.textFieldBorderColor,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                              onChange: ({
-                                required String key,
-                                required dynamic value,
-                              }) {
-                                menuHelper.selectedMealId = mealMap[value];
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 14,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              Strings.menuExperienceFoodTitle,
-                              textAlign: TextAlign.center,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: const Color(0xfffbeccb),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GeneralDropdown(
-                              name: 'Select',
-                              items: foodItems,
-                              borderColor: appTheme.colors.textFieldBorderColor,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                              onChange: ({
-                                required String key,
-                                required dynamic value,
-                              }) {
-                                menuHelper.selectedDishId = dishMap[value];
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  GeneralText(
-                    Strings.menuExperienceDishTitle,
-                    maxLines: 2,
-                    textAlign: TextAlign.start,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  GeneralTextInput(
-                      height: 51,
-                      controller: _dishController,
-                      inputType: InputType.text,
-                      backgroundColor: appTheme.colors.textFieldFilledColor,
-                      inputBorder: appTheme.focusedBorder,
-                      valueStyle: const TextStyle(color: Colors.white),
-                      hint: 'EBeef Kebab',
-                      hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.4), fontSize: 14),
-                      // valueStyle: valueStyle,
-                      onChanged: (newValue) {
-                        // _appService.state.experienceHelper!.dishName = newValue;
-
-                        menuHelper.selectedDishName = newValue;
-                      }),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  GeneralText(
-                    Strings.menuExperienceDescriptionTitle,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  GeneralTextInput(
-                      height: 80,
-                      controller: _descriptionController,
-                      inputType: InputType.text,
-                      isMultiline: true,
-                      backgroundColor: appTheme.colors.textFieldFilledColor,
-                      inputBorder: appTheme.focusedBorder,
-                      valueStyle: const TextStyle(color: Colors.white),
-                      hint:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                      hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.4), fontSize: 14),
-                      // valueStyle: valueStyle,
-                      onChanged: (newValue) {
-                        // _appService.state.experienceHelper!.dishDescription =
-                        //     newValue;
-
-                        menuHelper.givenDescription = newValue.trim();
-                      }),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              Strings.menuExperiencePriceTitle,
-                              textAlign: TextAlign.center,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: const Color(0xfffbeccb),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GeneralTextInput(
-                                height: 51,
-                                controller: _priceController,
-                                inputType: InputType.digit,
-                                backgroundColor:
-                                    appTheme.colors.textFieldFilledColor,
-                                inputBorder: appTheme.focusedBorder,
-                                valueStyle:
-                                    const TextStyle(color: Colors.white),
-                                hint: 'Enter price',
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.4),
-                                    fontSize: 14),
-                                // valueStyle: valueStyle,
-                                onChanged: (newValue) {
-                                  // _appService.state.experienceHelper!
-                                  //     .dishPrice = double.parse(newValue);
-
-                                  menuHelper.givenPrice =
-                                      double.parse(newValue);
-                                }),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 14,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GeneralText(
-                              Strings.menuExperienceServingTitle,
-                              textAlign: TextAlign.center,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                      color: const Color(0xfffbeccb),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GeneralTextInput(
-                                height: 51,
-                                controller: _servingController,
-                                inputType: InputType.digit,
-                                backgroundColor:
-                                    appTheme.colors.textFieldFilledColor,
-                                inputBorder: appTheme.focusedBorder,
-                                valueStyle:
-                                    const TextStyle(color: Colors.white),
-                                hint: '2',
-                                hintStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.4),
-                                    fontSize: 14),
-                                // valueStyle: valueStyle,
-                                onChanged: (newValue) {
-                                  // _appService.state.experienceHelper!
-                                  //         .dishServingNoOfPerson =
-                                  //     int.parse(newValue);
-
-                                  menuHelper.dishServingNoOfPerson =
-                                      int.parse(newValue);
-                                }),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  GeneralText(
-                    Strings.menuExperiencePictureTitle,
-                    textAlign: TextAlign.center,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                            color: const Color(0xfffbeccb),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
+                const SizedBox(
+                  height: 26,
+                ),
+                GeneralText(
+                  Strings.menuExperienceDishTitle,
+                  maxLines: 2,
+                  textAlign: TextAlign.start,
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                GeneralTextInput(
                     height: 51,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xfff1c452),
-                        width: 2.5,
+                    controller: _dishController,
+                    inputType: InputType.text,
+                    backgroundColor: appTheme.colors.textFieldFilledColor,
+                    inputBorder: appTheme.focusedBorder,
+                    valueStyle: const TextStyle(color: Colors.white),
+                    hint: 'EBeef Kebab',
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.4), fontSize: 14),
+                    // valueStyle: valueStyle,
+                    onChanged: (newValue) {
+                      // _appService.state.experienceHelper!.dishName = newValue;
+
+                      menuHelper.selectedDishName = newValue;
+                    }),
+                const SizedBox(
+                  height: 26,
+                ),
+                GeneralText(
+                  Strings.menuExperienceDescriptionTitle,
+                  textAlign: TextAlign.center,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GeneralTextInput(
+                    height: 80,
+                    controller: _descriptionController,
+                    inputType: InputType.text,
+                    isMultiline: true,
+                    backgroundColor: appTheme.colors.textFieldFilledColor,
+                    inputBorder: appTheme.focusedBorder,
+                    valueStyle: const TextStyle(color: Colors.white),
+                    hint:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                    hintStyle: TextStyle(
+                        color: Colors.white.withOpacity(0.4), fontSize: 14),
+                    // valueStyle: valueStyle,
+                    onChanged: (newValue) {
+                      // _appService.state.experienceHelper!.dishDescription =
+                      //     newValue;
+
+                      menuHelper.givenDescription = newValue.trim();
+                    }),
+                SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.menuExperiencePriceTitle,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GeneralTextInput(
+                              height: 51,
+                              controller: _priceController,
+                              inputType: InputType.digit,
+                              backgroundColor:
+                                  appTheme.colors.textFieldFilledColor,
+                              inputBorder: appTheme.focusedBorder,
+                              valueStyle: const TextStyle(color: Colors.white),
+                              hint: 'Enter price',
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.4),
+                                  fontSize: 14),
+                              // valueStyle: valueStyle,
+                              onChanged: (newValue) {
+                                // _appService.state.experienceHelper!
+                                //     .dishPrice = double.parse(newValue);
+
+                                menuHelper.givenPrice = double.parse(newValue);
+                              }),
+                        ],
                       ),
-                      borderRadius: BorderRadius.circular(
-                        10,
+                    ),
+                    SizedBox(
+                      width: 14,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GeneralText(
+                            Strings.menuExperienceServingTitle,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                    color: const Color(0xfffbeccb),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GeneralTextInput(
+                              height: 51,
+                              controller: _servingController,
+                              inputType: InputType.digit,
+                              backgroundColor:
+                                  appTheme.colors.textFieldFilledColor,
+                              inputBorder: appTheme.focusedBorder,
+                              valueStyle: const TextStyle(color: Colors.white),
+                              hint: '2',
+                              hintStyle: TextStyle(
+                                  color: Colors.white.withOpacity(0.4),
+                                  fontSize: 14),
+                              // valueStyle: valueStyle,
+                              onChanged: (newValue) {
+                                // _appService.state.experienceHelper!
+                                //         .dishServingNoOfPerson =
+                                //     int.parse(newValue);
+
+                                menuHelper.dishServingNoOfPerson =
+                                    int.parse(newValue);
+                              }),
+                        ],
                       ),
-                      color: Colors.transparent,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          Strings.menuExperienceUploadPictureTitle,
-                          textAlign: TextAlign.center,
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400),
-                        ),
-                        Image.asset(
-                          Resources.expUploadImagePNG,
-                          height: 23,
-                        ),
-                      ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 26,
+                ),
+                GeneralText(
+                  Strings.menuExperiencePictureTitle,
+                  textAlign: TextAlign.center,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          color: const Color(0xfffbeccb),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 51,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xfff1c452),
+                      width: 2.5,
                     ),
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                    color: Colors.transparent,
                   ),
-                ],
-              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GeneralText(
+                        Strings.menuExperienceUploadPictureTitle,
+                        textAlign: TextAlign.center,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400),
+                      ),
+                      Image.asset(
+                        Resources.expUploadImagePNG,
+                        height: 23,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GeneralText(
-                    Strings.menuExperienceAddMoreTitle.toUpperCase(),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 40.0, right: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    widget._viewModel.saveMenu(context);
+                  },
+                  child: GeneralText(
+                    Strings.menuSave.toUpperCase(),
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
@@ -455,23 +426,45 @@ class _MenuManagerState extends State<MenuManager> {
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Image.asset(
+                ),
+                const Spacer(),
+                GeneralText(
+                  Strings.menuExperienceAddMoreTitle.toUpperCase(),
+                  textAlign: TextAlign.start,
+                  style: appTheme.typographies.interFontFamily.headline4
+                      .copyWith(
+                          color: const Color(0xffbb3127),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    clearEntries();
+                  },
+                  child: Image.asset(
                     Resources.expPlusPNG,
                     height: 74,
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(
-              height: 70,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 70,
+          ),
+        ],
       ),
     );
+  }
+
+  void clearEntries() {
+    _descriptionController.clear();
+    _dishController.clear();
+    _priceController.clear();
+    _servingController.clear();
   }
 }
 

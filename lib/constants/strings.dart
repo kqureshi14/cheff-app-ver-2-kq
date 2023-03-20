@@ -411,19 +411,21 @@ abstract class Strings {
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
-
   static const infoPopupTitle = "Keep in mind";
   static const infoPopupButtonTitle = "Okay";
 
   static const foodieVerifiedPopupTitle = "Foodie Verified";
-  static const foodieVerifiedSubPopupTitle = "Lorem Ipsum has been the industry's Syed Ali";
+  static const foodieVerifiedSubPopupTitle =
+      "Lorem Ipsum has been the industry's Syed Ali";
   static const foodieVerifiedPopupBtnTitle = "Okay";
 
   static const foodieVerificationPopupTitle = "Foodie Verification";
-  static const foodieVerificationSubPopupTitle = "Lorem Ipsum has been the industry's standard dummy text ever since";
+  static const foodieVerificationSubPopupTitle =
+      "Lorem Ipsum has been the industry's standard dummy text ever since";
   static const foodieVerificationPopupBtnTitle = "SUBMIT";
   static const orderPopupTitle = "Order Accepted";
-  static const orderSubPopupTitle = "To confirm the order Foodie will pay advance as a next step";
+  static const orderSubPopupTitle =
+      "To confirm the order Foodie will pay advance as a next step";
   static const orderPopupBtnTitle = "Okay";
   static const cashPopupTitle = "Cash Recieved";
   static const cashSubPopupTitle = "Full amount has been received";
@@ -495,15 +497,15 @@ abstract class Strings {
   static const createExperienceTitle = "Create your Experience";
   static const createExperienceTitleField = "Title";
   static const createExperienceSubTitleField = "Describe your experience";
-  static const createExperienceWowFactorsTitle  = "Wow Factor";
-  static const createExperiencePreferenceTitle  = "Preference";
-  static const createExperiencePriceTitle  = "Price";
-  static const createExperiencePerItemTitle  = "Per Item";
-  static const createExperienceLabelTitle  = "Experience";
-  static const createExperienceLocationTitle  = "Location";
-  static const createExperienceHomeTitle  = "Home";
-  static const createExperienceOtherTitle  = "Other";
-  static const createExperienceSubHostTitle  = "Sub Host";
+  static const createExperienceWowFactorsTitle = "Wow Factor";
+  static const createExperiencePreferenceTitle = "Preference";
+  static const createExperiencePriceTitle = "Price";
+  static const createExperiencePerItemTitle = "Per Item";
+  static const createExperienceLabelTitle = "Experience";
+  static const createExperienceLocationTitle = "Location";
+  static const createExperienceHomeTitle = "Home";
+  static const createExperienceOtherTitle = "Other";
+  static const createExperienceSubHostTitle = "Sub Host";
   static const menuExperienceTitle = "Build your menu";
   static const menuExperienceDishTitle = "Dish";
   static const menuExperienceDescriptionTitle = "Description";
@@ -514,10 +516,12 @@ abstract class Strings {
   static const menuExperienceMealTitle = "Meal";
   static const menuExperienceFoodTitle = "Food";
   static const menuExperienceAddMoreTitle = "Add More";
+
+  static const menuSave = "Save";
   static const okButtonTitle = "Okay";
   static const cancelButtonTitle = "Cancel";
-  static const repeatPopupTitle = "Repeat ipsum dolor sit amet, conse ctetur adipiscing elit";
-
+  static const repeatPopupTitle =
+      "Repeat ipsum dolor sit amet, conse ctetur adipiscing elit";
 
   static const userProfileDetailAddress =
       "House # 23, Street 20, G-10/4, Islamabad";
@@ -552,13 +556,13 @@ abstract class Strings {
   static const foodieProfileOrderCompleted = "Order Completed";
   static const foodieProfileOrderDeclined = "Order Declined";
   static const foodieProfileDeclineReasonLabel = "Decline Reason";
-  static const foodieProfileDeclineReasonValue = "Donec iaculis risus sit amet magna facilisis, vitae pretium ex maximus. Nunc eget purus congue, tempus libero quis, pretium massa. Integer vel lorem ut metus consectetur luctus.";
+  static const foodieProfileDeclineReasonValue =
+      "Donec iaculis risus sit amet magna facilisis, vitae pretium ex maximus. Nunc eget purus congue, tempus libero quis, pretium massa. Integer vel lorem ut metus consectetur luctus.";
 
   static const earningPaidLabel = "PAID";
   static const earningPendingLabel = "PENDING";
   static const earningThisMonthLabel = "This Month";
   static const earningTotalEarningLabel = "Total Earning";
-  static const earningDescriptionLabel = "Advance Payment for BBQ Experiencefrom Ahmed Zia";
-
-
+  static const earningDescriptionLabel =
+      "Advance Payment for BBQ Experiencefrom Ahmed Zia";
 }

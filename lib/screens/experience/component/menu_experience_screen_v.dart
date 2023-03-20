@@ -27,6 +27,7 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
         bloc: viewModel,
         builder: (_, state) {
           return Scaffold(
+            backgroundColor: appTheme.colors.primaryBackground,
             floatingActionButton: displayActionButton(context),
             body: state.when(
                 loading: displayLoader,
@@ -55,6 +56,7 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
     return MenuManager(
       mealResponse: mealResponse,
       dishResponse: dishResponse,
+      viewModel: viewModel,
     );
   }
 
