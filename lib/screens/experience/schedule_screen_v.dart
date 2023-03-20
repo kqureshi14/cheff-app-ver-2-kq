@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:chef/screens/experience/show_off_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -306,32 +308,16 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
       lastDate: DateTime.now(),
     );
 
-    final TimeOfDay? pickedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if(picked!=null) {
+      print(picked.toString());
+      final TimeOfDay? pickedTime = await showTimePicker(
+          context: context, initialTime: TimeOfDay.now());
+      if(pickedTime!=null){
+        print(pickedTime.toString());
+        p
+      }
+    }
 
-   /* showTimePicker(
-      context: context,
-
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-                primary: appTheme.colors.primaryBackground // <-- SEE HERE
-
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: Colors.red, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
-      //lastDate: DateTime(2101),
-      lastDate: DateTime.now(),
-    );*/
 
   }
 
