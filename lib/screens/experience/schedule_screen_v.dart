@@ -224,6 +224,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) => ShowOffTime()));
+                    selectStartDate(context,appTheme);
                   },
                   child: Container(
                     width: 54,
@@ -275,6 +276,63 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
           EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
       margin: EdgeInsetsDirectional.only(bottom: 8),
     );
+  }
+
+  Future<void> selectStartDate(
+      BuildContext context, IAppThemeData appTheme) async {
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+                primary: appTheme.colors.primaryBackground // <-- SEE HERE
+
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      //lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
+    );
+
+    final TimeOfDay? pickedTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+
+   /* showTimePicker(
+      context: context,
+
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+                primary: appTheme.colors.primaryBackground // <-- SEE HERE
+
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      //lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
+    );*/
+
   }
 
   showConfirmationPopup(BuildContext context) {
