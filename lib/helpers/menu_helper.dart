@@ -1,5 +1,5 @@
 class MenuHelper {
-  late int selectedMealId;
+  int selectedMealId = 0;
   late int selectedDishId;
 
   late String selectedDishName;

@@ -76,7 +76,7 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
               },
               child: SvgPicture.asset(
                 Resources.getSignInLeftArrow,
-                color: Color(0xfff1c452),
+                color: const Color(0xfff1c452),
               ),
             ),
             InkWell(

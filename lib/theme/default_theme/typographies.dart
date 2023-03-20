@@ -104,7 +104,8 @@ class _InterTypography extends ITypography {
   TextStyle get label1 => _baseTextStyle.copyWith(
         fontWeight: FontWeight.normal,
         fontSize: _size16,
-        color: _IColors.grey08,
+        // color: _IColors.grey08,
+        color: _IColors.red0,
       );
 
   @override

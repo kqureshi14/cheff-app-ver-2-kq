@@ -100,6 +100,7 @@ class _Colors implements IColors {
 
   @override
   Color get primaryBackground => _IColors.black0;
+  // Color get primaryBackground => _IColors.red0;
 
   @override
   Color get secondaryBackground => _IColors.white;
@@ -201,10 +202,12 @@ class _Colors implements IColors {
   Color get primaryLight => _IColors.blue03;
 
   @override
-  Color get primaryCaption => _IColors.grey14.withOpacity(0.7);
+  // Color get primaryCaption => _IColors.grey14.withOpacity(0.7);
+  Color get primaryCaption => _IColors.red0;
 
   @override
   Color get primaryDark => _IColors.blue06;
+  // Color get primaryDark => _IColors.red0;
 
   @override
   Color get warningBackground => _IColors.orange0;
