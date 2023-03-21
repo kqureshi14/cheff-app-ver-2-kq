@@ -40,6 +40,8 @@ abstract class Api {
 
   static const experienceSave = 'experience/save';
 
+  static const scheduleSave = 'experience-schedule/save';
+
   static const menuSave = 'experience-menu/save';
 
   static const accessToken = 'api/auth/access-token';

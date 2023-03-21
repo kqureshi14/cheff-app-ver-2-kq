@@ -24,6 +24,7 @@ import 'screens/forgot_password/forgot_password_screen_vm.dart' as _i26;
 import 'screens/home/home_screen_vm.dart' as _i27;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i15;
 import 'screens/sign_up/get_started_screen_vm.dart' as _i17;
+import 'screens/experience/schedule/create_schedule_viewmodel.dart';
 import 'screens/sign_up/questionire/component/sign_up_questionire_screen_vm.dart'
     as _i16;
 import 'screens/sign_up/sign_up_screen_vm.dart' as _i18;
@@ -113,6 +114,9 @@ Future<_i1.GetIt> $initGetIt(
             appService: get<_i5.ApplicationService>(),
           ));
   gh.factory<_i17.SignUpScreenViewModel>(() => _i17.SignUpScreenViewModel());
+  gh.factory<ScheduleScreenViewModel>(() =>
+      ScheduleScreenViewModel(
+          network: get<_i5.INetworkService<dynamic>>()));
   gh.factory<_i18.SignUpScreenViewModel>(() => _i18.SignUpScreenViewModel(
         navigation: get<_i5.INavigationService<dynamic>>(),
         network: get<_i5.INetworkService<dynamic>>(),

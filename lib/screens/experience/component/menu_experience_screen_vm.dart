@@ -10,6 +10,7 @@ import '../../../models/meal/meal_response.dart' as meal;
 import '../../../models/meal/menu_response.dart' as menu_resp;
 import '../../../setup.dart';
 import '../../../models/meal/menu_request.dart' as menu_req;
+import '../schedule/create_schedule_view.dart';
 import '../schedule_screen_v.dart';
 import 'menu_experience_screen_m.dart' as menu_exp;
 
@@ -144,7 +145,7 @@ class MenuExperienceScreenViewModel
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SetupScheduleScreen()),
+          MaterialPageRoute(builder: (context) => ScheduleScreen()),
         );
       } else {
         Toaster.infoToast(
