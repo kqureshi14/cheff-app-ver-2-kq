@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:chef/screens/experience/show_off_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
@@ -23,6 +24,7 @@ class SetupScheduleScreen extends StatefulWidget {
 
 class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
   bool repeatChecked = false;
+  List<Schedule> scheduleList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +93,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: scheduleList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var item = scheduleList[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -119,14 +122,14 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(children: [
-                            GeneralText('MON'.toUpperCase(),
+                            GeneralText(item.dayOfWeek.toUpperCase(),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
                                         color: HexColor.fromHex('#f1c452'),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700)),
-                            GeneralText('13',
+                            GeneralText(item.dateOfMonth,
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -147,28 +150,34 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(20),
                                       bottomLeft: Radius.circular(20))),
-                              child: Wrap(children: [
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                              ]),
+                              child: Wrap(
+                                  children: getChipsWigetsList(
+                                      appTheme, context, item.timeInHourAndAmPm)
+
+                                  // [
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  // ]
+
+                                  ),
                             ),
                           )
                         ],
@@ -226,7 +235,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) => ShowOffTime()));
-                    selectStartDate(context,appTheme);
+                    selectStartDate(context, appTheme);
                   },
                   child: Container(
                     width: 54,
@@ -257,12 +266,31 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme,
+  List<Widget> getChipsWigetsList(IAppThemeData appTheme, BuildContext context,
+      List<String> timeInHourAndAmPm) {
+    return List.generate(timeInHourAndAmPm?.length ?? 0, (index) {
+      var item = timeInHourAndAmPm![index];
+      return InkWell(
+        onTap: () {
+          // var currentItemSelectedStatus = item.isSelected;
+          //
+          // item.isSelected = !currentItemSelectedStatus!;
+          setState(() {});
+        },
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(start: 7, end: 7),
+          child: timeSelectorBox(appTheme, item, showSelectedTime: false),
+        ),
+      );
+    });
+  }
+
+  Widget timeSelectorBox(IAppThemeData appTheme, String time,
       {bool showSelectedTime = false}) {
     return Container(
       // width: 71,
       // height: 36,
-      child: GeneralText('10 AM',
+      child: GeneralText(time,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
               color: showSelectedTime
                   ? HexColor.fromHex('#212129')
@@ -282,7 +310,6 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
 
   Future<void> selectStartDate(
       BuildContext context, IAppThemeData appTheme) async {
-
     final DateTime? picked = await showDatePicker(
       context: context,
 
@@ -292,7 +319,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
             colorScheme: ColorScheme.light(
                 primary: appTheme.colors.primaryBackground // <-- SEE HERE
 
-            ),
+                ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                 primary: Colors.red, // button text color
@@ -308,17 +335,78 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
       lastDate: DateTime.now(),
     );
 
-    if(picked!=null) {
+    if (picked != null) {
       print(picked.toString());
-      final TimeOfDay? pickedTime = await showTimePicker(
-          context: context, initialTime: TimeOfDay.now());
-      if(pickedTime!=null){
-        print(pickedTime.toString());
-        p
+      final TimeOfDay? pickedTime =
+          await showTimePicker(context: context, initialTime: TimeOfDay.now());
+      if (pickedTime != null) {
+        var _selectedDateTime = DateTime(picked.year, picked.month, picked.day,
+            pickedTime.hour, pickedTime.minute);
+        final selectedDateTime =
+            SelectedDateTime.fromDateTime(_selectedDateTime);
+
+        String date = (selectedDateTime.dateTime.toString().substring(0, 10));
+        String time = (selectedDateTime.dateTime.toString().substring(11, 16));
+
+        String dayString = DateFormat.E().format(picked); //
+
+        String timeString = DateFormat('h a').format(
+            DateTime(picked.year, picked.month, picked.day, pickedTime.hour));
+
+        String dateOfMonthString = DateFormat.d().format(picked);
+
+        print(dayString);
+        print(timeString);
+        print(dateOfMonthString);
+
+        if (scheduleList.isNotEmpty) {
+          var dateTimeAlreadyExist = false;
+          var matchedIndex = 0;
+          for (int i = 0; i < scheduleList.length; i++) {
+            var element = scheduleList[i];
+            if (element.dayOfWeek == dayString &&
+                element.dateOfMonth == dateOfMonthString) {
+              dateTimeAlreadyExist = true;
+              matchedIndex = i;
+
+            }
+          }
+          if (dateTimeAlreadyExist) {
+            var timeAlreadyExist = false;
+            scheduleList[matchedIndex].timeInHourAndAmPm.forEach((element) {
+              if (element == timeString) {
+                timeAlreadyExist = true;
+              }
+            });
+            if (!timeAlreadyExist) {
+              scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
+              setState(() {});
+            }
+          } else {
+            scheduleList.add(Schedule(
+                date: date,
+                time: time,
+                dayOfWeek: dayString,
+                dateOfMonth: dateOfMonthString,
+                timeInHourAndAmPm: [timeString]));
+            setState(() {
+
+            });
+          }
+          return;
+
+        } else {
+          scheduleList.add(Schedule(
+              date: date,
+              time: time,
+              dayOfWeek: dayString,
+              dateOfMonth: dateOfMonthString,
+              timeInHourAndAmPm: [timeString]));
+        }
+        print(scheduleList.length);
+        setState(() {});
       }
     }
-
-
   }
 
   showConfirmationPopup(BuildContext context) {
@@ -390,4 +478,33 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
       },
     );
   }
+}
+
+class SelectedDateTime {
+  DateTime dateTime;
+  String dayOfWeek;
+
+  SelectedDateTime({required this.dateTime, required this.dayOfWeek});
+
+  factory SelectedDateTime.fromDateTime(DateTime dateTime) {
+    final daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    final dayOfWeek = daysOfWeek[dateTime.weekday - 1];
+    return SelectedDateTime(dateTime: dateTime, dayOfWeek: dayOfWeek);
+  }
+}
+
+class Schedule {
+  String date;
+  String time;
+  String dayOfWeek;
+  String dateOfMonth;
+  List<String> timeInHourAndAmPm;
+
+  Schedule({
+    required this.date,
+    required this.time,
+    required this.dayOfWeek,
+    required this.dateOfMonth,
+    required this.timeInHourAndAmPm,
+  });
 }
