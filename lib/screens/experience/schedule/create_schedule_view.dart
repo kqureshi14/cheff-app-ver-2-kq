@@ -23,7 +23,7 @@ class ScheduleScreen extends BaseView<ScheduleScreenViewModel> {
         builder: (context, state) {
           return Scaffold(
             backgroundColor: appTheme.colors.primaryBackground,
-            body: state.when(loading: _loading, loaded: () => displayLoaded()),
+            body: state.when(loading: _loading, loaded: () => displayLoaded(viewModel)),
           );
         });
   }
@@ -33,8 +33,8 @@ class ScheduleScreen extends BaseView<ScheduleScreenViewModel> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  Widget displayLoaded() {
-    return SetupScheduleScreen();
+  Widget displayLoaded(ScheduleScreenViewModel viewModel) {
+    return SetupScheduleScreen(scheduleScreenViewModel: viewModel,);
   }
 
 }

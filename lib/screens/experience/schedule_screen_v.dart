@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:chef/screens/experience/schedule/create_schedule_viewmodel.dart';
 import 'package:chef/screens/experience/show_off_screen_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +17,8 @@ import '../../ui_kit/widgets/general_text.dart';
 // import '../show_off_time/show_off_time_screen.dart';
 
 class SetupScheduleScreen extends StatefulWidget {
-  const SetupScheduleScreen({Key? key}) : super(key: key);
+  SetupScheduleScreen({Key? key, this.scheduleScreenViewModel}) : super(key: key);
+  final ScheduleScreenViewModel? scheduleScreenViewModel;
 
   @override
   State<SetupScheduleScreen> createState() => _SetupScheduleScreenState();
@@ -24,7 +26,6 @@ class SetupScheduleScreen extends StatefulWidget {
 
 class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
   bool repeatChecked = false;
-  List<Schedule> scheduleList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +94,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: scheduleList.length,
+                itemCount: widget.scheduleScreenViewModel?.scheduleList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  var item = scheduleList[index];
+                  var item = widget.scheduleScreenViewModel?.scheduleList[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -122,14 +123,14 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(children: [
-                            GeneralText(item.dayOfWeek.toUpperCase(),
+                            GeneralText(item?.dayOfWeek.toUpperCase()??"",
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
                                         color: HexColor.fromHex('#f1c452'),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700)),
-                            GeneralText(item.dateOfMonth,
+                            GeneralText(item?.dateOfMonth??"",
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -152,7 +153,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                                       bottomLeft: Radius.circular(20))),
                               child: Wrap(
                                   children: getChipsWigetsList(
-                                      appTheme, context, item.timeInHourAndAmPm)
+                                      appTheme, context, item!.timeInHourAndAmPm)
 
                                   // [
                                   //   timeSelectorBox(appTheme,
@@ -359,11 +360,17 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
         print(timeString);
         print(dateOfMonthString);
 
-        if (scheduleList.isNotEmpty) {
+        widget.scheduleScreenViewModel?.setDayValue(dayString.toUpperCase());
+        widget.scheduleScreenViewModel?.setTimeValue(widget.scheduleScreenViewModel!.convertTo24HourFormat(timeString));
+        String pickedDate = picked.toString().substring(0, 10);
+        widget.scheduleScreenViewModel?.datePicked = pickedDate;
+
+
+        if (widget.scheduleScreenViewModel!.scheduleList.isNotEmpty) {
           var dateTimeAlreadyExist = false;
           var matchedIndex = 0;
-          for (int i = 0; i < scheduleList.length; i++) {
-            var element = scheduleList[i];
+          for (int i = 0; i < widget.scheduleScreenViewModel!.scheduleList.length; i++) {
+            var element = widget.scheduleScreenViewModel!.scheduleList[i];
             if (element.dayOfWeek == dayString &&
                 element.dateOfMonth == dateOfMonthString) {
               dateTimeAlreadyExist = true;
@@ -373,37 +380,42 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
           }
           if (dateTimeAlreadyExist) {
             var timeAlreadyExist = false;
-            scheduleList[matchedIndex].timeInHourAndAmPm.forEach((element) {
+            widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.forEach((element) {
               if (element == timeString) {
                 timeAlreadyExist = true;
               }
             });
             if (!timeAlreadyExist) {
-              scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
+              widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
               setState(() {});
             }
           } else {
-            scheduleList.add(Schedule(
+            widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
+              widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
+                  date: date,
+                  time: time,
+                  dayOfWeek: dayString,
+                  dateOfMonth: dateOfMonthString,
+                  timeInHourAndAmPm: [timeString]));
+              setState(() {
+
+              });
+            }
+            );
+          }
+          return;
+
+        } else {
+          widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
+            widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
                 date: date,
                 time: time,
                 dayOfWeek: dayString,
                 dateOfMonth: dateOfMonthString,
                 timeInHourAndAmPm: [timeString]));
-            setState(() {
-
-            });
-          }
-          return;
-
-        } else {
-          scheduleList.add(Schedule(
-              date: date,
-              time: time,
-              dayOfWeek: dayString,
-              dateOfMonth: dateOfMonthString,
-              timeInHourAndAmPm: [timeString]));
+          });
         }
-        print(scheduleList.length);
+        print(widget.scheduleScreenViewModel?.scheduleList.length);
         setState(() {});
       }
     }
@@ -493,18 +505,3 @@ class SelectedDateTime {
   }
 }
 
-class Schedule {
-  String date;
-  String time;
-  String dayOfWeek;
-  String dateOfMonth;
-  List<String> timeInHourAndAmPm;
-
-  Schedule({
-    required this.date,
-    required this.time,
-    required this.dayOfWeek,
-    required this.dateOfMonth,
-    required this.timeInHourAndAmPm,
-  });
-}

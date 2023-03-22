@@ -18,30 +18,114 @@ class  ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
 
   final INetworkService _network;
 
+  List<Schedule> scheduleList = [];
+
+  int? dayValue;
+  int? timeValue;
+  String? datePicked;
 
   initialize(){
     emit(const Loaded());
   }
 
-  Future<void> sendScheduleData() async {
+
+  setDayValue(String day){
+    Map<String, int> weekdaysMap = {'SUN': 1, 'MON': 2, 'TUE': 3, 'WED': 4, 'THU': 5, 'FRI': 6, 'SAT': 7};
+      if (weekdaysMap.containsKey(day)) {
+        int? dayIndex = weekdaysMap[day];
+        dayValue = dayIndex;
+      } else {
+        print('$day not found');
+      }
+  }
+
+  setTimeValue(String time){
+Map<String,  int> timeOfWeek = {'00': 1, '01': 2, '02': 3, '03': 4, '04': 5, '05': 6, '06': 7, '07': 8, '08': 9, '09': 10, '10': 11, '11': 12, '12': 13, '13': 14, '14': 15, '15': 16, '16': 17, '17': 18, '18': 19, '19': 20, '20': 21, '21': 22, '22': 23, '23': 24};
+if (timeOfWeek.containsKey(time)) {
+  int? dayIndex = timeOfWeek[time];
+  timeValue = dayIndex;
+} else {
+  print('$time not found');
+}
+  }
+
+  String convertTo24HourFormat(String time) {
+    // Split the time string into hours and minutes
+    List<String> timeParts = time.split(' ');
+    List<String> hourAndMinute = timeParts[0].split(':');
+    int hour = int.parse(hourAndMinute[0]);
+    // int minute = int.parse(hourAndMinute[1]);
+    // Convert the hour to 24-hour format
+    if (timeParts[1] == 'PM' && hour != 12) {
+      hour += 12;
+    } else if (timeParts[1] == 'AM' && hour == 12) {
+      hour = 0;
+    }
+    // Return the time in 24-hour format as a string
+    return '${hour.toString().padLeft(2, '0')}';
+  }
+
+  Future<void> sendScheduleData({Function? completion}) async {
     final url =
     InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleSave);
 
     emit(const Loading());
 
-    scheduleReuqest.ScehduleData? scheduleDataAdd;
+    final scheduleData = scheduleReuqest.ScehduleData(
+      chefId: 3,
+      reservedStatus: 'open',
+      experienceId: 12,
+      hourOfDay: 3,
+      dayOfMonth: dayValue,
+      hourId: timeValue,
+scheduledDate: datePicked,
+
+    );
 
 
     final ScheduleRequest = scheduleReuqest.ScheduleRequest(
-      t: scheduleDataAdd,
+      t: scheduleData,
     ).toJson();
 
-    final response = await _network.post(
+    var response = await _network.post(
       path: url,
       data: ScheduleRequest,
     );
 
+    completion!();
+    print(response.body);
+    response.body != "" || response.body != null ?  emit(Loaded())  : emit(const Loading());
+  }
 
-    response.body != "" || response.body != null ?  emit(Loaded()) : emit(const Loading());
+
+}
+
+class Schedule {
+  String date;
+  String time;
+  String dayOfWeek;
+  String dateOfMonth;
+  List<String> timeInHourAndAmPm;
+
+  Schedule({
+    required this.date,
+    required this.time,
+    required this.dayOfWeek,
+    required this.dateOfMonth,
+    required this.timeInHourAndAmPm,
+  });
+}
+
+
+class SelectedDateTime {
+  DateTime dateTime;
+  String dayOfWeek;
+
+  SelectedDateTime({required this.dateTime, required this.dayOfWeek});
+
+  factory SelectedDateTime.fromDateTime(DateTime dateTime) {
+    final daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    final dayOfWeek = daysOfWeek[dateTime.weekday - 1];
+    return SelectedDateTime(dateTime: dateTime, dayOfWeek: dayOfWeek);
   }
 }
