@@ -1,52 +1,86 @@
-
 import 'package:chef/base/base_viewmodel.dart';
 import 'package:chef/helpers/url_helper.dart';
 import 'package:chef/services/network/network_service.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:chef/models/experience/schedule_request.dart' as scheduleReuqest;
+import 'package:chef/models/experience/schedule_request.dart'
+    as scheduleReuqest;
 
 import '../../../constants/api.dart';
+import '../../../services/application_state.dart';
+import '../../../setup.dart';
 import 'create_schedule_m.dart';
 
 @injectable
-class  ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
+class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
   ScheduleScreenViewModel({
     required INetworkService network,
-  }) : _network = network, super(const Loading());
-
+  })  : _network = network,
+        super(const Loading());
 
   final INetworkService _network;
 
   List<Schedule> scheduleList = [];
-
+  final _appService = locateService<ApplicationService>();
   int? dayValue;
   int? timeValue;
   String? datePicked;
 
-  initialize(){
+  initialize() {
     emit(const Loaded());
   }
 
-
-  setDayValue(String day){
-    Map<String, int> weekdaysMap = {'SUN': 1, 'MON': 2, 'TUE': 3, 'WED': 4, 'THU': 5, 'FRI': 6, 'SAT': 7};
-      if (weekdaysMap.containsKey(day)) {
-        int? dayIndex = weekdaysMap[day];
-        dayValue = dayIndex;
-      } else {
-        print('$day not found');
-      }
+  setDayValue(String day) {
+    Map<String, int> weekdaysMap = {
+      'SUN': 1,
+      'MON': 2,
+      'TUE': 3,
+      'WED': 4,
+      'THU': 5,
+      'FRI': 6,
+      'SAT': 7
+    };
+    if (weekdaysMap.containsKey(day)) {
+      int? dayIndex = weekdaysMap[day];
+      dayValue = dayIndex;
+    } else {
+      print('$day not found');
+    }
   }
 
-  setTimeValue(String time){
-Map<String,  int> timeOfWeek = {'00': 1, '01': 2, '02': 3, '03': 4, '04': 5, '05': 6, '06': 7, '07': 8, '08': 9, '09': 10, '10': 11, '11': 12, '12': 13, '13': 14, '14': 15, '15': 16, '16': 17, '17': 18, '18': 19, '19': 20, '20': 21, '21': 22, '22': 23, '23': 24};
-if (timeOfWeek.containsKey(time)) {
-  int? dayIndex = timeOfWeek[time];
-  timeValue = dayIndex;
-} else {
-  print('$time not found');
-}
+  setTimeValue(String time) {
+    Map<String, int> timeOfWeek = {
+      '00': 1,
+      '01': 2,
+      '02': 3,
+      '03': 4,
+      '04': 5,
+      '05': 6,
+      '06': 7,
+      '07': 8,
+      '08': 9,
+      '09': 10,
+      '10': 11,
+      '11': 12,
+      '12': 13,
+      '13': 14,
+      '14': 15,
+      '15': 16,
+      '16': 17,
+      '17': 18,
+      '18': 19,
+      '19': 20,
+      '20': 21,
+      '21': 22,
+      '22': 23,
+      '23': 24
+    };
+    if (timeOfWeek.containsKey(time)) {
+      int? dayIndex = timeOfWeek[time];
+      timeValue = dayIndex;
+    } else {
+      print('$time not found');
+    }
   }
 
   String convertTo24HourFormat(String time) {
@@ -66,22 +100,19 @@ if (timeOfWeek.containsKey(time)) {
   }
 
   Future<void> sendScheduleData({Function? completion}) async {
-    final url =
-    InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleSave);
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleSave);
 
     emit(const Loading());
 
     final scheduleData = scheduleReuqest.ScehduleData(
-      chefId: 3,
+      chefId: _appService.state.userInfo!.t.id,
       reservedStatus: 'open',
-      experienceId: 12,
-      hourOfDay: 3,
+      experienceId: _appService.state.experienceResponse!.t!.id,
+      // hourOfDay: 3,
       dayOfMonth: dayValue,
       hourId: timeValue,
-scheduledDate: datePicked,
-
+      scheduledDate: datePicked,
     );
-
 
     final ScheduleRequest = scheduleReuqest.ScheduleRequest(
       t: scheduleData,
@@ -97,10 +128,10 @@ scheduledDate: datePicked,
 
     completion!();
     print(response.body);
-    response.body != "" || response.body != null ?  emit(Loaded())  : emit(const Loading());
+    response.body != "" || response.body != null
+        ? emit(Loaded())
+        : emit(const Loading());
   }
-
-
 }
 
 class Schedule {
@@ -118,7 +149,6 @@ class Schedule {
     required this.timeInHourAndAmPm,
   });
 }
-
 
 class SelectedDateTime {
   DateTime dateTime;
