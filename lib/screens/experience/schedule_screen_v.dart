@@ -313,7 +313,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
       BuildContext context, IAppThemeData appTheme) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -330,10 +332,10 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
           child: child!,
         );
       },
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
-      //lastDate: DateTime(2101),
-      lastDate: DateTime.now(),
+      // initialDate: DateTime.now(),
+      // firstDate: DateTime(2015, 8),
+      // //lastDate: DateTime(2101),
+      // lastDate: DateTime.now(),
     );
 
     if (picked != null) {
