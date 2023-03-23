@@ -87,10 +87,13 @@ scheduledDate: datePicked,
       t: scheduleData,
     ).toJson();
 
-    var response = await _network.post(
-      path: url,
-      data: ScheduleRequest,
-    );
+    var duration = Duration(seconds: 5); // set the duration to 5 seconds
+    var response = await Future.delayed(duration, () {
+      return _network.post(
+        path: url,
+        data: ScheduleRequest,
+      );
+    });
 
     completion!();
     print(response.body);

@@ -386,7 +386,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               }
             });
             if (!timeAlreadyExist) {
-              widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
+              widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
+                widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
+              });
               setState(() {});
             }
           } else {
@@ -397,11 +399,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                   dayOfWeek: dayString,
                   dateOfMonth: dateOfMonthString,
                   timeInHourAndAmPm: [timeString]));
-              setState(() {
-
-              });
-            }
-            );
+            });
+            setState(() {
+            });
           }
           return;
 
