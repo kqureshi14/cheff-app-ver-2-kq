@@ -26,18 +26,23 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
             MenuExperienceScreenState>(
         bloc: viewModel,
         builder: (_, state) {
-          return Scaffold(
-            backgroundColor: appTheme.colors.primaryBackground,
-            floatingActionButton: displayActionButton(context),
-            body: state.when(
-                loading: displayLoader,
-                loaded: (mealResponse, dishResponse) => _displayLoadedData(
-                      context,
-                      appTheme,
-                      state,
-                      mealResponse,
-                      dishResponse,
-                    )),
+          return WillPopScope(
+            onWillPop: () async{
+              return false;
+            },
+            child: Scaffold(
+              backgroundColor: appTheme.colors.primaryBackground,
+              floatingActionButton: displayActionButton(context),
+              body: state.when(
+                  loading: displayLoader,
+                  loaded: (mealResponse, dishResponse) => _displayLoadedData(
+                        context,
+                        appTheme,
+                        state,
+                        mealResponse,
+                        dishResponse,
+                      )),
+            ),
           );
         });
   }

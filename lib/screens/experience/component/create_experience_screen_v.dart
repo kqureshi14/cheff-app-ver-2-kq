@@ -29,17 +29,22 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
             CreateExperienceScreenState>(
         bloc: viewModel,
         builder: (_, state) {
-          return Scaffold(
-            floatingActionButton: displayActionButton(context),
-            body: state.when(
-                loading: displayLoader,
-                loaded: (wowFactor, preferences) => _displayLoadedData(
-                      context,
-                      appTheme,
-                      state,
-                      wowFactor,
-                      preferences,
-                    )),
+          return WillPopScope(
+            onWillPop: ()async{
+              return false;
+            },
+            child: Scaffold(
+              floatingActionButton: displayActionButton(context),
+              body: state.when(
+                  loading: displayLoader,
+                  loaded: (wowFactor, preferences) => _displayLoadedData(
+                        context,
+                        appTheme,
+                        state,
+                        wowFactor,
+                        preferences,
+                      )),
+            ),
           );
         });
   }
