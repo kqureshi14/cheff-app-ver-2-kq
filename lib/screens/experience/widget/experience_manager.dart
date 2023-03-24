@@ -19,6 +19,7 @@ class ExperienceManager extends StatefulWidget {
   final _wowFactor;
   final _preferences;
 
+
   @override
   State<ExperienceManager> createState() => ExperienceManagerState();
 }
@@ -31,6 +32,10 @@ class ExperienceManagerState extends State<ExperienceManager> {
   final TextController _locationController = TextController();
   final TextController _nameController = TextController();
   final TextController _mobileController = TextController();
+
+  var price ='';
+  var location ='';
+  var subhost ='';
 
   final experienceHelper = ExperienceHelper();
   final _appService = locateService<ApplicationService>();
@@ -70,7 +75,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
       //           onTap: () {
       //             // _appService.state?.experienceHelper   =_experienceHelper;
       //             _appService.updateExperienceHelper(_experienceHelper);
-      //          //   viewModel.saveExperience(context);
+      //          //   saveExperience(context);
       //           },
       //           child: SvgPicture.asset(
       //             Resources.getSignInRightArrow,
@@ -245,10 +250,27 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-                          Image.asset(
-                            Resources.transparentRingPNG,
-                            height: 22,
-                          ),
+                          InkWell(
+                            onTap: () {
+                              var currentSelectedOption = price;
+                              if (!(currentSelectedOption ==
+                                  Strings.createExperiencePerItemTitle)) {
+                                changePriceOption(
+                                    Strings.createExperiencePerItemTitle);
+                              }
+                            },
+                            child: Container(
+                              child: price ==
+                                  Strings.createExperiencePerItemTitle
+                                  ? Image.asset(
+                                Resources.checkPNG,
+                                height: 22,
+                              )
+                                  : Image.asset(
+                                Resources. transparentRingPNG,
+                                height: 22,
+                              ),
+                            ),),
                           SizedBox(
                             width: 11,
                           ),
@@ -266,9 +288,27 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-                          Image.asset(
-                            Resources.checkPNG,
-                            height: 22,
+                          InkWell(
+                            onTap: () {
+                              var currentSelectedOption = price;
+                              if (!(currentSelectedOption ==
+                                  Strings.createExperienceLabelTitle)) {
+                                changePriceOption(
+                                    Strings.createExperienceLabelTitle);
+                              }
+                            },
+                            child: Container(
+                              child: price ==
+                                  Strings.createExperienceLabelTitle
+                                  ? Image.asset(
+                                Resources.checkPNG,
+                                height: 22,
+                              )
+                                  : Image.asset(
+                                Resources.transparentRingPNG,
+                                height: 22,
+                              ),
+                            ),
                           ),
                           SizedBox(
                             width: 11,
@@ -363,9 +403,27 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-                          Image.asset(
-                            Resources.transparentRingPNG,
-                            height: 22,
+                          InkWell(
+                            onTap: () {
+                              var currentSelectedOption = location;
+                              if (!(currentSelectedOption ==
+                                  Strings.createExperienceHomeTitle)) {
+                                changeLocataionOption(
+                                    Strings.createExperienceHomeTitle);
+                              }
+                            },
+                            child: Container(
+                              child: location ==
+                                  Strings.createExperienceHomeTitle
+                                  ? Image.asset(
+                                Resources.checkPNG,
+                                height: 22,
+                              )
+                                  : Image.asset(
+                                Resources. transparentRingPNG,
+                                height: 22,
+                              ),
+                            ),
                           ),
                           SizedBox(
                             width: 11,
@@ -383,10 +441,29 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-                          Image.asset(
-                            Resources.checkPNG,
-                            height: 22,
+                          InkWell(
+                            onTap: () {
+                              var currentSelectedOption = location;
+                              if (!(currentSelectedOption ==
+                                  Strings.createExperienceOtherTitle)) {
+                                changeLocataionOption(
+                                    Strings.createExperienceOtherTitle);
+                              }
+                            },
+                            child: Container(
+                              child: location ==
+                                  Strings.createExperienceOtherTitle
+                                  ? Image.asset(
+                                Resources.checkPNG,
+                                height: 22,
+                              )
+                                  : Image.asset(
+                                Resources. transparentRingPNG,
+                                height: 22,
+                              ),
+                            ),
                           ),
+
                           SizedBox(
                             width: 11,
                           ),
@@ -455,9 +532,30 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-                          Image.asset(
-                            Resources.transparentRingPNG,
-                            height: 22,
+
+                          InkWell(
+                            onTap: () {
+                              var currentSelectedOption = subhost;
+                              if (!(currentSelectedOption ==
+                                  Strings.createExperienceSubHostTitle)) {
+                                changesubHostOption(
+                                    Strings.createExperienceSubHostTitle);
+                              }else{
+                                changesubHostOption(" ");
+                              }
+                            },
+                            child: Container(
+                              child: subhost ==
+                                  Strings.createExperienceSubHostTitle
+                                  ? Image.asset(
+                                Resources.checkPNG,
+                                height: 22,
+                              )
+                                  : Image.asset(
+                                Resources. transparentRingPNG,
+                                height: 22,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -638,7 +736,25 @@ class ExperienceManagerState extends State<ExperienceManager> {
   //     title: _titleName,
   //   );
   // }
+
+  void changePriceOption(String option) {
+    price = option;
+   setState(() {
+   });
+  }
+  void changeLocataionOption(String option) {
+    location = option;
+    setState(() {
+    });
+  }
+  void changesubHostOption(String option) {
+    subhost = option;
+    setState(() {
+    });
+  }
 }
+
+
 
 class ChipsWidget extends StatelessWidget {
   const ChipsWidget({
