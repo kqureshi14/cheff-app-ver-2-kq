@@ -21,82 +21,88 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: getSaveButton(appTheme: appTheme),
-        backgroundColor: HexColor.fromHex("#212129"),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Container(
-                height: 218,
-                child: Image.asset("assets/images/icons/show_off_time.png",
 
-                )),
-            Stack(
-              children: [
-                Positioned(
-                  right: -150,
-                  top: -40,
-                  // bottom: -10,
-                  child: Container(
-                    width: 300,
-                    height: 400,
+    return WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: SafeArea(
+          child: Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: getSaveButton(appTheme: appTheme),
+            backgroundColor: HexColor.fromHex("#212129"),
+            body: SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                    height: 218,
                     child: Image.asset(
-                      'assets/images/icons/food_product_ring.png',
-                      color: Color(0xfff1c452).withOpacity(0.2),
-                    ),
-                  ),
-                ),
-                Column(
+                      "assets/images/icons/show_off_time.png",
+                    )),
+                Stack(
                   children: [
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 29),
-                          child: GeneralText(
-                            Strings.timeToShowLabel,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    fontSize: 24,
-                                    color: HexColor.fromHex('#ffffff')),
-                          ),
+                    Positioned(
+                      right: -150,
+                      top: -40,
+                      // bottom: -10,
+                      child: Container(
+                        width: 300,
+                        height: 400,
+                        child: Image.asset(
+                          'assets/images/icons/food_product_ring.png',
+                          color: Color(0xfff1c452).withOpacity(0.2),
                         ),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 29),
+                              child: GeneralText(
+                                Strings.timeToShowLabel,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        fontSize: 24,
+                                        color: HexColor.fromHex('#ffffff')),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 29, end: 35),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 53,
+                              ),
+                              uploadVideos(appTheme),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              uploadPictures(appTheme),
+                              SizedBox(
+                                height: 28,
+                              ),
+                              Center(child: keepInMindLink(appTheme)),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.only(start: 29, end: 35),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 53,
-                          ),
-                          uploadVideos(appTheme),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          uploadPictures(appTheme),
-                          SizedBox(
-                            height: 28,
-                          ),
-                          Center(child: keepInMindLink(appTheme)),
-                        ],
-                      ),
-                    )
                   ],
-                ),
-              ],
-            )
-          ]),
-        ),
-      ),
-    );
+                )
+              ]),
+            ),
+          ),
+        ));
   }
 
   Widget uploadVideos(IAppThemeData appTheme) {
@@ -233,10 +239,10 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       styleType: ButtonStyleType.fill,
       onTap: () {
         _showInfoPopup(context);
-
       },
     );
   }
+
   Future<dynamic> _showInfoPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;
 
@@ -252,9 +258,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
-
             SizedBox(
               height: 16,
             ),
@@ -267,7 +271,6 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                   fontSize: 25,
                   fontWeight: FontWeight.w500),
             ),
-
             SizedBox(
               height: 38,
             ),
@@ -288,14 +291,16 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffee4a4),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                            color: const Color(0xfffee4a4),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 19,),
+            SizedBox(
+              height: 19,
+            ),
             Row(
               children: [
                 Image.asset(
@@ -313,15 +318,16 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffee4a4),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                            color: const Color(0xfffee4a4),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 19,),
-
+            SizedBox(
+              height: 19,
+            ),
             Row(
               children: [
                 Image.asset(
@@ -339,9 +345,9 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                     textAlign: TextAlign.start,
                     style: appTheme.typographies.interFontFamily.headline4
                         .copyWith(
-                        color: const Color(0xfffee4a4),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
+                            color: const Color(0xfffee4a4),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
@@ -355,8 +361,8 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return PopularFoodDetails();
-                    }));
+                  return PopularFoodDetails();
+                }));
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => SignUpScreen()),
@@ -378,5 +384,4 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       // ),
     );
   }
-
 }

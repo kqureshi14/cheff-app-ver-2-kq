@@ -32,11 +32,6 @@ class MenuManager extends StatefulWidget {
 }
 
 class _MenuManagerState extends State<MenuManager> {
-  final TextController _descriptionController = TextController();
-  final TextController _dishController = TextController();
-  final TextController _priceController = TextController();
-  final TextController _servingController = TextController();
-
   final _appService = locateService<ApplicationService>();
 
   MenuHelper menuHelper = MenuHelper();
@@ -69,12 +64,19 @@ class _MenuManagerState extends State<MenuManager> {
     for (int i = 0; i < widget._mealResponse.t.length; i++) {
       mealItems.add(widget._mealResponse.t[i].name);
       mealMap[widget._mealResponse.t[i].name] = widget._mealResponse.t[i].id;
+      if (i == 0) {
+        menuHelper.selectedMealId = mealMap[widget._mealResponse.t[i].name];
+      }
     }
 
     for (int i = 0; i < widget._dishResponse.t.length; i++) {
       foodItems.add(widget._dishResponse.t[i].name);
 
       dishMap[widget._dishResponse.t[i].name] = widget._dishResponse.t[i].id;
+
+      if (i == 0) {
+        menuHelper.selectedDishId = dishMap[widget._dishResponse.t[i].name];
+      }
     }
   }
 
@@ -87,7 +89,7 @@ class _MenuManagerState extends State<MenuManager> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 218,
             width: double.infinity,
             child: Image.asset(Resources.expHeaderBGPNG),
@@ -96,7 +98,7 @@ class _MenuManagerState extends State<MenuManager> {
             height: 20,
           ),
           Container(
-            margin: EdgeInsets.only(left: 29),
+            margin: const EdgeInsets.only(left: 29),
             child: GeneralText(
               Strings.menuExperienceTitle,
               textAlign: TextAlign.start,
@@ -110,13 +112,13 @@ class _MenuManagerState extends State<MenuManager> {
             height: 32,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 29),
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 19),
+            margin: const EdgeInsets.symmetric(horizontal: 29),
+            padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 10,
               ),
-              color: Color(0xff34343B),
+              color: const Color(0xff34343B),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +162,7 @@ class _MenuManagerState extends State<MenuManager> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 14,
                     ),
                     Expanded(
@@ -220,7 +222,7 @@ class _MenuManagerState extends State<MenuManager> {
                 ),
                 GeneralTextInput(
                     height: 51,
-                    controller: _dishController,
+                    controller: widget._viewModel.dishController,
                     inputType: InputType.text,
                     backgroundColor: appTheme.colors.textFieldFilledColor,
                     inputBorder: appTheme.focusedBorder,
@@ -251,7 +253,7 @@ class _MenuManagerState extends State<MenuManager> {
                 ),
                 GeneralTextInput(
                     height: 80,
-                    controller: _descriptionController,
+                    controller: widget._viewModel.descriptionController,
                     inputType: InputType.text,
                     isMultiline: true,
                     backgroundColor: appTheme.colors.textFieldFilledColor,
@@ -292,7 +294,7 @@ class _MenuManagerState extends State<MenuManager> {
                           ),
                           GeneralTextInput(
                               height: 51,
-                              controller: _priceController,
+                              controller: widget._viewModel.priceController,
                               inputType: InputType.digit,
                               backgroundColor:
                                   appTheme.colors.textFieldFilledColor,
@@ -312,7 +314,7 @@ class _MenuManagerState extends State<MenuManager> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 14,
                     ),
                     Expanded(
@@ -334,7 +336,7 @@ class _MenuManagerState extends State<MenuManager> {
                           ),
                           GeneralTextInput(
                               height: 51,
-                              controller: _servingController,
+                              controller: widget._viewModel.servingController,
                               inputType: InputType.digit,
                               backgroundColor:
                                   appTheme.colors.textFieldFilledColor,
@@ -416,10 +418,7 @@ class _MenuManagerState extends State<MenuManager> {
                 InkWell(
                   onTap: () {
                     widget._viewModel.saveMenu(context);
-                    _descriptionController.text='';
-                    _dishController.text='';
-                    _priceController.text='';
-                    _servingController.text='';
+                    //  clearEntries();
                   },
                   child: GeneralText(
                     Strings.menuSave.toUpperCase(),
@@ -446,7 +445,7 @@ class _MenuManagerState extends State<MenuManager> {
                 ),
                 InkWell(
                   onTap: () {
-                    clearEntries();
+                    //  clearEntries();
                   },
                   child: Image.asset(
                     Resources.expPlusPNG,
@@ -465,10 +464,10 @@ class _MenuManagerState extends State<MenuManager> {
   }
 
   void clearEntries() {
-    _descriptionController.clear();
-    _dishController.clear();
-    _priceController.clear();
-    _servingController.clear();
+    widget._viewModel.descriptionController.clear();
+    widget._viewModel.dishController.clear();
+    widget._viewModel.priceController.clear();
+    widget._viewModel.servingController.clear();
   }
 }
 

@@ -37,8 +37,12 @@ class CreateExperienceScreenViewModel
   late final preference.PreferenceResponse _preferenceResponse;
 
   initialize() {
-    emit(const create_experience.Loading());
+    // if (_wowFactorResponse.t.isNotEmpty) {
+    //  emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse));
+    // } else {
+    // emit(const create_experience.Loading());
     loadWowFactors();
+    // }
   }
 
   void saveExperience(BuildContext context) async {
@@ -59,7 +63,6 @@ class CreateExperienceScreenViewModel
         .log(' Chef Id In T is   ' + '${_appService.state.userInfo!.t.id}');
     ExperienceHelper experienceHelper = (_appService.state.experienceHelper)!;
 
-
     developer.log(
         ' priceExperience Details ' + '${experienceHelper.priceExperience}');
 
@@ -79,26 +82,26 @@ class CreateExperienceScreenViewModel
     //   MaterialPageRoute(builder: (context) => const MenuExperienceScreen()),
     // );
 
-    if(!validateData(context,experienceHelper)){
-     return;
+    if (!validateData(context, experienceHelper)) {
+      return;
     }
     final url =
         InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
-      title: experienceHelper.titleExperience??'',
-      description: experienceHelper.experienceDetails??'',
+      title: experienceHelper.titleExperience ?? '',
+      description: experienceHelper.experienceDetails ?? '',
       persons: experienceHelper.numberOfPerson.toString(),
       chefId: _appService.state.userInfo!.t.id,
       chefAddress: _appService.state.userInfo!.t.address,
       chefBrandName: _appService.state.userInfo!.t.address,
       chefName: _appService.state.userInfo!.t.name,
       locationId: 1,
-      price: (experienceHelper.priceExperience??0.0).toInt(),
+      price: (experienceHelper.priceExperience ?? 0.0).toInt(),
       priceTypeId: 1,
-      subHostMobileNo: experienceHelper.subHostMobileNumber??'',
-      subHostName: experienceHelper.subHostName??'',
+      subHostMobileNo: experienceHelper.subHostMobileNumber ?? '',
+      subHostName: experienceHelper.subHostName ?? '',
       wowFactorId: 1,
       preferenceId: 1,
       experienceWowFactors:
@@ -282,63 +285,62 @@ class CreateExperienceScreenViewModel
   }
 
   bool validateData(BuildContext context, ExperienceHelper experienceHelper) {
-   var  isValidate = true;
-   if((experienceHelper.titleExperience??'').isEmpty){
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Title cannot be empty');
-     return false;
-   }if((experienceHelper.experienceDetails??'').isEmpty){
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Descriptions cannot be empty');
-     return false;
-   }if((experienceHelper.priceExperience??0.0)>0){
-   }else{
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Price cannot be empty');
-     return false;
-   }
-   if((experienceHelper.personExperience??0)>0){
-   }else{
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Persons cannot be empty or zero');
-     return false;
-   }
-/*   if((experienceHelper.dishPrice??0.0)>0){
-   }else{
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Dish price cannot be empty');
-     return false;
-   }*/
-   if((experienceHelper.locationExperience??'').isEmpty){
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'Location cannot be empty');
-     return false;
-   }if((experienceHelper.subHostName??'').isEmpty){
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'SubHost Name cannot be empty');
-     return false;
-   }if((experienceHelper.subHostMobileNumber??'').isEmpty){
-     isValidate = false;
-     Toaster.infoToast(
-         context: context,
-         message: 'SubHost Mobile Number cannot be empty');
-     return false;
-   }
+    var isValidate = true;
+    if ((experienceHelper.titleExperience ?? '').isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(context: context, message: 'Title cannot be empty');
+      return false;
+    }
+    if ((experienceHelper.experienceDetails ?? '').isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(
+          context: context, message: 'Descriptions cannot be empty');
+      return false;
+    }
+    if ((experienceHelper.priceExperience ?? 0.0) > 0) {
+    } else {
+      isValidate = false;
+      Toaster.infoToast(context: context, message: 'Price cannot be empty');
+      return false;
+    }
+    if ((experienceHelper.personExperience ?? 0) > 0) {
+    } else {
+      isValidate = false;
+      Toaster.infoToast(
+          context: context, message: 'Persons cannot be empty or zero');
+      return false;
+    }
 
-   return isValidate;
+    if ((experienceHelper.locationExperience ?? '').isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(context: context, message: 'Location cannot be empty');
+      return false;
+    }
+    if ((experienceHelper.subHostName ?? '').isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(
+          context: context, message: 'SubHost Name cannot be empty');
+      return false;
+    }
+    if ((experienceHelper.subHostMobileNumber ?? '').isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(
+          context: context, message: 'SubHost Mobile Number cannot be empty');
+      return false;
+    }
+
+    if (experienceHelper.selectedWowFactors.isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(context: context, message: 'Select Wow Factor');
+      return false;
+    }
+
+    if (experienceHelper.selectedPerferencesFactors.isEmpty) {
+      isValidate = false;
+      Toaster.infoToast(context: context, message: 'Select Perfernces Factor');
+      return false;
+    }
+
+    return isValidate;
   }
 }

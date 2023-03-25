@@ -12,12 +12,14 @@ import '../../helpers/color_helper.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
+import '../../ui_kit/helpers/toaster_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_text.dart';
 // import '../show_off_time/show_off_time_screen.dart';
 
 class SetupScheduleScreen extends StatefulWidget {
-  SetupScheduleScreen({Key? key, this.scheduleScreenViewModel}) : super(key: key);
+  SetupScheduleScreen({Key? key, this.scheduleScreenViewModel})
+      : super(key: key);
   final ScheduleScreenViewModel? scheduleScreenViewModel;
 
   @override
@@ -30,246 +32,254 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-    return WillPopScope(
-      onWillPop: ()async{
-        return false;
-      },
-      child: Scaffold(
-        backgroundColor: HexColor.fromHex("#212129"),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: Container(
-            margin: EdgeInsets.only(left: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    // Navigator.pop(context);
-                  },
-                  child: SvgPicture.asset(
-                    Resources.getSignInLeftArrow,
-                    color: Color(0xfff1c452),
-                  ),
+    // return WillPopScope(
+    //   onWillPop: ()async{
+    //     return false;
+    //   },
+    //   child:
+    return Scaffold(
+      backgroundColor: HexColor.fromHex("#212129"),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Container(
+          margin: const EdgeInsets.only(left: 32),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () {
+                  //Navigator.pop(context);
+                },
+                child: SvgPicture.asset(
+                  Resources.getSignInLeftArrow,
+                  color: Color(0xfff1c452),
                 ),
-                InkWell(
-                  onTap: () {
+              ),
+              InkWell(
+                onTap: () {
+                  if (widget.scheduleScreenViewModel!.scheduleSaveCounter > 0) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ShowOffTimeScreen()),
                     );
-                  },
-                  child: SvgPicture.asset(
-                    Resources.getSignInRightArrow,
-                    color: Color(0xfff1c452),
-                  ),
+                  } else {
+                    Toaster.infoToast(
+                        context: context,
+                        message: 'Please add at-least one schedule');
+                  }
+                },
+                child: SvgPicture.asset(
+                  Resources.getSignInRightArrow,
+                  color: Color(0xfff1c452),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Container(
+            height: 218,
+            width: double.infinity,
+            child: Image.asset(Resources.expHeaderBGPNG),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 29),
+                child: GeneralText(
+                  Strings.setYourScheduleLabel,
+                  style: appTheme.typographies.interFontFamily.headline6
+                      .copyWith(
+                          fontSize: 24, color: HexColor.fromHex('#ffffff')),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsetsDirectional.only(start: 40, bottom: 50),
+            child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: widget.scheduleScreenViewModel?.scheduleList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var item =
+                      widget.scheduleScreenViewModel?.scheduleList[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 18.0, bottom: 10),
+                            child: InkWell(
+                              child: Image.asset(
+                                Resources.expEditPenPNG,
+                                height: 20,
+                              ),
+                              onTap: () {
+                                showConfirmationPopup(context);
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(children: [
+                            GeneralText(item?.dayOfWeek.toUpperCase() ?? "",
+                                style: appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: HexColor.fromHex('#f1c452'),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w700)),
+                            GeneralText(item?.dateOfMonth ?? "",
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  color: HexColor.fromHex('#909094'),
+                                  fontSize: 40,
+                                ))
+                          ]),
+                          SizedBox(
+                            width: 27,
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: double.infinity,
+                              padding:
+                                  EdgeInsets.only(left: 8, top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex('#2b2b33'),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
+                              child: Wrap(
+                                  children: getChipsWigetsList(appTheme,
+                                      context, item!.timeInHourAndAmPm)
+
+                                  // [
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  //   timeSelectorBox(appTheme,
+                                  //       showSelectedTime: false),
+                                  //   SizedBox(
+                                  //     width: 7,
+                                  //   ),
+                                  // ]
+
+                                  ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                }),
+          ),
+          SizedBox(
+            height: 37,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 14, right: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            if (repeatChecked) {
+                              repeatChecked = false;
+                            } else {
+                              repeatChecked = true;
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          repeatChecked
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank,
+                          color: HexColor.fromHex('#f1c452'),
+                        )),
+                    // SizedBox(
+                    //   width: 12.5,
+                    // ),
+                    GeneralText(
+                      Strings.scheduleSetupRepeatText,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: HexColor.fromHex('#ffffff'),
+                      ),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => ShowOffTime()));
+                    selectStartDate(context, appTheme);
+                  },
+                  child: Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                        color: HexColor.fromHex("#bb3127"),
+                        shape: BoxShape.circle),
+                    child: Center(
+                      child: Icon(
+                        Icons.add_sharp,
+                        size: 35,
+                        color: HexColor.fromHex("#ffffff"),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Container(
-              height: 218,
-              width: double.infinity,
-              child: Image.asset(Resources.expHeaderBGPNG),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 29),
-                  child: GeneralText(
-                    Strings.setYourScheduleLabel,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                            fontSize: 24, color: HexColor.fromHex('#ffffff')),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: EdgeInsetsDirectional.only(start: 40, bottom: 50),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: widget.scheduleScreenViewModel?.scheduleList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var item = widget.scheduleScreenViewModel?.scheduleList[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 18.0, bottom: 10),
-                              child: InkWell(
-                                child: Image.asset(
-                                  Resources.expEditPenPNG,
-                                  height: 20,
-                                ),
-                                onTap: () {
-                                  showConfirmationPopup(context);
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(children: [
-                              GeneralText(item?.dayOfWeek.toUpperCase()??"",
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline6
-                                      .copyWith(
-                                          color: HexColor.fromHex('#f1c452'),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700)),
-                              GeneralText(item?.dateOfMonth??"",
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline2
-                                      .copyWith(
-                                    color: HexColor.fromHex('#909094'),
-                                    fontSize: 40,
-                                  ))
-                            ]),
-                            SizedBox(
-                              width: 27,
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: double.infinity,
-                                padding:
-                                    EdgeInsets.only(left: 8, top: 10, bottom: 10),
-                                decoration: BoxDecoration(
-                                    color: HexColor.fromHex('#2b2b33'),
-                                    borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20))),
-                                child: Wrap(
-                                    children: getChipsWigetsList(
-                                        appTheme, context, item!.timeInHourAndAmPm)
-
-                                    // [
-                                    //   timeSelectorBox(appTheme,
-                                    //       showSelectedTime: false),
-                                    //   SizedBox(
-                                    //     width: 7,
-                                    //   ),
-                                    //   timeSelectorBox(appTheme,
-                                    //       showSelectedTime: false),
-                                    //   SizedBox(
-                                    //     width: 7,
-                                    //   ),
-                                    //   timeSelectorBox(appTheme,
-                                    //       showSelectedTime: false),
-                                    //   SizedBox(
-                                    //     width: 7,
-                                    //   ),
-                                    //   timeSelectorBox(appTheme,
-                                    //       showSelectedTime: false),
-                                    //   SizedBox(
-                                    //     width: 7,
-                                    //   ),
-                                    // ]
-
-                                    ),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-            SizedBox(
-              height: 37,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 14, right: 14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (repeatChecked) {
-                                repeatChecked = false;
-                              } else {
-                                repeatChecked = true;
-                              }
-                            });
-                          },
-                          icon: Icon(
-                            repeatChecked
-                                ? Icons.check_box_outlined
-                                : Icons.check_box_outline_blank,
-                            color: HexColor.fromHex('#f1c452'),
-                          )),
-                      // SizedBox(
-                      //   width: 12.5,
-                      // ),
-                      GeneralText(
-                        Strings.scheduleSetupRepeatText,
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor.fromHex('#ffffff'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => ShowOffTime()));
-                      selectStartDate(context, appTheme);
-                    },
-                    child: Container(
-                      width: 54,
-                      height: 54,
-                      decoration: BoxDecoration(
-                          color: HexColor.fromHex("#bb3127"),
-                          shape: BoxShape.circle),
-                      child: Center(
-                        child: Icon(
-                          Icons.add_sharp,
-                          size: 35,
-                          color: HexColor.fromHex("#ffffff"),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 60,
-            ),
-            SizedBox(
-              height: 49.5,
-            ),
-          ]),
-        ),
+          SizedBox(
+            height: 60,
+          ),
+          SizedBox(
+            height: 49.5,
+          ),
+        ]),
       ),
     );
+    // );
   }
 
   List<Widget> getChipsWigetsList(IAppThemeData appTheme, BuildContext context,
@@ -368,38 +378,43 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
         print(dateOfMonthString);
 
         widget.scheduleScreenViewModel?.setDayValue(dayString.toUpperCase());
-        widget.scheduleScreenViewModel?.setTimeValue(widget.scheduleScreenViewModel!.convertTo24HourFormat(timeString));
+        widget.scheduleScreenViewModel?.setTimeValue(
+            widget.scheduleScreenViewModel!.convertTo24HourFormat(timeString));
         String pickedDate = picked.toString().substring(0, 10);
         widget.scheduleScreenViewModel?.datePicked = pickedDate;
-
 
         if (widget.scheduleScreenViewModel!.scheduleList.isNotEmpty) {
           var dateTimeAlreadyExist = false;
           var matchedIndex = 0;
-          for (int i = 0; i < widget.scheduleScreenViewModel!.scheduleList.length; i++) {
+          for (int i = 0;
+              i < widget.scheduleScreenViewModel!.scheduleList.length;
+              i++) {
             var element = widget.scheduleScreenViewModel!.scheduleList[i];
             if (element.dayOfWeek == dayString &&
                 element.dateOfMonth == dateOfMonthString) {
               dateTimeAlreadyExist = true;
               matchedIndex = i;
-
             }
           }
           if (dateTimeAlreadyExist) {
             var timeAlreadyExist = false;
-            widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.forEach((element) {
+            widget.scheduleScreenViewModel?.scheduleList[matchedIndex]
+                .timeInHourAndAmPm
+                .forEach((element) {
               if (element == timeString) {
                 timeAlreadyExist = true;
               }
             });
             if (!timeAlreadyExist) {
-              widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
-                widget.scheduleScreenViewModel?.scheduleList[matchedIndex].timeInHourAndAmPm.add(timeString);
+              widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
+                widget.scheduleScreenViewModel?.scheduleList[matchedIndex]
+                    .timeInHourAndAmPm
+                    .add(timeString);
               });
               setState(() {});
             }
           } else {
-            widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
+            widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
               widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
                   date: date,
                   time: time,
@@ -407,13 +422,11 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                   dateOfMonth: dateOfMonthString,
                   timeInHourAndAmPm: [timeString]));
             });
-            setState(() {
-            });
+            setState(() {});
           }
           return;
-
         } else {
-          widget.scheduleScreenViewModel?.sendScheduleData(completion: (){
+          widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
             widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
                 date: date,
                 time: time,
@@ -511,4 +524,3 @@ class SelectedDateTime {
     return SelectedDateTime(dateTime: dateTime, dayOfWeek: dayOfWeek);
   }
 }
-

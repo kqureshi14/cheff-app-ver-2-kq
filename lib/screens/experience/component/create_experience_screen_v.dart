@@ -30,7 +30,7 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
         bloc: viewModel,
         builder: (_, state) {
           return WillPopScope(
-            onWillPop: ()async{
+            onWillPop: () async {
               return false;
             },
             child: Scaffold(
@@ -65,7 +65,7 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
               onTap: () {},
               child: SvgPicture.asset(
                 Resources.getSignInLeftArrow,
-                color: Color(0xfff1c452),
+                color: const Color(0xfff1c452),
               ),
             ),
             InkWell(
@@ -77,7 +77,7 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,
-                color: Color(0xfff1c452),
+                color: const Color(0xfff1c452),
               ),
             ),
           ],

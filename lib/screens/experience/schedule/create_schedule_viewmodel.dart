@@ -7,6 +7,7 @@ import 'package:chef/models/experience/schedule_request.dart'
     as scheduleReuqest;
 
 import '../../../constants/api.dart';
+import '../../../models/experience/schedule_response.dart';
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
 import 'create_schedule_m.dart';
@@ -25,6 +26,8 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
   int? dayValue;
   int? timeValue;
   String? datePicked;
+
+  int scheduleSaveCounter = 0;
 
   initialize() {
     emit(const Loaded());
@@ -108,7 +111,7 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
       chefId: _appService.state.userInfo!.t.id,
       reservedStatus: 'open',
       experienceId: _appService.state.experienceResponse!.t!.id,
-      // hourOfDay: 3,
+      hourOfDay: 3,
       dayOfMonth: dayValue,
       hourId: timeValue,
       scheduledDate: datePicked,
@@ -118,19 +121,32 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
       t: scheduleData,
     ).toJson();
 
-    var duration = Duration(seconds: 5); // set the duration to 5 seconds
+    var duration = const Duration(seconds: 5); // set the duration to 5 seconds
     var response = await Future.delayed(duration, () {
       return _network.post(
         path: url,
         data: ScheduleRequest,
       );
     });
-
+    //
     completion!();
-    print(response.body);
-    response.body != "" || response.body != null
-        ? emit(Loaded())
-        : emit(const Loading());
+    // print(response.body);
+    if (response.body != null) {
+      ScheduleResponse scheduleResponse =
+          scheduleResponseFromJson(response.body);
+      if (scheduleResponse.code == 200) {
+        scheduleSaveCounter++;
+
+        emit(const Loaded());
+      } else {
+        emit(const Loading());
+      }
+    } else {
+      emit(const Loaded());
+    }
+    //response.body.code == 200) {
+
+    //  }
   }
 }
 

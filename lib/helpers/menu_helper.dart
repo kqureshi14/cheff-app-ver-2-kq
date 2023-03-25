@@ -1,10 +1,10 @@
 class MenuHelper {
   int selectedMealId = 0;
-  late int selectedDishId;
+  int selectedDishId = 0;
 
-  late String selectedDishName;
-  late String givenDescription;
+  String selectedDishName = '';
+  String givenDescription = '';
 
-  late double givenPrice;
-  late int dishServingNoOfPerson;
+  double givenPrice = 0.0;
+  int dishServingNoOfPerson = 0;
 }
