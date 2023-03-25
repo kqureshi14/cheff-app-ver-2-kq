@@ -19,6 +19,12 @@ import 'dart:developer' as developer;
 @injectable
 class MenuExperienceScreenViewModel
     extends BaseViewModel<menu_exp.MenuExperienceScreenState> {
+  int menuSaveCounter=0;
+
+  menu_resp.MenuResponse? menueResponse ;
+
+  var menueResponseCode=0;
+
   // MenuExperienceScreenViewModel(MenuExperienceScreenState state) : super(state);
 
   MenuExperienceScreenViewModel({
@@ -92,6 +98,7 @@ class MenuExperienceScreenViewModel
   void saveMenu(BuildContext context) async {
     final _appService = locateService<ApplicationService>();
     developer.log(' Ready to save Menu');
+    menuSaveCounter += 1;
 
     menu_help.MenuHelper menuHelper = (_appService.state.menuHelper)!;
 
@@ -142,11 +149,11 @@ class MenuExperienceScreenViewModel
 
         menu_resp.MenuResponse menuResponse =
             menu_resp.menuResponseFromJson(response.body);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ScheduleScreen()),
-        );
+        menueResponseCode = menuResponse.code??0;
+        Toaster.infoToast(
+            context: context,
+            message: menuResponse.message.toString());
+        
       } else {
         Toaster.infoToast(
             context: context,

@@ -295,25 +295,31 @@ class CreateExperienceScreenViewModel
          context: context,
          message: 'Descriptions cannot be empty');
      return false;
-   }if((experienceHelper.priceExperience??0.0)>1){
+   }if((experienceHelper.priceExperience??0.0)>0){
+   }else{
      isValidate = false;
      Toaster.infoToast(
          context: context,
          message: 'Price cannot be empty');
      return false;
-   }if((experienceHelper.personExperience??0)>0){
+   }
+   if((experienceHelper.personExperience??0)>0){
+   }else{
      isValidate = false;
      Toaster.infoToast(
          context: context,
          message: 'Persons cannot be empty or zero');
      return false;
-   }if((experienceHelper.dishPrice??0.0)>1){
+   }
+/*   if((experienceHelper.dishPrice??0.0)>0){
+   }else{
      isValidate = false;
      Toaster.infoToast(
          context: context,
          message: 'Dish price cannot be empty');
      return false;
-   }if((experienceHelper.locationExperience??'').isEmpty){
+   }*/
+   if((experienceHelper.locationExperience??'').isEmpty){
      isValidate = false;
      Toaster.infoToast(
          context: context,
