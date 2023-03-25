@@ -12,21 +12,21 @@ class ExperienceHelper {
   String selectedCategory = 'Couple';
   int numberOfPerson = 4;
 
-  late String titleExperience;
-  late String experienceDetails;
-  late double priceExperience;
-  late int personExperience;
-  late String locationExperience;
-  late String subHostName;
-  late String subHostMobileNumber;
+   String? titleExperience='';
+   String? experienceDetails='';
+   double? priceExperience=0.0;
+   int? personExperience=0;
+   String? locationExperience='';
+   String? subHostName='';
+   String? subHostMobileNumber='';
 
-  late String mainCourseMeal;
-  late String mainFoodMeal;
+   String? mainCourseMeal='';
+   String? mainFoodMeal='';
 
-  late String dishName;
-  late String dishDescription;
-  late double dishPrice;
-  late int dishServingNoOfPerson;
+   String? dishName='';
+   String? dishDescription='';
+   double? dishPrice=0.0;
+   int? dishServingNoOfPerson=0;
 
   // final selectedWowFactors = {};
   final selectedPerferencesFactors = {};

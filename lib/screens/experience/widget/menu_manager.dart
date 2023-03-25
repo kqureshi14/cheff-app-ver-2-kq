@@ -416,6 +416,10 @@ class _MenuManagerState extends State<MenuManager> {
                 InkWell(
                   onTap: () {
                     widget._viewModel.saveMenu(context);
+                    _descriptionController.text='';
+                    _dishController.text='';
+                    _priceController.text='';
+                    _servingController.text='';
                   },
                   child: GeneralText(
                     Strings.menuSave.toUpperCase(),

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../helpers/color_helper.dart';
 import '../../../setup.dart';
+import '../schedule/create_schedule_view.dart';
 import '../widget/menu_manager.dart';
 import 'menu_experience_screen_m.dart';
 import 'menu_experience_screen_vm.dart';
@@ -91,7 +92,16 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
                 final _appService = locateService<ApplicationService>();
                 // _appService.state?.experienceHelper   =_experienceHelper;
                 //_appService.updateExperienceHelper(viewModel.);
-                viewModel.saveMenu(ctx);
+               if(viewModel.menuSaveCounter>0   && viewModel.menueResponseCode==200){
+                 Navigator.push(
+                   ctx,
+                   MaterialPageRoute(builder: (context) => ScheduleScreen()),
+                 );
+               }else{
+                 Toaster.infoToast(
+                     context: ctx,
+                     message: 'Please Save atleast one Menu');
+               }
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,

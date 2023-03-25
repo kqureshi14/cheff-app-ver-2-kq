@@ -95,6 +95,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                           }
                         }
                     : null,
+
                 onChanged: (values) {
                   widget._onChange.call(
                     key: widget._name,
