@@ -62,7 +62,7 @@ class HomeScreenViewModel extends BaseViewModel<HomeScreenState> {
 
   void navigateToModulesScreen() async {
     _appService.updateSearchDisplay();
-    _appService.updateSelectedNavId(id: NavigationDrawer.module);
+    _appService.updateSelectedNavId(id: NavDrawerItem.module);
     //  _navigation.replace(route: ModulesRoute());
   }
 
