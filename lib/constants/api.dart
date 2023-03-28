@@ -44,6 +44,8 @@ abstract class Api {
 
   static const menuSave = 'experience-menu/save';
 
+  static const experienceList = 'experience/list';
+
   static const accessToken = 'api/auth/access-token';
   static const refreshToken = '$apiVersion/refresh-token';
   static const customers = '$apiVersion/customer';

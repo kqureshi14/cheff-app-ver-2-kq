@@ -2,16 +2,23 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
-import '../../helpers/color_helper.dart';
-import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_rich_text.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../booking/food_item_bookng.dart';
+import '../../../constants/resources.dart';
+import '../../../constants/strings.dart';
+import '../../../helpers/color_helper.dart';
+import '../../../models/home/experience_list_response.dart';
+import '../../../ui_kit/widgets/general_new_appbar.dart';
+import '../../../ui_kit/widgets/general_rich_text.dart';
+import '../../../ui_kit/widgets/general_text.dart';
+import '../../booking/food_item_bookng.dart';
 
 class PopularFoodDetails extends StatefulWidget {
-  const PopularFoodDetails({Key? key}) : super(key: key);
+  const PopularFoodDetails({
+    required ExperienceListResponse expResponse,
+    Key? key,
+  })  : _expResponse = expResponse,
+        super(key: key);
+
+  final ExperienceListResponse _expResponse;
 
   @override
   State<PopularFoodDetails> createState() => _PopularFoodDetailsState();
@@ -44,15 +51,13 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
       backgroundColor: HexColor.fromHex("#212129"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => const OrderHistoryScreen()),
+            MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
           );
         },
         backgroundColor: Color(0xffbb3127),
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),
@@ -67,6 +72,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
             padding: const EdgeInsets.only(left: 15.0, bottom: 12),
             child: GeneralNewAppBar(
               title: Strings.popularFoodDetailAppBarTitle,
+              // title: 'hello',
               titleColor: Colors.white,
               rightIcon: Resources.homeIconSvg,
             ),
@@ -83,14 +89,14 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
       child: ListView.builder(
           physics: BouncingScrollPhysics(),
           shrinkWrap: true,
-          itemCount: 3,
+          itemCount: widget._expResponse.t.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                      return FoodDetailScreen();
-                    }));
+                  return FoodDetailScreen();
+                }));
               },
               child: Container(
                 margin: EdgeInsets.only(bottom: 40),
@@ -129,7 +135,8 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                           height: 32.2,
                         ),
                         GeneralRichText(
-                          title: Strings.popularFoodDetailTitle,
+                          // title: Strings.popularFoodDetailTitle,
+                          title: widget._expResponse.t[index].title,
                           titleStyle:
                               appTheme.typographies.interFontFamily.label11,
                         ),
@@ -152,9 +159,11 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                           children: [
                             Container(
                               width: 13.9,
-                              child: Image.asset('assets/images/icons/star.png',
-                                  fit: BoxFit.fill,
-                              color: Colors.grey,),
+                              child: Image.asset(
+                                'assets/images/icons/star.png',
+                                fit: BoxFit.fill,
+                                color: Colors.grey,
+                              ),
                             ),
                             const SizedBox(
                               width: 5,
@@ -164,13 +173,14 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
-                                      fontSize: 14,
-                                color: Colors.grey,),
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(
-                          height:37,
+                          height: 37,
                         ),
                         GeneralText(
                           Strings.popularFoodDetailWowFactorTitle,
@@ -185,7 +195,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         const SizedBox(
                           height: 11.7,
                         ),
-                        wowFactors(appTheme),
+                        wowFactors(appTheme, index),
                       ],
                     )
                   ]),
@@ -196,10 +206,13 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
     );
   }
 
-  Widget wowFactors(IAppThemeData appTheme) {
+  Widget wowFactors(IAppThemeData appTheme, int index) {
     return Wrap(
       children: [
-        for (int i = 0; i < wowFactorsList.length; i++)
+        //for (int i = 0; i <  wowFactorsList.length; i++)
+        for (int i = 0;
+            i < widget._expResponse.t[index].experienceWowFactors.length;
+            i++)
           Padding(
             padding: const EdgeInsets.only(right: 8.1, bottom: 7.7),
             child: Container(
@@ -211,13 +224,35 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                 ),
               ),
               child: Container(
-                child: Image.asset(
-                  wowFactorsList[i].name != null
-                      ? wowFactorsList[i].name ?? ""
-                      : '',
-                  color: HexColor.fromHex("#f1c452"),
-                ),
+                child: widget._expResponse.t[index].experienceWowFactors[i]
+                            .wowFactorIconPath !=
+                        null
+                    ? SvgPicture.network(
+                        (widget._expResponse.t[index].experienceWowFactors[i]
+                            .wowFactorIconPath)!,
+
+                        // wowFactorsList[i].name != null
+                        //     ? wowFactorsList[i].name ?? ""
+                        //     : '',
+                        color: HexColor.fromHex("#f1c452"),
+                      )
+                    : Image.asset('assets/images/icons/fireworks.png'),
               ),
+              // child: Container(
+              //   child: Image.asset(
+              //     widget._expResponse.t[index].experienceWowFactors[i]
+              //                 .wowFactorName !=
+              //             null
+              //         ? widget._expResponse.t[index].experienceWowFactors[i]
+              //                 .wowFactorName ??
+              //             ""
+              //         : '',
+              //     // wowFactorsList[i].name != null
+              //     //     ? wowFactorsList[i].name ?? ""
+              //     //     : '',
+              //     color: HexColor.fromHex("#f1c452"),
+              //   ),
+              // ),
             ),
           ),
       ],

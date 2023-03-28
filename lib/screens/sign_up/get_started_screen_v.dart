@@ -1,5 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 
+import '../home/experiences_details/experience_details_screen_v.dart';
+
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -149,6 +151,11 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
           context,
           MaterialPageRoute(builder: (context) => SignUpScreen()),
         );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => ExperienceDetailsScreen()),
+        // );
+
         //    viewModel.goToForgotPasswordScreen();
       },
     );

@@ -106,6 +106,7 @@ class _FoodProductExperienceDetailsState
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GeneralText(
+                              // 'testing',
                               Strings.productDetailTitle,
                               style: appTheme
                                   .typographies.interFontFamily.headline6

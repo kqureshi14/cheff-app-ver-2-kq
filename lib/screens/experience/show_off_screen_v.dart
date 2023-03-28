@@ -8,7 +8,8 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../home/popular_food_detail.dart';
+import '../home/experiences_details/experience_details_screen_v.dart';
+import '../home/widget/popular_food_detail.dart';
 
 class ShowOffTimeScreen extends StatefulWidget {
   const ShowOffTimeScreen({Key? key}) : super(key: key);
@@ -361,7 +362,8 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return PopularFoodDetails();
+                  return ExperienceDetailsScreen();
+                  //  return PopularFoodDetails();
                 }));
                 // Navigator.push(
                 //   context,
