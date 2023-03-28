@@ -404,18 +404,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
               developer.log('Address is  ' + _addressController.text);
 
-              // viewModel.saveChef(
-              //   name: _nameController.text,
-              //   brandName: _brandController.text,
-              //   mobileNumber: _mobileNumberController.text,
-              //   address: _addressController.text,
-              //   context: context,
-              //   baseUrl: baseURLs[0],
-              // );
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SignUpQuestionireScreen()));
+              viewModel.saveChef(
+                name: _nameController.text,
+                brandName: _brandController.text,
+                mobileNumber: _mobileNumberController.text,
+                address: _addressController.text,
+                context: context,
+                baseUrl: baseURLs[0],
+              );
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => SignUpQuestionireScreen()));
 
               // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
 

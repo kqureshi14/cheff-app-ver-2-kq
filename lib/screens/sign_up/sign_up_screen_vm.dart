@@ -177,7 +177,11 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
           Toaster.infoToast(context: context, message: signupResponse.message);
-
+          await _cacheData(
+            context: context,
+            loginData: response.body,
+            baseUrl: Api.baseURL,
+          );
           // await _cacheData(
           //   context: context,
           //   loginData: response.body,
