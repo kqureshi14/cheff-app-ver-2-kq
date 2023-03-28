@@ -1,23 +1,31 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/resources.dart';
-import '../../constants/strings.dart';
-import '../../helpers/color_helper.dart';
-import '../../theme/app_theme_data/app_theme_data.dart';
-import '../../theme/app_theme_widget.dart';
-import '../../ui_kit/widgets/general_button.dart';
-import '../../ui_kit/widgets/general_dropdown.dart';
-import '../../ui_kit/widgets/general_new_appbar.dart';
-import '../../ui_kit/widgets/general_text.dart';
-import '../../ui_kit/widgets/general_text_input.dart';
-import '../user_account/user_profile.dart';
+import '../../../constants/resources.dart';
+import '../../../constants/strings.dart';
+import '../../../helpers/color_helper.dart';
+import '../../../models/home/food_details_menu_model.dart';
+import '../../../theme/app_theme_data/app_theme_data.dart';
+import '../../../theme/app_theme_widget.dart';
+import '../../../ui_kit/widgets/general_button.dart';
+import '../../../ui_kit/widgets/general_dropdown.dart';
+import '../../../ui_kit/widgets/general_new_appbar.dart';
+import '../../../ui_kit/widgets/general_text.dart';
+import '../../../ui_kit/widgets/general_text_input.dart';
+import '../../user_account/user_profile.dart';
 
 enum TabBars { details, menu, schedule, media }
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({Key? key}) : super(key: key);
+  // const FoodDetailScreen({Key? key}) : super(key: key);
 
+  const FoodDetailScreen({
+    required FoodMenuModel foodMenuModel,
+    Key? key,
+  })  : _foodMenuModel = foodMenuModel,
+        super(key: key);
+
+  final FoodMenuModel _foodMenuModel;
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
@@ -105,6 +113,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           name: "assets/images/icons/fnf.png"),
     ]);
     super.initState();
+  }
+
+  void loadWowFactor() {
+    // developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');
+    // var experienceWowFactor = widget.data.experienceWowFactors;
+    //
+    // for (int i = 0; i < experienceWowFactor.length; i++) {
+    //   wowFactorsList.addAll([
+    //     CustomModel(
+    //         icon: experienceWowFactor[i].wowFactorName,
+    //         name: experienceWowFactor[i].wowFactorIconPath),
+    //   ]);
+    // }
   }
 
   addQuantity() {

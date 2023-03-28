@@ -11,6 +11,10 @@ import '../../../ui_kit/widgets/general_rich_text.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../booking/food_item_bookng.dart';
 
+import 'dart:developer' as developer;
+
+import '../experience_menu_details/experience_menu_details_screen_v.dart';
+
 class PopularFoodDetails extends StatefulWidget {
   const PopularFoodDetails({
     required ExperienceListResponse expResponse,
@@ -93,9 +97,17 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
+                developer.log(
+                    ' Clicked data is ' + '${widget._expResponse.t[index].id}');
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (BuildContext context) {
+                //   return FoodDetailScreen();
+                // }));
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return FoodDetailScreen();
+                  return ExperienceMenuDetailsScreen(
+                    expId: widget._expResponse.t[index].id,
+                  );
                 }));
               },
               child: Container(

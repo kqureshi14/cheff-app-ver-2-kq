@@ -14,7 +14,7 @@ import '../foodie_profile/foodie_profile_booking_confirmed.dart';
 import '../foodie_profile/foodie_profile_decision.dart';
 import '../foodie_profile/foodie_profile_detail.dart';
 import '../foodie_profile/foodie_profile_order_completed.dart';
-import '../home/food_details_screen.dart';
+import '../home/widget/food_details_screen.dart';
 import '../home/food_item_booking_confirmed.dart';
 import 'booking_in_process_screen.dart';
 import 'food_item_advance_booking.dart';

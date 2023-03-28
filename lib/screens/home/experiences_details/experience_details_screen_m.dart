@@ -14,7 +14,5 @@ class ExperienceDetailsScreenState extends BaseState
   const factory ExperienceDetailsScreenState.loading() = Loading;
   const factory ExperienceDetailsScreenState.loaded(
     ExperienceListResponse experienceListResponse,
-    // WowFactorResponse wowFactorResponse,
-    // PreferenceResponse preferenceResponse
   ) = Loaded;
 }
