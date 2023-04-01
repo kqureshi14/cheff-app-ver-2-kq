@@ -252,6 +252,7 @@ abstract class Strings {
 
   static const letsGetTitle = "Let's get to know";
   static const signUpTitle = "each other";
+  static const signUpFields = 'All fields are required';
   static const signFullNameLabel = "Full Name";
   static const signBrandNameLabel = "Brand Name";
   static const signMobileNumberLabel = "Mobile Number";
@@ -408,6 +409,8 @@ abstract class Strings {
   static const verificationPopupTitle = "Verification\nCode";
   static const verificationPopupSubtitle =
       'We have sent you an SMS with a code to\n number +92 345 000 0000';
+  static const verificationPopupSubtitleForAuthPopUp =
+      'We have sent you an SMS with a code to\n number +';
   static const verificationPopupButton = "Verify";
   static const verificationPopupResendCode = "Resend Code";
 
