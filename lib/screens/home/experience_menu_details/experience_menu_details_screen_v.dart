@@ -5,33 +5,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../helpers/color_helper.dart';
 import '../../../helpers/experience_helper.dart';
+import '../../../models/experience/schedule_list_display.dart';
 import '../../../models/home/experience_list_response.dart';
 import '../../../models/home/food_details_menu_model.dart';
-import '../../../models/preference.dart';
-import '../../../models/wow_factor/wow_factor_response.dart';
+
 import '../../../setup.dart';
 import 'experience_menu_details_screen_m.dart';
 import 'experience_menu_details_screen_vm.dart';
-// import 'menu_experience_screen_v.dart';
 
 import 'dart:developer' as developer;
 
-import 'experience_menu_details_screen_m.dart';
-import 'experience_menu_details_screen_vm.dart';
-
-// import '../widget/experience_manager.dart';
-// import 'create_experience_screen_m.dart';
-// import 'create_experience_screen_vm.dart';
+import '../../../models/home/experience_list_response.dart' as experience_data;
 
 class ExperienceMenuDetailsScreen
     extends BaseView<ExperienceMenuDetailsScreenViewModel> {
   ExperienceMenuDetailsScreen({
     required int expId,
+    required experience_data.T experienceData,
     Key? key,
   })  : _expId = expId,
+        _experienceData = experienceData,
         super(key: key);
 
   final int _expId;
+  final experience_data.T _experienceData;
 
   @override
   Widget buildScreen({
@@ -52,11 +49,12 @@ class ExperienceMenuDetailsScreen
               floatingActionButton: displayActionButton(context),
               body: state.when(
                   loading: displayLoader,
-                  loaded: (foodMenu) => _displayLoadedData(
+                  loaded: (foodMenu, scheduleData) => _displayLoadedData(
                         context,
                         appTheme,
                         state,
                         foodMenu,
+                        scheduleData,
                         // wowFactor,
                         // preferences,
                       )),
@@ -107,9 +105,11 @@ class ExperienceMenuDetailsScreen
     appTheme,
     state,
     FoodMenuModel foodMenuModel,
+    ScheduleData scheduleData,
   ) {
     return FoodDetailScreen(
-      foodMenuModel: foodMenuModel,
+      foodMenuModel: foodMenuModel, experienceData: _experienceData,
+      scheduleData: scheduleData,
       // expResponse: expResp,
       // wowFactor: wowFactor,
       // preferences: preferences,

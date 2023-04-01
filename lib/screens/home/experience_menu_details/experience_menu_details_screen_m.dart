@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:chef/base/base.dart';
 
+import '../../../models/experience/schedule_list_display.dart';
 import '../../../models/home/experience_list_response.dart';
 import '../../../models/home/food_details_menu_model.dart';
 import '../../../models/preference.dart';
@@ -15,5 +16,6 @@ class ExperienceMenuDetailsScreenState extends BaseState
   const factory ExperienceMenuDetailsScreenState.loading() = Loading;
   const factory ExperienceMenuDetailsScreenState.loaded(
       FoodMenuModel foodMenuModel,
+      ScheduleData scheduleData,
       ) = Loaded;
 }

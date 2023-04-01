@@ -13,6 +13,7 @@ import '../../booking/food_item_bookng.dart';
 
 import 'dart:developer' as developer;
 
+import '../../experience/component/create_experience_screen_v.dart';
 import '../experience_menu_details/experience_menu_details_screen_v.dart';
 
 class PopularFoodDetails extends StatefulWidget {
@@ -55,9 +56,13 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
       backgroundColor: HexColor.fromHex("#212129"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
+          // );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
+            MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
           );
         },
         backgroundColor: Color(0xffbb3127),
@@ -107,6 +112,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                     MaterialPageRoute(builder: (BuildContext context) {
                   return ExperienceMenuDetailsScreen(
                     expId: widget._expResponse.t[index].id,
+                    experienceData: widget._expResponse.t[index],
                   );
                 }));
               },

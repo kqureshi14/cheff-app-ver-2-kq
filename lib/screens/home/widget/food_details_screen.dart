@@ -1,9 +1,11 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
+import '../../../models/experience/schedule_list_display.dart';
 import '../../../models/home/food_details_menu_model.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
@@ -13,6 +15,9 @@ import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_text.dart';
 import '../../../ui_kit/widgets/general_text_input.dart';
 import '../../user_account/user_profile.dart';
+import '../../../models/home/experience_list_response.dart' as experience_data;
+
+import 'dart:developer' as developer;
 
 enum TabBars { details, menu, schedule, media }
 
@@ -21,11 +26,18 @@ class FoodDetailScreen extends StatefulWidget {
 
   const FoodDetailScreen({
     required FoodMenuModel foodMenuModel,
+    required experience_data.T experienceData,
+    required ScheduleData scheduleData,
     Key? key,
   })  : _foodMenuModel = foodMenuModel,
+        _experienceData = experienceData,
+        _scheduleData = scheduleData,
         super(key: key);
 
   final FoodMenuModel _foodMenuModel;
+  final experience_data.T _experienceData;
+  final ScheduleData _scheduleData;
+
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
 }
@@ -48,6 +60,22 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
+
+  List months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+  String _price = '';
 
   @override
   void initState() {
@@ -74,58 +102,93 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Couple');
     items.add('Single');
 
-    menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
-      CustomModel(name: "Buritto"),
-      CustomModel(name: "Vegetable Salad"),
-      CustomModel(name: "Hyderabadi Rice"),
-      CustomModel(name: "Soft Drinks"),
-    ]);
-    wowFactorsList.addAll([
-      CustomModel(
-          icon: Strings.productDetailWowFactorGarden,
-          name: "assets/images/icons/garden.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorFireworks,
-          name: "assets/images/icons/fireworks.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorPetFriendly,
-          name: "assets/images/icons/pet_friendly.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorWifi,
-          name: "assets/images/icons/wifi_2.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorMusic,
-          name: "assets/images/icons/music.png"),
-      CustomModel(
-          icon: Strings.productDetailWowFactorParking,
-          name: "assets/images/icons/parking.png")
-    ]);
-    preferencesList.addAll([
-      CustomModel(
-          icon: Strings.foodDetailPreferenceCouple,
-          name: "assets/images/icons/couple.png"),
-      CustomModel(
-          icon: Strings.foodDetailPreferenceFamily,
-          name: "assets/images/icons/family.png"),
-      CustomModel(
-          icon: Strings.foodDetailPreferenceFnf,
-          name: "assets/images/icons/fnf.png"),
-    ]);
+    if (widget._foodMenuModel.t.isNotEmpty) {
+      _price = widget._foodMenuModel.t[0].price.toString();
+    }
+    // menuListItems.addAll([
+    //   CustomModel(name: "Sindhi Biryani"),
+    //   CustomModel(name: "Buritto"),
+    //   CustomModel(name: "Vegetable Salad"),
+    //   CustomModel(name: "Hyderabadi Rice"),
+    //   CustomModel(name: "Soft Drinks"),
+    // ]);
+    // wowFactorsList.addAll([
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorGarden,
+    //       name: "assets/images/icons/garden.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorFireworks,
+    //       name: "assets/images/icons/fireworks.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorPetFriendly,
+    //       name: "assets/images/icons/pet_friendly.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorWifi,
+    //       name: "assets/images/icons/wifi_2.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorMusic,
+    //       name: "assets/images/icons/music.png"),
+    //   CustomModel(
+    //       icon: Strings.productDetailWowFactorParking,
+    //       name: "assets/images/icons/parking.png")
+    // ]);
+    loadMenuItems();
+    loadWowFactor();
+    loadPerferences();
+    // preferencesList.addAll([
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceCouple,
+    //       name: "assets/images/icons/couple.png"),
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceFamily,
+    //       name: "assets/images/icons/family.png"),
+    //   CustomModel(
+    //       icon: Strings.foodDetailPreferenceFnf,
+    //       name: "assets/images/icons/fnf.png"),
+    // ]);
     super.initState();
   }
 
+  void loadMenuItems() {
+    developer.log(' Length of Menu is ' + '${widget._foodMenuModel.t.length}');
+    for (int i = 0; i < widget._foodMenuModel.t.length; i++) {
+      // widget._foodMenuModel.t[i].
+      menuListItems.addAll([
+        CustomModel(name: widget._foodMenuModel.t[i].dish),
+        // CustomModel(name: "Buritto"),
+        // CustomModel(name: "Vegetable Salad"),
+        // CustomModel(name: "Hyderabadi Rice"),
+        // CustomModel(name: "Soft Drinks"),
+      ]);
+    }
+  }
+
   void loadWowFactor() {
-    // developer.log(' Wow factors are ' + '${widget.data.experienceWowFactors}');
-    // var experienceWowFactor = widget.data.experienceWowFactors;
+    developer.log(
+        ' Wow factors are ' + '${widget._experienceData.experienceWowFactors}');
+    var experienceWowFactor = widget._experienceData.experienceWowFactors;
     //
-    // for (int i = 0; i < experienceWowFactor.length; i++) {
-    //   wowFactorsList.addAll([
-    //     CustomModel(
-    //         icon: experienceWowFactor[i].wowFactorName,
-    //         name: experienceWowFactor[i].wowFactorIconPath),
-    //   ]);
-    // }
+    for (int i = 0; i < experienceWowFactor.length; i++) {
+      wowFactorsList.addAll([
+        CustomModel(
+            icon: experienceWowFactor[i].wowFactorName,
+            name: experienceWowFactor[i].wowFactorIconPath),
+      ]);
+    }
+  }
+
+  void loadPerferences() {
+    developer.log(' loadPerferences factors are ' +
+        '${widget._experienceData.experiencePreferences}');
+    var experiencePreferences = widget._experienceData.experiencePreferences;
+
+    for (int i = 0; i < experiencePreferences.length; i++) {
+      preferencesList.addAll([
+        CustomModel(
+            icon: experiencePreferences[i].preferenceName,
+            name: experiencePreferences[i].preferenceIconPath),
+      ]);
+    }
   }
 
   addQuantity() {
@@ -198,7 +261,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 11,
                           ),
                           menuTabView(context, appTheme),
@@ -220,7 +283,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   title: Strings.foodDetailHeading2),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 11,
                           ),
                           menuTabView(context, appTheme),
@@ -254,7 +317,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             top: 140,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-              padding: EdgeInsetsDirectional.only(start: 25),
+              padding: const EdgeInsetsDirectional.only(start: 25),
               child: Column(
                 children: [
                   Container(
@@ -264,12 +327,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               topLeft: Radius.circular(30),
                               bottomLeft: Radius.circular(30))),
                       height: 118,
-                      padding: EdgeInsetsDirectional.only(bottom: 0),
+                      padding: const EdgeInsetsDirectional.only(bottom: 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.only(end: 14, top: 30),
+                        padding:
+                            const EdgeInsetsDirectional.only(end: 14, top: 30),
                         child: Column(children: [
                           getFoodMainHeading(appTheme: appTheme),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Padding(
@@ -415,7 +479,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          padding: EdgeInsetsDirectional.only(
+                          padding: const EdgeInsetsDirectional.only(
                               start: 25, end: 25, bottom: 15, top: 15),
                           decoration: BoxDecoration(
                               color: HexColor.fromHex("#8ea659"),
@@ -425,7 +489,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             Strings.appCurrency +
                                 "." +
                                 " " +
-                                Strings.foodProductItemPrice,
+                                //widget._foodMenuModel.t[]
+                                _price,
+                            // widget._foodMenuModel.t.isNotEmpty? widget._foodMenuModel.t[0].price
+                            //     .toString():    Strings.foodProductItemPrice,
                             style: appTheme
                                 .typographies.interFontFamily.headline4
                                 .copyWith(
@@ -464,7 +531,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
     return Padding(
-      padding: EdgeInsetsDirectional.only(end: 12),
+      padding: const EdgeInsetsDirectional.only(end: 12),
       child: Container(
           padding: const EdgeInsetsDirectional.only(
               start: 9.9, end: 18.3, bottom: 12),
@@ -474,14 +541,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: widget._foodMenuModel.t.length,
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 13,
                       ),
                       Row(
@@ -519,7 +586,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    getFoodItemTitle(appTheme: appTheme),
+                                    getFoodItemTitle(
+                                        appTheme: appTheme,
+                                        itemTitle: widget
+                                            ._foodMenuModel.t[index].dish),
                                     Image.asset(
                                       Resources.expEditPenPNG,
                                       height: 17,
@@ -527,8 +597,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                     // getFoodItemAmount(appTheme: appTheme),
                                   ],
                                 ),
-                                getFoodItemSubTitle(appTheme: appTheme),
-                                getFoodItemDescription(appTheme: appTheme),
+                                getFoodItemSubTitle(
+                                    appTheme: appTheme,
+                                    subItemTitle:
+                                        widget._foodMenuModel.t[index].dish),
+                                getFoodItemDescription(
+                                    appTheme: appTheme,
+                                    foodDescription: widget
+                                        ._foodMenuModel.t[index].description),
                               ],
                             ),
                           ),
@@ -549,10 +625,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               const SizedBox(
                                 width: 4,
                               ),
-                              getFoodItemUsers(appTheme: appTheme),
+                              //  getFoodItemUsers(appTheme: appTheme,numberOfUserServed:widget._foodMenuModel.t[index]. ),
+                              getFoodItemUsers(
+                                appTheme: appTheme,
+                              ),
                             ],
                           ),
-                          getFoodItemAmount(appTheme: appTheme),
+                          getFoodItemAmount(
+                              appTheme: appTheme,
+                              itemPrice: widget._foodMenuModel.t[index].price
+                                  .toString()),
                         ],
                       ),
                       // SizedBox(
@@ -580,25 +662,31 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemTitle({required IAppThemeData appTheme}) {
+  Widget getFoodItemTitle(
+      {required IAppThemeData appTheme, required String itemTitle}) {
     return GeneralText(
-      Strings.foodProductTitle,
+      //     Strings.foodProductTitle,
+      itemTitle,
       style: appTheme.typographies.interFontFamily.headline6
           .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
     );
   }
 
-  Widget getFoodItemSubTitle({required IAppThemeData appTheme}) {
+  Widget getFoodItemSubTitle(
+      {required IAppThemeData appTheme, required String subItemTitle}) {
     return GeneralText(
-      Strings.foodProductSubTitle,
+      //   Strings.foodProductSubTitle,
+      subItemTitle,
       style: appTheme.typographies.interFontFamily.headline6
           .copyWith(fontSize: 15, color: HexColor.fromHex('#b0c18b')),
     );
   }
 
-  Widget getFoodItemAmount({required IAppThemeData appTheme}) {
+  Widget getFoodItemAmount(
+      {required IAppThemeData appTheme, required String itemPrice}) {
     return GeneralText(
-      Strings.appCurrency + ". " + Strings.foodProductItemPrice,
+      //  Strings.appCurrency + ". " + Strings.foodProductItemPrice,
+      Strings.appCurrency + ". " + itemPrice,
       style: appTheme.typographies.interFontFamily.headline6.copyWith(
           fontSize: 28,
           fontWeight: FontWeight.w500,
@@ -606,9 +694,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemDescription({required IAppThemeData appTheme}) {
+  Widget getFoodItemDescription(
+      {required IAppThemeData appTheme, required String foodDescription}) {
     return GeneralText(
-      Strings.foodProductItemDescription,
+      //  Strings.foodProductItemDescription,
+      foodDescription,
       maxLines: 3,
       textAlign: TextAlign.start,
       style: appTheme.typographies.interFontFamily.headline6
@@ -616,9 +706,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget getFoodItemUsers({required IAppThemeData appTheme}) {
+  Widget getFoodItemUsers(
+      {required IAppThemeData appTheme, String? numberOfUserServed}) {
     return GeneralText(
-      Strings.foodProductItemUsers,
+      // Strings.foodProductItemUsers,
+      numberOfUserServed ?? Strings.foodProductItemUsers,
       style: appTheme.typographies.interFontFamily.headline6
           .copyWith(fontSize: 16, color: HexColor.fromHex('#ffffff')),
     );
@@ -965,12 +1057,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         Stack(
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.only(start: 20, bottom: 50),
+          padding: const EdgeInsetsDirectional.only(start: 20, bottom: 50),
           child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: widget._scheduleData.t.daysGroups.length, // 4,
               itemBuilder: (BuildContext context, int index) {
+                var item = widget._scheduleData.t.daysGroups[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -995,14 +1088,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(children: [
-                            GeneralText(selectedDay.toUpperCase(),
+                            //   GeneralText(selectedDay.toUpperCase(),
+                            GeneralText(dayOfMonth(item.scheduledDate),
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
                                         color: HexColor.fromHex('#f1c452'),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700)),
-                            GeneralText(selectedDate,
+                            GeneralText(
+                                // selectedDate,
+                                item.scheduledDate.day.toString(),
                                 style: appTheme
                                     .typographies.interFontFamily.headline2
                                     .copyWith(
@@ -1017,40 +1113,42 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           SizedBox(
                             width: 27,
                           ),
-                          Expanded(
-                            child: Container(
-                              width: double.infinity,
-                              padding:
-                                  EdgeInsets.only(left: 8, top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                  color: HexColor.fromHex('#2b2b33'),
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20))),
-                              child: Wrap(children: [
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                timeSelectorBox(appTheme,
-                                    showSelectedTime: false),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                              ]),
-                            ),
-                          )
+                          displayScheduleTime(item.hours),
+                          // Expanded(
+                          //   child: Container(
+                          //     width: double.infinity,
+                          //     padding:
+                          //         EdgeInsets.only(left: 8, top: 10, bottom: 10),
+                          //     decoration: BoxDecoration(
+                          //         color: HexColor.fromHex('#2b2b33'),
+                          //         borderRadius: const BorderRadius.only(
+                          //             topLeft: Radius.circular(20),
+                          //             bottomLeft: Radius.circular(20))),
+                          //     child: Wrap(
+                          //         children: [
+                          //       timeSelectorBox(appTheme,
+                          //           showSelectedTime: false),
+                          //       SizedBox(
+                          //         width: 7,
+                          //       ),
+                          //       timeSelectorBox(appTheme,
+                          //           showSelectedTime: false),
+                          //       SizedBox(
+                          //         width: 7,
+                          //       ),
+                          //       timeSelectorBox(appTheme,
+                          //           showSelectedTime: false),
+                          //       SizedBox(
+                          //         width: 7,
+                          //       ),
+                          //       timeSelectorBox(appTheme,
+                          //           showSelectedTime: false),
+                          //       SizedBox(
+                          //         width: 7,
+                          //       ),
+                          //     ]),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -1081,6 +1179,46 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         ),
       ],
     );
+  }
+
+  Widget displayScheduleTime(List<Hour> _hours) {
+    final appTheme = AppTheme.of(context).theme;
+    return Expanded(
+      child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 8, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+              color: HexColor.fromHex('#2b2b33'),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20))),
+          child: Wrap(
+            direction: Axis.horizontal,
+            children: [
+              for (var i in _hours) //displayTimeData(i),
+                timeSelectorBox(
+                  appTheme,
+                  i.startTime,
+                  i,
+                  //  false,
+                  // showSelectedTime: _appService.state.orderHelper!.scheduleId ==
+                  //     i.scheduleId.toString()
+                  //     ? true
+                  //     : false,
+                ),
+              // const SizedBox(
+              //   width: 7,
+              // ),
+            ],
+          )),
+    );
+  }
+
+  String dayOfMonth(DateTime _date) {
+    var dateData = DateFormat('EEEE').format(_date);
+    selectedMonth = months[_date.month - 1];
+
+    return dateData.substring(0, 3);
   }
 
   Future<void> selectStartDate(
@@ -1528,7 +1666,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 23),
               child: GeneralText(
-                Strings.productDetailAboutSubTitle,
+                // Strings.productDetailAboutSubTitle,
+                widget._experienceData.description,
                 style: appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 14,
                     color: HexColor.fromHex('#ffffff'),
@@ -1583,20 +1722,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     color: HexColor.fromHex('#f1c452'),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Image.asset(
                   Resources.userIconPNG,
                   height: 12,
                 ),
                 GeneralText(
-                  '22',
+                  widget._experienceData.persons,
+                  //    '22',
                   style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 16,
                     color: HexColor.fromHex('#f1c452'),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
               ],
@@ -1632,7 +1772,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: GeneralText(
-                'House # 11, Street # 65 F-11/4, Islamabad',
+                // 'House # 11, Street # 65 F-11/4, Islamabad',
+                widget._experienceData.chefAddress,
                 style: appTheme.typographies.interFontFamily.headline6.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -1657,6 +1798,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 ),
                 GeneralText(
                   Strings.foodDetailSubHost,
+                  // widget._experienceData.subHostName,
                   style:
                       appTheme.typographies.interFontFamily.headline6.copyWith(
                     fontSize: 20,
@@ -1671,7 +1813,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               child: Row(
                 children: [
                   GeneralText(
-                    'Zoya Khan',
+                    widget._experienceData.subHostName,
                     style: appTheme.typographies.interFontFamily.headline6
                         .copyWith(
                       fontSize: 14,
@@ -1679,7 +1821,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 50,
                   ),
                   Container(
@@ -1687,11 +1829,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     width: 1,
                     color: Colors.grey,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                   ),
                   GeneralText(
-                    '0300 5000000',
+                    widget._experienceData.subHostMobileNo,
                     style: appTheme.typographies.interFontFamily.headline6
                         .copyWith(
                       fontSize: 14,
@@ -1755,7 +1897,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                         color: HexColor.fromHex("#f1c452"),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(
+                      // child: Image.asset(
+                      //     items[i].name != null ? items[i].name ?? "" : ''),
+                      child: SvgPicture.network(
                           items[i].name != null ? items[i].name ?? "" : ''),
                     ),
                   ),
@@ -1775,28 +1919,58 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
       {bool showSelectedTime = false}) {
-    return Container(
-      // width: 71,
-      // height: 36,
-      child: GeneralText(selectedTime,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+    var finalDate = '';
+    finalDate = InfininURLHelpers.getAmPm(displayTime);
+    return Padding(
+        padding: const EdgeInsets.only(right: 7),
+        child: Container(
+          // width: 71,
+          // height: 36,
+
+          child: GeneralText(finalDate,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: showSelectedTime
+                      ? HexColor.fromHex('#212129')
+                      : HexColor.fromHex('#f1c452'),
+                  fontSize: 14)),
+          decoration: BoxDecoration(
+              border: Border.all(color: HexColor.fromHex('#f1c452')),
               color: showSelectedTime
-                  ? HexColor.fromHex('#212129')
-                  : HexColor.fromHex('#f1c452'),
-              fontSize: 14)),
-      decoration: BoxDecoration(
-          border: Border.all(color: HexColor.fromHex('#f1c452')),
-          color: showSelectedTime
-              ? HexColor.fromHex('#f1c452')
-              : HexColor.fromHex('#2b2b33'),
-          borderRadius: BorderRadius.circular(10)),
-      padding:
-          EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
-      margin: EdgeInsetsDirectional.only(bottom: 8),
-    );
+                  ? HexColor.fromHex('#f1c452')
+                  : HexColor.fromHex('#2b2b33'),
+              borderRadius: BorderRadius.circular(10)),
+          padding: const EdgeInsetsDirectional.only(
+              top: 8, bottom: 8, start: 16, end: 16),
+          //padding: const EdgeInsets.only(right: 7, left: 7),
+          margin: const EdgeInsetsDirectional.only(
+            bottom: 8,
+          ),
+        ));
   }
+  // Widget timeSelectorBox(IAppThemeData appTheme,
+  //     {bool showSelectedTime = false}) {
+  //   return Container(
+  //     // width: 71,
+  //     // height: 36,
+  //     child: GeneralText(selectedTime,
+  //         style: appTheme.typographies.interFontFamily.headline6.copyWith(
+  //             color: showSelectedTime
+  //                 ? HexColor.fromHex('#212129')
+  //                 : HexColor.fromHex('#f1c452'),
+  //             fontSize: 14)),
+  //     decoration: BoxDecoration(
+  //         border: Border.all(color: HexColor.fromHex('#f1c452')),
+  //         color: showSelectedTime
+  //             ? HexColor.fromHex('#f1c452')
+  //             : HexColor.fromHex('#2b2b33'),
+  //         borderRadius: BorderRadius.circular(10)),
+  //     padding:
+  //         EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+  //     margin: EdgeInsetsDirectional.only(bottom: 8),
+  //   );
+  // }
 
   Widget noOfPersonsField({
     required IAppThemeData appTheme,

@@ -6,6 +6,7 @@ import '../../../helpers/helpers.dart';
 import '../../../models/experience/experience_request.dart'
     as experience_request;
 import '../../../models/experience/experience_response.dart' as expresp;
+import '../../../models/experience/schedule_list_display.dart';
 import '../../../models/home/experience_list_response.dart';
 import '../../../models/home/food_details_menu_model.dart';
 import '../../../models/home/food_menu_request.dart';
@@ -16,6 +17,9 @@ import '../../../setup.dart';
 import 'experience_menu_details_screen_m.dart' as exp_menu_details;
 
 import 'package:chef/helpers/data_request.dart' as data_request;
+
+import 'package:chef/models/home/food_menu_request.dart' as menurequest;
+import 'package:chef/models/experience/schedule_response.dart';
 // import 'menu_experience_screen_v.dart';
 // import 'create_experience_screen_m.dart' as create_experience;
 
@@ -42,6 +46,7 @@ class ExperienceMenuDetailsScreenViewModel
   late final wowfactor.WowFactorResponse _wowFactorResponse;
   late final preference.PreferenceResponse _preferenceResponse;
   late FoodMenuModel foodMenuData;
+  late ScheduleData scheduleData;
 
   initialize() {
     // if (_wowFactorResponse.t.isNotEmpty) {
@@ -243,12 +248,34 @@ class ExperienceMenuDetailsScreenViewModel
     );
 
     foodMenuData = foodMenuModelFromJson(response.body);
-    emit(exp_menu_details.Loaded(foodMenuData));
+    getScheduleData(experienceId: experienceId);
+    // emit(exp_menu_details.Loaded(foodMenuData));
     //  getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData);
     //  emit(Loaded(foodMenuData));
 
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
+  }
+
+  Future<void> getScheduleData({
+    required String experienceId,
+    // required FoodMenuModel foodMenuModel,
+  }) async {
+    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
+    // emit(const Loading());
+
+    final scheduleRequest = menurequest.FoodMenuRequest(
+      t: int.parse(experienceId),
+    ).toJson();
+
+    final response = await _network.post(path: url, data: scheduleRequest);
+
+    debugPrint("schedule response\n" + response.body.toString());
+
+    // final scheduleData = scheduleModelFromJson(response.body);
+    scheduleData = scheduleModelFromJson(response.body);
+    emit(exp_menu_details.Loaded(foodMenuData, scheduleData));
+    // loadPreference(foodMenuModel: foodMenuModel, scheduleData: scheduleData);
   }
 
   // void loadWowFactors() async {

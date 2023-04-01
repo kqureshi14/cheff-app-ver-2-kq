@@ -35,7 +35,7 @@ class ExperienceDetailsScreen
               return false;
             },
             child: Scaffold(
-              floatingActionButton: displayActionButton(context),
+              //   floatingActionButton: displayActionButton(context),
               body: state.when(
                   loading: displayLoader,
                   loaded: (expResp) => _displayLoadedData(
@@ -75,7 +75,7 @@ class ExperienceDetailsScreen
                 final _appService = locateService<ApplicationService>();
                 // _appService.state?.experienceHelper   =_experienceHelper;
                 //_appService.updateExperienceHelper(viewModel.);
-                viewModel.saveExperience(ctx);
+                // viewModel.saveExperience(ctx);
               },
               child: SvgPicture.asset(
                 Resources.getSignInRightArrow,
