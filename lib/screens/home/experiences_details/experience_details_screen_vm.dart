@@ -378,18 +378,18 @@ class ExperienceDetailsScreenViewModel
       Toaster.infoToast(context: context, message: 'Location cannot be empty');
       return false;
     }
-    if ((experienceHelper.subHostName ?? '').isEmpty) {
-      isValidate = false;
-      Toaster.infoToast(
-          context: context, message: 'SubHost Name cannot be empty');
-      return false;
-    }
-    if ((experienceHelper.subHostMobileNumber ?? '').isEmpty) {
-      isValidate = false;
-      Toaster.infoToast(
-          context: context, message: 'SubHost Mobile Number cannot be empty');
-      return false;
-    }
+    // if ((experienceHelper.subHostName ?? '').isEmpty) {
+    //   isValidate = false;
+    //   Toaster.infoToast(
+    //       context: context, message: 'SubHost Name cannot be empty');
+    //   return false;
+    // }
+    // if ((experienceHelper.subHostMobileNumber ?? '').isEmpty) {
+    //   isValidate = false;
+    //   Toaster.infoToast(
+    //       context: context, message: 'SubHost Mobile Number cannot be empty');
+    //   return false;
+    // }
 
     if (experienceHelper.selectedWowFactors.isEmpty) {
       isValidate = false;

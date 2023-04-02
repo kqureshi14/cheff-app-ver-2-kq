@@ -509,7 +509,7 @@ abstract class Strings {
   static const createExperienceHomeTitle = "Home";
   static const createExperienceOtherTitle = "Other";
   static const createExperienceSubHostTitle = "Sub Host";
-  static const menuExperienceTitle = "Build your menu";
+  static const menuExperienceTitle = "Build your MENU";
   static const menuExperienceDishTitle = "Dish";
   static const menuExperienceDescriptionTitle = "Description";
   static const menuExperiencePriceTitle = "Price";

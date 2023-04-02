@@ -524,6 +524,113 @@ class ExperienceManagerState extends State<ExperienceManager> {
                   SizedBox(
                     height: 52,
                   ),
+                  // Column(
+                  //   children: [
+                  //     Row(
+                  //       children: [
+                  //         GeneralText(
+                  //           Strings.createExperienceSubHostTitle,
+                  //           textAlign: TextAlign.center,
+                  //           style: appTheme
+                  //               .typographies.interFontFamily.headline6
+                  //               .copyWith(
+                  //               color: const Color(0xfffbeccb),
+                  //               fontSize: 18.0,
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //         SizedBox(
+                  //           width: 22,
+                  //         ),
+                  //         InkWell(
+                  //           onTap: () {
+                  //             var currentSelectedOption = viewModel.subhost;
+                  //             if (!(currentSelectedOption ==
+                  //                 Strings.createExperienceSubHostTitle)) {
+                  //               viewModel.changesubHostOption(
+                  //                   Strings.createExperienceSubHostTitle);
+                  //             }else{
+                  //               viewModel.changesubHostOption(" ");
+                  //             }
+                  //           },
+                  //           child: Container(
+                  //             child: viewModel.subhost ==
+                  //                 Strings.createExperienceSubHostTitle
+                  //                 ? Image.asset(
+                  //               Resources.checkPNG,
+                  //               height: 22,
+                  //             )
+                  //                 : Image.asset(
+                  //               Resources. transparentRingPNG,
+                  //               height: 22,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     SizedBox(
+                  //       height: 10,
+                  //     ),
+                  //     Container(
+                  //       margin: EdgeInsets.only(right: 29),
+                  //       child: Row(
+                  //         children: [
+                  //           Expanded(
+                  //             child: GeneralTextInput(
+                  //                 height: 51,
+                  //                 controller: viewModel.nameController,
+                  //                 inputType: InputType.text,
+                  //                 isEnable:  ((viewModel.subhost ==
+                  //                     Strings.createExperienceSubHostTitle))?true:false,
+                  //                 isMultiline: true,
+                  //                 backgroundColor:
+                  //                 appTheme.colors.textFieldFilledColor,
+                  //                 inputBorder: appTheme.focusedBorder,
+                  //                 valueStyle:
+                  //                 const TextStyle(color: Colors.white),
+                  //                 hint: 'Name',
+                  //                 hintStyle: TextStyle(
+                  //                     color: Colors.white.withOpacity(0.4),
+                  //                     fontSize: 14.0),
+                  //                 // valueStyle: valueStyle,
+                  //                 onChanged: (newValue) {
+                  //                   viewModel.nameController.text = newValue;
+                  //                   _experienceHelper.subHostName =
+                  //                       newValue; // subHostName
+                  //                 }),
+                  //           ),
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Expanded(
+                  //             child: GeneralTextInput(
+                  //                 height: 51,
+                  //                 controller: viewModel.mobileController,
+                  //                 inputType: InputType.digit,
+                  //                 isMultiline: true,
+                  //                 isEnable: ((viewModel.subhost ==
+                  //                     Strings.createExperienceSubHostTitle))?true:false,
+                  //                 backgroundColor:
+                  //                 appTheme.colors.textFieldFilledColor,
+                  //                 inputBorder: appTheme.focusedBorder,
+                  //                 valueStyle:
+                  //                 const TextStyle(color: Colors.white),
+                  //                 hint: 'Mobile',
+                  //                 hintStyle: TextStyle(
+                  //                     color: Colors.white.withOpacity(0.4),
+                  //                     fontSize: 14.0),
+                  //                 // valueStyle: valueStyle,
+                  //                 onChanged: (newValue) {
+                  //                   viewModel.mobileController.text = newValue;
+                  //                   _experienceHelper.subHostMobileNumber =
+                  //                       newValue;
+                  //                 }),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+
                   Column(
                     children: [
                       Row(
@@ -580,6 +687,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   height: 51,
                                   controller: _nameController,
                                   inputType: InputType.text,
+                                  isEnable:  ((subhost ==
+                                      Strings.createExperienceSubHostTitle))?true:false,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -605,6 +714,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   controller: _mobileController,
                                   inputType: InputType.digit,
                                   isMultiline: true,
+                                  isEnable:  ((subhost ==
+                                      Strings.createExperienceSubHostTitle))?true:false,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
                                   inputBorder: appTheme.focusedBorder,
