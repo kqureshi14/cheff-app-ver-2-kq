@@ -211,7 +211,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             inputBorder: appTheme.focusedBorder,
                             valueStyle: const TextStyle(color: Colors.white),
                             hint:
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                                'Enter your experience description',
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.4),
                                 fontSize: 14.0),
@@ -223,12 +223,13 @@ class ExperienceManagerState extends State<ExperienceManager> {
                     ),
                   ),
                   const SizedBox(
-                    height: 36,
+                    height: 80,
                   ),
-                  const SizedBox(
-                    height: 44,
-                  ),
+
                   displayWowFactor(appTheme, widget._wowFactor),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   displayPreferences(appTheme, widget._preferences),
                   const SizedBox(
                     height: 50,
@@ -278,12 +279,14 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             Strings.createExperiencePerItemTitle,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: appTheme
+                            style: price ==
+                                Strings.createExperiencePerItemTitle?
+                                const TextStyle(color: Colors.white): appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    color: const Color(0xff909094),
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500),
+                                color: const Color(0xff909094),
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
                             width: 22,
@@ -316,12 +319,14 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           GeneralText(
                             Strings.createExperienceLabelTitle,
                             textAlign: TextAlign.center,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500),
+                            style:price ==
+                                Strings.createExperienceLabelTitle ?
+                              const TextStyle(color: Colors.white): appTheme
+                .typographies.interFontFamily.headline6
+                .copyWith(
+                color: const Color(0xff909094),
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -431,12 +436,14 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           GeneralText(
                             Strings.createExperienceHomeTitle,
                             textAlign: TextAlign.center,
-                            style: appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                    color: const Color(0xff909094),
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500),
+                            style:location ==
+                                Strings.createExperienceHomeTitle ?
+                              const TextStyle(color: Colors.white): appTheme
+                .typographies.interFontFamily.headline6
+                .copyWith(
+                color: const Color(0xff909094),
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
                             width: 22,
@@ -470,12 +477,14 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           GeneralText(
                             Strings.createExperienceOtherTitle,
                             textAlign: TextAlign.center,
-                            style: appTheme
+                            style: location ==
+                                Strings.createExperienceOtherTitle ?
+                            const TextStyle(color: Colors.white): appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500),
+                                color: const Color(0xff909094),
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),

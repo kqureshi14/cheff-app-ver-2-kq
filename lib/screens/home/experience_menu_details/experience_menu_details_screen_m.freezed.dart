@@ -19,19 +19,23 @@ mixin _$ExperienceMenuDetailsScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(FoodMenuModel foodMenuModel) loaded,
+    required TResult Function(
+            FoodMenuModel foodMenuModel, ScheduleData scheduleData)
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +118,9 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(FoodMenuModel foodMenuModel) loaded,
+    required TResult Function(
+            FoodMenuModel foodMenuModel, ScheduleData scheduleData)
+        loaded,
   }) {
     return loading();
   }
@@ -123,7 +129,8 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
   }) {
     return loading?.call();
   }
@@ -132,7 +139,8 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -181,7 +189,7 @@ abstract class Loading implements ExperienceMenuDetailsScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
-  $Res call({FoodMenuModel foodMenuModel});
+  $Res call({FoodMenuModel foodMenuModel, ScheduleData scheduleData});
 }
 
 /// @nodoc
@@ -197,12 +205,17 @@ class __$$LoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? foodMenuModel = freezed,
+    Object? scheduleData = freezed,
   }) {
     return _then(_$Loaded(
       foodMenuModel == freezed
           ? _value.foodMenuModel
           : foodMenuModel // ignore: cast_nullable_to_non_nullable
               as FoodMenuModel,
+      scheduleData == freezed
+          ? _value.scheduleData
+          : scheduleData // ignore: cast_nullable_to_non_nullable
+              as ScheduleData,
     ));
   }
 }
@@ -210,14 +223,16 @@ class __$$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(this.foodMenuModel);
+  const _$Loaded(this.foodMenuModel, this.scheduleData);
 
   @override
   final FoodMenuModel foodMenuModel;
+  @override
+  final ScheduleData scheduleData;
 
   @override
   String toString() {
-    return 'ExperienceMenuDetailsScreenState.loaded(foodMenuModel: $foodMenuModel)';
+    return 'ExperienceMenuDetailsScreenState.loaded(foodMenuModel: $foodMenuModel, scheduleData: $scheduleData)';
   }
 
   @override
@@ -226,12 +241,16 @@ class _$Loaded implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$Loaded &&
             const DeepCollectionEquality()
-                .equals(other.foodMenuModel, foodMenuModel));
+                .equals(other.foodMenuModel, foodMenuModel) &&
+            const DeepCollectionEquality()
+                .equals(other.scheduleData, scheduleData));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(foodMenuModel));
+      runtimeType,
+      const DeepCollectionEquality().hash(foodMenuModel),
+      const DeepCollectionEquality().hash(scheduleData));
 
   @JsonKey(ignore: true)
   @override
@@ -242,29 +261,33 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(FoodMenuModel foodMenuModel) loaded,
+    required TResult Function(
+            FoodMenuModel foodMenuModel, ScheduleData scheduleData)
+        loaded,
   }) {
-    return loaded(foodMenuModel);
+    return loaded(foodMenuModel, scheduleData);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
   }) {
-    return loaded?.call(foodMenuModel);
+    return loaded?.call(foodMenuModel, scheduleData);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(FoodMenuModel foodMenuModel)? loaded,
+    TResult Function(FoodMenuModel foodMenuModel, ScheduleData scheduleData)?
+        loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(foodMenuModel);
+      return loaded(foodMenuModel, scheduleData);
     }
     return orElse();
   }
@@ -302,9 +325,12 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements ExperienceMenuDetailsScreenState {
-  const factory Loaded(final FoodMenuModel foodMenuModel) = _$Loaded;
+  const factory Loaded(
+          final FoodMenuModel foodMenuModel, final ScheduleData scheduleData) =
+      _$Loaded;
 
   FoodMenuModel get foodMenuModel;
+  ScheduleData get scheduleData;
   @JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;
