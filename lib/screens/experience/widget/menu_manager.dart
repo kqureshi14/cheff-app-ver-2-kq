@@ -227,7 +227,7 @@ class _MenuManagerState extends State<MenuManager> {
                     backgroundColor: appTheme.colors.textFieldFilledColor,
                     inputBorder: appTheme.focusedBorder,
                     valueStyle: const TextStyle(color: Colors.white),
-                    hint: 'EBeef Kebab',
+                    hint: 'Enter your dish',
                     hintStyle: TextStyle(
                         color: Colors.white.withOpacity(0.4), fontSize: 14),
                     // valueStyle: valueStyle,
@@ -260,7 +260,7 @@ class _MenuManagerState extends State<MenuManager> {
                     inputBorder: appTheme.focusedBorder,
                     valueStyle: const TextStyle(color: Colors.white),
                     hint:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                        'Enter your dish description',
                     hintStyle: TextStyle(
                         color: Colors.white.withOpacity(0.4), fontSize: 14),
                     // valueStyle: valueStyle,

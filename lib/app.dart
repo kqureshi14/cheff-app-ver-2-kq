@@ -1,3 +1,4 @@
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,10 +29,12 @@ class App extends StatelessWidget {
     );
     return AppTheme(
       appThemeData: _appThemeData,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerDelegate: _appRouter.delegate(),
-        routeInformationParser: _appRouter.defaultRouteParser(),
+      child: FirebasePhoneAuthProvider(
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerDelegate: _appRouter.delegate(),
+          routeInformationParser: _appRouter.defaultRouteParser(),
+        ),
       ),
     );
   }

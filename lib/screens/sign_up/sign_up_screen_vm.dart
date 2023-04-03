@@ -53,6 +53,12 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     emit(const Loaded());
   }
 
+  ValueNotifier<bool> buttonEnabled = ValueNotifier(false);
+
+  void changeButton(bool? value) {
+    buttonEnabled.value =  value??!buttonEnabled.value;
+  }
+
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
   String updateUrl(String url) {
@@ -92,6 +98,50 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       address.trim().isNotEmpty;
   // town.trim().isNotEmpty &&
   // city.trim().isNotEmpty ;
+
+  bool verifyInput({
+    required String name,
+    required String brandName,
+    required String mobileNumber,
+    required String address,
+    required String baseUrl,
+    required BuildContext context,
+  }) {
+    final isInputValid = _validateInput(
+      name: name,
+      mobileNumber: mobileNumber,
+  address: address,
+      brandName: brandName,
+    );
+    if (!isInputValid) {
+      Toaster.errorToast(
+        context: context,
+        message: Strings.signUpFields,
+      );
+      return false;
+    }
+    return true;
+  }
+
+
+  bool verifyInputForm({
+    required String name,
+    required String brandName,
+    required String mobileNumber,
+    required String address,
+  }) {
+    final isInputValid = _validateInput(
+      name: name,
+      mobileNumber: mobileNumber,
+      address: address,
+      brandName: brandName,
+    );
+    if (!isInputValid) {
+      return false;
+    }
+    return true;
+  }
+
 
   Future<void> _cacheData({
     required BuildContext context,
