@@ -19,7 +19,6 @@ class ExperienceManager extends StatefulWidget {
   final _wowFactor;
   final _preferences;
 
-
   @override
   State<ExperienceManager> createState() => ExperienceManagerState();
 }
@@ -33,9 +32,9 @@ class ExperienceManagerState extends State<ExperienceManager> {
   final TextController _nameController = TextController();
   final TextController _mobileController = TextController();
 
-  var price ='';
-  var location ='';
-  var subhost ='';
+  var price = '';
+  var location = '';
+  var subhost = '';
 
   final experienceHelper = ExperienceHelper();
   final _appService = locateService<ApplicationService>();
@@ -43,6 +42,15 @@ class ExperienceManagerState extends State<ExperienceManager> {
   @override
   void initState() {
     _appService.updateExperienceHelper(experienceHelper);
+
+    location = Strings.createExperienceHomeTitle;
+
+    _locationController.text = _appService.state.userInfo!.t.address;
+
+    experienceHelper.locationExperience = _locationController.text;
+
+    price = Strings.createExperienceLabelTitle;
+
     super.initState();
   }
 
@@ -210,8 +218,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                 appTheme.colors.textFieldFilledColor,
                             inputBorder: appTheme.focusedBorder,
                             valueStyle: const TextStyle(color: Colors.white),
-                            hint:
-                                'Enter your experience description',
+                            hint: 'Enter your experience description',
                             hintStyle: TextStyle(
                                 color: Colors.white.withOpacity(0.4),
                                 fontSize: 14.0),
@@ -258,20 +265,26 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   Strings.createExperiencePerItemTitle)) {
                                 changePriceOption(
                                     Strings.createExperiencePerItemTitle);
+                              } else {
+                                changePriceOption(" ");
                               }
+
+                              developer.log(
+                                  ' Price selected value here  ' + '${price}');
                             },
                             child: Container(
-                              child: price ==
-                                  Strings.createExperiencePerItemTitle
-                                  ? Image.asset(
-                                Resources.checkPNG,
-                                height: 22,
-                              )
-                                  : Image.asset(
-                                Resources. transparentRingPNG,
-                                height: 22,
-                              ),
-                            ),),
+                              child:
+                                  price == Strings.createExperiencePerItemTitle
+                                      ? Image.asset(
+                                          Resources.checkPNG,
+                                          height: 22,
+                                        )
+                                      : Image.asset(
+                                          Resources.transparentRingPNG,
+                                          height: 22,
+                                        ),
+                            ),
+                          ),
                           SizedBox(
                             width: 11,
                           ),
@@ -279,16 +292,16 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             Strings.createExperiencePerItemTitle,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: price ==
-                                Strings.createExperiencePerItemTitle?
-                                const TextStyle(color: Colors.white): appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                color: const Color(0xff909094),
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500),
+                            style: price == Strings.createExperiencePerItemTitle
+                                ? const TextStyle(color: Colors.white)
+                                : appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: const Color(0xff909094),
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 22,
                           ),
                           InkWell(
@@ -299,34 +312,34 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                 changePriceOption(
                                     Strings.createExperienceLabelTitle);
                               }
+                              developer.log(' Price selected is ' + '${price}');
                             },
                             child: Container(
-                              child: price ==
-                                  Strings.createExperienceLabelTitle
+                              child: price == Strings.createExperienceLabelTitle
                                   ? Image.asset(
-                                Resources.checkPNG,
-                                height: 22,
-                              )
+                                      Resources.checkPNG,
+                                      height: 22,
+                                    )
                                   : Image.asset(
-                                Resources.transparentRingPNG,
-                                height: 22,
-                              ),
+                                      Resources.transparentRingPNG,
+                                      height: 22,
+                                    ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 11,
                           ),
                           GeneralText(
                             Strings.createExperienceLabelTitle,
                             textAlign: TextAlign.center,
-                            style:price ==
-                                Strings.createExperienceLabelTitle ?
-                              const TextStyle(color: Colors.white): appTheme
-                .typographies.interFontFamily.headline6
-                .copyWith(
-                color: const Color(0xff909094),
-          fontSize: 15.0,
-          fontWeight: FontWeight.w500),
+                            style: price == Strings.createExperienceLabelTitle
+                                ? const TextStyle(color: Colors.white)
+                                : appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: const Color(0xff909094),
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -342,6 +355,10 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   height: 51,
                                   controller: _priceController,
                                   inputType: InputType.digit,
+                                  isEnable: ((price !=
+                                          Strings.createExperiencePerItemTitle))
+                                      ? true
+                                      : false,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -418,16 +435,16 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               }
                             },
                             child: Container(
-                              child: location ==
-                                  Strings.createExperienceHomeTitle
-                                  ? Image.asset(
-                                Resources.checkPNG,
-                                height: 22,
-                              )
-                                  : Image.asset(
-                                Resources. transparentRingPNG,
-                                height: 22,
-                              ),
+                              child:
+                                  location == Strings.createExperienceHomeTitle
+                                      ? Image.asset(
+                                          Resources.checkPNG,
+                                          height: 22,
+                                        )
+                                      : Image.asset(
+                                          Resources.transparentRingPNG,
+                                          height: 22,
+                                        ),
                             ),
                           ),
                           SizedBox(
@@ -436,14 +453,14 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           GeneralText(
                             Strings.createExperienceHomeTitle,
                             textAlign: TextAlign.center,
-                            style:location ==
-                                Strings.createExperienceHomeTitle ?
-                              const TextStyle(color: Colors.white): appTheme
-                .typographies.interFontFamily.headline6
-                .copyWith(
-                color: const Color(0xff909094),
-          fontSize: 15.0,
-          fontWeight: FontWeight.w500),
+                            style: location == Strings.createExperienceHomeTitle
+                                ? const TextStyle(color: Colors.white)
+                                : appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: const Color(0xff909094),
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500),
                           ),
                           SizedBox(
                             width: 22,
@@ -458,33 +475,33 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               }
                             },
                             child: Container(
-                              child: location ==
-                                  Strings.createExperienceOtherTitle
-                                  ? Image.asset(
-                                Resources.checkPNG,
-                                height: 22,
-                              )
-                                  : Image.asset(
-                                Resources. transparentRingPNG,
-                                height: 22,
-                              ),
+                              child:
+                                  location == Strings.createExperienceOtherTitle
+                                      ? Image.asset(
+                                          Resources.checkPNG,
+                                          height: 22,
+                                        )
+                                      : Image.asset(
+                                          Resources.transparentRingPNG,
+                                          height: 22,
+                                        ),
                             ),
                           ),
-
                           SizedBox(
                             width: 11,
                           ),
                           GeneralText(
                             Strings.createExperienceOtherTitle,
                             textAlign: TextAlign.center,
-                            style: location ==
-                                Strings.createExperienceOtherTitle ?
-                            const TextStyle(color: Colors.white): appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                color: const Color(0xff909094),
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500),
+                            style:
+                                location == Strings.createExperienceOtherTitle
+                                    ? const TextStyle(color: Colors.white)
+                                    : appTheme
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                            color: const Color(0xff909094),
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -648,7 +665,6 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           SizedBox(
                             width: 22,
                           ),
-
                           InkWell(
                             onTap: () {
                               var currentSelectedOption = subhost;
@@ -656,21 +672,21 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   Strings.createExperienceSubHostTitle)) {
                                 changesubHostOption(
                                     Strings.createExperienceSubHostTitle);
-                              }else{
+                              } else {
                                 changesubHostOption(" ");
                               }
                             },
                             child: Container(
                               child: subhost ==
-                                  Strings.createExperienceSubHostTitle
+                                      Strings.createExperienceSubHostTitle
                                   ? Image.asset(
-                                Resources.checkPNG,
-                                height: 22,
-                              )
+                                      Resources.checkPNG,
+                                      height: 22,
+                                    )
                                   : Image.asset(
-                                Resources. transparentRingPNG,
-                                height: 22,
-                              ),
+                                      Resources.transparentRingPNG,
+                                      height: 22,
+                                    ),
                             ),
                           ),
                         ],
@@ -687,8 +703,10 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   height: 51,
                                   controller: _nameController,
                                   inputType: InputType.text,
-                                  isEnable:  ((subhost ==
-                                      Strings.createExperienceSubHostTitle))?true:false,
+                                  isEnable: ((subhost ==
+                                          Strings.createExperienceSubHostTitle))
+                                      ? true
+                                      : false,
                                   isMultiline: true,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
@@ -714,8 +732,10 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   controller: _mobileController,
                                   inputType: InputType.digit,
                                   isMultiline: true,
-                                  isEnable:  ((subhost ==
-                                      Strings.createExperienceSubHostTitle))?true:false,
+                                  isEnable: ((subhost ==
+                                          Strings.createExperienceSubHostTitle))
+                                      ? true
+                                      : false,
                                   backgroundColor:
                                       appTheme.colors.textFieldFilledColor,
                                   inputBorder: appTheme.focusedBorder,
@@ -859,22 +879,24 @@ class ExperienceManagerState extends State<ExperienceManager> {
 
   void changePriceOption(String option) {
     price = option;
-   setState(() {
-   });
+    setState(() {});
   }
+
   void changeLocataionOption(String option) {
     location = option;
+
     setState(() {
+      if (location == Strings.createExperienceHomeTitle) {
+        _locationController.text = _appService.state.userInfo!.t.address;
+      }
     });
   }
+
   void changesubHostOption(String option) {
     subhost = option;
-    setState(() {
-    });
+    setState(() {});
   }
 }
-
-
 
 class ChipsWidget extends StatelessWidget {
   const ChipsWidget({

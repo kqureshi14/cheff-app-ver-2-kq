@@ -15,6 +15,7 @@ import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 // import '../bottom_bar/bottom_bar.dart';
 import '../experience/component/create_experience_screen_v.dart';
 import '../experience/component/menu_experience_screen_v.dart';
+import '../home/experiences_details/experience_details_screen_v.dart';
 import '../home/home_screen_v.dart';
 // import '../sign_in/sign_in_screen_m.freezed.dart';
 
@@ -173,9 +174,14 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
 
           //    Navigator.pushReplacementNamed(context, '/BottomBar');
           //_navigation.replace(route: BottomBar());
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
+          // );
+
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
+            MaterialPageRoute(builder: (context) => ExperienceDetailsScreen()),
           );
 
           // Navigator.push(

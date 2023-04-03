@@ -1,5 +1,6 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/experience/schedule_screen_v.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../helpers/color_helper.dart';
 import '../../../helpers/menu_helper.dart';
@@ -10,6 +11,8 @@ import '../../../models/meal/meal_response.dart' as meal;
 
 import 'dart:developer' as developer;
 
+import '../../../ui_kit/helpers/dialog_helper.dart';
+import '../../../ui_kit/widgets/general_text_dialog.dart';
 import '../component/menu_experience_screen_vm.dart';
 
 class MenuManager extends StatefulWidget {
@@ -57,6 +60,23 @@ class _MenuManagerState extends State<MenuManager> {
   void initState() {
     loadItems();
     _appService.updateMenuHelper(menuHelper);
+
+    developer.log(' Experience pRice in menu section is ' +
+        '${_appService.state.experienceHelper!.priceExperience}');
+    if ((_appService.state.experienceHelper!.priceExperience) != null) {
+      menuHelper.givenPrice =
+          (_appService.state.experienceHelper!.priceExperience)!;
+      widget._viewModel.priceController.text =
+          (_appService.state.experienceHelper!.priceExperience)!.toString();
+    }
+
+    if ((_appService.state.experienceHelper!.personExperience) != null) {
+      widget._viewModel.servingController.text =
+          (_appService.state.experienceHelper!.personExperience)!.toString();
+      menuHelper.dishServingNoOfPerson =
+          (_appService.state.experienceHelper!.personExperience)!;
+    }
+
     super.initState();
   }
 
@@ -259,8 +279,7 @@ class _MenuManagerState extends State<MenuManager> {
                     backgroundColor: appTheme.colors.textFieldFilledColor,
                     inputBorder: appTheme.focusedBorder,
                     valueStyle: const TextStyle(color: Colors.white),
-                    hint:
-                        'Enter your dish description',
+                    hint: 'Enter your dish description',
                     hintStyle: TextStyle(
                         color: Colors.white.withOpacity(0.4), fontSize: 14),
                     // valueStyle: valueStyle,
@@ -296,6 +315,7 @@ class _MenuManagerState extends State<MenuManager> {
                               height: 51,
                               controller: widget._viewModel.priceController,
                               inputType: InputType.digit,
+                              isEnable: false,
                               backgroundColor:
                                   appTheme.colors.textFieldFilledColor,
                               inputBorder: appTheme.focusedBorder,
@@ -338,6 +358,7 @@ class _MenuManagerState extends State<MenuManager> {
                               height: 51,
                               controller: widget._viewModel.servingController,
                               inputType: InputType.digit,
+                              isEnable: false,
                               backgroundColor:
                                   appTheme.colors.textFieldFilledColor,
                               inputBorder: appTheme.focusedBorder,
@@ -415,22 +436,22 @@ class _MenuManagerState extends State<MenuManager> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                InkWell(
-                  onTap: () {
-                    widget._viewModel.saveMenu(context);
-                    //  clearEntries();
-                  },
-                  child: GeneralText(
-                    Strings.menuSave.toUpperCase(),
-                    textAlign: TextAlign.start,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
-                            color: const Color(0xffbb3127),
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const Spacer(),
+                // InkWell(
+                //   onTap: () {
+                //     widget._viewModel.saveMenu(context);
+                //     //  clearEntries();
+                //   },
+                //   child: GeneralText(
+                //     Strings.menuSave.toUpperCase(),
+                //     textAlign: TextAlign.start,
+                //     style: appTheme.typographies.interFontFamily.headline4
+                //         .copyWith(
+                //             color: const Color(0xffbb3127),
+                //             fontSize: 15,
+                //             fontWeight: FontWeight.bold),
+                //   ),
+                // ),
+                // const Spacer(),
                 GeneralText(
                   Strings.menuExperienceAddMoreTitle.toUpperCase(),
                   textAlign: TextAlign.start,
@@ -446,6 +467,39 @@ class _MenuManagerState extends State<MenuManager> {
                 InkWell(
                   onTap: () {
                     //  clearEntries();
+
+                    DialogHelper.confirmationDialog(
+                      context: context,
+                      onConfirm: () {
+                        developer.log(' Yes please save this ');
+                        // SystemNavigator.pop();
+                        widget._viewModel.saveMenu(context);
+                        Navigator.pop(context);
+                      },
+                      onDeny: () {
+                        developer.log(' No please dont save ');
+                        Navigator.pop(context);
+                      },
+
+                      // title: 'Save',
+                      // body: const Text(
+                      //   'Do you want to save this ',
+                      // ),
+                      // body: CheckListAttachmentsView(
+                      //   checkList: widget._checkList,
+                      //   fieldId: (widget.innerItem?.id)!,
+                      //   itemAttachmentSuccessful: () {
+                      //     setState(() {});
+                      //   },
+                      // ),
+                      // barrierLabel: 'Test',
+                      // isDismissible: true,
+                      // maxHeight: MediaQuery.of(context).size.height * 0.6,
+                    );
+
+                    // showTextDialog(context,
+                    //     title: Strings.editTitle,
+                    //     value: 'Are you sure you want to save');
                   },
                   child: Image.asset(
                     Resources.expPlusPNG,

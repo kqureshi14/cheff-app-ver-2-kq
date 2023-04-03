@@ -198,10 +198,25 @@ class MenuExperienceScreenViewModel
     menuHelper.givenDescription = '';
     menuHelper.givenPrice = 0;
     menuHelper.dishServingNoOfPerson = 0;
+    final _appService = locateService<ApplicationService>();
 
     descriptionController.clear();
     dishController.clear();
     priceController.clear();
     servingController.clear();
+
+    if ((_appService.state.experienceHelper!.priceExperience) != null) {
+      menuHelper.givenPrice =
+          (_appService.state.experienceHelper!.priceExperience)!;
+      priceController.text =
+          (_appService.state.experienceHelper!.priceExperience)!.toString();
+    }
+
+    if ((_appService.state.experienceHelper!.personExperience) != null) {
+      servingController.text =
+          (_appService.state.experienceHelper!.personExperience)!.toString();
+      menuHelper.dishServingNoOfPerson =
+          (_appService.state.experienceHelper!.personExperience)!;
+    }
   }
 }

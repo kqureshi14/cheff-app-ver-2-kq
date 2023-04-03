@@ -247,6 +247,7 @@ class ExperienceMenuDetailsScreenViewModel
       data: foodMenuRequest,
     );
 
+    developer.log(' Food Menu Data is ' + '${response.body}');
     foodMenuData = foodMenuModelFromJson(response.body);
     getScheduleData(experienceId: experienceId);
     // emit(exp_menu_details.Loaded(foodMenuData));

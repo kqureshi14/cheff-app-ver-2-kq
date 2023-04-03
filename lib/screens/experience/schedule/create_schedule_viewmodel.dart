@@ -121,7 +121,7 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
       t: scheduleData,
     ).toJson();
 
-    var duration = const Duration(seconds: 5); // set the duration to 5 seconds
+    var duration = const Duration(seconds: 2); // set the duration to 5 seconds
     var response = await Future.delayed(duration, () {
       return _network.post(
         path: url,

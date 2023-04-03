@@ -102,9 +102,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Couple');
     items.add('Single');
 
-    if (widget._foodMenuModel.t.isNotEmpty) {
-      _price = widget._foodMenuModel.t[0].price.toString();
-    }
+    // if (widget._foodMenuModel.t.isNotEmpty) {
+    //   _price = widget._foodMenuModel.t[0].price.toString();
+    // }
+    _price = widget._experienceData.price.toString();
     // menuListItems.addAll([
     //   CustomModel(name: "Sindhi Biryani"),
     //   CustomModel(name: "Buritto"),
@@ -207,7 +208,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
   }
 
-  TabBars selectedTab = TabBars.menu;
+  TabBars selectedTab = TabBars.details;
 
   updateTabView(TabBars tab) {
     setState(() {
@@ -232,7 +233,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: EdgeInsetsDirectional.only(start: 24),
+                    padding: const EdgeInsetsDirectional.only(start: 24),
                     color: HexColor.fromHex('#212129'),
                     child: Column(
                       children: [
@@ -268,25 +269,25 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           const SizedBox(
                             height: 25,
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              getFoodItemHeading(
-                                  appTheme: appTheme,
-                                  title: Strings.foodDetailHeading2),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 11,
-                          ),
-                          menuTabView(context, appTheme),
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       color: HexColor.fromHex('#f1c452'),
+                          //       width: 16,
+                          //       height: 1,
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 2,
+                          //     ),
+                          //     getFoodItemHeading(
+                          //         appTheme: appTheme,
+                          //         title: Strings.foodDetailHeading2),
+                          //   ],
+                          // ),
+                          // const SizedBox(
+                          //   height: 11,
+                          // ),
+                          // menuTabView(context, appTheme),
                         ],
                         const SizedBox(
                           height: 15,
@@ -337,8 +338,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             height: 5,
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.only(start: 36, end: 36),
+                            padding: const EdgeInsetsDirectional.only(
+                                start: 36, end: 36),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -490,6 +491,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 "." +
                                 " " +
                                 //widget._foodMenuModel.t[]
+
                                 _price,
                             // widget._foodMenuModel.t.isNotEmpty? widget._foodMenuModel.t[0].price
                             //     .toString():    Strings.foodProductItemPrice,
@@ -539,7 +541,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: HexColor.fromHex('#f1c452'))),
           child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: widget._foodMenuModel.t.length,
               padding: EdgeInsets.zero,
@@ -628,23 +630,26 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               //  getFoodItemUsers(appTheme: appTheme,numberOfUserServed:widget._foodMenuModel.t[index]. ),
                               getFoodItemUsers(
                                 appTheme: appTheme,
+                                numberOfUserServed:
+                                    widget._experienceData.persons,
                               ),
                             ],
                           ),
-                          getFoodItemAmount(
-                              appTheme: appTheme,
-                              itemPrice: widget._foodMenuModel.t[index].price
-                                  .toString()),
+                          //Uncomment this when started handle the per Item price.
+                          // getFoodItemAmount(
+                          //     appTheme: appTheme,
+                          //     itemPrice: widget._foodMenuModel.t[index].price
+                          //         .toString()),
                         ],
                       ),
                       // SizedBox(
                       //   height: 23,
                       // ),
-                      if (index != 3)
-                        Divider(
-                          color: HexColor.fromHex('#f1c452'),
-                          thickness: 1,
-                        )
+                      // if (index != 3)
+                      //   Divider(
+                      //     color: HexColor.fromHex('#f1c452'),
+                      //     thickness: 1,
+                      //   )
                     ]);
               })),
     );
@@ -667,6 +672,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     return GeneralText(
       //     Strings.foodProductTitle,
       itemTitle,
+      // 'here',
       style: appTheme.typographies.interFontFamily.headline6
           .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
     );
@@ -759,7 +765,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget getFoodMainHeading({required IAppThemeData appTheme}) {
-    return GeneralText(Strings.foodItemMainHeading,
+    // return GeneralText(Strings.foodItemMainHeading,
+    //     textAlign: TextAlign.center,
+    //     style: appTheme.typographies.interFontFamily.headline6.copyWith(
+    //         fontWeight: FontWeight.bold, color: Colors.white, fontSize: 24));
+
+    return GeneralText(widget._experienceData.title,
         textAlign: TextAlign.center,
         style: appTheme.typographies.interFontFamily.headline6.copyWith(
             fontWeight: FontWeight.bold, color: Colors.white, fontSize: 24));
@@ -1808,42 +1819,44 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               ],
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Row(
-                children: [
-                  GeneralText(
-                    widget._experienceData.subHostName,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+            widget._experienceData.subHostName.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        GeneralText(
+                          widget._experienceData.subHostName,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Container(
+                          height: 30,
+                          width: 1,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        GeneralText(
+                          widget._experienceData.subHostMobileNo,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Container(
-                    height: 30,
-                    width: 1,
-                    color: Colors.grey,
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  GeneralText(
-                    widget._experienceData.subHostMobileNo,
-                    style: appTheme.typographies.interFontFamily.headline6
-                        .copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                : Container(),
 
             SizedBox(
               height: 60,
