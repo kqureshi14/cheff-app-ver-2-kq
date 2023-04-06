@@ -2,6 +2,8 @@ class MenuHelper {
   int selectedMealId = 0;
   int selectedDishId = 0;
 
+  String selectedBaseDishName = "";
+  String selectedBaseMealNameCategory = "";
   String selectedDishName = '';
   String givenDescription = '';
 

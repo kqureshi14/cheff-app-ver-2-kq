@@ -55,6 +55,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   final items = <String>[];
 
+  final menuHeaderList = <String>[];
+
   bool scheduleForm = false;
 
   List<CustomModel> wowFactorsList = [];
@@ -136,6 +138,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     loadMenuItems();
     loadWowFactor();
     loadPerferences();
+    loadMenuHeader();
     // preferencesList.addAll([
     //   CustomModel(
     //       icon: Strings.foodDetailPreferenceCouple,
@@ -148,6 +151,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     //       name: "assets/images/icons/fnf.png"),
     // ]);
     super.initState();
+  }
+
+  void loadMenuHeader() {
+    for (int i = 0; i < widget._foodMenuModel.t.length; i++) {
+      if (!menuHeaderList
+          .contains(widget._foodMenuModel.t[i].mealName.trim())) {
+        menuHeaderList.add(widget._foodMenuModel.t[i].mealName.trim());
+      }
+    }
   }
 
   void loadMenuItems() {
@@ -246,29 +258,35 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             height: 40,
                           ),
                         if (selectedTab == TabBars.menu) ...[
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              getFoodItemHeading(
-                                appTheme: appTheme,
-                                title: Strings.foodDetailHeading,
-                              ),
-                            ],
+                          // Row(
+                          //   children: [
+                          //     Container(
+                          //       color: HexColor.fromHex('#f1c452'),
+                          //       width: 16,
+                          //       height: 1,
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 2,
+                          //     ),
+                          //     getFoodItemHeading(
+                          //       appTheme: appTheme,
+                          //       title: Strings.foodDetailHeading,
+                          //     ),
+                          //   ],
+                          // ),
+                          // displayMenuHeader(appTheme),
+                          // const SizedBox(
+                          //   height: 11,
+                          // ),
+                          //    for (var i in menuHeaderList)
+                          displayMenuHeader(
+                            appTheme,
                           ),
-                          const SizedBox(
-                            height: 11,
-                          ),
-                          menuTabView(context, appTheme),
-                          const SizedBox(
-                            height: 25,
-                          ),
+
+                          // menuTabView(context, appTheme),
+                          // const SizedBox(
+                          //   height: 25,
+                          // ),
                           // Row(
                           //   children: [
                           //     Container(
@@ -531,7 +549,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget menuTabView(BuildContext context, IAppThemeData appTheme) {
+  Widget menuTabView(
+      BuildContext context, IAppThemeData appTheme, String headerName) {
+    //menuHeaderList();
+    developer.log(' HEader name is in Menu tab ' + '${headerName}');
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 12),
       child: Container(
@@ -546,112 +567,191 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               itemCount: widget._foodMenuModel.t.length,
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
-                return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 13,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                return headerName.trim().toString().toLowerCase() ==
+                        widget._foodMenuModel.t[index].mealName
+                            .toString()
+                            .trim()
+                            .toLowerCase()
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                              padding: const EdgeInsetsDirectional.all(16),
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/icons/food_item_circle.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.asset(
-                                'assets/images/icons/food_item_sample.png',
-                                height: 50,
-                              ),
+                            // displayMenuHeader(appTheme),
+                            const SizedBox(
+                              height: 13,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 7.7,
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Column(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    getFoodItemTitle(
-                                        appTheme: appTheme,
-                                        itemTitle: widget
-                                            ._foodMenuModel.t[index].dish),
-                                    Image.asset(
-                                      Resources.expEditPenPNG,
-                                      height: 17,
-                                    )
-                                    // getFoodItemAmount(appTheme: appTheme),
-                                  ],
+                                Expanded(
+                                  flex: 2,
+                                  child: Container(
+                                    padding:
+                                        const EdgeInsetsDirectional.all(16),
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/icons/food_item_circle.png'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/icons/food_item_sample.png',
+                                      height: 50,
+                                    ),
+                                  ),
                                 ),
-                                getFoodItemSubTitle(
-                                    appTheme: appTheme,
-                                    subItemTitle:
-                                        widget._foodMenuModel.t[index].dish),
-                                getFoodItemDescription(
-                                    appTheme: appTheme,
-                                    foodDescription: widget
-                                        ._foodMenuModel.t[index].description),
+                                const SizedBox(
+                                  width: 7.7,
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          getFoodItemTitle(
+                                              appTheme: appTheme,
+                                              itemTitle: widget._foodMenuModel
+                                                  .t[index].baseDishName),
+                                          Image.asset(
+                                            Resources.expEditPenPNG,
+                                            height: 17,
+                                          )
+                                          // getFoodItemAmount(appTheme: appTheme),
+                                        ],
+                                      ),
+                                      getFoodItemSubTitle(
+                                          appTheme: appTheme,
+                                          subItemTitle: widget
+                                              ._foodMenuModel.t[index].dish),
+                                      getFoodItemDescription(
+                                          appTheme: appTheme,
+                                          foodDescription: widget._foodMenuModel
+                                              .t[index].description),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                Resources.userIcon,
-                                height: 15,
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              //  getFoodItemUsers(appTheme: appTheme,numberOfUserServed:widget._foodMenuModel.t[index]. ),
-                              getFoodItemUsers(
-                                appTheme: appTheme,
-                                numberOfUserServed:
-                                    widget._experienceData.persons,
-                              ),
-                            ],
-                          ),
-                          //Uncomment this when started handle the per Item price.
-                          // getFoodItemAmount(
-                          //     appTheme: appTheme,
-                          //     itemPrice: widget._foodMenuModel.t[index].price
-                          //         .toString()),
-                        ],
-                      ),
-                      // SizedBox(
-                      //   height: 23,
-                      // ),
-                      // if (index != 3)
-                      //   Divider(
-                      //     color: HexColor.fromHex('#f1c452'),
-                      //     thickness: 1,
-                      //   )
-                    ]);
+                            SizedBox(
+                              height: 20.5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      Resources.userIcon,
+                                      height: 15,
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    //  getFoodItemUsers(appTheme: appTheme,numberOfUserServed:widget._foodMenuModel.t[index]. ),
+                                    getFoodItemUsers(
+                                      appTheme: appTheme,
+                                      numberOfUserServed:
+                                          widget._experienceData.persons,
+                                    ),
+                                  ],
+                                ),
+                                //Uncomment this when started handle the per Item price.
+                                // getFoodItemAmount(
+                                //     appTheme: appTheme,
+                                //     itemPrice: widget._foodMenuModel.t[index].price
+                                //         .toString()),
+                              ],
+                            ),
+                            // SizedBox(
+                            //   height: 23,
+                            // ),
+                            // if (index != 3)
+                            //   Divider(
+                            //     color: HexColor.fromHex('#f1c452'),
+                            //     thickness: 1,
+                            //   )
+                          ])
+                    : Container();
               })),
+    );
+  }
+
+  Widget displayMenuHeader(
+    appTheme,
+  ) {
+    return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: menuHeaderList.length,
+        padding: EdgeInsets.zero,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              getHeaderData(appTheme, menuHeaderList[index]),
+              const SizedBox(
+                height: 11,
+              ),
+              menuTabView(context, appTheme, menuHeaderList[index]),
+              const SizedBox(
+                height: 25,
+              ),
+            ],
+          );
+        });
+    // return Column(
+    //   children: List.generate(menuHeaderList.length,(index){
+    //     return getHeaderData(appTheme,headerName);
+    //    // return Text(menuHeaderList[index].toString());
+    //   }),
+    //   // children: [
+    //   //   Row(
+    //   //     children: [
+    //   //       Container(
+    //   //         color: HexColor.fromHex('#f1c452'),
+    //   //         width: 16,
+    //   //         height: 1,
+    //   //       ),
+    //   //       const SizedBox(
+    //   //         width: 2,
+    //   //       ),
+    //   //       getFoodItemHeading(
+    //   //         appTheme: appTheme,
+    //   //         title: headerName,
+    //   //         // title: Strings.foodDetailHeading,
+    //   //       ),
+    //   //     ],
+    //   //   )
+    //   // ],
+    // );
+    //return
+  }
+
+  Widget getHeaderData(appTheme, headerName) {
+    return Row(
+      children: [
+        Container(
+          color: HexColor.fromHex('#f1c452'),
+          width: 16,
+          height: 1,
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        getFoodItemHeading(
+          appTheme: appTheme,
+          title: headerName,
+          // title: Strings.foodDetailHeading,
+        ),
+      ],
     );
   }
 

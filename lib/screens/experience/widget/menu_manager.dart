@@ -177,6 +177,7 @@ class _MenuManagerState extends State<MenuManager> {
                               required dynamic value,
                             }) {
                               menuHelper.selectedMealId = mealMap[value];
+                              menuHelper.selectedBaseMealNameCategory = value;
                             },
                           ),
                         ],
@@ -216,7 +217,10 @@ class _MenuManagerState extends State<MenuManager> {
                               required String key,
                               required dynamic value,
                             }) {
+                              developer.log(' Dish Map key is ' + '${key}');
+                              developer.log(' Dish Map value is ' + '${value}');
                               menuHelper.selectedDishId = dishMap[value];
+                              menuHelper.selectedBaseDishName = value;
                             },
                           ),
                         ],

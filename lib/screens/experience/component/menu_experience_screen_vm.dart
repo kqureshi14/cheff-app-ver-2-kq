@@ -123,12 +123,14 @@ class MenuExperienceScreenViewModel
     //getList(experienceHelper.selectedWowFactors,'wow');
     menu_req.T t = menu_req.T(
       dish: menuHelper.selectedDishName,
-      dishId: menuHelper.selectedDishId,
+      baseDishId: menuHelper.selectedDishId,
       mealId: menuHelper.selectedMealId,
       experienceId: (experienceResponse.t!.id)!,
       description: menuHelper.givenDescription,
       price: menuHelper.dishServingNoOfPerson,
       pictureUrl: '',
+      baseDishName: menuHelper.selectedBaseDishName,
+      mealName: menuHelper.selectedBaseMealNameCategory,
     );
 
     final menuData = menu_req.MenuRequest(
