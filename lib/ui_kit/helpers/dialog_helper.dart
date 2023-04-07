@@ -76,13 +76,13 @@ abstract class DialogHelper {
         actions: <Widget>[
           GeneralButton.button(
             title: Strings.no,
-            height: 40,
+            height: 50,
             styleType: ButtonStyleType.outline,
             onTap: onDeny ?? locateService<INavigationService>().pop,
           ),
           GeneralButton.button(
             title: Strings.yes,
-            height: 40,
+            height: 50,
             onTap: onConfirm,
           ),
         ],

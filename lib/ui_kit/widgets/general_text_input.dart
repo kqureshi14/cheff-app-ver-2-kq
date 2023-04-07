@@ -33,6 +33,7 @@ class GeneralTextInput extends StatefulWidget {
     TextStyle? hintStyle,
     IconData? prefixIcon,
     IconData? suffixIcon,
+    String? prefixText,
     Widget? suffix,
     void Function()? onSuffixIconClick,
     Color? backgroundColor,
@@ -63,6 +64,7 @@ class GeneralTextInput extends StatefulWidget {
         _contentPadding = contentPadding,
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
+  _prefixText = prefixText,
         super(key: key) {
     _selectInputType();
   }
@@ -89,6 +91,7 @@ class GeneralTextInput extends StatefulWidget {
   final EdgeInsetsGeometry? _contentPadding;
   final double? _textFieldHeight;
   final double? _textFieldWidth;
+  final String? _prefixText;
   late final TextInputType _keyboardType;
   late final bool _passwordMode;
 
@@ -179,6 +182,7 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
             enabledBorder: widget._inputBorder ?? appTheme.inputBorder,
             prefixIcon:
                 widget._prefixIcon != null ? Icon(widget._prefixIcon) : null,
+            prefixText: widget._prefixText ?? "",
             //  suffixIcon: _buildSuffixIcon(appTheme),
             contentPadding: widget._contentPadding ??
                 EdgeInsets.symmetric(vertical: 18, horizontal: 13)),

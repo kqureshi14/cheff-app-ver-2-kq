@@ -353,6 +353,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             Expanded(
                               child: GeneralTextInput(
                                   height: 51,
+                                  suffix:const Text("Price/Prsn"),
                                   controller: _priceController,
                                   inputType: InputType.digit,
                                   isEnable: ((price !=
@@ -372,8 +373,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   // valueStyle: valueStyle,
                                   onChanged: (newValue) {
                                     experienceHelper.priceExperience =
-                                        double.parse(
-                                            newValue); // priceExperience
+                                        newValue.isNotEmpty?double.parse(
+                                            newValue):null; // priceExperience
                                   }),
                             ),
                             SizedBox(
@@ -382,6 +383,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             Expanded(
                               child: GeneralTextInput(
                                   height: 51,
+                                  suffix: const Text('Max Limit'),
                                   controller: _personController,
                                   inputType: InputType.digit,
                                   isMultiline: true,
@@ -397,7 +399,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   // valueStyle: valueStyle,
                                   onChanged: (newValue) {
                                     experienceHelper.personExperience =
-                                        int.parse(newValue);
+                                        newValue.isNotEmpty? int.parse(newValue):null;
                                   }),
                             ),
                           ],

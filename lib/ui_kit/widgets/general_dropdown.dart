@@ -23,6 +23,8 @@ class GeneralDropdown<T> extends StatefulWidget {
     String? Function(List<String>?)? validator,
     double borderWidth = 2.0,
     double dropDownHeight = 53.0,
+    String? initialValue,
+    Widget? hintWidget,
     Key? key,
   })  : _items = items,
         _name = name,
@@ -38,7 +40,9 @@ class GeneralDropdown<T> extends StatefulWidget {
         _validator = validator,
         _borderWidth = borderWidth,
         _style = style,
-        _dropDownHeight = dropDownHeight,
+        _initialValue = initialValue,
+      _dropDownHeight = dropDownHeight,
+  _hintWidget = hintWidget,
         super(key: key);
 
   final String _name;
@@ -57,6 +61,8 @@ class GeneralDropdown<T> extends StatefulWidget {
   final double _borderWidth;
   final TextStyle? _style;
   final double _dropDownHeight;
+  final String? _initialValue;
+  final Widget? _hintWidget;
 
   @override
   _GeneralDropdownState createState() => _GeneralDropdownState();
@@ -64,12 +70,12 @@ class GeneralDropdown<T> extends StatefulWidget {
 
 class _GeneralDropdownState extends State<GeneralDropdown> {
   late String selectedValue;
-  late String currentChoice;
+  String? currentChoice;
 
   @override
   void initState() {
     selectedValue = widget._selectedItem ?? '';
-    currentChoice = widget._items[0];
+    widget._initialValue == null? currentChoice = widget._items[0]: (){};
     super.initState();
   }
 
@@ -117,10 +123,11 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                     child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: DropdownButton<String>(
+                          hint: widget._hintWidget,
                           isExpanded: true,
                           dropdownColor: Colors.grey,
                           style: widget._style,
-                          value: currentChoice,
+                          value:  currentChoice,
                           iconEnabledColor: widget._borderColor,
                           underline: Container(),
                           onChanged: (value) {
