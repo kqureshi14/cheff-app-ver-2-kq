@@ -48,6 +48,8 @@ abstract class Api {
   static const experienceMenu = 'experience-menu/find-by-experience-id';
   static const scheduleData = 'experience-schedule/find-by-experience-id';
 
+  static const bookingsByChefId = 'experience-booking/bookings-by-chef-id';
+
   static const accessToken = 'api/auth/access-token';
   static const refreshToken = '$apiVersion/refresh-token';
   static const customers = '$apiVersion/customer';

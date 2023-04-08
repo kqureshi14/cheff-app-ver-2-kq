@@ -2,14 +2,19 @@ import 'package:chef/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../screens/home/home_page/home_screen_v.dart';
+import '../../screens/home/home_screen.dart';
 import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
+
+import 'dart:developer' as developer;
 
 class GeneralNewAppBar extends StatelessWidget {
   final String? title;
   final Color? titleColor;
   final String? rightIcon;
-  const GeneralNewAppBar({Key? key, this.title, this.titleColor, this.rightIcon})
+  const GeneralNewAppBar(
+      {Key? key, this.title, this.titleColor, this.rightIcon})
       : super(key: key);
 
   @override
@@ -33,20 +38,27 @@ class GeneralNewAppBar extends StatelessWidget {
           GeneralText(
             title ?? '',
             textAlign: TextAlign.center,
-            style: appTheme.typographies.interFontFamily.headline5
-                .copyWith(color: titleColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 23
-            ),
+            style: appTheme.typographies.interFontFamily.headline5.copyWith(
+                color: titleColor, fontWeight: FontWeight.bold, fontSize: 23),
           ),
         ],
         if (rightIcon != null) ...[
-          Spacer(),
-          SvgPicture.asset(
-            rightIcon!,
-            height: 25,
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              developer.log(' Transferring to home page');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeScreenView()),
+              );
+            },
+            child: SvgPicture.asset(
+              rightIcon!,
+              height: 25,
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 26,
           ),
         ]

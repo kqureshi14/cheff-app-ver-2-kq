@@ -18,43 +18,37 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(BookingOverview bookingOverview) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initialized value) initialized,
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
@@ -77,117 +71,6 @@ class _$HomeScreenStateCopyWithImpl<$Res>
   final HomeScreenState _value;
   // ignore: unused_field
   final $Res Function(HomeScreenState) _then;
-}
-
-/// @nodoc
-abstract class _$$InitializedCopyWith<$Res> {
-  factory _$$InitializedCopyWith(
-          _$Initialized value, $Res Function(_$Initialized) then) =
-      __$$InitializedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$InitializedCopyWithImpl<$Res>
-    extends _$HomeScreenStateCopyWithImpl<$Res>
-    implements _$$InitializedCopyWith<$Res> {
-  __$$InitializedCopyWithImpl(
-      _$Initialized _value, $Res Function(_$Initialized) _then)
-      : super(_value, (v) => _then(v as _$Initialized));
-
-  @override
-  _$Initialized get _value => super._value as _$Initialized;
-}
-
-/// @nodoc
-
-class _$Initialized implements Initialized {
-  const _$Initialized();
-
-  @override
-  String toString() {
-    return 'HomeScreenState.initialized()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Initialized);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
-    required TResult Function() loading,
-    required TResult Function() loaded,
-  }) {
-    return initialized();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function()? loading,
-    TResult Function()? loaded,
-  }) {
-    return initialized?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    required TResult orElse(),
-  }) {
-    if (initialized != null) {
-      return initialized();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Initialized value) initialized,
-    required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
-  }) {
-    return initialized(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
-  }) {
-    return initialized?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
-    TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
-    required TResult orElse(),
-  }) {
-    if (initialized != null) {
-      return initialized(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Initialized implements HomeScreenState {
-  const factory Initialized() = _$Initialized;
 }
 
 /// @nodoc
@@ -228,9 +111,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(BookingOverview bookingOverview) loaded,
   }) {
     return loading();
   }
@@ -238,9 +120,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
   }) {
     return loading?.call();
   }
@@ -248,9 +129,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -262,7 +142,6 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initialized value) initialized,
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
   }) {
@@ -272,7 +151,6 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
   }) {
@@ -282,7 +160,6 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
@@ -302,6 +179,7 @@ abstract class Loading implements HomeScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
+  $Res call({BookingOverview bookingOverview});
 }
 
 /// @nodoc
@@ -312,57 +190,78 @@ class __$$LoadedCopyWithImpl<$Res> extends _$HomeScreenStateCopyWithImpl<$Res>
 
   @override
   _$Loaded get _value => super._value as _$Loaded;
+
+  @override
+  $Res call({
+    Object? bookingOverview = freezed,
+  }) {
+    return _then(_$Loaded(
+      bookingOverview == freezed
+          ? _value.bookingOverview
+          : bookingOverview // ignore: cast_nullable_to_non_nullable
+              as BookingOverview,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded();
+  const _$Loaded(this.bookingOverview);
+
+  @override
+  final BookingOverview bookingOverview;
 
   @override
   String toString() {
-    return 'HomeScreenState.loaded()';
+    return 'HomeScreenState.loaded(bookingOverview: $bookingOverview)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$Loaded &&
+            const DeepCollectionEquality()
+                .equals(other.bookingOverview, bookingOverview));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(bookingOverview));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(BookingOverview bookingOverview) loaded,
   }) {
-    return loaded();
+    return loaded(bookingOverview);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(bookingOverview);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(BookingOverview bookingOverview)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(bookingOverview);
     }
     return orElse();
   }
@@ -370,7 +269,6 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Initialized value) initialized,
     required TResult Function(Loading value) loading,
     required TResult Function(Loaded value) loaded,
   }) {
@@ -380,7 +278,6 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
   }) {
@@ -390,7 +287,6 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Initialized value)? initialized,
     TResult Function(Loading value)? loading,
     TResult Function(Loaded value)? loaded,
     required TResult orElse(),
@@ -403,5 +299,10 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements HomeScreenState {
-  const factory Loaded() = _$Loaded;
+  const factory Loaded(final BookingOverview bookingOverview) = _$Loaded;
+
+  BookingOverview get bookingOverview;
+  @JsonKey(ignore: true)
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

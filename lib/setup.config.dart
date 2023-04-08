@@ -26,7 +26,7 @@ import 'screens/home/experience_menu_details/experience_menu_details_screen_vm.d
     as _i10;
 import 'screens/home/experiences_details/experience_details_screen_vm.dart'
     as _i6;
-import 'screens/home/home_screen_vm.dart' as _i31;
+import 'screens/home/home_page/home_screen_vm.dart' as _i31;
 import 'screens/sign_in/sign_in_screen_vm.dart' as _i19;
 import 'screens/sign_up/get_started_screen_vm.dart' as _i21;
 import 'screens/sign_up/questionire/component/sign_up_questionire_screen_vm.dart'
@@ -170,6 +170,7 @@ Future<_i1.GetIt> $initGetIt(
         navigation: get<_i3.INavigationService<dynamic>>(),
         storage: get<_i3.IStorageService>(),
         appService: get<_i3.ApplicationService>(),
+        network: get<_i3.INetworkService<dynamic>>(),
       ));
   return get;
 }

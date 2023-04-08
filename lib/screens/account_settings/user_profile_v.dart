@@ -12,7 +12,8 @@ import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../food_product_experience_details/bbq_experience_details.dart';
-import '../home/home_screen_v.dart';
+import '../home/home_page/home_screen_v.dart';
+import '../home/home_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -154,7 +155,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      LoungeHomeScreen /*FoodProductExperienceDetails*/ ()),
+                                      HomeScreenView /*FoodProductExperienceDetails*/ ()),
                             );
                           },
                           child: GeneralText(
@@ -210,10 +211,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               width: 5,
                             ),
                             InkWell(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const ReviewsScreen()),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ReviewsScreen()),
                                 );
                               },
                               child: GeneralText(

@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../models/booking/booking_overview.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../account_settings/user_profile_v.dart';
 import '../booking/food_item_bookng.dart';
 import '../earnings/earning_screen_v.dart';
-import '../experience/experience_questionire_v.dart';
+import 'experiences_details/experience_details_screen_v.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
-  const LoungeHomeScreen({Key? key}) : super(key: key);
+  LoungeHomeScreen({required BookingOverview bookingOverview, Key? key})
+      : _bookingOverview = bookingOverview,
+        super(key: key);
+  BookingOverview _bookingOverview;
 
   @override
   State<LoungeHomeScreen> createState() => _LoungeHomeScreenState();
@@ -101,7 +105,10 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                           height: 13,
                                                         )),
                                                     GeneralText(
-                                                      Strings.loungeNewValue,
+                                                      // Strings.loungeNewValue,
+                                                      widget._bookingOverview.t
+                                                          .newBookings
+                                                          .toString(),
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -150,7 +157,10 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 GeneralText(
-                                                  Strings.loungeAcceptedValue,
+                                                  //   Strings.loungeAcceptedValue,
+                                                  widget._bookingOverview.t
+                                                      .acceptedBookings
+                                                      .toString(),
                                                   style: appTheme.typographies
                                                       .interFontFamily.headline6
                                                       .copyWith(
@@ -186,7 +196,10 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Column(
                                               children: [
                                                 GeneralText(
-                                                  Strings.loungeConfirmedValue,
+                                                  // Strings.loungeConfirmedValue,
+                                                  widget._bookingOverview.t
+                                                      .confirmedBookings
+                                                      .toString(),
                                                   style: appTheme.typographies
                                                       .interFontFamily.headline6
                                                       .copyWith(
@@ -221,7 +234,10 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Column(
                                               children: [
                                                 GeneralText(
-                                                  Strings.loungeInProgressValue,
+                                                  // Strings.loungeInProgressValue,
+                                                  widget._bookingOverview.t
+                                                      .inProgressBookings
+                                                      .toString(),
                                                   style: appTheme.typographies
                                                       .interFontFamily.headline6
                                                       .copyWith(
@@ -284,7 +300,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                const ExperienceQuestionireScreen()),
+                                                                ExperienceDetailsScreen()),
                                                       );
                                                       //
                                                     },

@@ -1,8 +1,9 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
+import 'package:chef/screens/home/home_screen.dart';
 
 import '../bottom_bar/bottom_bar.dart';
 import '../experience/experience_questionire_v.dart';
+import '../home/home_page/home_screen_v.dart';
 
 class SignUpLetsStartScreen extends StatefulWidget {
   const SignUpLetsStartScreen({Key? key}) : super(key: key);
@@ -70,7 +71,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                       width: 10,
                     ),
                     Expanded(
-                       child: GeneralText(
+                      child: GeneralText(
                         Strings.letsStartScreenLabel2,
                         maxLines: 2,
                         textAlign: TextAlign.start,
@@ -182,7 +183,6 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       title: Strings.letsStartScreenBtnLabel.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) => const ExperienceQuestionireScreen()),
@@ -190,7 +190,8 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
         Navigator.push(
           context,
           // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-          MaterialPageRoute(builder: (context) => const LoungeHomeScreen()),
+          //  MaterialPageRoute(builder: (context) => LoungeHomeScreen()),
+          MaterialPageRoute(builder: (context) => HomeScreenView()),
         );
         //    viewModel.goToForgotPasswordScreen();
       },

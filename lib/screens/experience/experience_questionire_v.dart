@@ -1,5 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/home/home_screen_v.dart';
+import 'package:chef/screens/home/home_screen.dart';
 
 import '../bottom_bar/bottom_bar.dart';
 import 'component/create_experience_screen_v.dart';

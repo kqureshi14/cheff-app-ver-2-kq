@@ -16,7 +16,8 @@ import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 import '../experience/component/create_experience_screen_v.dart';
 import '../experience/component/menu_experience_screen_v.dart';
 import '../home/experiences_details/experience_details_screen_v.dart';
-import '../home/home_screen_v.dart';
+import '../home/home_page/home_screen_v.dart';
+import '../home/home_screen.dart';
 // import '../sign_in/sign_in_screen_m.freezed.dart';
 
 @injectable
@@ -179,11 +180,14 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
           //   MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
           // );
 
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => ExperienceDetailsScreen()),
+          // );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ExperienceDetailsScreen()),
+            MaterialPageRoute(builder: (context) => HomeScreenView()),
           );
-
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: (context) => MenuExperienceScreen()),

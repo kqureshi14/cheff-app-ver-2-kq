@@ -9,6 +9,8 @@ import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../home/experiences_details/experience_details_screen_v.dart';
+import '../home/home_page/home_screen_v.dart';
+import '../home/home_screen.dart';
 import '../home/widget/popular_food_detail.dart';
 
 class ShowOffTimeScreen extends StatefulWidget {
@@ -360,9 +362,15 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
               title: Strings.infoPopupButtonTitle.toUpperCase(),
               styleType: ButtonStyleType.fill,
               onTap: () {
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (BuildContext context) {
+                //   return ExperienceDetailsScreen();
+                //   //  return PopularFoodDetails();
+                // }));
+
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return ExperienceDetailsScreen();
+                  return HomeScreenView();
                   //  return PopularFoodDetails();
                 }));
                 // Navigator.push(
