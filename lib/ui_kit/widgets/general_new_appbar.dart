@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../screens/home/home_page/home_screen_v.dart';
 import '../../screens/home/home_screen.dart';
+import '../../services/navigation/navigation_service.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import 'general_text.dart';
 
@@ -20,14 +22,15 @@ class GeneralNewAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-
+    final _navigation = locateService<INavigationService>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
             onTap: () {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              _navigation.pop();
             },
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
@@ -49,8 +52,7 @@ class GeneralNewAppBar extends StatelessWidget {
               developer.log(' Transferring to home page');
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreenView()),
+                MaterialPageRoute(builder: (context) => HomeScreenView()),
               );
             },
             child: SvgPicture.asset(

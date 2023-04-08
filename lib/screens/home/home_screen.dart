@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
 import '../../models/booking/booking_overview.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
 import '../account_settings/user_profile_v.dart';
+import '../booking/component/order_screen_v.dart';
 import '../booking/food_item_bookng.dart';
 import '../earnings/earning_screen_v.dart';
 import 'experiences_details/experience_details_screen_v.dart';
@@ -22,6 +24,7 @@ class LoungeHomeScreen extends StatefulWidget {
 }
 
 class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
+  final _navigation = locateService<INavigationService>();
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -73,48 +76,74 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                            height: 108,
-                                            width: 117,
-                                            padding: EdgeInsetsDirectional.only(
-                                                bottom: 10),
-                                            decoration: BoxDecoration(
-                                                border: Border(
-                                                    bottom: BorderSide(
-                                                        width: 1,
-                                                        color: HexColor.fromHex(
-                                                            "#4b4b52")))),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Stack(
-                                                  clipBehavior: Clip.none,
+                                        InkWell(
+                                            onTap: () {
+                                              _navigation.replace(
+                                                  route: OrderRouteView());
+                                            },
+                                            child: Container(
+                                                height: 108,
+                                                width: 117,
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        bottom: 10),
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                            width: 1,
+                                                            color: HexColor
+                                                                .fromHex(
+                                                                    "#4b4b52")))),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
                                                   children: [
-                                                    Positioned(
-                                                        right: -15,
-                                                        top: 10,
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              color: HexColor
-                                                                  .fromHex(
-                                                                      "#bb3127"),
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                          width: 13,
-                                                          height: 13,
-                                                        )),
+                                                    Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        Positioned(
+                                                            right: -15,
+                                                            top: 10,
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: HexColor
+                                                                      .fromHex(
+                                                                          "#bb3127"),
+                                                                  shape: BoxShape
+                                                                      .circle),
+                                                              width: 13,
+                                                              height: 13,
+                                                            )),
+                                                        GeneralText(
+                                                          // Strings.loungeNewValue,
+                                                          widget
+                                                              ._bookingOverview
+                                                              .t
+                                                              .newBookings
+                                                              .toString(),
+                                                          style: appTheme
+                                                              .typographies
+                                                              .interFontFamily
+                                                              .headline6
+                                                              .copyWith(
+                                                            fontSize: 45,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: HexColor
+                                                                .fromHex(
+                                                                    '#fee4a4'),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                     GeneralText(
-                                                      // Strings.loungeNewValue,
-                                                      widget._bookingOverview.t
-                                                          .newBookings
-                                                          .toString(),
+                                                      Strings.loungeNewLabel,
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
                                                           .headline6
                                                           .copyWith(
-                                                        fontSize: 45,
+                                                        fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         color: HexColor.fromHex(
@@ -122,67 +151,69 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                       ),
                                                     ),
                                                   ],
-                                                ),
-                                                GeneralText(
-                                                  Strings.loungeNewLabel,
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: HexColor.fromHex(
-                                                        '#fee4a4'),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                                ))),
                                         Container(
                                           width: 1,
                                           height: 49,
                                           color: HexColor.fromHex("#4b4b52"),
                                         ),
-                                        Container(
-                                            height: 108,
-                                            width: 117,
-                                            padding: EdgeInsetsDirectional.only(
-                                                bottom: 10),
-                                            decoration: BoxDecoration(
-                                                border: Border(
-                                                    bottom: BorderSide(
-                                                        width: 1,
+                                        InkWell(
+                                            onTap: () {
+                                              //  _navigate. OrderScreenView
+                                              // _navigation.replace(
+                                              //     route: OrderRouteView());
+                                            },
+                                            child: Container(
+                                                height: 108,
+                                                width: 117,
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .only(bottom: 10),
+                                                decoration: BoxDecoration(
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                            width: 1,
+                                                            color: HexColor
+                                                                .fromHex(
+                                                                    "#4b4b52")))),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    GeneralText(
+                                                      //   Strings.loungeAcceptedValue,
+                                                      widget._bookingOverview.t
+                                                          .acceptedBookings
+                                                          .toString(),
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 35,
+                                                        fontWeight:
+                                                            FontWeight.w300,
                                                         color: HexColor.fromHex(
-                                                            "#4b4b52")))),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                GeneralText(
-                                                  //   Strings.loungeAcceptedValue,
-                                                  widget._bookingOverview.t
-                                                      .acceptedBookings
-                                                      .toString(),
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 35,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: HexColor.fromHex(
-                                                        '#ea7458'),
-                                                  ),
-                                                ),
-                                                GeneralText(
-                                                  Strings.loungeAcceptedLabel,
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: HexColor.fromHex(
-                                                        '#909094'),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                                            '#ea7458'),
+                                                      ),
+                                                    ),
+                                                    GeneralText(
+                                                      Strings
+                                                          .loungeAcceptedLabel,
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: HexColor.fromHex(
+                                                            '#909094'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ))),
                                       ],
                                     ),
                                     Row(

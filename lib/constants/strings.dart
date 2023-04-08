@@ -386,6 +386,8 @@ abstract class Strings {
   static const labelTermsCond = 'Terms & Conditions';
   static const labelBookings = 'History';
 
+  static const labelNewBookings = 'New Order';
+
   static const labelTitleProfile = 'Profile';
 
   static const labelTitleReviews = 'Reviews';
