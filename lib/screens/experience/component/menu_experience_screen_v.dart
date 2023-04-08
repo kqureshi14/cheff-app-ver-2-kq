@@ -93,14 +93,20 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
                 // _appService.state?.experienceHelper   =_experienceHelper;
                 //_appService.updateExperienceHelper(viewModel.);
                if(viewModel.menuSaveCounter>0   && viewModel.menueResponseCode==200){
-                 Navigator.push(
-                   ctx,
-                   MaterialPageRoute(builder: (context) => ScheduleScreen()),
-                 );
+                 if(viewModel.dishController.text.isNotEmpty||viewModel.descriptionController.text.isNotEmpty){
+                   Toaster.infoToast(
+                       context: ctx,
+                       message: 'Save the menu first or the data will be lost');
+                 }else{
+                   Navigator.push(
+                     ctx,
+                     MaterialPageRoute(builder: (context) => ScheduleScreen()),
+                   );
+                 }
                }else{
                  Toaster.infoToast(
                      context: ctx,
-                     message: 'Please Save atleast one Menu');
+                     message: 'Please Save at least one Menu');
                }
               },
               child: SvgPicture.asset(

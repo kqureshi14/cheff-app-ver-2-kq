@@ -103,7 +103,6 @@ class _MenuManagerState extends State<MenuManager> {
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
-
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -164,6 +163,8 @@ class _MenuManagerState extends State<MenuManager> {
                           ),
                           GeneralDropdown(
                             name: 'Select',
+                            initialValue: '',
+                            hintWidget: const Text('Select an option',style: TextStyle(color: Colors.white),),
                             items: mealItems,
                             borderColor: appTheme.colors.textFieldBorderColor,
                             style: appTheme
@@ -205,6 +206,8 @@ class _MenuManagerState extends State<MenuManager> {
                           ),
                           GeneralDropdown(
                             name: 'Select',
+                            initialValue: '',
+                            hintWidget: const Text('Select an option',style: TextStyle(color: Colors.white),),
                             items: foodItems,
                             borderColor: appTheme.colors.textFieldBorderColor,
                             style: appTheme
