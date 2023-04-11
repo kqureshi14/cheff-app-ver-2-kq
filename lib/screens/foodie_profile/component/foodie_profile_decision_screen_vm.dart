@@ -5,37 +5,46 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/api.dart';
+import '../../../models/booking/accept_booking_response.dart';
 import '../../../models/booking/booking_status.dart';
+import '../../../models/foodie/foodie_details_response.dart';
 import '../../../models/home/food_menu_request.dart';
 import '../../../services/application_state.dart';
 import '../../../setup.dart';
-import 'order_screen_m.dart';
+import 'foodie_profile_decision_screen_m.dart';
+// import 'order_screen_m.dart';
 
 import 'dart:developer' as developer;
 
 @injectable
-class OrderScreenViewModel extends BaseViewModel<OrderScreenState> {
-  OrderScreenViewModel({
+class FoodieProfileDecisionScreenViewModel
+    extends BaseViewModel<FoodieProfileDecisionScreenState> {
+  FoodieProfileDecisionScreenViewModel({
     required INetworkService network,
   })  : _network = network,
         super(const Loading());
 
   final INetworkService _network;
+  
+  String bookingId = "0";
 
-  void initialize() {
-    emit(const Loading());
+  void initialize(String _bookingId) {
+    bookingId = _bookingId;
+   // emit(const Loading());
+    loadFoodieDetails();
   }
 
-  Future<void> loadBookingOverview(String _type) async {
-    final url = InfininHelpers.getRestApiURL(
-        Api.baseURL + Api.findByChefId + '?type=' + _type);
+  Future<void> loadFoodieDetails() async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.findByFoodieId);
+    // emit(const Loading());
 
     final _appService = locateService<ApplicationService>();
 
     emit(const Loading());
 
     final foodMenuRequest = FoodMenuRequest(
-      t: int.parse(_appService.state.userInfo!.t.id.toString()),
+      // t: int.parse(_appService.state.userInfo!.t.id.toString()),
+      t: 45,
     ).toJson();
 
     final response = await _network.post(
@@ -44,8 +53,34 @@ class OrderScreenViewModel extends BaseViewModel<OrderScreenState> {
     );
 
     if (response != null) {
-      BookingStatus bookingStatus = bookingStatusFromJson(response.body);
-      emit(Loaded(bookingStatus));
+      FoodieDetails foodieDetails = foodieDetailsFromJson(response.body);
+      emit(Loaded(foodieDetails));
+    }
+  }
+
+  Future<void> sendAcceptRequest() async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.acceptBooking);
+    // emit(const Loading());
+
+    final _appService = locateService<ApplicationService>();
+
+  //  emit(const Loading());
+
+    final foodMenuRequest = FoodMenuRequest(
+      // t: int.parse(_appService.state.userInfo!.t.id.toString()),
+      t: int.parse(bookingId),
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: foodMenuRequest,
+    );
+
+    if (response != null) {
+      AcceptResponse acceptResponse = acceptResponseFromJson(response.body);
+      developer.log('acceptResponse is  ' + '${acceptResponse.t.brandName}');
+
+    //  emit(Loaded(foodieDetails));
     }
   }
 

@@ -31,7 +31,7 @@ class SignUpQuestionireScreenViewModel
     required String baseUrl,
     required BuildContext context,
   }) async {
-    final url = InfininURLHelpers.getRestApiURL(baseUrl + Api.questionListAPI);
+    final url = InfininHelpers.getRestApiURL(baseUrl + Api.questionListAPI);
     final questionsDataRequest = questionirerequest.QuestionireRequest(
       t: questionirerequest.T(category: "CHEF_PROFILE"),
     ).toJson();

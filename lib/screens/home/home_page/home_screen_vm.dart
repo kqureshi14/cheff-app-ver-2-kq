@@ -69,7 +69,7 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
 
   Future<void> loadBookingOverview() async {
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.bookingsByChefId);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.bookingsByChefId);
     // emit(const Loading());
 
     final _appService = locateService<ApplicationService>();

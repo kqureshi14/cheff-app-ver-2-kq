@@ -137,7 +137,7 @@ class SignInScreenViewModel extends BaseViewModel<SignInScreenState> {
     );
     if (isInputValid) {
       try {
-        final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
+        final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.loginAPI);
 
         loginrequest.T t = loginrequest.T(
           mobileNo: mobileNumber,

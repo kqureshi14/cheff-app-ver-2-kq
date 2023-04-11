@@ -193,7 +193,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       emit(const Loading());
       try {
         final url =
-            InfininURLHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
+            InfininHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
         // signuprequest.T t = signuprequest.T(
         //   name: name,
         //   brandName: brandName,

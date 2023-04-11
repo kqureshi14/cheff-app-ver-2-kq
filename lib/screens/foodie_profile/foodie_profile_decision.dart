@@ -5,25 +5,37 @@ import 'package:flutter/material.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
 import '../../ui_kit/widgets/general_button.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
+import '../home/home_page/home_screen_v.dart';
+import 'component/foodie_profile_decision_screen_vm.dart';
 import 'foodie_profile_booking_confirmed.dart';
 
 class FoodieProfileRequiredPending extends StatefulWidget {
-  const FoodieProfileRequiredPending({Key? key}) : super(key: key);
-
+  FoodieProfileRequiredPending(
+      {required FoodieProfileDecisionScreenViewModel
+          foodieProfileDecisionScreenViewModel,
+      Key? key})
+      : _foodieProfileDecisionScreenViewModel =
+            foodieProfileDecisionScreenViewModel,
+        super(key: key);
+  FoodieProfileDecisionScreenViewModel _foodieProfileDecisionScreenViewModel;
   @override
-  State<FoodieProfileRequiredPending> createState() => _FoodieProfileRequiredPendingState();
+  State<FoodieProfileRequiredPending> createState() =>
+      _FoodieProfileRequiredPendingState();
 }
 
-class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPending> {
+class _FoodieProfileRequiredPendingState
+    extends State<FoodieProfileRequiredPending> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
+  final _navigation = locateService<INavigationService>();
 
   @override
   void initState() {
@@ -62,8 +74,8 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:  Container(
-          margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        floatingActionButton: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -76,222 +88,224 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
           ),
         ),
         body: SingleChildScrollView(
-          child: Stack(children: [
-            Container(
-                color: HexColor.fromHex("#212129"),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 209,
-                      padding: EdgeInsetsDirectional.only(start: 29),
-                      decoration: BoxDecoration(
-                        color: HexColor.fromHex("#4b4b52"),
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 30),
-                            child: GeneralNewAppBar(
-                              title: Strings.foodieProfileHeader,
-                              titleColor: Colors.white,
-                              rightIcon: Resources.homeIconSvg,
+          child: Stack(
+            children: [
+              Container(
+                  color: HexColor.fromHex("#212129"),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 209,
+                        padding: EdgeInsetsDirectional.only(start: 29),
+                        decoration: BoxDecoration(
+                          color: HexColor.fromHex("#4b4b52"),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10)),
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 30),
+                              child: GeneralNewAppBar(
+                                title: Strings.foodieProfileHeader,
+                                titleColor: Colors.white,
+                                rightIcon: Resources.homeIconSvg,
+                              ),
                             ),
-                          ),
-                          Container(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 90,
-                                  ),
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: HexColor.fromHex("#ffffff"),
-                                            width: 2)),
-                                    child: Image.asset(
-                                        "assets/images/icons/foodie_profile.png"),
-                                  ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  GeneralText(
-                                    Strings.foodieProfileName,
+                            Container(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 90,
+                                    ),
+                                    Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              color:
+                                                  HexColor.fromHex("#ffffff"),
+                                              width: 2)),
+                                      child: Image.asset(
+                                          "assets/images/icons/foodie_profile.png"),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    GeneralText(
+                                      Strings.foodieProfileName,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline6
+                                          .copyWith(
+                                        fontSize: 18,
+                                        color: HexColor.fromHex('#f1c452'),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 13.9,
+                                          child: Image.asset(
+                                            'assets/images/icons/star.png',
+                                            fit: BoxFit.fill,
+                                            color: HexColor.fromHex("#f1c452"),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        GeneralText(
+                                          Strings.productDetailReview,
+                                          style: appTheme.typographies
+                                              .interFontFamily.headline6
+                                              .copyWith(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: HexColor.fromHex(
+                                                      '#f1c452')),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10.9,
+                                    ),
+                                  ]),
+                            ),
+                            Positioned.fill(
+                              bottom: -15,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 4),
+                                  decoration: BoxDecoration(
+                                      color: HexColor.fromHex("#b0c18b"),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: GeneralText(
+                                    Strings.foodieProfileDecisionRequiredStatus
+                                        .toUpperCase(),
                                     style: appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
-                                      fontSize: 18,
-                                      color: HexColor.fromHex('#f1c452'),
+                                      fontSize: 12,
+                                      color: HexColor.fromHex('#212129'),
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 13.9,
-                                        child: Image.asset(
-                                          'assets/images/icons/star.png',
-                                          fit: BoxFit.fill,
-                                          color: HexColor.fromHex("#f1c452"),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      GeneralText(
-                                        Strings.productDetailReview,
-                                        style: appTheme.typographies
-                                            .interFontFamily.headline6
-                                            .copyWith(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w700,
-                                            color:
-                                            HexColor.fromHex('#f1c452')),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10.9,
-                                  ),
-                                ]),
-                          ),
-                          Positioned.fill(
-                            bottom: -15,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
-
-                                decoration: BoxDecoration(
-                                    color: HexColor.fromHex("#b0c18b"),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: GeneralText(
-                                  Strings.foodieProfileDecisionRequiredStatus.toUpperCase(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 33.9,
+                      ),
+                      Container(
+                        padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
+                                ),
+                                const SizedBox(
+                                  width: 7.2,
+                                ),
+                                GeneralText(
+                                  Strings.foodieProfileExperienceLabel,
                                   style: appTheme
                                       .typographies.interFontFamily.headline6
                                       .copyWith(
-                                    fontSize: 12,
-                                    color: HexColor.fromHex('#212129'),
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 33.9,
-                    ),
-                    Container(
-                      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 7.2,
-                              ),
-                              GeneralText(
-                                Strings.foodieProfileExperienceLabel,
+                            const SizedBox(
+                              height: 18.5,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: HexColor.fromHex("#4b4b52"),
+                                  borderRadius: BorderRadius.circular(15)),
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 22.5, top: 30, bottom: 30),
+                              child: GeneralText(
+                                Strings.foodieProfileExperienceValue,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
-                                  fontSize: 20,
-                                  color: HexColor.fromHex('#f1c452'),
+                                  fontSize: 18,
+                                  color: HexColor.fromHex('#ffffff'),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 18.5,
-                          ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: HexColor.fromHex("#4b4b52"),
-                                borderRadius: BorderRadius.circular(15)),
-                            padding: EdgeInsetsDirectional.only(
-                                start: 22.5, top: 30, bottom: 30),
-                            child: GeneralText(
-                              Strings.foodieProfileExperienceValue,
-                              style: appTheme
-                                  .typographies.interFontFamily.headline6
-                                  .copyWith(
-                                fontSize: 18,
-                                color: HexColor.fromHex('#ffffff'),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 35.5,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                color: HexColor.fromHex('#f1c452'),
-                                width: 16,
-                                height: 1,
-                              ),
-                              const SizedBox(
-                                width: 7.2,
-                              ),
-                              GeneralText(
-                                Strings.foodieProfileLabel,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                  fontSize: 20,
+                            const SizedBox(
+                              height: 35.5,
+                            ),
+                            Row(
+                              children: [
+                                Container(
                                   color: HexColor.fromHex('#f1c452'),
+                                  width: 16,
+                                  height: 1,
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15.9,
-                          ),
-                          wowFactors(appTheme),
-                        ],
+                                const SizedBox(
+                                  width: 7.2,
+                                ),
+                                GeneralText(
+                                  Strings.foodieProfileLabel,
+                                  style: appTheme
+                                      .typographies.interFontFamily.headline6
+                                      .copyWith(
+                                    fontSize: 20,
+                                    color: HexColor.fromHex('#f1c452'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15.9,
+                            ),
+                            wowFactors(appTheme),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    foodProductDetails(appTheme),
-                    const SizedBox(
-                      height: 28,
-                    ),
-                    foodieInfo(appTheme),
-                    const SizedBox(
-                      height: 47.9,
-                    ),
-                    productPriceInformation(appTheme),
-                    SizedBox(
-                      height: 189,
-                    ),
-                  ],
-                )),
-
-          ],),
-
-
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      foodProductDetails(appTheme),
+                      const SizedBox(
+                        height: 28,
+                      ),
+                      foodieInfo(appTheme),
+                      const SizedBox(
+                        height: 47.9,
+                      ),
+                      productPriceInformation(appTheme),
+                      SizedBox(
+                        height: 189,
+                      ),
+                    ],
+                  )),
+            ],
+          ),
         ),
       ),
     );
@@ -308,7 +322,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 12,right: 18.5),
+            padding: const EdgeInsets.only(left: 12, right: 18.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -488,7 +502,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                    const EdgeInsetsDirectional.all(10),
+                                        const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -499,7 +513,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                     ),
                                     child: Container(
                                       padding:
-                                      const EdgeInsetsDirectional.all(10),
+                                          const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -535,7 +549,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                     width: 58,
                                     height: 63.3,
                                     padding:
-                                    const EdgeInsetsDirectional.all(10),
+                                        const EdgeInsetsDirectional.all(10),
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         image: AssetImage(
@@ -546,7 +560,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                                     ),
                                     child: Container(
                                       padding:
-                                      const EdgeInsetsDirectional.all(10),
+                                          const EdgeInsetsDirectional.all(10),
                                       decoration: BoxDecoration(
                                         color: HexColor.fromHex("#f1c452"),
                                         shape: BoxShape.circle,
@@ -657,9 +671,9 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                fontSize: 12,
-                                color: HexColor.fromHex('#909094'),
-                                fontWeight: FontWeight.w400),
+                                    fontSize: 12,
+                                    color: HexColor.fromHex('#909094'),
+                                    fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -770,9 +784,9 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                       menuListItems[index].name ?? "",
                       style: appTheme.typographies.interFontFamily.headline2
                           .copyWith(
-                          fontSize: 14,
-                          color: HexColor.fromHex('#ffffff'),
-                          fontWeight: FontWeight.w400),
+                              fontSize: 14,
+                              color: HexColor.fromHex('#ffffff'),
+                              fontWeight: FontWeight.w400),
                       maxLines: 3,
                     ),
                   ],
@@ -1010,9 +1024,9 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                         Strings.productDetailPriceValue,
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
-                            fontSize: 36,
-                            color: HexColor.fromHex('#f89f84'),
-                            fontWeight: FontWeight.w300),
+                                fontSize: 36,
+                                color: HexColor.fromHex('#f89f84'),
+                                fontWeight: FontWeight.w300),
                       ),
                       GeneralText(
                         Strings.productDetailPriceTotal,
@@ -1116,7 +1130,8 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
       title: Strings.foodieProfileAcceptBtn.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-
+        widget._foodieProfileDecisionScreenViewModel.sendAcceptRequest();
+        // sendAcceptRequest
         _showCashReceivedPopup(context);
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
@@ -1131,9 +1146,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
   Widget getDeclineCash({required IAppThemeData appTheme}) {
     return GeneralButton.button(
       width: 150,
-
       title: Strings.foodieProfileDeclineBtn.toUpperCase(),
-
       styleType: ButtonStyleType.fill,
 /*      onTap: () {
         Navigator.push(context,
@@ -1145,8 +1158,6 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
     //   style: appTheme.typographies.interFontFamily.headline2,
     // );
   }
-
-
 
   Future<dynamic> _showCashReceivedPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;
@@ -1163,12 +1174,14 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
             SizedBox(
               height: 20,
             ),
-            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            Image.asset(
+              Resources.reviewCheckPNG,
+              height: 63,
+            ),
             SizedBox(
               height: 16,
             ),
@@ -1193,7 +1206,6 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
                   fontSize: 15,
                   fontWeight: FontWeight.w500),
             ),
-
             SizedBox(
               height: 29,
             ),
@@ -1201,6 +1213,7 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
               title: Strings.orderPopupBtnTitle.toUpperCase(),
               styleType: ButtonStyleType.fill,
               onTap: () {
+                _navigation.navigateTo(route: HomeRouteView());
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(builder: (context) => SignUpScreen()),
@@ -1222,7 +1235,6 @@ class _FoodieProfileRequiredPendingState extends State<FoodieProfileRequiredPend
       // ),
     );
   }
-
 }
 
 class CustomModel {

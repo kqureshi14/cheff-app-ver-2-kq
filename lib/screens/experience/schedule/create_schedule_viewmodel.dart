@@ -103,7 +103,7 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
   }
 
   Future<void> sendScheduleData({Function? completion}) async {
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleSave);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.scheduleSave);
 
     emit(const Loading());
 

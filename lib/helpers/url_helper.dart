@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class InfininURLHelpers {
+class InfininHelpers {
   static List months = [
     'Jan',
     'Feb',
@@ -15,6 +15,24 @@ class InfininURLHelpers {
     'Nov',
     'Dec'
   ];
+
+  static String  getMonthName(int month) {
+    List<String> monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return monthNames[month - 1];
+  }
 
   static String getRestApiURL(String url) {
     final parts = url.toString().split('//');

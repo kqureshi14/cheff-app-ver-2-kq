@@ -96,7 +96,7 @@ class ExperienceMenuDetailsScreenViewModel
       return;
     }
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -231,7 +231,7 @@ class ExperienceMenuDetailsScreenViewModel
 
   Future<void> getExperienceMenu({required String experienceId}) async {
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
 
     emit(const exp_menu_details.Loading());
@@ -260,7 +260,7 @@ class ExperienceMenuDetailsScreenViewModel
     required String experienceId,
     // required FoodMenuModel foodMenuModel,
   }) async {
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.scheduleData);
     // emit(const Loading());
 
     final scheduleRequest = menurequest.FoodMenuRequest(

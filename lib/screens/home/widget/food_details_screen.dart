@@ -2035,7 +2035,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
       {bool showSelectedTime = false}) {
     var finalDate = '';
-    finalDate = InfininURLHelpers.getAmPm(displayTime);
+    finalDate = InfininHelpers.getAmPm(displayTime);
     return Padding(
         padding: const EdgeInsets.only(right: 7),
         child: Container(

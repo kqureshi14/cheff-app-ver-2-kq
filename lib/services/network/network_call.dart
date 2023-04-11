@@ -229,7 +229,7 @@ class NetworkCall extends INetworkService {
   Future<String> _loadBaseURL() async {
     final url = _appService.state.baseUrl ??
         _storage.readString(key: PreferencesKeys.sBaseUrl);
-    return InfininURLHelpers.getRestApiURL(url);
+    return InfininHelpers.getRestApiURL(url);
   }
 
   dynamic _returnResponse(Response response) {

@@ -86,7 +86,7 @@ class CreateExperienceScreenViewModel
       return;
     }
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -222,7 +222,7 @@ class CreateExperienceScreenViewModel
   void loadWowFactors() async {
     //http://18.202.117.137:8080/feyst-service/wow-factor/list
 
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.wowFactorAPI);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.wowFactorAPI);
 
     // T t = loginrequest.T(
     //   mobileNo: mobileNumber,
@@ -255,7 +255,7 @@ class CreateExperienceScreenViewModel
     //http://18.202.117.137:8080/feyst-service/wow-factor/list
 
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
 
     // T t = loginrequest.T(
     //   mobileNo: mobileNumber,

@@ -29,15 +29,15 @@ class GeneralNewAppBar extends StatelessWidget {
         // Image.asset(Resources.appBackIcon,height: 35,),
         InkWell(
             onTap: () {
-              // Navigator.pop(context);
-              _navigation.pop();
+              Navigator.pop(context);
+              // _navigation.pop();
             },
             child: SvgPicture.asset(
               Resources.appBackIconSVG,
               height: 33,
             )),
         if (title != null) ...[
-          Spacer(),
+          const Spacer(),
           GeneralText(
             title ?? '',
             textAlign: TextAlign.center,

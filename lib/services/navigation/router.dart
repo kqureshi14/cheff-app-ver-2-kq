@@ -6,6 +6,8 @@ import 'package:chef/screens/screen.dart';
 import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 
 import '../../screens/booking/component/order_screen_v.dart';
+import '../../screens/foodie_profile/component/foodie_profile_decision_screen_v.dart';
+import '../../screens/home/home_page/home_screen_v.dart';
 import '../../screens/sign_up/sign_up_screen_v.dart';
 
 export 'router.gr.dart';
@@ -36,7 +38,9 @@ abstract class Routes {
   static const accountSettings = '/account_settings';
   static const getStartedScreen = '/get_started_screen';
 
-  static const orderScreenView = '/order_screen';
+  static const orderScreenView = '/order_screen/:type';
+
+  static const foodieDecisionPending = '/foodie_decision_pending/:bookingId';
 }
 
 @MaterialAutoRouter(
@@ -55,12 +59,22 @@ abstract class Routes {
       path: Routes.signUp,
     ),
     AutoRoute(
+      page: HomeScreenView,
+      path: Routes.home,
+    ),
+
+    AutoRoute(
       page: ForgotPasswordScreen,
       path: Routes.forgotPassword,
     ),
     AutoRoute(
       page: OrderScreenView,
       path: Routes.orderScreenView,
+    ),
+
+    AutoRoute(
+      page: FoodieProfileDecisionScreenView,
+      path: Routes.foodieDecisionPending,
     ),
 
     // AutoRoute(

@@ -52,7 +52,7 @@ class MenuExperienceScreenViewModel
   void loadMealList() async {
     //http://18.202.117.137:8080/feyst-service/wow-factor/list
 
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.mealAPI);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.mealAPI);
 
     // T t = loginrequest.T(
     //   mobileNo: mobileNumber,
@@ -77,7 +77,7 @@ class MenuExperienceScreenViewModel
   void loadDishList() async {
     //http://18.202.117.137:8080/feyst-service/wow-factor/list
 
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.dishAPI);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.dishAPI);
 
     // T t = loginrequest.T(
     //   mobileNo: mobileNumber,
@@ -118,7 +118,7 @@ class MenuExperienceScreenViewModel
     //   MaterialPageRoute(builder: (context) => const MenuExperienceScreen()),
     // );
 
-    final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.menuSave);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.menuSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     menu_req.T t = menu_req.T(

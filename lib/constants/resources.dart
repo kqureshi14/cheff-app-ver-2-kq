@@ -75,4 +75,6 @@ abstract class Resources {
   static const earningBG2PNG = 'assets/images/icons/earning_bg2.png';
   static const earningPaidPNG = 'assets/images/icons/earning_paid.png';
   static const earningPendingPNG = 'assets/images/icons/earning_pending.png';
+
+  //timelapse
 }

@@ -90,7 +90,7 @@ class ExperienceDetailsScreenViewModel
       return;
     }
     final url =
-        InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -170,7 +170,7 @@ class ExperienceDetailsScreenViewModel
     emit(const exp_details.Loading());
     try {
       final url =
-          InfininURLHelpers.getRestApiURL(Api.baseURL + Api.experienceList);
+          InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceList);
       data_request.T t = data_request.T();
 
       final dataRequest = data_request.DataRequest(

@@ -59,14 +59,19 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       backgroundColor: HexColor.fromHex("#212129"),
       body: Container(
         // padding: const EdgeInsets.only(left: 22, right: 22),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 40,
               ),
               Container(
-                padding: EdgeInsets.only(left: 12, top: 20, bottom: 20,),
+                padding: EdgeInsets.only(
+                  left: 12,
+                  top: 20,
+                  bottom: 20,
+                ),
                 child: const GeneralNewAppBar(
                   rightIcon: Resources.homeIconSvg,
                   title: Strings.labelBookings,
@@ -110,17 +115,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       color: HexColor.fromHex("#4b4b52")),
                   child: InkWell(
                     onTap: () {
+                      if (index == 0) {
+                        //
 
-                      if(index==0)
-                        {
-                          //
-
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                                return const FoodieProfileOrderCompleted();
-                              }));
-                        }
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const FoodieProfileOrderCompleted();
+                        }));
+                      }
 
                       if (index == 1) {
                         Navigator.push(context,
@@ -130,19 +132,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       } else if (index == 2) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return FoodieInProgressDetail();
-                            }));
+                          return FoodieInProgressDetail();
+                        }));
                       } else if (index == 3) {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             FoodieProfileRequiredPending()));
+                      } else if (index == 4) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => FoodieProfileRequiredPending()));
-                      }
-                      else if (index == 4) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FoodieProfileBookingConfirmed()));
+                                builder: (context) =>
+                                    FoodieProfileBookingConfirmed()));
                       }
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
@@ -264,6 +267,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                                 children: [
                                   GeneralText(
                                     Strings.foodItemBookingDateTime,
+                                    // widget._ ,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(
@@ -524,7 +528,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else if (index == 3||index==4) {
+    } else if (index == 3 || index == 4) {
       progressBar = Row(children: [
         Container(
           width: 12,

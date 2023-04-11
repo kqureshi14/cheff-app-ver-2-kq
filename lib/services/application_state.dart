@@ -39,6 +39,7 @@ class ApplicationState extends Equatable {
     this.experienceHelper,
     this.experienceResponse,
     this.menuHelper,
+    this.titlePage,
   });
 
   // final LoginResponse? userInfo;
@@ -59,6 +60,7 @@ class ApplicationState extends Equatable {
   final ExperienceHelper? experienceHelper;
   final ExperienceResponse? experienceResponse;
   final MenuHelper? menuHelper;
+  final String? titlePage;
 
   ApplicationState copyWith({
     // LoginResponse? userInfo,
@@ -78,6 +80,7 @@ class ApplicationState extends Equatable {
     ExperienceHelper? experienceHelper,
     ExperienceResponse? experienceResponse,
     MenuHelper? menuHelper,
+    String? titlePage,
   }) {
     return ApplicationState(
       userInfo: userInfo ?? this.userInfo,
@@ -96,6 +99,7 @@ class ApplicationState extends Equatable {
       experienceHelper: experienceHelper ?? this.experienceHelper,
       experienceResponse: experienceResponse ?? this.experienceResponse,
       menuHelper: menuHelper ?? this.menuHelper,
+      titlePage: titlePage ?? this.titlePage,
     );
   }
 
@@ -116,6 +120,7 @@ class ApplicationState extends Equatable {
         experienceHelper,
         experienceResponse,
         menuHelper,
+        titlePage,
       ];
 }
 
@@ -194,6 +199,10 @@ class ApplicationService extends Cubit<ApplicationState> {
 
   void updateSaveExperience(ExperienceResponse experienceResponse) {
     emit(state.copyWith(experienceResponse: experienceResponse));
+  }
+
+  void updateTitlePage(String title) {
+    emit(state.copyWith(titlePage: title));
   }
 
   void updateNewRecordAttachedFilesList(String id) {

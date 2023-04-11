@@ -570,4 +570,15 @@ abstract class Strings {
   static const earningTotalEarningLabel = "Total Earning";
   static const earningDescriptionLabel =
       "Advance Payment for BBQ Experiencefrom Ahmed Zia";
+
+  static const newData = 'NEW';
+  static const acceptData = 'ACCEPTED';
+  static const confirmed = 'CONFIRMED';
+
+  static const declined = 'DECLINED';
+  static const inProgress = 'IN_PROGRESS';
+
+  static const requestedNew = 'REQUESTED';
+
+  static const newOrder = 'New Order';
 }

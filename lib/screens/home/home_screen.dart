@@ -25,6 +25,7 @@ class LoungeHomeScreen extends StatefulWidget {
 
 class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
   final _navigation = locateService<INavigationService>();
+  final _appService = locateService<ApplicationService>();
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -47,7 +48,9 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                       height: 81,
                     ),
                     GeneralText(
-                      Strings.loungeHeaderLabel,
+                      // Strings.loungeHeaderLabel,
+                      // widget._bookingOverview.t.
+                      _appService.state.userInfo!.t.brandName,
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 32,
@@ -78,8 +81,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
-                                              _navigation.replace(
-                                                  route: OrderRouteView());
+                                              _appService.updateTitlePage(
+                                                  Strings.newOrder);
+                                              _navigation.navigateTo(
+                                                  route: OrderRouteView(
+                                                type: Strings.newData,
+                                              ));
                                             },
                                             child: Container(
                                                 height: 108,
@@ -162,6 +169,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //  _navigate. OrderScreenView
                                               // _navigation.replace(
                                               //     route: OrderRouteView());
+                                              _appService.updateTitlePage(
+                                                  Strings.acceptData);
+                                              _navigation.navigateTo(
+                                                  route: OrderRouteView(
+                                                type: Strings.acceptData,
+                                              ));
                                             },
                                             child: Container(
                                                 height: 108,
@@ -220,77 +233,107 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                            width: 117,
-                                            padding: EdgeInsetsDirectional.only(
-                                                bottom: 10),
-                                            child: Column(
-                                              children: [
-                                                GeneralText(
-                                                  // Strings.loungeConfirmedValue,
-                                                  widget._bookingOverview.t
-                                                      .confirmedBookings
-                                                      .toString(),
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 35,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: HexColor.fromHex(
-                                                        '#b0c18b'),
-                                                  ),
-                                                ),
-                                                GeneralText(
-                                                  Strings.loungeConfirmedLabel,
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: HexColor.fromHex(
-                                                        '#909094'),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                        InkWell(
+                                            onTap: () {
+                                              _navigation.navigateTo(
+                                                  route: OrderRouteView(
+                                                type: Strings.confirmed,
+                                              ));
+                                            },
+                                            child: Container(
+                                                width: 117,
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        bottom: 10),
+                                                child: Column(
+                                                  children: [
+                                                    GeneralText(
+                                                      // Strings.loungeConfirmedValue,
+                                                      widget._bookingOverview.t
+                                                          .confirmedBookings
+                                                          .toString(),
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 35,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: HexColor.fromHex(
+                                                            '#b0c18b'),
+                                                      ),
+                                                    ),
+                                                    GeneralText(
+                                                      Strings
+                                                          .loungeConfirmedLabel,
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: HexColor.fromHex(
+                                                            '#909094'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ))),
                                         Container(
                                           width: 1,
                                           height: 49,
                                           color: HexColor.fromHex("#4b4b52"),
                                         ),
-                                        Container(
-                                            width: 117,
-                                            padding: EdgeInsetsDirectional.only(
-                                                bottom: 10),
-                                            child: Column(
-                                              children: [
-                                                GeneralText(
-                                                  // Strings.loungeInProgressValue,
-                                                  widget._bookingOverview.t
-                                                      .inProgressBookings
-                                                      .toString(),
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 35,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: HexColor.fromHex(
-                                                        '#f1c452'),
-                                                  ),
-                                                ),
-                                                GeneralText(
-                                                  Strings.loungeInProgressLabel,
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: HexColor.fromHex(
-                                                        '#909094'),
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                        InkWell(
+                                            onTap: () {
+                                              _navigation.navigateTo(
+                                                  route: OrderRouteView(
+                                                type: Strings.inProgress,
+                                              ));
+                                            },
+                                            child: Container(
+                                                width: 117,
+                                                padding:
+                                                    EdgeInsetsDirectional.only(
+                                                        bottom: 10),
+                                                child: Column(
+                                                  children: [
+                                                    GeneralText(
+                                                      // Strings.loungeInProgressValue,
+                                                      widget._bookingOverview.t
+                                                          .inProgressBookings
+                                                          .toString(),
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 35,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: HexColor.fromHex(
+                                                            '#f1c452'),
+                                                      ),
+                                                    ),
+                                                    GeneralText(
+                                                      Strings
+                                                          .loungeInProgressLabel,
+                                                      style: appTheme
+                                                          .typographies
+                                                          .interFontFamily
+                                                          .headline6
+                                                          .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: HexColor.fromHex(
+                                                            '#909094'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ))),
                                       ],
                                     ),
                                   ])),
