@@ -2,6 +2,7 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../models/booking/booking_status.dart';
+import '../../../models/booking/order_detail_response.dart';
 import '../../../models/foodie/foodie_details_response.dart';
 import '../foodie_profile_decision.dart';
 // import '../order_screen.dart';
@@ -24,9 +25,10 @@ class FoodieProfileDecisionScreenView
   }
 
   Widget displayLoaded(FoodieProfileDecisionScreenViewModel viewModel,
-      FoodieDetails foodieDetails) {
+      OrderDetails orderDetails) {
     return FoodieProfileRequiredPending(
       foodieProfileDecisionScreenViewModel: viewModel,
+      orderDetails: orderDetails,
       // bookingStatus: bookingStatus,
       // orderViewModel: viewModel,
     );

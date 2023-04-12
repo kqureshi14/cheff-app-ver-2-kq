@@ -52,11 +52,15 @@ abstract class Api {
 
   static const findByChefId = 'experience-booking/find-by-chef-id';
 
+  static const findById = 'experience-booking/find-by-id';
+
   static const findByFoodieId = 'foodie/find-by-id';
 
   static const getNewId = 'NEW';
 
   static const acceptBooking = 'experience-booking/accept-booking';
+
+  static const declineBooking = 'experience-booking/decline-booking';
 
   static const accessToken = 'api/auth/access-token';
   static const refreshToken = '$apiVersion/refresh-token';
@@ -132,4 +136,6 @@ abstract class Api {
   static const apiDocuments = '/document';
   static const apiDocumentsUploadSwitch = '/upload';
   static const apiDocumentsDownloadSwitch = '/download';
+
+  static const imageUrl = 'http://18.202.117.137/feyst-media';
 }

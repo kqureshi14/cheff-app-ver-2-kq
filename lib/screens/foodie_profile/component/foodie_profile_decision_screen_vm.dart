@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../constants/api.dart';
 import '../../../models/booking/accept_booking_response.dart';
 import '../../../models/booking/booking_status.dart';
+import '../../../models/booking/order_detail_response.dart';
 import '../../../models/foodie/foodie_details_response.dart';
 import '../../../models/home/food_menu_request.dart';
 import '../../../services/application_state.dart';
@@ -25,46 +26,23 @@ class FoodieProfileDecisionScreenViewModel
         super(const Loading());
 
   final INetworkService _network;
-  
+
   String bookingId = "0";
 
   void initialize(String _bookingId) {
+    developer.log(' Booking Id is ' + '${_bookingId}');
     bookingId = _bookingId;
-   // emit(const Loading());
-    loadFoodieDetails();
+    // emit(const Loading());
+    loadOrderDetails();
   }
 
-  Future<void> loadFoodieDetails() async {
-    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.findByFoodieId);
+  Future<void> loadOrderDetails() async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.findById);
     // emit(const Loading());
 
     final _appService = locateService<ApplicationService>();
 
     emit(const Loading());
-
-    final foodMenuRequest = FoodMenuRequest(
-      // t: int.parse(_appService.state.userInfo!.t.id.toString()),
-      t: 45,
-    ).toJson();
-
-    final response = await _network.post(
-      path: url,
-      data: foodMenuRequest,
-    );
-
-    if (response != null) {
-      FoodieDetails foodieDetails = foodieDetailsFromJson(response.body);
-      emit(Loaded(foodieDetails));
-    }
-  }
-
-  Future<void> sendAcceptRequest() async {
-    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.acceptBooking);
-    // emit(const Loading());
-
-    final _appService = locateService<ApplicationService>();
-
-  //  emit(const Loading());
 
     final foodMenuRequest = FoodMenuRequest(
       // t: int.parse(_appService.state.userInfo!.t.id.toString()),
@@ -77,10 +55,66 @@ class FoodieProfileDecisionScreenViewModel
     );
 
     if (response != null) {
-      AcceptResponse acceptResponse = acceptResponseFromJson(response.body);
+      // FoodieDetails foodieDetails = foodieDetailsFromJson(response.body);
+      developer
+          .log(' Response body of order details are ' + '${response.body}');
+
+      OrderDetails orderDetails = orderDetailsFromJson(response.body);
+      emit(Loaded(orderDetails));
+    }
+  }
+
+  Future<void> sendAcceptRequest() async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.acceptBooking);
+    // emit(const Loading());
+
+    final _appService = locateService<ApplicationService>();
+
+    //  emit(const Loading());
+
+    final foodMenuRequest = FoodMenuRequest(
+      // t: int.parse(_appService.state.userInfo!.t.id.toString()),
+      t: int.parse(bookingId),
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: foodMenuRequest,
+    );
+
+    if (response != null) {
+      OrderStatusResponse acceptResponse =
+          orderStatusResponseFromJson(response.body);
       developer.log('acceptResponse is  ' + '${acceptResponse.t.brandName}');
 
-    //  emit(Loaded(foodieDetails));
+      //  emit(Loaded(foodieDetails));
+    }
+  }
+
+  Future<void> sendDeclineRequest() async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.declineBooking);
+    // emit(const Loading());
+
+    final _appService = locateService<ApplicationService>();
+
+    //  emit(const Loading());
+
+    final foodMenuRequest = FoodMenuRequest(
+      // t: int.parse(_appService.state.userInfo!.t.id.toString()),
+      t: int.parse(bookingId),
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: foodMenuRequest,
+    );
+
+    if (response != null) {
+      OrderStatusResponse declineResponse =
+          orderStatusResponseFromJson(response.body);
+      developer.log('declineResponse is  ' + '${declineResponse.t.brandName}');
+
+      //  emit(Loaded(foodieDetails));
     }
   }
 
@@ -130,5 +164,17 @@ class FoodieProfileDecisionScreenViewModel
     final String formatted = formatter.format(providedDate);
 
     return formatted;
+  }
+
+  String getDayAndMonth(DateTime _givenDate) {
+    var _date = InfininHelpers.dayOfMonth(_givenDate);
+    var dayOfMonth = _givenDate.day;
+    var _month = InfininHelpers.months[_givenDate.month - 1];
+    var _productDetailSelectionDate = _date.toUpperCase() +
+        ',  ' +
+        (dayOfMonth.toString())! +
+        "   " +
+        _month.toString().toUpperCase();
+    return _productDetailSelectionDate;
   }
 }

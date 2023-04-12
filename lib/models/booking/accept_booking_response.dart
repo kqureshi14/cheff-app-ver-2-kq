@@ -4,13 +4,14 @@
 
 import 'dart:convert';
 
-AcceptResponse acceptResponseFromJson(String str) =>
-    AcceptResponse.fromJson(json.decode(str));
+OrderStatusResponse orderStatusResponseFromJson(String str) =>
+    OrderStatusResponse.fromJson(json.decode(str));
 
-String acceptResponseToJson(AcceptResponse data) => json.encode(data.toJson());
+String acceptResponseToJson(OrderStatusResponse data) =>
+    json.encode(data.toJson());
 
-class AcceptResponse {
-  AcceptResponse({
+class OrderStatusResponse {
+  OrderStatusResponse({
     required this.t,
     this.userId,
     this.message,
@@ -24,7 +25,8 @@ class AcceptResponse {
   dynamic error;
   int code;
 
-  factory AcceptResponse.fromJson(Map<String, dynamic> json) => AcceptResponse(
+  factory OrderStatusResponse.fromJson(Map<String, dynamic> json) =>
+      OrderStatusResponse(
         t: T.fromJson(json["t"]),
         userId: json["userId"],
         message: json["message"],

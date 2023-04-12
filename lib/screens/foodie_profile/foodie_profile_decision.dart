@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../models/booking/order_detail_response.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
@@ -16,15 +17,21 @@ import '../home/home_page/home_screen_v.dart';
 import 'component/foodie_profile_decision_screen_vm.dart';
 import 'foodie_profile_booking_confirmed.dart';
 
+import 'dart:developer' as developer;
+
 class FoodieProfileRequiredPending extends StatefulWidget {
   FoodieProfileRequiredPending(
       {required FoodieProfileDecisionScreenViewModel
           foodieProfileDecisionScreenViewModel,
+      required OrderDetails orderDetails,
       Key? key})
       : _foodieProfileDecisionScreenViewModel =
             foodieProfileDecisionScreenViewModel,
+        _orderDetails = orderDetails,
         super(key: key);
   FoodieProfileDecisionScreenViewModel _foodieProfileDecisionScreenViewModel;
+  OrderDetails _orderDetails;
+
   @override
   State<FoodieProfileRequiredPending> createState() =>
       _FoodieProfileRequiredPendingState();
@@ -35,37 +42,54 @@ class _FoodieProfileRequiredPendingState
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> menuListItems = [];
   bool checkValue = false;
+  final _appService = locateService<ApplicationService>();
   final _navigation = locateService<INavigationService>();
 
   @override
   void initState() {
     // TODO: implement initState
-    menuListItems.addAll([
-      CustomModel(name: "Sindhi Biryani"),
-      CustomModel(name: "Buritto"),
-      CustomModel(name: "Vegetable Salad"),
-      CustomModel(name: "Hyderabadi Rice"),
-      CustomModel(name: "Soft Drinks"),
-    ]);
-    wowFactorsList.addAll([
-      CustomModel(
-          foodCategory: Strings.foodieProfileFoodCategoryLabel,
-          name: Strings.productDetailWowFactorGarden,
-          icon: "assets/images/icons/garden.png"),
-      CustomModel(
-          foodCategory: Strings.foodieProfileAmbienceCategoryLabel,
-          name: Strings.productDetailWowFactorFireworks,
-          icon: "assets/images/icons/fireworks.png"),
-      CustomModel(
-          foodCategory: Strings.foodieProfileCuisineCategoryLabel,
-          name: Strings.productDetailWowFactorPetFriendly,
-          icon: "assets/images/icons/pet_friendly.png"),
-      CustomModel(
-          foodCategory: Strings.foodieProfileInterestsCategoryLabel,
-          name: Strings.productDetailWowFactorWifi,
-          icon: "assets/images/icons/wifi_2.png"),
-    ]);
+    // menuListItems.addAll([
+    //   CustomModel(name: "Sindhi Biryani"),
+    //   CustomModel(name: "Buritto"),
+    //   CustomModel(name: "Vegetable Salad"),
+    //   CustomModel(name: "Hyderabadi Rice"),
+    //   CustomModel(name: "Soft Drinks"),
+    // ]);
+
+    developer.log(' Base Url is ' + '${_appService.state.baseUrl}');
+    loadMenu();
+    loadWowFactor();
+
     super.initState();
+  }
+
+  void loadMenu() {
+    for (var i = 0; i < widget._orderDetails.t.experienceMenu.length; i++) {
+      menuListItems.add(
+        CustomModel(
+            foodCategory: widget._orderDetails.t.experienceMenu[i].mealName,
+            name: widget._orderDetails.t.experienceMenu[i].dish,
+            icon: "assets/images/icons/garden.png"),
+      );
+    }
+  }
+
+  void loadWowFactor() {
+    for (var i = 0;
+        i < widget._orderDetails.t.experience.experienceWowFactors.length;
+        i++) {
+      wowFactorsList.add(CustomModel(
+        foodCategory: Strings.foodieProfileFoodCategoryLabel,
+        //   foodCategory: widget._orderDetails.t.experience.experienceWowFactors[i]
+        //       .,
+        name: widget
+            ._orderDetails.t.experience.experienceWowFactors[i].wowFactorName,
+        icon: Api.imageUrl +
+            "" +
+            widget._orderDetails.t.experience.experienceWowFactors[i]
+                .wowFactorIconPath, // Strings.productDetailWowFactorGarden,
+      ));
+    }
   }
 
   @override
@@ -247,7 +271,8 @@ class _FoodieProfileRequiredPendingState
                               padding: EdgeInsetsDirectional.only(
                                   start: 22.5, top: 30, bottom: 30),
                               child: GeneralText(
-                                Strings.foodieProfileExperienceValue,
+                                // Strings.foodieProfileExperienceValue,
+                                widget._orderDetails.t.experienceName,
                                 style: appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -322,275 +347,607 @@ class _FoodieProfileRequiredPendingState
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 12, right: 18.5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 7.7),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GeneralText(
-                          wowFactorsList[0].foodCategory ?? "",
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                        Container(
-                          width: 58,
-                          height: 63.3,
-                          padding: const EdgeInsetsDirectional.all(10),
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/icons/food_item_circle.png'),
-                              fit: BoxFit.fill,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Container(
-                            padding: const EdgeInsetsDirectional.all(10),
-                            decoration: BoxDecoration(
-                              color: HexColor.fromHex("#f1c452"),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.asset(wowFactorsList[0].icon != null
-                                ? wowFactorsList[0].icon ?? ""
-                                : ''),
-                          ),
-                        ),
-                        GeneralText(
-                          wowFactorsList[0].name ?? "",
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 14,
-                            color: HexColor.fromHex('#ffffff'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 7.7),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GeneralText(
-                          wowFactorsList[1].foodCategory ?? "",
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#f1c452'),
-                          ),
-                        ),
-                        Container(
-                          width: 58,
-                          height: 63.3,
-                          padding: const EdgeInsetsDirectional.all(10),
-                          decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/icons/food_item_circle.png'),
-                              fit: BoxFit.fill,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Container(
-                            padding: const EdgeInsetsDirectional.all(10),
-                            decoration: BoxDecoration(
-                              color: HexColor.fromHex("#f1c452"),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.asset(wowFactorsList[1].icon != null
-                                ? wowFactorsList[1].icon ?? ""
-                                : ''),
-                          ),
-                        ),
-                        GeneralText(
-                          wowFactorsList[1].name ?? "",
-                          style: appTheme.typographies.interFontFamily.headline6
-                              .copyWith(
-                            fontSize: 14,
-                            color: HexColor.fromHex('#ffffff'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 7.7),
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GeneralText(
-                        wowFactorsList[2].foodCategory ?? "",
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 16,
-                          color: HexColor.fromHex('#f1c452'),
-                        ),
-                      ),
-                      Container(
-                        width: 58,
-                        height: 63.3,
-                        padding: const EdgeInsetsDirectional.all(10),
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage(
-                                'assets/images/icons/food_item_circle.png'),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Container(
-                          padding: const EdgeInsetsDirectional.all(10),
-                          decoration: BoxDecoration(
-                            color: HexColor.fromHex("#f1c452"),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(wowFactorsList[2].icon != null
-                              ? wowFactorsList[2].icon ?? ""
-                              : ''),
-                        ),
-                      ),
-                      GeneralText(
-                        wowFactorsList[2].name ?? "",
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 14,
-                          color: HexColor.fromHex('#ffffff'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Row(
+              padding: const EdgeInsets.only(left: 12, right: 18.5),
+
+              // child: ListView.builder(
+              //     physics: const BouncingScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemCount: wowFactorsList.length,
+              //     padding: EdgeInsets.zero,
+              //     itemBuilder: (BuildContext context, int index) {
+              child: Wrap(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 22,
                 children: [
-                  Column(
-                    children: [
-                      GeneralText(
-                        wowFactorsList[3].foodCategory ?? "",
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 16,
-                          color: HexColor.fromHex('#f1c452'),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 7.7),
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 58,
-                                    height: 63.3,
-                                    padding:
-                                        const EdgeInsetsDirectional.all(10),
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/icons/food_item_circle.png'),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsetsDirectional.all(10),
-                                      decoration: BoxDecoration(
-                                        color: HexColor.fromHex("#f1c452"),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                          wowFactorsList[3].icon != null
-                                              ? wowFactorsList[3].icon ?? ""
-                                              : ''),
-                                    ),
-                                  ),
-                                  GeneralText(
-                                    wowFactorsList[3].name ?? "",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                      fontSize: 14,
-                                      color: HexColor.fromHex('#ffffff'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 11.4,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 7.7),
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: 58,
-                                    height: 63.3,
-                                    padding:
-                                        const EdgeInsetsDirectional.all(10),
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/icons/food_item_circle.png'),
-                                        fit: BoxFit.fill,
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Container(
-                                      padding:
-                                          const EdgeInsetsDirectional.all(10),
-                                      decoration: BoxDecoration(
-                                        color: HexColor.fromHex("#f1c452"),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.asset(
-                                          wowFactorsList[3].icon != null
-                                              ? wowFactorsList[3].icon ?? ""
-                                              : ''),
-                                    ),
-                                  ),
-                                  GeneralText(
-                                    wowFactorsList[3].name ?? "",
-                                    style: appTheme
-                                        .typographies.interFontFamily.headline6
-                                        .copyWith(
-                                      fontSize: 14,
-                                      color: HexColor.fromHex('#ffffff'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
+                  for (var item in wowFactorsList)
+                    getWowFactorDisplay(appTheme, item),
+                  // ListView.builder(
+                  //     physics: const BouncingScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: 3,
+                  //     padding: EdgeInsets.zero,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return getWowFactorDisplay();
+                  //     }),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.only(bottom: 7.7),
+                  //   child: Container(
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         GeneralText(
+                  //           wowFactorsList[1].foodCategory ?? "",
+                  //           style: appTheme
+                  //               .typographies.interFontFamily.headline6
+                  //               .copyWith(
+                  //             fontSize: 16,
+                  //             color: HexColor.fromHex('#f1c452'),
+                  //           ),
+                  //         ),
+                  //         Container(
+                  //           width: 58,
+                  //           height: 63.3,
+                  //           padding: const EdgeInsetsDirectional.all(10),
+                  //           decoration: BoxDecoration(
+                  //             image: const DecorationImage(
+                  //               image: AssetImage(
+                  //                   'assets/images/icons/food_item_circle.png'),
+                  //               fit: BoxFit.fill,
+                  //             ),
+                  //             shape: BoxShape.circle,
+                  //           ),
+                  //           child: Container(
+                  //             padding: const EdgeInsetsDirectional.all(10),
+                  //             decoration: BoxDecoration(
+                  //               color: HexColor.fromHex("#f1c452"),
+                  //               shape: BoxShape.circle,
+                  //             ),
+                  //             child: Image.asset(
+                  //                 wowFactorsList[1].icon != null
+                  //                     ? wowFactorsList[1].icon ?? ""
+                  //                     : ''),
+                  //           ),
+                  //         ),
+                  //         GeneralText(
+                  //           wowFactorsList[1].name ?? "",
+                  //           style: appTheme
+                  //               .typographies.interFontFamily.headline6
+                  //               .copyWith(
+                  //             fontSize: 14,
+                  //             color: HexColor.fromHex('#ffffff'),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               )
-            ],
+              //  }),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(bottom: 7.7),
+              //       child: Container(
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.center,
+              //           children: [
+              //             GeneralText(
+              //               wowFactorsList[2].foodCategory ?? "",
+              //               style: appTheme.typographies.interFontFamily.headline6
+              //                   .copyWith(
+              //                 fontSize: 16,
+              //                 color: HexColor.fromHex('#f1c452'),
+              //               ),
+              //             ),
+              //             Container(
+              //               width: 58,
+              //               height: 63.3,
+              //               padding: const EdgeInsetsDirectional.all(10),
+              //               decoration: BoxDecoration(
+              //                 image: const DecorationImage(
+              //                   image: AssetImage(
+              //                       'assets/images/icons/food_item_circle.png'),
+              //                   fit: BoxFit.fill,
+              //                 ),
+              //                 shape: BoxShape.circle,
+              //               ),
+              //               child: Container(
+              //                 padding: const EdgeInsetsDirectional.all(10),
+              //                 decoration: BoxDecoration(
+              //                   color: HexColor.fromHex("#f1c452"),
+              //                   shape: BoxShape.circle,
+              //                 ),
+              //                 child: Image.asset(wowFactorsList[2].icon != null
+              //                     ? wowFactorsList[2].icon ?? ""
+              //                     : ''),
+              //               ),
+              //             ),
+              //             GeneralText(
+              //               wowFactorsList[2].name ?? "",
+              //               style: appTheme.typographies.interFontFamily.headline6
+              //                   .copyWith(
+              //                 fontSize: 14,
+              //                 color: HexColor.fromHex('#ffffff'),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     Row(
+              //       children: [
+              //         Column(
+              //           children: [
+              //             GeneralText(
+              //               wowFactorsList[3].foodCategory ?? "",
+              //               style: appTheme.typographies.interFontFamily.headline6
+              //                   .copyWith(
+              //                 fontSize: 16,
+              //                 color: HexColor.fromHex('#f1c452'),
+              //               ),
+              //             ),
+              //             Row(
+              //               children: [
+              //                 Padding(
+              //                   padding: const EdgeInsets.only(bottom: 7.7),
+              //                   child: Container(
+              //                     child: Column(
+              //                       children: [
+              //                         Container(
+              //                           width: 58,
+              //                           height: 63.3,
+              //                           padding:
+              //                               const EdgeInsetsDirectional.all(10),
+              //                           decoration: BoxDecoration(
+              //                             image: const DecorationImage(
+              //                               image: AssetImage(
+              //                                   'assets/images/icons/food_item_circle.png'),
+              //                               fit: BoxFit.fill,
+              //                             ),
+              //                             shape: BoxShape.circle,
+              //                           ),
+              //                           child: Container(
+              //                             padding:
+              //                                 const EdgeInsetsDirectional.all(10),
+              //                             decoration: BoxDecoration(
+              //                               color: HexColor.fromHex("#f1c452"),
+              //                               shape: BoxShape.circle,
+              //                             ),
+              //                             child: Image.asset(
+              //                                 wowFactorsList[3].icon != null
+              //                                     ? wowFactorsList[3].icon ?? ""
+              //                                     : ''),
+              //                           ),
+              //                         ),
+              //                         GeneralText(
+              //                           wowFactorsList[3].name ?? "",
+              //                           style: appTheme
+              //                               .typographies.interFontFamily.headline6
+              //                               .copyWith(
+              //                             fontSize: 14,
+              //                             color: HexColor.fromHex('#ffffff'),
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 SizedBox(
+              //                   width: 11.4,
+              //                 ),
+              //                 Padding(
+              //                   padding: const EdgeInsets.only(bottom: 7.7),
+              //                   child: Container(
+              //                     child: Column(
+              //                       children: [
+              //                         Container(
+              //                           width: 58,
+              //                           height: 63.3,
+              //                           padding:
+              //                               const EdgeInsetsDirectional.all(10),
+              //                           decoration: BoxDecoration(
+              //                             image: const DecorationImage(
+              //                               image: AssetImage(
+              //                                   'assets/images/icons/food_item_circle.png'),
+              //                               fit: BoxFit.fill,
+              //                             ),
+              //                             shape: BoxShape.circle,
+              //                           ),
+              //                           child: Container(
+              //                             padding:
+              //                                 const EdgeInsetsDirectional.all(10),
+              //                             decoration: BoxDecoration(
+              //                               color: HexColor.fromHex("#f1c452"),
+              //                               shape: BoxShape.circle,
+              //                             ),
+              //                             child: Image.asset(
+              //                                 wowFactorsList[3].icon != null
+              //                                     ? wowFactorsList[3].icon ?? ""
+              //                                     : ''),
+              //                           ),
+              //                         ),
+              //                         GeneralText(
+              //                           wowFactorsList[3].name ?? "",
+              //                           style: appTheme
+              //                               .typographies.interFontFamily.headline6
+              //                               .copyWith(
+              //                             fontSize: 14,
+              //                             color: HexColor.fromHex('#ffffff'),
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ],
+              //             )
+              //           ],
+              //         )
+              //       ],
+              //     )
+              //   ],
+              // ),
+              )
+        ],
+      ),
+    );
+  }
+
+  Widget wowFactorsBackup(IAppThemeData appTheme) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsetsDirectional.only(
+          top: 16.9, bottom: 16.9, start: 38, end: 19.5),
+      decoration: BoxDecoration(
+          color: HexColor.fromHex("#4b4b52"),
+          borderRadius: BorderRadius.circular(30)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 12, right: 18.5),
+
+            child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: wowFactorsList.length,
+                padding: EdgeInsets.zero,
+                itemBuilder: (BuildContext context, int index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // ListView.builder(
+                      //     physics: const BouncingScrollPhysics(),
+                      //     shrinkWrap: true,
+                      //     itemCount: 3,
+                      //     padding: EdgeInsets.zero,
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return getWowFactorDisplay();
+                      //     }),
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 7.7),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            GeneralText(
+                              wowFactorsList[index].foodCategory ?? "",
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 16,
+                                color: HexColor.fromHex('#f1c452'),
+                              ),
+                            ),
+                            Container(
+                              width: 58,
+                              height: 63.3,
+                              padding: const EdgeInsetsDirectional.all(10),
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/icons/food_item_circle.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                padding: const EdgeInsetsDirectional.all(10),
+                                decoration: BoxDecoration(
+                                  color: HexColor.fromHex("#f1c452"),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.asset(
+                                    wowFactorsList[index].icon != null
+                                        ? wowFactorsList[index].icon ?? ""
+                                        : ''),
+                              ),
+                            ),
+                            GeneralText(
+                              // wowFactorsList[0].name ?? "",
+                              wowFactorsList[index].name ?? "",
+                              style: appTheme
+                                  .typographies.interFontFamily.headline6
+                                  .copyWith(
+                                fontSize: 14,
+                                color: HexColor.fromHex('#ffffff'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 7.7),
+                      //   child: Container(
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.center,
+                      //       children: [
+                      //         GeneralText(
+                      //           wowFactorsList[1].foodCategory ?? "",
+                      //           style: appTheme
+                      //               .typographies.interFontFamily.headline6
+                      //               .copyWith(
+                      //             fontSize: 16,
+                      //             color: HexColor.fromHex('#f1c452'),
+                      //           ),
+                      //         ),
+                      //         Container(
+                      //           width: 58,
+                      //           height: 63.3,
+                      //           padding: const EdgeInsetsDirectional.all(10),
+                      //           decoration: BoxDecoration(
+                      //             image: const DecorationImage(
+                      //               image: AssetImage(
+                      //                   'assets/images/icons/food_item_circle.png'),
+                      //               fit: BoxFit.fill,
+                      //             ),
+                      //             shape: BoxShape.circle,
+                      //           ),
+                      //           child: Container(
+                      //             padding: const EdgeInsetsDirectional.all(10),
+                      //             decoration: BoxDecoration(
+                      //               color: HexColor.fromHex("#f1c452"),
+                      //               shape: BoxShape.circle,
+                      //             ),
+                      //             child: Image.asset(
+                      //                 wowFactorsList[1].icon != null
+                      //                     ? wowFactorsList[1].icon ?? ""
+                      //                     : ''),
+                      //           ),
+                      //         ),
+                      //         GeneralText(
+                      //           wowFactorsList[1].name ?? "",
+                      //           style: appTheme
+                      //               .typographies.interFontFamily.headline6
+                      //               .copyWith(
+                      //             fontSize: 14,
+                      //             color: HexColor.fromHex('#ffffff'),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  );
+                }),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.only(bottom: 7.7),
+            //       child: Container(
+            //         child: Column(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           children: [
+            //             GeneralText(
+            //               wowFactorsList[2].foodCategory ?? "",
+            //               style: appTheme.typographies.interFontFamily.headline6
+            //                   .copyWith(
+            //                 fontSize: 16,
+            //                 color: HexColor.fromHex('#f1c452'),
+            //               ),
+            //             ),
+            //             Container(
+            //               width: 58,
+            //               height: 63.3,
+            //               padding: const EdgeInsetsDirectional.all(10),
+            //               decoration: BoxDecoration(
+            //                 image: const DecorationImage(
+            //                   image: AssetImage(
+            //                       'assets/images/icons/food_item_circle.png'),
+            //                   fit: BoxFit.fill,
+            //                 ),
+            //                 shape: BoxShape.circle,
+            //               ),
+            //               child: Container(
+            //                 padding: const EdgeInsetsDirectional.all(10),
+            //                 decoration: BoxDecoration(
+            //                   color: HexColor.fromHex("#f1c452"),
+            //                   shape: BoxShape.circle,
+            //                 ),
+            //                 child: Image.asset(wowFactorsList[2].icon != null
+            //                     ? wowFactorsList[2].icon ?? ""
+            //                     : ''),
+            //               ),
+            //             ),
+            //             GeneralText(
+            //               wowFactorsList[2].name ?? "",
+            //               style: appTheme.typographies.interFontFamily.headline6
+            //                   .copyWith(
+            //                 fontSize: 14,
+            //                 color: HexColor.fromHex('#ffffff'),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //     Row(
+            //       children: [
+            //         Column(
+            //           children: [
+            //             GeneralText(
+            //               wowFactorsList[3].foodCategory ?? "",
+            //               style: appTheme.typographies.interFontFamily.headline6
+            //                   .copyWith(
+            //                 fontSize: 16,
+            //                 color: HexColor.fromHex('#f1c452'),
+            //               ),
+            //             ),
+            //             Row(
+            //               children: [
+            //                 Padding(
+            //                   padding: const EdgeInsets.only(bottom: 7.7),
+            //                   child: Container(
+            //                     child: Column(
+            //                       children: [
+            //                         Container(
+            //                           width: 58,
+            //                           height: 63.3,
+            //                           padding:
+            //                               const EdgeInsetsDirectional.all(10),
+            //                           decoration: BoxDecoration(
+            //                             image: const DecorationImage(
+            //                               image: AssetImage(
+            //                                   'assets/images/icons/food_item_circle.png'),
+            //                               fit: BoxFit.fill,
+            //                             ),
+            //                             shape: BoxShape.circle,
+            //                           ),
+            //                           child: Container(
+            //                             padding:
+            //                                 const EdgeInsetsDirectional.all(10),
+            //                             decoration: BoxDecoration(
+            //                               color: HexColor.fromHex("#f1c452"),
+            //                               shape: BoxShape.circle,
+            //                             ),
+            //                             child: Image.asset(
+            //                                 wowFactorsList[3].icon != null
+            //                                     ? wowFactorsList[3].icon ?? ""
+            //                                     : ''),
+            //                           ),
+            //                         ),
+            //                         GeneralText(
+            //                           wowFactorsList[3].name ?? "",
+            //                           style: appTheme
+            //                               .typographies.interFontFamily.headline6
+            //                               .copyWith(
+            //                             fontSize: 14,
+            //                             color: HexColor.fromHex('#ffffff'),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 SizedBox(
+            //                   width: 11.4,
+            //                 ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.only(bottom: 7.7),
+            //                   child: Container(
+            //                     child: Column(
+            //                       children: [
+            //                         Container(
+            //                           width: 58,
+            //                           height: 63.3,
+            //                           padding:
+            //                               const EdgeInsetsDirectional.all(10),
+            //                           decoration: BoxDecoration(
+            //                             image: const DecorationImage(
+            //                               image: AssetImage(
+            //                                   'assets/images/icons/food_item_circle.png'),
+            //                               fit: BoxFit.fill,
+            //                             ),
+            //                             shape: BoxShape.circle,
+            //                           ),
+            //                           child: Container(
+            //                             padding:
+            //                                 const EdgeInsetsDirectional.all(10),
+            //                             decoration: BoxDecoration(
+            //                               color: HexColor.fromHex("#f1c452"),
+            //                               shape: BoxShape.circle,
+            //                             ),
+            //                             child: Image.asset(
+            //                                 wowFactorsList[3].icon != null
+            //                                     ? wowFactorsList[3].icon ?? ""
+            //                                     : ''),
+            //                           ),
+            //                         ),
+            //                         GeneralText(
+            //                           wowFactorsList[3].name ?? "",
+            //                           style: appTheme
+            //                               .typographies.interFontFamily.headline6
+            //                               .copyWith(
+            //                             fontSize: 14,
+            //                             color: HexColor.fromHex('#ffffff'),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ],
+            //             )
+            //           ],
+            //         )
+            //       ],
+            //     )
+            //   ],
+            // ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget getWowFactorDisplay(appTheme, CustomModel customModel) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7.7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          GeneralText(
+            customModel.foodCategory ?? "",
+            style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              fontSize: 16.0,
+              color: HexColor.fromHex('#f1c452'),
+            ),
+          ),
+          Container(
+            width: 58,
+            height: 63.3,
+            padding: const EdgeInsetsDirectional.all(10),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/icons/food_item_circle.png'),
+                fit: BoxFit.fill,
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: Container(
+              padding: const EdgeInsetsDirectional.all(10),
+              decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"),
+                shape: BoxShape.circle,
+              ),
+              child: customModel.icon != null
+                  ? SvgPicture.network(customModel.icon!)
+                  : Image.asset(""),
+              // child: Image.asset(
+              //     customModel.icon != null ? customModel.icon ?? "" : ''),
+            ),
+          ),
+          GeneralText(
+            // wowFactorsList[0].name ?? "",
+            customModel.name ?? "",
+            style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              fontSize: 14.0,
+              color: HexColor.fromHex('#ffffff'),
+            ),
           ),
         ],
       ),
@@ -622,7 +979,10 @@ class _FoodieProfileRequiredPendingState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionDate,
+                            // Strings.productDetailSelectionDate,
+                            widget._foodieProfileDecisionScreenViewModel
+                                .getDayAndMonth(widget
+                                    ._orderDetails.t.scheduleScheduledDate),
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -631,7 +991,9 @@ class _FoodieProfileRequiredPendingState
                             ),
                           ),
                           GeneralText(
-                            Strings.productDetailSelectionTime,
+                            //  Strings.productDetailSelectionTime,
+                            InfininHelpers.getAmPm(
+                                widget._orderDetails.t.scheduleStartTime),
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -649,7 +1011,8 @@ class _FoodieProfileRequiredPendingState
                       Column(
                         children: [
                           GeneralText(
-                            Strings.productDetailSelectionType,
+                            //    Strings.productDetailSelectionType,
+                            widget._orderDetails.t.preferenceName,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -658,7 +1021,8 @@ class _FoodieProfileRequiredPendingState
                             ),
                           ),
                           GeneralText(
-                            Strings.productDetailSelectionTotalPersons,
+                            // Strings.productDetailSelectionTotalPersons,
+                            widget._orderDetails.t.persons,
                             style: appTheme
                                 .typographies.interFontFamily.headline2
                                 .copyWith(
@@ -714,7 +1078,8 @@ class _FoodieProfileRequiredPendingState
               color: HexColor.fromHex("#212129"),
               borderRadius: BorderRadius.circular(11)),
           child: GeneralText(
-            Strings.productDetailSelectionNotes,
+            //   Strings.productDetailSelectionNotes,
+            widget._orderDetails.t.comments,
             style: appTheme.typographies.interFontFamily.headline6.copyWith(
                 fontSize: 14,
                 color: HexColor.fromHex('#ffffff'),
@@ -767,14 +1132,17 @@ class _FoodieProfileRequiredPendingState
                             color: HexColor.fromHex('#f89f84'),
                           ),
                         ),
-                        GeneralText(
-                          Strings.productDetailSelectionMenuAmount,
-                          style: appTheme.typographies.interFontFamily.headline2
-                              .copyWith(
-                            fontSize: 16,
-                            color: HexColor.fromHex('#909094'),
-                          ),
-                        ),
+                        widget._orderDetails.t.experience.priceTypeId == 2
+                            ? GeneralText(
+                                Strings.productDetailSelectionMenuAmount,
+                                style: appTheme
+                                    .typographies.interFontFamily.headline2
+                                    .copyWith(
+                                  fontSize: 16,
+                                  color: HexColor.fromHex('#909094'),
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                     SizedBox(
@@ -921,7 +1289,8 @@ class _FoodieProfileRequiredPendingState
                             ),
                           ),
                           GeneralText(
-                            Strings.foodieInfoProfessionValue,
+                            // Strings.foodieInfoProfessionValue,
+                            widget._orderDetails.t.foodieProfession,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -960,7 +1329,8 @@ class _FoodieProfileRequiredPendingState
                             ),
                           ),
                           GeneralText(
-                            Strings.foodieInfoAgeValue,
+                            //Strings.foodieInfoAgeValue,
+                            widget._orderDetails.t.foodieAge,
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -1021,7 +1391,8 @@ class _FoodieProfileRequiredPendingState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GeneralText(
-                        Strings.productDetailPriceValue,
+                        //   Strings.productDetailPriceValue,
+                        widget._orderDetails.t.totalPrice.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -1060,7 +1431,8 @@ class _FoodieProfileRequiredPendingState
                       ),
                     ),
                     GeneralText(
-                      Strings.productDetailPriceTaxValue,
+                      //     Strings.productDetailPriceTaxValue,
+                      (widget._orderDetails.t.totalPrice * 0.17).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1106,7 +1478,8 @@ class _FoodieProfileRequiredPendingState
                       ],
                     ),
                     GeneralText(
-                      Strings.foodItemAdvancePaymentValue,
+                      //  Strings.foodItemAdvancePaymentValue,
+                      (widget._orderDetails.t.totalPrice * 0.20).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1148,10 +1521,12 @@ class _FoodieProfileRequiredPendingState
       width: 150,
       title: Strings.foodieProfileDeclineBtn.toUpperCase(),
       styleType: ButtonStyleType.fill,
-/*      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => OrderHistoryScreen()));
-      },*/
+      onTap: () {
+        widget._foodieProfileDecisionScreenViewModel.sendDeclineRequest();
+        _navigation.navigateTo(route: HomeRouteView());
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => OrderHistoryScreen()));
+      },
     );
     // ExtoText(
     //   Strings.getStartedButtonTitle,
