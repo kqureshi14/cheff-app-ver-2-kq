@@ -242,6 +242,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
+                                              _appService.updateTitlePage(
+                                                  Strings.confirmed);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.confirmed,
@@ -299,6 +301,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         ),
                                         InkWell(
                                             onTap: () {
+                                              _appService.updateTitlePage(
+                                                  Strings.inProgress);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.inProgress,
