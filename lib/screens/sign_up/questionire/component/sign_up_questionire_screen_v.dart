@@ -97,11 +97,11 @@ class SignUpQuestionireScreen
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignUpLetsStartScreen()),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const SignUpLetsStartScreen()),
+                  // );
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInLeftArrow,
@@ -118,7 +118,7 @@ class SignUpQuestionireScreen
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInRightArrow,
-                  color: Colors.grey,
+                  color: const Color(0xfff1c452),
                 ),
               ),
             ],
@@ -139,7 +139,7 @@ class SignUpQuestionireScreen
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
+              margin: EdgeInsets.symmetric(horizontal: 27),
               //   alignment: Alignment.center,
               //  padding: const EdgeInsets.only(left: 29),
               child: Column(
@@ -155,9 +155,9 @@ class SignUpQuestionireScreen
                             fontWeight: FontWeight.w500),
                     //style: appTheme.typographies.interFontFamily.headline4,
                   ),
-                  const SizedBox(
-                    height: 27,
-                  ),
+                  // const SizedBox(
+                  //   height: 27,
+                  // ),
                   Container(
                     height: 1050,
                     child: ListView.builder(
@@ -233,7 +233,7 @@ class SignUpQuestionireScreen
         ),
         GridView.builder(
             padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -302,7 +302,7 @@ class ChipsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
         // width: widthContainer,
         child: GeneralText(
           title.capitalize(),

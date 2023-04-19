@@ -249,7 +249,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       GeneralText(
-                                        Strings.foodItemBookingUserName,
+                                        widget._bookingStatus.t[index].brandName,
                                         style: appTheme.typographies
                                             .interFontFamily.headline6
                                             .copyWith(
@@ -296,7 +296,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ),
                                 child: GeneralText(
                                   //     Strings.foodItemBookingAmount,
-                                  widget._bookingStatus.t[index].totalPrice
+                                    Strings.rsLabel + widget._bookingStatus.t[index].totalPrice
                                       .toString(),
                                   style: appTheme
                                       .typographies.interFontFamily.headline1
@@ -331,7 +331,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                   GeneralText(
                                     // Strings.foodItemBookingNoPersons,
-                                    widget._bookingStatus.t[index].persons,
+                                    widget._bookingStatus.t[index].persons + Strings.personsLabel,
                                     style: appTheme
                                         .typographies.interFontFamily.headline1
                                         .copyWith(

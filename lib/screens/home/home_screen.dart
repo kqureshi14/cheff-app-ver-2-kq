@@ -26,6 +26,7 @@ class LoungeHomeScreen extends StatefulWidget {
 class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
   final _navigation = locateService<INavigationService>();
   final _appService = locateService<ApplicationService>();
+
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -58,7 +59,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                         color: HexColor.fromHex('#ffffff'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 44,
                     ),
                     Container(
@@ -123,19 +124,21 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                             )),
                                                         GeneralText(
                                                           // Strings.loungeNewValue,
-                                                          widget
-                                                              ._bookingOverview
-                                                              .t
-                                                              .newBookings
-                                                              .toString(),
+                                                          widget._bookingOverview.t
+                                                                      .newBookings
+                                                                      .toString()
+                                                                      .length ==
+                                                                  1
+                                                              ? '0${widget._bookingOverview.t.newBookings}'
+                                                              : '${widget._bookingOverview.t.newBookings}',
                                                           style: appTheme
                                                               .typographies
                                                               .interFontFamily
                                                               .headline6
                                                               .copyWith(
-                                                            fontSize: 45,
+                                                            fontSize: 40,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                                FontWeight.bold,
                                                             color: HexColor
                                                                 .fromHex(
                                                                     '#fee4a4'),
@@ -196,8 +199,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       //   Strings.loungeAcceptedValue,
                                                       widget._bookingOverview.t
-                                                          .acceptedBookings
-                                                          .toString(),
+                                                                  .acceptedBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.acceptedBookings}'
+                                                          : '${widget._bookingOverview.t.acceptedBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -250,8 +257,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       // Strings.loungeConfirmedValue,
                                                       widget._bookingOverview.t
-                                                          .confirmedBookings
-                                                          .toString(),
+                                                                  .confirmedBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.confirmedBookings}'
+                                                          : '${widget._bookingOverview.t.confirmedBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -303,8 +314,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       // Strings.loungeInProgressValue,
                                                       widget._bookingOverview.t
-                                                          .inProgressBookings
-                                                          .toString(),
+                                                                  .inProgressBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.inProgressBookings}'
+                                                          : '${widget._bookingOverview.t.inProgressBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily

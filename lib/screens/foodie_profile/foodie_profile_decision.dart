@@ -161,7 +161,7 @@ class _FoodieProfileRequiredPendingState
                                       height: 4,
                                     ),
                                     GeneralText(
-                                      Strings.foodieProfileName,
+                                      widget._orderDetails.t.brandName,
                                       style: appTheme.typographies
                                           .interFontFamily.headline6
                                           .copyWith(
@@ -215,7 +215,7 @@ class _FoodieProfileRequiredPendingState
                                       color: HexColor.fromHex("#b0c18b"),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: GeneralText(
-                                    Strings.foodieProfileDecisionRequiredStatus
+                                    widget._orderDetails.t.bookingStatus
                                         .toUpperCase(),
                                     style: appTheme
                                         .typographies.interFontFamily.headline6

@@ -51,6 +51,7 @@ class _QuestionViewState extends State<QuestionView> {
           // padding: EdgeInsets.only(left: 30),
           child: GeneralText(
             widget.questionObj.name ?? "",
+            maxLines: 2,
             textAlign: TextAlign.left,
             style: widget.appTheme.typographies.interFontFamily.headline6
                 .copyWith(
@@ -151,7 +152,7 @@ class InputField extends StatelessWidget {
         backgroundColor: appTheme.colors.textFieldFilledColor,
         inputBorder: appTheme.focusedBorder,
         valueStyle: const TextStyle(color: Colors.white),
-        hint: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        hint: 'Please enter description here',
         hintStyle:
             TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
         // valueStyle: valueStyle,
@@ -259,7 +260,7 @@ class _SingleOptionState extends State<SingleOption> {
                       ),
                       onPressed: () async {
                         setState(() {
-                          widget.answersIds.add(widget.answerList[index].id);
+                          widget.answersIds.contains(widget.answerList[index].id)? widget.answersIds.remove(widget.answerList[index].id) :widget.answersIds.add(widget.answerList[index].id);
                         });
                       }),
                 ),
