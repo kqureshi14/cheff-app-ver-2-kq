@@ -1392,7 +1392,7 @@ class _FoodieProfileRequiredPendingState
                     children: [
                       GeneralText(
                         //   Strings.productDetailPriceValue,
-                        widget._orderDetails.t.totalPrice.toString(),
+                       "Rs. " + widget._orderDetails.t.totalPrice.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -1432,7 +1432,7 @@ class _FoodieProfileRequiredPendingState
                     ),
                     GeneralText(
                       //     Strings.productDetailPriceTaxValue,
-                      (widget._orderDetails.t.totalPrice * 0.17).toString(),
+                      "Rs " +(widget._orderDetails.t.totalPrice * 0.17).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1479,7 +1479,7 @@ class _FoodieProfileRequiredPendingState
                     ),
                     GeneralText(
                       //  Strings.foodItemAdvancePaymentValue,
-                      (widget._orderDetails.t.totalPrice * 0.20).toString(),
+                      "Rs " +(widget._orderDetails.t.totalPrice * 0.20).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,

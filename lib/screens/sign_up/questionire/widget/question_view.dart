@@ -44,9 +44,9 @@ class _QuestionViewState extends State<QuestionView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 27,
-        ),
+        // const SizedBox(
+        //   height: 27,
+        // ),
         Container(
           // padding: EdgeInsets.only(left: 30),
           child: GeneralText(
@@ -105,9 +105,9 @@ class multiChipView extends StatelessWidget {
       margin: EdgeInsets.only(right: 20, left: 20, top: 4),
       child: GridView.builder(
         // padding: EdgeInsets.zero,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3.5,
           crossAxisSpacing: 20.0,

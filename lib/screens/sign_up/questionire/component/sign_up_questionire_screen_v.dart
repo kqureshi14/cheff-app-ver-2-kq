@@ -33,6 +33,7 @@ class SignUpQuestionireScreen
     required ScreenSizeData screenSizeData,
   }) {
     final appTheme = AppTheme.of(context).theme;
+    initState();
 
     viewModel.loadQuestion(baseUrl: Api.baseURL, context: context);
     return BlocBuilder<SignUpQuestionireScreenViewModel,
@@ -57,9 +58,7 @@ class SignUpQuestionireScreen
 
   Widget _loading() => const GeneralLoading();
 
-  @override
   void initState() {
-    // TODO: implement initState
 
     handlesList.addAll([
       SocialMediaHandles(
@@ -163,7 +162,7 @@ class SignUpQuestionireScreen
                     child: ListView.builder(
                         itemCount: questionList.length,
                         physics:
-                            NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
+                            const NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return QuestionView(
