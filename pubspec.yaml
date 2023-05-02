@@ -61,6 +61,8 @@ dependencies:
   firebase_core: 2.5.0
   firebase_auth: 4.2.6
   firebase_phone_auth_handler: 1.0.8
+  firebase_messaging:
+  flutter_local_notifications:
   pinput: 2.2.31
   flutter_speed_dial: ^6.2.0
 
