@@ -12,11 +12,19 @@ import 'package:chef/services/services.dart';
 import 'package:chef/theme/theme.dart';
 import 'package:chef/setup.config.dart';
 
+import 'package:camera/camera.dart';
+
 final getIt = GetIt.instance;
+List<CameraDescription> cameras = [];
 
 Future<dynamic> configureDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  try {
+    cameras = await availableCameras();
+  } on Exception {
+    cameras.clear();
+  }
   HttpOverrides.global = DevHttpOverrides(); // to ignore ssl certification
   return $initGetIt(getIt);
 }

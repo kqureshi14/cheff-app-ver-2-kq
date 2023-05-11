@@ -8,6 +8,7 @@ import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 import '../../screens/booking/component/order_screen_v.dart';
 import '../../screens/foodie_profile/component/foodie_profile_decision_screen_v.dart';
 import '../../screens/home/home_page/home_screen_v.dart';
+import '../../screens/qr_scanner/qr_scanner_screen_v.dart';
 import '../../screens/sign_up/sign_up_screen_v.dart';
 
 export 'router.gr.dart';
@@ -75,6 +76,11 @@ abstract class Routes {
     AutoRoute(
       page: FoodieProfileDecisionScreenView,
       path: Routes.foodieDecisionPending,
+    ),
+
+    AutoRoute(
+      page: QrScannerScreen,
+      path: Routes.qrScanner,
     ),
 
     // AutoRoute(
