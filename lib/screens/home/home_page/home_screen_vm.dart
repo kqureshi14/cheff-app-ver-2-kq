@@ -25,6 +25,7 @@ import '../../../../setup.dart';
 import 'dart:developer' as developer;
 
 import '../../../models/booking/booking_overview.dart';
+import '../../../models/booking/process_booking_request.dart' as bookingRequest;
 import '../../../models/qr_response.dart';
 
 @injectable
@@ -116,11 +117,12 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     var url = await _navigation.navigateTo(route: QrScannerRoute());
     developer.log('  Data Received is ' + '${url}');
 
-    Map<String, dynamic> map = jsonDecode(url);
-    int bookingId = map['bookingId'];
-    int chefId = map['chefId'];
+    // Map<String, dynamic> map = jsonDecode(url);
+    // int bookingId = map['bookingId'];
+    // int chefId = map['chefId'];
 
-    developer.log(' bookingId parsed is is ' + '${bookingId}');
+    // developer.log(' bookingId parsed is is ' + '${bookingId}');
+    processOrder(url);
     if (url != null) {
       url = updateUrl(url);
       if (isValidUrl(url)) {
@@ -157,61 +159,57 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     return url;
   }
 
-  void processOrder() {
-    String data =
-        '{"bookingId": 1, "chefId": 1, "foodieId": 45, "experienceId": 8, "verificationCode": 3921 }';
+  void processOrder(String jsonString) {
+    String jsonWithoutBraces = jsonString.substring(1, jsonString.length - 1);
+    List<String> keyValuePairs = jsonWithoutBraces.split(',');
 
-    List dataSplit = data.split(':');
-    String rawJson = '{"name":"Mary","age":30}';
+    Map<String, dynamic> jsonMap = {};
 
-    Map<String, dynamic> map = jsonDecode(data);
-    int bookingId = map['bookingId'];
-    int chefId = map['chefId'];
+    for (String keyValuePair in keyValuePairs) {
+      List<String> keyValue = keyValuePair.split(':');
+      String key = keyValue[0].trim();
+      String value = keyValue[1].trim();
 
-    developer.log(' bookingId is ' + '${bookingId}');
-    // for (var i = 0; i < dataSplit.length; i++) {
-    //   developer.log(' Data split ' + '${dataSplit[i]}');
-    //   List _split = [];
-    //   _split = dataSplit[i].toString().split(',');
-    //
-    //   for(var j=0;j<)
-    //   developer.log(' _Split here is '+ '${_split[]}');
-    // }
+      dynamic parsedValue = int.tryParse(value) ?? value.replaceAll('"', '');
+      jsonMap[key] = parsedValue;
+    }
 
-    Map receiedData = {};
-    //receiedData['bookingId'] =
-    //
-    // var encodedString = jsonEncode(data);
-    //
-    //
-    // dynamic valueMap = json.decode(encodedString);
-    //
-    //
-    // QR qrData = QR.fromJson(valueMap);
-    // developer.log(' Qr Data is ' + '${qrData.verificationCode}');
-
-    // String data2 = '{\'id\':1, name: lorem ipsum, address: dolor set amet}';
-    //
-    // var tagsJson = jsonDecode(data2)['id'];
-    //
-    // developer.log('Tags JSON is ' + '${tagsJson}');
-
-    // var encodedString2 = jsonEncode(data2);
-    //
-    // Map<String, dynamic> valueMap2 = json.decode(encodedString2);
-    //
-    // User user = User.fromJson(valueMap2);
-    // Map data =
-    //     '{bookingId: 1, chefId: 1, foodieId: 45, experienceId: 8, verificationCode: 3921}'
-    //         as Map;
-
-    // final body = json.decode(data);
-
-    // if (data != null) {
-    //   developer.log(' Verification code is ' + '${data['verificationCode']}');
-    // }
+    String json = jsonEncode(jsonMap);
+    developer.log(' JSOn is ' + '${json}');
+    developer.log('Data converted verification code is ' +
+        '${jsonMap['verificationCode']}');
+    processBooking(jsonMap);
   }
 
   Future<bool> logoutPopUp(BuildContext context) async =>
       _appService.logoutPopUp(context);
+
+  Future<void> processBooking(
+      Map<String, dynamic> processBookingDetails) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.processBooking);
+    // emit(const Loading());
+
+    final _appService = locateService<ApplicationService>();
+
+    emit(const home_model.Loading());
+
+    final bookingData = bookingRequest.ProcessBookingRequest(
+        t: bookingRequest.T(
+      bookingId: processBookingDetails['bookingId'],
+      experienceId: processBookingDetails['experienceId'],
+      chefId: processBookingDetails['chefId'],
+      foodieId: processBookingDetails['foodieId'],
+      verificationCode: processBookingDetails['verificationCode'],
+    )).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: bookingData,
+    );
+
+    if (response != null) {
+      // BookingOverview bookingOverview = bookingOverviewFromJson(response.body);
+      // emit(home_model.Loaded(bookingOverview));
+    }
+  }
 }
