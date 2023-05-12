@@ -12,6 +12,7 @@ import '../booking/component/order_screen_v.dart';
 import '../booking/food_item_bookng.dart';
 import '../earnings/earning_screen_v.dart';
 import 'experiences_details/experience_details_screen_v.dart';
+import 'home_page/home_screen_vm.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
   LoungeHomeScreen({required BookingOverview bookingOverview, Key? key})
@@ -85,7 +86,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         InkWell(
                                             onTap: () {
                                               _appService.updateTitlePage(
-                                                  Strings.newOrder.substring(0, 1).toUpperCase() + Strings.newOrder.substring(1).toLowerCase()  );
+                                                  Strings.newOrder
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      Strings.newOrder
+                                                          .substring(1)
+                                                          .toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.newData,
@@ -175,7 +181,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               // _navigation.replace(
                                               //     route: OrderRouteView());
                                               _appService.updateTitlePage(
-                                                  Strings.acceptData.substring(0, 1).toUpperCase() + Strings.acceptData.substring(1).toLowerCase());
+                                                  Strings.acceptData
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      Strings.acceptData
+                                                          .substring(1)
+                                                          .toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.acceptData,
@@ -244,7 +255,13 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
-                                              _appService.updateTitlePage(Strings.confirmed.substring(0, 1).toUpperCase() + Strings.confirmed.substring(1).toLowerCase()  );
+                                              _appService.updateTitlePage(
+                                                  Strings.confirmed
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      Strings.confirmed
+                                                          .substring(1)
+                                                          .toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.confirmed,
@@ -303,7 +320,13 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         InkWell(
                                             onTap: () {
                                               _appService.updateTitlePage(
-                                                  Strings.inProgress.replaceAll('_', '').substring(0, 1).toUpperCase() + Strings.inProgress.substring(1).toLowerCase());
+                                                  Strings.inProgress
+                                                          .replaceAll('_', '')
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      Strings.inProgress
+                                                          .substring(1)
+                                                          .toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.inProgress,
