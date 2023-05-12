@@ -196,7 +196,7 @@ class Experience {
         persons: json["persons"],
         locationId: json["locationId"],
         subHostName: json["subHostName"],
-        subHostMobileNo: json["subHostMobileNo"]??"",
+        subHostMobileNo: json["subHostMobileNo"] ?? '',
         experienceWowFactors: List<ExperienceWowFactor>.from(
             json["experienceWowFactors"]
                 .map((x) => ExperienceWowFactor.fromJson(x))),
@@ -289,7 +289,7 @@ class ExperienceWowFactor {
         wowFactorId: json["wowFactorId"],
         wowFactorName: json["wowFactorName"],
         wowFactorDescription: json["wowFactorDescription"],
-        wowFactorIconPath: json["wowFactorIconPath"]??"",
+        wowFactorIconPath: json["wowFactorIconPath"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

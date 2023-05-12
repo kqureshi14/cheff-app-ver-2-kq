@@ -49,6 +49,7 @@ abstract class Api {
   static const scheduleData = 'experience-schedule/find-by-experience-id';
 
   static const bookingsByChefId = 'experience-booking/bookings-by-chef-id';
+  static const processBooking = 'experience-booking/in-progress-booking';
 
   static const findByChefId = 'experience-booking/find-by-chef-id';
 

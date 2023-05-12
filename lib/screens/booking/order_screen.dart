@@ -546,6 +546,8 @@ class _OrderScreenState extends State<OrderScreen> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
+    } else {
+      return Container();
     }
     if (widget._type == Strings.confirmed) {
       progressBar = Row(children: [

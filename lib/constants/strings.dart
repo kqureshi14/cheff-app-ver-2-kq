@@ -587,4 +587,6 @@ abstract class Strings {
   static const requestedNew = 'REQUESTED';
 
   static const newOrder = 'New Order';
+
+  static const scanningInstructions = 'Scanning instructions';
 }
