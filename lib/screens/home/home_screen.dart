@@ -1,5 +1,4 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/screens/home/home_page/home_screen_vm.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/strings.dart';
@@ -62,7 +61,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                         color: HexColor.fromHex('#ffffff'),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 44,
                     ),
                     Container(
@@ -86,7 +85,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         InkWell(
                                             onTap: () {
                                               _appService.updateTitlePage(
-                                                  Strings.newOrder);
+                                                  Strings.newOrder.substring(0, 1).toUpperCase() + Strings.newOrder.substring(1).toLowerCase()  );
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.newData,
@@ -127,19 +126,21 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                             )),
                                                         GeneralText(
                                                           // Strings.loungeNewValue,
-                                                          widget
-                                                              ._bookingOverview
-                                                              .t
-                                                              .newBookings
-                                                              .toString(),
+                                                          widget._bookingOverview.t
+                                                                      .newBookings
+                                                                      .toString()
+                                                                      .length ==
+                                                                  1
+                                                              ? '0${widget._bookingOverview.t.newBookings}'
+                                                              : '${widget._bookingOverview.t.newBookings}',
                                                           style: appTheme
                                                               .typographies
                                                               .interFontFamily
                                                               .headline6
                                                               .copyWith(
-                                                            fontSize: 45,
+                                                            fontSize: 40,
                                                             fontWeight:
-                                                                FontWeight.w600,
+                                                                FontWeight.bold,
                                                             color: HexColor
                                                                 .fromHex(
                                                                     '#fee4a4'),
@@ -174,7 +175,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               // _navigation.replace(
                                               //     route: OrderRouteView());
                                               _appService.updateTitlePage(
-                                                  Strings.acceptData);
+                                                  Strings.acceptData.substring(0, 1).toUpperCase() + Strings.acceptData.substring(1).toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.acceptData,
@@ -200,8 +201,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       //   Strings.loungeAcceptedValue,
                                                       widget._bookingOverview.t
-                                                          .acceptedBookings
-                                                          .toString(),
+                                                                  .acceptedBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.acceptedBookings}'
+                                                          : '${widget._bookingOverview.t.acceptedBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -239,6 +244,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
+                                              _appService.updateTitlePage(Strings.confirmed.substring(0, 1).toUpperCase() + Strings.confirmed.substring(1).toLowerCase()  );
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.confirmed,
@@ -254,8 +260,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       // Strings.loungeConfirmedValue,
                                                       widget._bookingOverview.t
-                                                          .confirmedBookings
-                                                          .toString(),
+                                                                  .confirmedBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.confirmedBookings}'
+                                                          : '${widget._bookingOverview.t.confirmedBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -292,6 +302,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         ),
                                         InkWell(
                                             onTap: () {
+                                              _appService.updateTitlePage(
+                                                  Strings.inProgress.replaceAll('_', '').substring(0, 1).toUpperCase() + Strings.inProgress.substring(1).toLowerCase());
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.inProgress,
@@ -307,8 +319,12 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     GeneralText(
                                                       // Strings.loungeInProgressValue,
                                                       widget._bookingOverview.t
-                                                          .inProgressBookings
-                                                          .toString(),
+                                                                  .inProgressBookings
+                                                                  .toString()
+                                                                  .length ==
+                                                              1
+                                                          ? '0${widget._bookingOverview.t.inProgressBookings}'
+                                                          : '${widget._bookingOverview.t.inProgressBookings}',
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -578,50 +594,47 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                     right: 0,
                                     top: -50,
                                     child: Center(
-                                      child: InkWell(
-                                          onTap: () {
-                                            _homeScreenViewModel
-                                                .scanQr(context);
-                                            // _homeScreenViewModel.processOrder();
-                                          },
-                                          child: Container(
-                                            height: 102,
-                                            width: 102,
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    HexColor.fromHex("#f1c452"),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                      width: 44.3,
-                                                      child: Image.asset(
-                                                          "assets/images/icons/lounge_qr_code.png")),
-                                                  const SizedBox(
-                                                    height: 9.9,
+                                      child: Container(
+                                        height: 102,
+                                        width: 102,
+                                        decoration: BoxDecoration(
+                                            color: HexColor.fromHex("#f1c452"),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  width: 44.3,
+                                                  child: Image.asset(
+                                                      "assets/images/icons/lounge_qr_code.png")),
+                                              SizedBox(
+                                                height: 9.9,
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  // Navigator.push(
+                                                  //   context,
+                                                  //   MaterialPageRoute(
+                                                  //       builder: (context) =>
+                                                  //           FoodieProfileDetail()),
+                                                  // );
+                                                },
+                                                child: GeneralText(
+                                                  "Start",
+                                                  style: appTheme.typographies
+                                                      .interFontFamily.headline6
+                                                      .copyWith(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: HexColor.fromHex(
+                                                        '#212129'),
                                                   ),
-
-                                                  GeneralText(
-                                                    "Start",
-                                                    style: appTheme
-                                                        .typographies
-                                                        .interFontFamily
-                                                        .headline6
-                                                        .copyWith(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: HexColor.fromHex(
-                                                          '#212129'),
-                                                    ),
-                                                  ),
-
-                                                  ///  ),
-                                                ]),
-                                          )),
+                                                ),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
                                   ),
                                 ],

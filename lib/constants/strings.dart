@@ -387,6 +387,9 @@ abstract class Strings {
   static const labelBookings = 'History';
 
   static const labelNewBookings = 'New Order';
+  static const rsLabel = 'RS. ';
+  static const personsLabel = ' Persons';
+
 
   static const labelTitleProfile = 'Profile';
 
