@@ -88,10 +88,10 @@ class _OrderScreenState extends State<OrderScreen> {
         return Strings.foodItemBookingDecisionRequired;
       case Strings.acceptData:
         return Strings.acceptData;
-      case Strings.confirmed:
-        return Strings.confirmed;
+      case Strings.confirmedStatus:
+        return Strings.confirmedValue;
       case Strings.inProgress:
-        return Strings.inProgress;
+        return Strings.inProgressBillGenerated;
       default:
         return Strings.foodItemBookingDecisionRequired;
     }
