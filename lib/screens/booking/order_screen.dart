@@ -477,7 +477,6 @@ class _OrderScreenState extends State<OrderScreen> {
         ),
       ]);
     }
-
     if (widget._type == Strings.acceptData) {
       progressBar = Row(children: [
         Container(
@@ -527,6 +526,76 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 12,
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 5,
+          height: 1,
+          color: HexColor.fromHex("#909094"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
+        ),
+      ]);
+    }
+    if (widget._type == Strings.confirmed) {
+      progressBar = Row(children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        SizedBox(
+          width: 7.5,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Container(
+            width: 64,
+            // width: MediaQuery.of(context).size.width / 5,
+            height: 1,
+            color: HexColor.fromHex("#f1c452")),
+        SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Container(
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            width: 36,
+            decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+            child: Image.asset(
+              bookingProgressStatus[index].bookingStatusIcon!,
+              width: 18.5,
+              height: 18.5,
+            ),
+          ),
         ),
         SizedBox(
           width: 2,
