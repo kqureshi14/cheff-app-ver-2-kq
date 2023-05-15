@@ -86,12 +86,14 @@ class _OrderScreenState extends State<OrderScreen> {
     switch (_status) {
       case Strings.requestedNew:
         return Strings.foodItemBookingDecisionRequired;
-      case Strings.acceptData:
-        return Strings.acceptData;
+      case Strings.acceptDataLowerCase:
+        return Strings.foodItemBookingAdvancePendingHeader;
       case Strings.confirmedStatus:
         return Strings.confirmedValue;
-      case Strings.inProgress:
-        return Strings.inProgressBillGenerated;
+      case Strings.inProgressForSwitch:
+        return Strings.inProgressTitle;
+      case Strings.billGenerated:
+        return Strings.billGenerated;
       default:
         return Strings.foodItemBookingDecisionRequired;
     }
@@ -168,12 +170,12 @@ class _OrderScreenState extends State<OrderScreen> {
                           color: HexColor.fromHex('#fee4a4'),
                           fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 22, bottom: 40),
-                  margin: EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(left: 22, bottom: 40),
+                  margin: const EdgeInsets.only(bottom: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: HexColor.fromHex("#4b4b52")),
@@ -308,11 +310,11 @@ class _OrderScreenState extends State<OrderScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 17,
                           ),
                           Container(
-                            padding: EdgeInsets.only(right: 22),
+                            padding: const EdgeInsets.only(right: 22),
                             child: Column(children: [
                               Row(
                                 mainAxisAlignment:
@@ -372,11 +374,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 25,
                               ),
                               progressBar(appTheme, index),
-                              SizedBox(
+                              const SizedBox(
                                 height: 23,
                               ),
                               Row(
@@ -422,7 +424,7 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -431,7 +433,7 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -440,7 +442,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -448,7 +450,7 @@ class _OrderScreenState extends State<OrderScreen> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#909094")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -457,7 +459,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -466,7 +468,7 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -477,7 +479,7 @@ class _OrderScreenState extends State<OrderScreen> {
         ),
       ]);
     }
-    if (widget._type == Strings.acceptData) {
+    else if (widget._type == Strings.acceptData) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -485,7 +487,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -494,12 +496,12 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
@@ -510,7 +512,7 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -518,7 +520,7 @@ class _OrderScreenState extends State<OrderScreen> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#909094")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -527,7 +529,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -536,7 +538,7 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -546,10 +548,8 @@ class _OrderScreenState extends State<OrderScreen> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
-    } else {
-      return Container();
     }
-    if (widget._type == Strings.confirmed) {
+    else if (widget._type == Strings.confirmed) {
       progressBar = Row(children: [
         Container(
           width: 12,
@@ -557,7 +557,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 7.5,
         ),
         Container(
@@ -566,7 +566,7 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#f1c452"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -575,7 +575,7 @@ class _OrderScreenState extends State<OrderScreen> {
           decoration: BoxDecoration(
               color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -583,12 +583,12 @@ class _OrderScreenState extends State<OrderScreen> {
             // width: MediaQuery.of(context).size.width / 5,
             height: 1,
             color: HexColor.fromHex("#f1c452")),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Flexible(
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.8),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
             width: 36,
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
@@ -599,7 +599,7 @@ class _OrderScreenState extends State<OrderScreen> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -608,7 +608,7 @@ class _OrderScreenState extends State<OrderScreen> {
           height: 1,
           color: HexColor.fromHex("#909094"),
         ),
-        SizedBox(
+        const SizedBox(
           width: 2,
         ),
         Container(
@@ -618,6 +618,79 @@ class _OrderScreenState extends State<OrderScreen> {
               color: HexColor.fromHex("#909094"), shape: BoxShape.circle),
         ),
       ]);
+    }
+    else if (widget._type == Strings.inProgress) {
+      progressBar = Row(children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 7.5,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 6,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+            width: 64,
+            // width: MediaQuery.of(context).size.width / 5,
+            height: 1,
+            color: HexColor.fromHex("#f1c452")),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Container(
+          width: 64,
+          // width: MediaQuery.of(context).size.width / 5,
+          height: 1,
+          color: HexColor.fromHex("#f1c452"),
+        ),
+        const SizedBox(
+          width: 2,
+        ),
+        Flexible(
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.8),
+            width: 36,
+            decoration: BoxDecoration(
+                color: HexColor.fromHex("#f1c452"), shape: BoxShape.circle),
+            child: Image.asset(
+              bookingProgressStatus[index].bookingStatusIcon!,
+              width: 18.5,
+              height: 18.5,
+            ),
+          ),
+        ),
+      ]);
+    }
+    else {
+      return Container();
     }
     return progressBar;
   }
@@ -650,7 +723,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 19,
             ),
             Padding(
@@ -660,12 +733,12 @@ class _OrderScreenState extends State<OrderScreen> {
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                    color: Color(0xfffee4a4),
+                    color: const Color(0xfffee4a4),
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 31,
             ),
             GeneralButton.button(
@@ -679,7 +752,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],

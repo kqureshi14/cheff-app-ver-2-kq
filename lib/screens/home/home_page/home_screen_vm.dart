@@ -114,33 +114,33 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
 
   void scanQr(BuildContext context) async {
-    var url = await _navigation.navigateTo(route: QrScannerRoute());
-    developer.log('  Data Received is ' + '${url}');
+    var data = await _navigation.navigateTo(route: QrScannerRoute());
+    developer.log('  Data Received is ' '$data');
 
-    // Map<String, dynamic> map = jsonDecode(url);
+    // Map<String, dynamic> map = jsonDecode(data);
     // int bookingId = map['bookingId'];
     // int chefId = map['chefId'];
 
     // developer.log(' bookingId parsed is is ' + '${bookingId}');
-    processOrder(url);
-    if (url != null) {
-      url = updateUrl(url);
-      if (isValidUrl(url)) {
-        // emit(
-        //   state.copyWith(
-        //     baseURL: url,
-        //   ),
-        // );
-        Toaster.successToast(
-          context: context,
-          message: '$url',
-        );
-      } else {
-        Toaster.errorToast(
-          context: context,
-          message: Strings.invalidUrl,
-        );
-      }
+    if (data != null) {
+      processOrder(data, context);
+      // data = updateUrl(data);
+      // if (isValidUrl(data)) {
+      //   // emit(
+      //   //   state.copyWith(
+      //   //     baseURL: data,
+      //   //   ),
+      //   // );
+      //   Toaster.successToast(
+      //     context: context,
+      //     message: '$data',
+      //   );
+      // } else {
+      //   Toaster.errorToast(
+      //     context: context,
+      //     message: Strings.invalidUrl,
+      //   );
+      // }
     } else {
       Toaster.errorToast(
         context: context,
@@ -159,7 +159,7 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     return url;
   }
 
-  void processOrder(String jsonString) {
+  void processOrder(String jsonString, BuildContext context) {
     String jsonWithoutBraces = jsonString.substring(1, jsonString.length - 1);
     List<String> keyValuePairs = jsonWithoutBraces.split(',');
 
@@ -178,14 +178,13 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     developer.log(' JSOn is ' + '${json}');
     developer.log('Data converted verification code is ' +
         '${jsonMap['verificationCode']}');
-    processBooking(jsonMap);
+    processBooking(jsonMap, context);
   }
 
   Future<bool> logoutPopUp(BuildContext context) async =>
       _appService.logoutPopUp(context);
 
-  Future<void> processBooking(
-      Map<String, dynamic> processBookingDetails) async {
+  Future<void> processBooking(Map<String, dynamic> processBookingDetails, BuildContext context) async {
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.processBooking);
     // emit(const Loading());
 
@@ -194,6 +193,7 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     emit(const home_model.Loading());
 
     final bookingData = bookingRequest.ProcessBookingRequest(
+      userId: _appService.state.userInfo?.t.id,
         t: bookingRequest.T(
       bookingId: processBookingDetails['bookingId'],
       experienceId: processBookingDetails['experienceId'],
@@ -202,14 +202,38 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
       verificationCode: processBookingDetails['verificationCode'],
     )).toJson();
 
-    final response = await _network.post(
-      path: url,
-      data: bookingData,
-    );
+
+    var duration = const Duration(seconds: 2); // set the duration to 5 seconds
+    var response = await Future.delayed(duration, () {
+      return _network.post(
+        path: url,
+        data: bookingData,
+      );
+    });
+    // final response = await _network.post(
+    //   path: url,
+    //   data: bookingData,
+    // );
+
 
     if (response != null) {
+      print("ressp"+response.body);
+      _appService.updateTitlePage(
+          Strings.inProgress
+              .replaceAll('_', '')
+              .substring(0, 1)
+              .toUpperCase() +
+              Strings.inProgressTitle
+                  .substring(1)
+                  .toLowerCase());
+      _navigation.navigateTo(
+          route: OrderRouteView(
+            type: Strings.inProgress,
+          ));
       // BookingOverview bookingOverview = bookingOverviewFromJson(response.body);
       // emit(home_model.Loaded(bookingOverview));
+    } else {
+      Toaster.errorToast(context: context, message: "Invalid response received");
     }
   }
 }

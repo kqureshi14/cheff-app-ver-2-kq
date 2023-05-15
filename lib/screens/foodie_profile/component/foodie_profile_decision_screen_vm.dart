@@ -5,9 +5,11 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/api.dart';
+import '../../../models/billed_bookings/billed_bookings_response.dart';
 import '../../../models/booking/accept_booking_response.dart';
 import '../../../models/booking/booking_status.dart';
 import '../../../models/booking/order_detail_response.dart';
+import '../../../models/experience/experience_billed_request.dart';
 import '../../../models/foodie/foodie_details_response.dart';
 import '../../../models/home/food_menu_request.dart';
 import '../../../services/application_state.dart';
@@ -30,7 +32,7 @@ class FoodieProfileDecisionScreenViewModel
   String bookingId = "0";
 
   void initialize(String _bookingId) {
-    developer.log(' Booking Id is ' + '${_bookingId}');
+    developer.log(' Booking Id is ' '${_bookingId}');
     bookingId = _bookingId;
     // emit(const Loading());
     loadOrderDetails();
@@ -57,10 +59,37 @@ class FoodieProfileDecisionScreenViewModel
     if (response != null) {
       // FoodieDetails foodieDetails = foodieDetailsFromJson(response.body);
       developer
-          .log(' Response body of order details are ' + '${response.body}');
+          .log(' Response body of order details are ' '${response.body}');
 
       OrderDetails orderDetails = orderDetailsFromJson(response.body);
       emit(Loaded(orderDetails));
+    }
+  }
+
+  Future<void> loadBilledDetails({required int id}) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.billedBooking);
+
+    final _appService = locateService<ApplicationService>();
+
+    // emit(const Loading());
+
+    final expBilledRequest = ExperienceBilledRequest(
+      userId: int.parse(_appService.state.userInfo!.t.id.toString()),
+      t: id,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: expBilledRequest,
+    );
+
+    if (response != null) {
+
+      developer
+          .log(' Response body of billed orders details are ' '${response.body}');
+print("billed "+ response.body);
+      // ExperienceBilledOrder billedOrderDetails = billedOrderDetailsFromJson(response.body);
+      // emit(Loaded());
     }
   }
 
@@ -85,7 +114,7 @@ class FoodieProfileDecisionScreenViewModel
     if (response != null) {
       OrderStatusResponse acceptResponse =
           orderStatusResponseFromJson(response.body);
-      developer.log('acceptResponse is  ' + '${acceptResponse.t.brandName}');
+      developer.log('acceptResponse is  ' '${acceptResponse.t.brandName}');
 
       //  emit(Loaded(foodieDetails));
     }
@@ -112,7 +141,7 @@ class FoodieProfileDecisionScreenViewModel
     if (response != null) {
       OrderStatusResponse declineResponse =
           orderStatusResponseFromJson(response.body);
-      developer.log('declineResponse is  ' + '${declineResponse.t.brandName}');
+      developer.log('declineResponse is  ' '${declineResponse.t.brandName}');
 
       //  emit(Loaded(foodieDetails));
     }
@@ -136,7 +165,7 @@ class FoodieProfileDecisionScreenViewModel
     DateFormat outputFormat = DateFormat('hh a');
     String formattedTime = outputFormat.format(dateTime);
 
-    developer.log(' Formatted Time is ' + '${formattedTime}');
+    developer.log(' Formatted Time is ' '${formattedTime}');
 
     return formattedTime;
   }

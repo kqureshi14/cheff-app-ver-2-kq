@@ -100,16 +100,14 @@ class _FoodieProfileRequiredPendingState
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              getAcceptButton(appTheme: appTheme),
-              // SizedBox(
-              //   width: 10,
-              // ),
-              getDeclineCash(appTheme: appTheme),
-            ],
-          ),
+          child:
+            widget._orderDetails.t.bookingStatus == Strings.requestedNew.toLowerCase()? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                  getAcceptButton(appTheme: appTheme) ,
+                getDeclineCash(appTheme: appTheme) ,
+              ],
+            ):widget._orderDetails.t.bookingStatus == Strings.inProgressForSwitch? getBillButton(appTheme: appTheme):Container(),
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -1392,7 +1390,7 @@ class _FoodieProfileRequiredPendingState
                     children: [
                       GeneralText(
                         //   Strings.productDetailPriceValue,
-                       "Rs. " + widget._orderDetails.t.totalPrice.toString(),
+                        "Rs. " + widget._orderDetails.t.totalPrice.toString(),
                         style: appTheme.typographies.interFontFamily.headline6
                             .copyWith(
                                 fontSize: 36,
@@ -1432,7 +1430,8 @@ class _FoodieProfileRequiredPendingState
                     ),
                     GeneralText(
                       //     Strings.productDetailPriceTaxValue,
-                      "Rs " +(widget._orderDetails.t.totalPrice * 0.17).toString(),
+                      "Rs " +
+                          (widget._orderDetails.t.totalPrice * 0.17).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1479,7 +1478,8 @@ class _FoodieProfileRequiredPendingState
                     ),
                     GeneralText(
                       //  Strings.foodItemAdvancePaymentValue,
-                      "Rs " +(widget._orderDetails.t.totalPrice * 0.20).toString(),
+                      "Rs " +
+                          (widget._orderDetails.t.totalPrice * 0.20).toString(),
                       style: appTheme.typographies.interFontFamily.headline6
                           .copyWith(
                         fontSize: 15,
@@ -1533,6 +1533,20 @@ class _FoodieProfileRequiredPendingState
     //   style: appTheme.typographies.interFontFamily.headline2,
     // );
   }
+
+  Widget getBillButton({required IAppThemeData appTheme}) {
+    return GeneralButton.button(
+      width: 181,
+      title: Strings.billGenerate,
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        widget._foodieProfileDecisionScreenViewModel.loadBilledDetails(id: widget._orderDetails.t.id);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
+      },
+    );
+  }
+
 
   Future<dynamic> _showCashReceivedPopup(BuildContext context) async {
     final appTheme = AppTheme.of(context).theme;

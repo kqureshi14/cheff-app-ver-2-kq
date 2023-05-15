@@ -324,7 +324,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                           .replaceAll('_', '')
                                                           .substring(0, 1)
                                                           .toUpperCase() +
-                                                      Strings.inProgress
+                                                      Strings.inProgressTitle
                                                           .substring(1)
                                                           .toLowerCase());
                                               _navigation.navigateTo(
@@ -617,46 +617,51 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                     right: 0,
                                     top: -50,
                                     child: Center(
-                                      child: Container(
-                                        height: 102,
-                                        width: 102,
-                                        decoration: BoxDecoration(
-                                            color: HexColor.fromHex("#f1c452"),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                  width: 44.3,
-                                                  child: Image.asset(
-                                                      "assets/images/icons/lounge_qr_code.png")),
-                                              SizedBox(
-                                                height: 9.9,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           FoodieProfileDetail()),
-                                                  // );
-                                                },
-                                                child: GeneralText(
-                                                  "Start",
-                                                  style: appTheme.typographies
-                                                      .interFontFamily.headline6
-                                                      .copyWith(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: HexColor.fromHex(
-                                                        '#212129'),
+                                      child: InkWell(
+                                        onTap:(){
+                                          _homeScreenViewModel.scanQr(context);
+                                        },
+                                        child: Container(
+                                          height: 102,
+                                          width: 102,
+                                          decoration: BoxDecoration(
+                                              color: HexColor.fromHex("#f1c452"),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                    width: 44.3,
+                                                    child: Image.asset(
+                                                        "assets/images/icons/lounge_qr_code.png")),
+                                                SizedBox(
+                                                  height: 9.9,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    // Navigator.push(
+                                                    //   context,
+                                                    //   MaterialPageRoute(
+                                                    //       builder: (context) =>
+                                                    //           FoodieProfileDetail()),
+                                                    // );
+                                                  },
+                                                  child: GeneralText(
+                                                    "Start",
+                                                    style: appTheme.typographies
+                                                        .interFontFamily.headline6
+                                                        .copyWith(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: HexColor.fromHex(
+                                                          '#212129'),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ]),
+                                              ]),
+                                        ),
                                       ),
                                     ),
                                   ),

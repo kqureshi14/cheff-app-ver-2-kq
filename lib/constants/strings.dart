@@ -576,13 +576,18 @@ abstract class Strings {
 
   static const newData = 'NEW';
   static const acceptData = 'ACCEPTED';
+  static const acceptDataLowerCase = 'accepted';
   static const confirmed = 'CONFIRMED';
   static const confirmedValue = 'BOOKING CONFIRMED';
   static const confirmedStatus = 'confirmed';
 
   static const declined = 'DECLINED';
   static const inProgress = 'IN_PROGRESS';
+  static const inProgressForSwitch = 'in_progress';
+  static const inProgressTitle = 'IN PROGRESS';
   static const inProgressBillGenerated = 'BILL GENERATED';
+  static const billGenerate = 'GENERATE BILL';
+  static const billGenerated = 'bill_generated';
 
   static const requestedNew = 'REQUESTED';
 
