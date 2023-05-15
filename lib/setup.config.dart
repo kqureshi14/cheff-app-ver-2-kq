@@ -94,6 +94,7 @@ Future<_i1.GetIt> $initGetIt(
       () => _i11.FieldRenderer(fieldInputData: get<Map<String, dynamic>>()));
   gh.factory<_i12.FoodieProfileDecisionScreenViewModel>(() =>
       _i12.FoodieProfileDecisionScreenViewModel(
+          navigation: get<_i5.INavigationService<dynamic>>(),
           network: get<_i13.INetworkService<dynamic>>()));
   gh.singleton<_i14.IAppThemeData>(registerModule.theme);
   gh.singleton<_i3.IDeviceService>(registerModule.deviceService);

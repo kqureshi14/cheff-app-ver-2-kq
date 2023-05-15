@@ -46,6 +46,7 @@ class T {
     required this.comments,
     required this.totalPrice,
     required this.priceTypeId,
+    required this.qrRequest,
     required this.bookingStatus,
     required this.foodieProfession,
     required this.foodieAge,
@@ -70,6 +71,7 @@ class T {
   String comments;
   int totalPrice;
   int priceTypeId;
+  QrRequest? qrRequest;
   String bookingStatus;
   String foodieProfession;
   String foodieAge;
@@ -96,7 +98,7 @@ class T {
         comments: json["comments"],
         totalPrice: json["totalPrice"],
         priceTypeId: json["priceTypeId"],
-        bookingStatus: json["bookingStatus"],
+    bookingStatus: json["bookingStatus"],
         foodieProfession: json["foodieProfession"],
         foodieAge: json["foodieAge"],
         scheduleId: json["scheduleId"],
@@ -111,6 +113,7 @@ class T {
         experienceName: json["experienceName"],
         chefId: json["chefId"],
         brandName: json["brandName"],
+    qrRequest: QrRequest.fromJson(json['qrRequest']),
       );
 
   Map<String, dynamic> toJson() => {
@@ -139,7 +142,40 @@ class T {
         "experienceName": experienceName,
         "chefId": chefId,
         "brandName": brandName,
+    'qrRequest': qrRequest?.toJson(),
       };
+}
+class QrRequest {
+  int? bookingId;
+  int? chefId;
+  int? experienceId;
+  int? foodieId;
+  int? verificationCode;
+
+  QrRequest(
+      {this.bookingId,
+        this.chefId,
+        this.experienceId,
+        this.foodieId,
+        this.verificationCode});
+
+  QrRequest.fromJson(Map<String, dynamic> json) {
+    bookingId = json['bookingId'];
+    chefId = json['chefId'];
+    experienceId = json['experienceId'];
+    foodieId = json['foodieId'];
+    verificationCode = json['verificationCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bookingId'] = bookingId;
+    data['chefId'] = chefId;
+    data['experienceId'] = experienceId;
+    data['foodieId'] = foodieId;
+    data['verificationCode'] = verificationCode;
+    return data;
+  }
 }
 
 class Experience {

@@ -159,6 +159,9 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     return url;
   }
 
+  Future<bool> logoutPopUp(BuildContext context) async =>
+      _appService.logoutPopUp(context);
+
   void processOrder(String jsonString, BuildContext context) {
     String jsonWithoutBraces = jsonString.substring(1, jsonString.length - 1);
     List<String> keyValuePairs = jsonWithoutBraces.split(',');
@@ -180,9 +183,6 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
         '${jsonMap['verificationCode']}');
     processBooking(jsonMap, context);
   }
-
-  Future<bool> logoutPopUp(BuildContext context) async =>
-      _appService.logoutPopUp(context);
 
   Future<void> processBooking(Map<String, dynamic> processBookingDetails, BuildContext context) async {
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.processBooking);

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/ui_kit/general_ui_kit.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +46,8 @@ class _FoodieProfileRequiredPendingState
   bool checkValue = false;
   final _appService = locateService<ApplicationService>();
   final _navigation = locateService<INavigationService>();
+  final TextController _orderIDController = TextController();
+  dynamic group1Value;
 
   @override
   void initState() {
@@ -100,14 +104,28 @@ class _FoodieProfileRequiredPendingState
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child:
-            widget._orderDetails.t.bookingStatus == Strings.requestedNew.toLowerCase()? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                  getAcceptButton(appTheme: appTheme) ,
-                getDeclineCash(appTheme: appTheme) ,
-              ],
-            ):widget._orderDetails.t.bookingStatus == Strings.inProgressForSwitch? getBillButton(appTheme: appTheme):Container(),
+          child: widget._orderDetails.t.bookingStatus ==
+                  Strings.requestedNew.toLowerCase()
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    getAcceptButton(appTheme: appTheme),
+                    getDeclineCash(appTheme: appTheme),
+                  ],
+                )
+              : widget._orderDetails.t.bookingStatus ==
+                      Strings.inProgressForSwitch
+                  ? getBillButton(appTheme: appTheme)
+                  : widget._orderDetails.t.bookingStatus ==
+                          Strings.confirmedStatus.toLowerCase()
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            getStartButton(appTheme: appTheme),
+                            getCancelButton(appTheme: appTheme),
+                          ],
+                        )
+                      : Container(),
         ),
         body: SingleChildScrollView(
           child: Stack(
@@ -1534,16 +1552,405 @@ class _FoodieProfileRequiredPendingState
     // );
   }
 
+  Widget getStartButton({required IAppThemeData appTheme}) {
+    return GeneralButton.button(
+      width: 159,
+      title: Strings.foodieProfileStartBtn.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        _showFoodieVerificationPopup(context);
+      },
+    );
+  }
+
+  Widget getCancelButton({required IAppThemeData appTheme}) {
+    return GeneralButton.button(
+      width: 150,
+      title: Strings.foodieProfileCancelBtn.toUpperCase(),
+      styleType: ButtonStyleType.fill,
+      onTap: () {
+        _showBottomSheet(context);
+      },
+    );
+
+  }
+
   Widget getBillButton({required IAppThemeData appTheme}) {
     return GeneralButton.button(
       width: 181,
       title: Strings.billGenerate,
       styleType: ButtonStyleType.fill,
       onTap: () {
-        widget._foodieProfileDecisionScreenViewModel.loadBilledDetails(id: widget._orderDetails.t.id);
+        widget._foodieProfileDecisionScreenViewModel
+            .loadBilledDetails(id: widget._orderDetails.t.id);
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => FoodieProfileBookingConfirmed()));
       },
+    );
+  }
+
+  _showBottomSheet(BuildContext context) {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.showBottomSheetDialog(
+      borderRadius: 20,
+      context: context,
+      body: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: Container(
+          padding: EdgeInsetsDirectional.only(
+            start: 25,
+            end: 28,
+            top: 41,
+          ),
+          decoration: BoxDecoration(
+              color: HexColor.fromHex("#212129"),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              )),
+          child: Column(
+            children: [
+              GeneralText(
+                Strings.bottomSheetTellUsWhyTitle,
+                maxLines: 2,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(children: [
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 0,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 1,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 2,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                              color: HexColor.fromHex("#fbeccb"),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Radio(
+                        visualDensity: VisualDensity.compact,
+                        fillColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              return HexColor.fromHex("#fbeccb");
+                            }),
+                        activeColor: HexColor.fromHex("#fbeccb"),
+                        value: 3,
+                        groupValue: group1Value,
+                        onChanged: (value) {
+                          setState(() {
+                            group1Value = value;
+                          });
+                        },
+                      ),
+                      Expanded(
+                        child: GeneralText(
+                          Strings.bottomSheetTellUsWhyRadioHint,
+                          maxLines: 2,
+                          style: appTheme.typographies.interFontFamily.headline6
+                              .copyWith(
+                            color: HexColor.fromHex("#fbeccb"),
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
+              SizedBox(
+                height: 42,
+              ),
+              GeneralButton.button(
+                title: Strings.generalButtonTitle.toUpperCase(),
+                styleType: ButtonStyleType.fill,
+                width: 151,
+                onTap: () {
+                  _navigation.navigateTo(route: HomeRouteView());
+                  // Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 12,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Future<dynamic> _showFoodieVerificationPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: false,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.foodieVerificationPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Color(0xfff1c452),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 29,
+            ),
+            GeneralText(
+              Strings.foodieVerificationSubPopupTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 33,
+            ),
+
+            GeneralTextInput(
+                height: 80,
+                controller: _orderIDController,
+                inputType: InputType.digit,
+                backgroundColor:
+                appTheme.colors.textFieldFilledColor,
+                inputBorder: appTheme.focusedBorder,
+                valueStyle: const TextStyle(color: Colors.white),
+                hint: 'Enter Order ID',
+                hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.4),
+                    fontSize: 14),
+                // valueStyle: valueStyle,
+                onChanged: (newValue) {}),
+            SizedBox(
+              height: 48,
+            ),
+
+            GeneralButton.button(
+              title: Strings.foodieVerificationPopupBtnTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                // Navigator.pop(context);
+                Map<String, dynamic> orderData = jsonDecode(widget._foodieProfileDecisionScreenViewModel.orderQR);
+                int verificationCode = orderData['verificationCode'];
+                if( verificationCode.toString()== _orderIDController.text ){
+                  // Navigator.pop(context);
+                  _showFoodieVerifiedPopup(context);
+                  _orderIDController.clear();
+                } else {
+                  // Navigator.pop(context);
+                  _orderIDController.clear();
+                  Toaster.warningToast(context: context, message: "Invalid code");
+                }
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
+    );
+  }
+
+  Future<dynamic> _showFoodieVerifiedPopup(BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
+
+    return DialogHelper.show(
+      context: context,
+      // dialogType: GeneralComponentStyle.success,
+      isDismissible: true,
+      barrierLabel: '',
+      // title: 'Verification\nCode',
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.all(8.0),
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(Resources.reviewCheckPNG,height: 63,),
+            SizedBox(
+              height: 16,
+            ),
+            GeneralText(
+              Strings.foodieVerifiedPopupTitle,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Color(0xff8ea659),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 29,
+            ),
+            GeneralText(
+              Strings.foodieVerifiedSubPopupTitle,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+
+            SizedBox(
+              height: 29,
+            ),
+            GeneralButton.button(
+              title: Strings.foodieVerifiedPopupBtnTitle.toUpperCase(),
+              styleType: ButtonStyleType.fill,
+              onTap: () {
+                widget._foodieProfileDecisionScreenViewModel.processOrder(widget._foodieProfileDecisionScreenViewModel.orderQR, context);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SignUpScreen()),
+                // );
+                //    viewModel.goToForgotPasswordScreen();
+              },
+            ),
+            SizedBox(
+              height: 12,
+            ),
+          ],
+        ),
+      ),
+      // body: GBottomSheet<String>(
+      //   bottomSheetTitle: Strings.chooseDateFormat,
+      //   list: ['7878,87,876'],
+      //   selectedItem: viewModel.getSelectedFormat(),
+      //   bottomSheetType: BottomSheetType.dateFormat,
+      // ),
     );
   }
 

@@ -424,12 +424,12 @@ abstract class Strings {
 
   static const foodieVerifiedPopupTitle = "Foodie Verified";
   static const foodieVerifiedSubPopupTitle =
-      "Lorem Ipsum has been the industry's Syed Ali";
+      "The foodie is verified";
   static const foodieVerifiedPopupBtnTitle = "Okay";
 
   static const foodieVerificationPopupTitle = "Foodie Verification";
   static const foodieVerificationSubPopupTitle =
-      "Lorem Ipsum has been the industry's standard dummy text ever since";
+      "Please enter the verification code";
   static const foodieVerificationPopupBtnTitle = "SUBMIT";
   static const orderPopupTitle = "Order Accepted";
   static const orderSubPopupTitle =
