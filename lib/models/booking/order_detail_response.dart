@@ -98,7 +98,7 @@ class T {
         comments: json["comments"],
         totalPrice: json["totalPrice"],
         priceTypeId: json["priceTypeId"],
-    bookingStatus: json["bookingStatus"],
+        bookingStatus: json["bookingStatus"],
         foodieProfession: json["foodieProfession"],
         foodieAge: json["foodieAge"],
         scheduleId: json["scheduleId"],
@@ -113,7 +113,9 @@ class T {
         experienceName: json["experienceName"],
         chefId: json["chefId"],
         brandName: json["brandName"],
-    qrRequest: QrRequest.fromJson(json['qrRequest']),
+        qrRequest: json['qrRequest'] != null
+            ? QrRequest.fromJson(json['qrRequest'])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -142,9 +144,10 @@ class T {
         "experienceName": experienceName,
         "chefId": chefId,
         "brandName": brandName,
-    'qrRequest': qrRequest?.toJson(),
+        'qrRequest': qrRequest?.toJson(),
       };
 }
+
 class QrRequest {
   int? bookingId;
   int? chefId;
@@ -154,10 +157,10 @@ class QrRequest {
 
   QrRequest(
       {this.bookingId,
-        this.chefId,
-        this.experienceId,
-        this.foodieId,
-        this.verificationCode});
+      this.chefId,
+      this.experienceId,
+      this.foodieId,
+      this.verificationCode});
 
   QrRequest.fromJson(Map<String, dynamic> json) {
     bookingId = json['bookingId'];
