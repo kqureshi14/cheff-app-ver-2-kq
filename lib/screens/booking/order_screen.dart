@@ -85,7 +85,7 @@ class _OrderScreenState extends State<OrderScreen> {
   String getStatusName(String _status) {
     switch (_status) {
       case Strings.requestedNew:
-        return Strings.foodItemBookingDecisionRequired;
+        return Strings.foodItemBookingPending;
       case Strings.acceptDataLowerCase:
         return Strings.foodItemBookingAdvancePendingHeader;
       case Strings.confirmedStatus:

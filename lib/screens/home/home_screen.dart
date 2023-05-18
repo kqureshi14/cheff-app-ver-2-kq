@@ -48,7 +48,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 81,
                     ),
                     GeneralText(
@@ -69,14 +69,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: HexColor.fromHex("#212129"),
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(44),
                                 topRight: Radius.circular(44))),
                         child: Container(
                           child: Column(
                             children: [
                               Container(
-                                  padding: EdgeInsetsDirectional.only(
+                                  padding: const EdgeInsetsDirectional.only(
                                       start: 47, end: 43, top: 33, bottom: 77),
                                   child: Column(children: [
                                     Row(
@@ -85,13 +85,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
-                                              _appService.updateTitlePage(
-                                                  Strings.newOrder
-                                                          .substring(0, 1)
-                                                          .toUpperCase() +
-                                                      Strings.newOrder
-                                                          .substring(1)
-                                                          .toLowerCase());
+                                              // _appService.updateTitlePage(
+                                              //     Strings.newOrder
+                                              //             .substring(0, 1)
+                                              //             .toUpperCase() +
+                                              //         Strings.newOrder
+                                              //             .substring(1)
+                                              //             .toLowerCase());
+                                              _appService.updateTitlePage(Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.newData,
@@ -101,7 +102,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                 height: 108,
                                                 width: 117,
                                                 padding:
-                                                    EdgeInsetsDirectional.only(
+                                                    const EdgeInsetsDirectional.only(
                                                         bottom: 10),
                                                 decoration: BoxDecoration(
                                                     border: Border(
@@ -155,7 +156,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                       ],
                                                     ),
                                                     GeneralText(
-                                                      Strings.loungeNewLabel,
+                                                      Strings.loungePendingLabel.toUpperCase(),
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -180,13 +181,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //  _navigate. OrderScreenView
                                               // _navigation.replace(
                                               //     route: OrderRouteView());
-                                              _appService.updateTitlePage(
-                                                  Strings.acceptData
-                                                          .substring(0, 1)
-                                                          .toUpperCase() +
-                                                      Strings.acceptData
-                                                          .substring(1)
-                                                          .toLowerCase());
+                                              // _appService.updateTitlePage(
+                                              //     Strings.acceptData
+                                              //             .substring(0, 1)
+                                              //             .toUpperCase() +
+                                              //         Strings.acceptData
+                                              //             .substring(1)
+                                              //             .toLowerCase());
+                                              _appService.updateTitlePage(Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.acceptData,
@@ -255,13 +257,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                       children: [
                                         InkWell(
                                             onTap: () {
-                                              _appService.updateTitlePage(
-                                                  Strings.confirmed
-                                                          .substring(0, 1)
-                                                          .toUpperCase() +
-                                                      Strings.confirmed
-                                                          .substring(1)
-                                                          .toLowerCase());
+                                              // _appService.updateTitlePage(
+                                              //     Strings.confirmed
+                                              //             .substring(0, 1)
+                                              //             .toUpperCase() +
+                                              //         Strings.confirmed
+                                              //             .substring(1)
+                                              //             .toLowerCase());
+                                              _appService.updateTitlePage(Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.confirmed,
@@ -270,7 +273,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Container(
                                                 width: 117,
                                                 padding:
-                                                    EdgeInsetsDirectional.only(
+                                                    const EdgeInsetsDirectional.only(
                                                         bottom: 10),
                                                 child: Column(
                                                   children: [
@@ -319,14 +322,15 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                         ),
                                         InkWell(
                                             onTap: () {
-                                              _appService.updateTitlePage(
-                                                  Strings.inProgress
-                                                          .replaceAll('_', '')
-                                                          .substring(0, 1)
-                                                          .toUpperCase() +
-                                                      Strings.inProgressTitle
-                                                          .substring(1)
-                                                          .toLowerCase());
+                                              // _appService.updateTitlePage(
+                                              //     Strings.inProgress
+                                              //             .replaceAll('_', '')
+                                              //             .substring(0, 1)
+                                              //             .toUpperCase() +
+                                              //         Strings.inProgressTitle
+                                              //             .substring(1)
+                                              //             .toLowerCase());
+                                              _appService.updateTitlePage(Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.inProgress,
@@ -335,7 +339,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Container(
                                                 width: 117,
                                                 padding:
-                                                    EdgeInsetsDirectional.only(
+                                                    const EdgeInsetsDirectional.only(
                                                         bottom: 10),
                                                 child: Column(
                                                   children: [
@@ -385,14 +389,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                 children: [
                                   Container(
                                       width: MediaQuery.of(context).size.width,
-                                      padding: EdgeInsetsDirectional.only(
+                                      padding: const EdgeInsetsDirectional.only(
                                           start: 47,
                                           end: 43,
                                           top: 94,
                                           bottom: 50),
                                       decoration: BoxDecoration(
                                           color: HexColor.fromHex("#bb3127"),
-                                          borderRadius: BorderRadius.only(
+                                          borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(44),
                                               topRight: Radius.circular(44))),
                                       child: Container(
@@ -424,7 +428,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     child: Container(
                                                         width: 121,
                                                         padding:
-                                                            EdgeInsetsDirectional
+                                                            const EdgeInsetsDirectional
                                                                 .only(
                                                                     bottom: 10),
                                                         child: Column(
@@ -433,7 +437,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                                 width: 27.6,
                                                                 child: Image.asset(
                                                                     "assets/images/icons/experiences.png")),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 9.2,
                                                             ),
                                                             GeneralText(
@@ -474,7 +478,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     child: Container(
                                                         width: 121,
                                                         padding:
-                                                            EdgeInsetsDirectional
+                                                            const EdgeInsetsDirectional
                                                                 .only(
                                                                     bottom: 10),
                                                         child: Column(
@@ -483,7 +487,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                                 width: 30.2,
                                                                 child: Image.asset(
                                                                     "assets/images/icons/earnings.png")),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 9.2,
                                                             ),
                                                             GeneralText(
@@ -526,7 +530,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                   child: Container(
                                                       width: 121,
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .only(bottom: 10),
                                                       child: Column(
                                                         children: [
@@ -534,7 +538,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                               width: 26.1,
                                                               child: Image.asset(
                                                                   "assets/images/icons/history_recent.png")),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             height: 9.2,
                                                           ),
                                                           GeneralText(
@@ -576,7 +580,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                   child: Container(
                                                       width: 121,
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .only(bottom: 10),
                                                       child: Column(
                                                         children: [
@@ -584,7 +588,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                               width: 18.7,
                                                               child: Image.asset(
                                                                   "assets/images/icons/people.png")),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             height: 9.2,
                                                           ),
                                                           GeneralText(
@@ -636,7 +640,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                     width: 44.3,
                                                     child: Image.asset(
                                                         "assets/images/icons/lounge_qr_code.png")),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 9.9,
                                                 ),
                                                 GestureDetector(

@@ -407,6 +407,7 @@ abstract class Strings {
   static const bookingOrderDeclined = 'ORDER DECLINED';
   static const foodItemBookingInProgress = 'IN PROGRESS';
   static const foodItemBookingDecisionRequired = 'DECISION REQUIRED';
+  static const foodItemBookingPending = 'PENDING';
   static const foodItemBookingConfirmed = 'BOOKING CONFIRMED';
   static const foodItemBookingAdvancePendingButton = 'Pay Advance';
   static const foodItemAdvancePendingTermsCondition = 'Terms & Condition';
@@ -492,6 +493,7 @@ abstract class Strings {
   static const loungeHeaderLabel = "Zee Lounge";
   static const loungeNewValue = "12";
   static const loungeNewLabel = "New";
+  static const loungePendingLabel = "Pending";
   static const loungeAcceptedValue = "06";
   static const loungeAcceptedLabel = "ACCEPTED";
   static const loungeConfirmedLabel = "CONFIRMED";
@@ -592,6 +594,7 @@ abstract class Strings {
   static const requestedNew = 'REQUESTED';
 
   static const newOrder = 'New Order';
+  static const bookingsLabel = 'Bookings';
 
   static const scanningInstructions = 'Scanning instructions';
 }
