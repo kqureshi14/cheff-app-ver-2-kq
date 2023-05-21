@@ -31,10 +31,13 @@ class ExperienceManagerState extends State<ExperienceManager> {
   final TextController _locationController = TextController();
   final TextController _nameController = TextController();
   final TextController _mobileController = TextController();
+  final TextController _townController = TextController();
+  final TextController _cityController = TextController();
+  final TextController _addressController = TextController();
 
   var price = '';
   var location = '';
-  var subhost = '';
+  var subHost = '';
 
   final experienceHelper = ExperienceHelper();
   final _appService = locateService<ApplicationService>();
@@ -59,61 +62,6 @@ class ExperienceManagerState extends State<ExperienceManager> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 12),
-      //   child: Container(
-      //     margin: const EdgeInsets.only(left: 32),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         InkWell(
-      //           onTap: () {
-      //             // Navigator.push(
-      //             //   context,
-      //             //   MaterialPageRoute(
-      //             //       builder: (context) => const SignUpLetsStartScreen()),
-      //             // );
-      //           },
-      //           child: SvgPicture.asset(
-      //             Resources.getSignInLeftArrow,
-      //             color: Color(0xfff1c452),
-      //           ),
-      //         ),
-      //         InkWell(
-      //           onTap: () {
-      //             // _appService.state?.experienceHelper   =_experienceHelper;
-      //             _appService.updateExperienceHelper(_experienceHelper);
-      //          //   saveExperience(context);
-      //           },
-      //           child: SvgPicture.asset(
-      //             Resources.getSignInRightArrow,
-      //             color: Color(0xfff1c452),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-
-      // InkWell(
-      //   onTap: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) =>
-      //           const SignUpLetsStartScreen()),
-      //     );
-      //   },
-      //   child: Padding(
-      //     padding: EdgeInsets.only(right: 32),
-      //     child: Align(
-      //       alignment: Alignment.bottomRight,
-      //       child: SvgPicture.asset(
-      //         Resources.getSignInRightArrow,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +79,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.only(left: 29),
+              margin: const EdgeInsets.only(left: 29),
               //   alignment: Alignment.center,
               //  padding: const EdgeInsets.only(left: 29),
               child: Column(
@@ -150,7 +98,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                     height: 32,
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 29),
+                    margin: const EdgeInsets.only(right: 29),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,7 +108,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           textAlign: TextAlign.start,
                           style: appTheme.typographies.interFontFamily.headline4
                               .copyWith(
-                                  color: const Color(0xfffbeccb),
+                                  color: const Color(0xFFfee4a4),
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold),
                         ),
@@ -202,7 +150,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           textAlign: TextAlign.center,
                           style: appTheme.typographies.interFontFamily.headline6
                               .copyWith(
-                                  color: const Color(0xfffbeccb),
+                                  color: const Color(0xFFfee4a4),
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold),
                         ),
@@ -251,11 +199,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    color: const Color(0xfffbeccb),
+                                    color: const Color(0xFFfee4a4),
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 22,
                           ),
                           InkWell(
@@ -270,7 +218,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               }
 
                               developer.log(
-                                  ' Price selected value here  ' + '${price}');
+                                  ' Price selected value here  ' '$price');
                             },
                             child: Container(
                               child:
@@ -285,7 +233,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                         ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 11,
                           ),
                           GeneralText(
@@ -293,7 +241,12 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             maxLines: 2,
                             textAlign: TextAlign.center,
                             style: price == Strings.createExperiencePerItemTitle
-                                ? const TextStyle(color: Colors.white)
+                                ? appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -312,7 +265,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                 changePriceOption(
                                     Strings.createExperienceLabelTitle);
                               }
-                              developer.log(' Price selected is ' + '${price}');
+                              developer.log(' Price selected is ' '${price}');
                             },
                             child: Container(
                               child: price == Strings.createExperienceLabelTitle
@@ -333,7 +286,12 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             Strings.createExperienceLabelTitle,
                             textAlign: TextAlign.center,
                             style: price == Strings.createExperienceLabelTitle
-                                ? const TextStyle(color: Colors.white)
+                                ? appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -343,17 +301,17 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 18,
                       ),
                       Container(
-                        margin: EdgeInsets.only(right: 29),
+                        margin: const EdgeInsets.only(right: 29),
                         child: Row(
                           children: [
                             Expanded(
                               child: GeneralTextInput(
                                   height: 51,
-                                  suffix:const Text("Price/Prsn"),
+                                  suffix: const Text("Price/Prsn"),
                                   controller: _priceController,
                                   inputType: InputType.digit,
                                   isEnable: ((price !=
@@ -373,11 +331,12 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   // valueStyle: valueStyle,
                                   onChanged: (newValue) {
                                     experienceHelper.priceExperience =
-                                        newValue.isNotEmpty?double.parse(
-                                            newValue):null; // priceExperience
+                                        newValue.isNotEmpty
+                                            ? double.parse(newValue)
+                                            : null; // priceExperience
                                   }),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Expanded(
@@ -399,7 +358,9 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   // valueStyle: valueStyle,
                                   onChanged: (newValue) {
                                     experienceHelper.personExperience =
-                                        newValue.isNotEmpty? int.parse(newValue):null;
+                                        newValue.isNotEmpty
+                                            ? int.parse(newValue)
+                                            : null;
                                   }),
                             ),
                           ],
@@ -407,7 +368,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 54,
                   ),
                   Column(
@@ -420,11 +381,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    color: const Color(0xfffbeccb),
+                                    color: const Color(0xFFfee4a4),
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 22,
                           ),
                           InkWell(
@@ -449,14 +410,19 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                         ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 11,
                           ),
                           GeneralText(
                             Strings.createExperienceHomeTitle,
                             textAlign: TextAlign.center,
                             style: location == Strings.createExperienceHomeTitle
-                                ? const TextStyle(color: Colors.white)
+                                ? appTheme
+                                .typographies.interFontFamily.headline6
+                                .copyWith(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -464,7 +430,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w500),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 22,
                           ),
                           InkWell(
@@ -489,7 +455,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                         ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 11,
                           ),
                           GeneralText(
@@ -497,7 +463,12 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             textAlign: TextAlign.center,
                             style:
                                 location == Strings.createExperienceOtherTitle
-                                    ? const TextStyle(color: Colors.white)
+                                    ? appTheme
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w500)
                                     : appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -507,40 +478,43 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 17,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: 29),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GeneralTextInput(
-                                  height: 51,
-                                  controller: _locationController,
-                                  inputType: InputType.text,
-                                  isMultiline: true,
-                                  backgroundColor:
-                                      appTheme.colors.textFieldFilledColor,
-                                  inputBorder: appTheme.focusedBorder,
-                                  valueStyle:
-                                      const TextStyle(color: Colors.white),
-                                  hint: 'Enter Location',
-                                  hintStyle: TextStyle(
-                                      color: Colors.white.withOpacity(0.4),
-                                      fontSize: 14.0),
-                                  // valueStyle: valueStyle,
-                                  onChanged: (newValue) {
-                                    experienceHelper.locationExperience =
-                                        newValue;
-                                  }),
-                            ),
-                          ],
-                        ),
-                      )
+                      location == Strings.createExperienceOtherTitle
+                          ? address(appTheme)
+                          : Container(
+                              margin: const EdgeInsets.only(right: 29),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GeneralTextInput(
+                                        height: 51,
+                                        controller: _locationController,
+                                        inputType: InputType.text,
+                                        isMultiline: true,
+                                        backgroundColor: appTheme
+                                            .colors.textFieldFilledColor,
+                                        inputBorder: appTheme.focusedBorder,
+                                        valueStyle: const TextStyle(
+                                            color: Colors.white),
+                                        hint: 'Enter Location',
+                                        hintStyle: TextStyle(
+                                            color:
+                                                Colors.white.withOpacity(0.4),
+                                            fontSize: 14.0),
+                                        // valueStyle: valueStyle,
+                                        onChanged: (newValue) {
+                                          experienceHelper.locationExperience =
+                                              newValue;
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 52,
                   ),
                   // Column(
@@ -660,16 +634,16 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
-                                    color: const Color(0xfffbeccb),
+                                    color: const Color(0xFFfee4a4),
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 22,
                           ),
                           InkWell(
                             onTap: () {
-                              var currentSelectedOption = subhost;
+                              var currentSelectedOption = subHost;
                               if (!(currentSelectedOption ==
                                   Strings.createExperienceSubHostTitle)) {
                                 changesubHostOption(
@@ -679,7 +653,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               }
                             },
                             child: Container(
-                              child: subhost ==
+                              child: subHost ==
                                       Strings.createExperienceSubHostTitle
                                   ? Image.asset(
                                       Resources.checkPNG,
@@ -693,11 +667,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
-                        margin: EdgeInsets.only(right: 29),
+                        margin: const EdgeInsets.only(right: 29),
                         child: Row(
                           children: [
                             Expanded(
@@ -705,7 +679,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   height: 51,
                                   controller: _nameController,
                                   inputType: InputType.text,
-                                  isEnable: ((subhost ==
+                                  isEnable: ((subHost ==
                                           Strings.createExperienceSubHostTitle))
                                       ? true
                                       : false,
@@ -725,7 +699,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                         newValue; // subHostName
                                   }),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Expanded(
@@ -734,7 +708,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                   controller: _mobileController,
                                   inputType: InputType.digit,
                                   isMultiline: true,
-                                  isEnable: ((subhost ==
+                                  isEnable: ((subHost ==
                                           Strings.createExperienceSubHostTitle))
                                       ? true
                                       : false,
@@ -778,7 +752,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
           Strings.createExperienceWowFactorsTitle,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: const Color(0xfffbeccb),
+              color: const Color(0xFFfee4a4),
               fontSize: 18.0,
               fontWeight: FontWeight.bold),
         ),
@@ -796,6 +770,169 @@ class ExperienceManagerState extends State<ExperienceManager> {
           ],
         ),
         //),
+      ],
+    );
+  }
+
+  Widget address(IAppThemeData appTheme) {
+    return Column(
+      children: [
+        displayTownCity(appTheme),
+        const SizedBox(
+          height: 10,
+        ),
+        displayAddress(appTheme),
+      ],
+    );
+  }
+
+  Widget displayTownCity(IAppThemeData appTheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signTownLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GeneralTextInput(
+                height: 80,
+                textFieldWidth: 145,
+                controller: _townController,
+                inputType: InputType.text,
+                backgroundColor: appTheme.colors.textFieldFilledColor,
+                inputBorder: appTheme.focusedBorder,
+                valueStyle: const TextStyle(color: Colors.white),
+                hint: 'Enter Town',
+                hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.4), fontSize: 14),
+                // valueStyle: valueStyle,
+                // onChanged: (newValue) {
+                //   if(viewModel.verifyInputForm(
+                //       name: _nameController.text,
+                //       brandName: _brandController.text,
+                //       mobileNumber: _mobileNumberController.text,
+                //       address: _addressController.text,
+                //       town: _townController.text,
+                //       city: _cityController.text
+                //   )){
+                //     viewModel.changeButton(true);
+                //   }else{
+                //     viewModel.changeButton(false);
+                //   }
+                // }
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signCityLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              GeneralTextInput(
+                height: 80,
+                textFieldWidth: 145,
+                controller: _cityController,
+                inputType: InputType.text,
+                backgroundColor: appTheme.colors.textFieldFilledColor,
+                inputBorder: appTheme.focusedBorder,
+                valueStyle: const TextStyle(color: Colors.white),
+                hint: 'Enter City',
+                hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.4), fontSize: 14),
+                // valueStyle: valueStyle,
+                // onChanged: (newValue) {
+                //   if(viewModel.verifyInputForm(
+                //       name: _nameController.text,
+                //       brandName: _brandController.text,
+                //       mobileNumber: _mobileNumberController.text,
+                //       address: _addressController.text,
+                //       town: _townController.text,
+                //       city: _cityController.text
+                //   )){
+                //     viewModel.changeButton(true);
+                //   }else{
+                //     viewModel.changeButton(false);
+                //   }
+                // }
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget displayAddress(IAppThemeData appTheme) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GeneralText(
+          Strings.signAddressLabel,
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              color: const Color(0xfffbeccb),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        GeneralTextInput(
+          controller: _addressController,
+          inputType: InputType.text,
+          suffix: Image.asset(
+            Resources.locationIconPNG,
+            height: 20,
+          ),
+          backgroundColor: appTheme.colors.textFieldFilledColor,
+          inputBorder: appTheme.focusedBorder,
+          valueStyle: const TextStyle(color: Colors.white),
+          hint: 'Enter Address',
+          hintStyle:
+              TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+          // valueStyle: valueStyle,
+          // onChanged: (newValue) {
+          //   if(viewModel.verifyInputForm(
+          //       name: _nameController.text,
+          //       brandName: _brandController.text,
+          //       mobileNumber: _mobileNumberController.text,
+          //       address: _addressController.text,
+          //       town: _townController.text,
+          //       city: _cityController.text
+          //   )){
+          //     viewModel.changeButton(true);
+          //   }else{
+          //     viewModel.changeButton(false);
+          //   }
+          // }
+        ),
       ],
     );
   }
@@ -852,7 +989,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
           Strings.createExperiencePreferenceTitle,
           textAlign: TextAlign.center,
           style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: const Color(0xfffbeccb),
+              color: const Color(0xFFfee4a4),
               fontSize: 18.0,
               fontWeight: FontWeight.bold),
         ),
@@ -895,7 +1032,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
   }
 
   void changesubHostOption(String option) {
-    subhost = option;
+    subHost = option;
     setState(() {});
   }
 }

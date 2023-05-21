@@ -11,6 +11,7 @@ import 'package:chef/services/services.dart';
 import 'package:chef/helpers/enum_helper.dart';
 
 import '../../models/login/login_response.dart';
+import '../sign_up/get_started_screen_v.dart';
 
 @injectable
 class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
@@ -41,6 +42,15 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
     } catch (error) {
       //     navigateToSignUp();
     }
+  }
+
+  void splashNavigation(BuildContext context ){
+    Future.delayed(const Duration(seconds: 3),(){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const GetStartedScreen()),
+      );
+    });
   }
 
   void navigateToPage(LoginResponse authData) async {

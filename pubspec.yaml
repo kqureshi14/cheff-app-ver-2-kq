@@ -65,6 +65,7 @@ dependencies:
   pinput: 2.2.31
   flutter_speed_dial: ^6.2.0
   google_mlkit_barcode_scanning: 0.5.0
+  video_player: ^2.6.1
 
 dev_dependencies:
   analyzer: 4.3.1
@@ -84,6 +85,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/icons/
+    - assets/video/
   fonts:
     - family: Roboto
       fonts:

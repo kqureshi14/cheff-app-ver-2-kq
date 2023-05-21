@@ -1,7 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 
 import '../home/experiences_details/experience_details_screen_v.dart';
-
+import 'package:video_player/video_player.dart';
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -18,8 +18,22 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     buildSignature: 'Unknown',
   );
 
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
   void initState() {
     super.initState();
+    _controller = VideoPlayerController.asset(Resources.onBoardingVideo);
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+    _controller.play();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,41 +50,71 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: appTheme.colors.primaryBackground,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              Resources.getStartedBgPng,
-            ),
-            fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      VideoPlayer(_controller),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            _getStartedTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 12,
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(),
+                _getStartedTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 12,
+                ),
+                _getStartedSubTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 230,
+                ),
+                _getStartedButtonTitle(appTheme: appTheme),
+                const SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      ' Version ' + '${_packageInfo.version}',
+                      style: appTheme.typographies.interFontFamily.headline6,
+                    )),
+              ],
             ),
-            _getStartedSubTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 230,
-            ),
-            _getStartedButtonTitle(appTheme: appTheme),
-            const SizedBox(
-              height: 50,
-            ),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  ' Version ' + '${_packageInfo.version}',
-                  style: appTheme.typographies.interFontFamily.headline6,
-                )),
-          ],
-        ) /* add child content here */,
+          ) /* add child content here */,
+        ],
+
+
+      // Container(
+      //   width: double.infinity,
+      //   height: double.infinity,
+      //   decoration: const BoxDecoration(
+      //     image: DecorationImage(
+      //       image: AssetImage(
+      //         Resources.getStartedBgPng,
+      //       ),
+      //       fit: BoxFit.cover,
+      //     ),
+      //   ),
+      //   child:
       ),
     );
   }
@@ -95,7 +139,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         height: 1.5,
         shadows: <Shadow>[
           Shadow(
-            offset: Offset(10.0, 5.0),
+            offset: const Offset(10.0, 5.0),
             blurRadius: 10.0,
             color: Colors.black.withOpacity(0.4),
           ),

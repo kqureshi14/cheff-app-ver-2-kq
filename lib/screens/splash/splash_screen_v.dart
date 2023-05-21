@@ -28,16 +28,17 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
       bloc: viewModel,
       builder: (_, state) {
+        viewModel.splashNavigation(context);
         return Scaffold(
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GetStartedScreen()),
-                  // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const GetStartedScreen()),
+                //   // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+                // );
               },
               child: SvgPicture.asset(
                 Resources.chefLogo,

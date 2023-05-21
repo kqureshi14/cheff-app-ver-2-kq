@@ -38,17 +38,6 @@ class _MenuManagerState extends State<MenuManager> {
   final _appService = locateService<ApplicationService>();
 
   MenuHelper menuHelper = MenuHelper();
-  //late MenuExperienceScreenViewModel viewModel;
-  // final mealItems = <String>[
-  //   'main course',
-  //   'BBQ',
-  //   'Salad',
-  // ];
-  // final foodItems = <String>[
-  //   'Kabab',
-  //   'Platter',
-  //   'Salad',
-  // ];
 
   final mealItems = <String>[];
   final foodItems = <String>[];

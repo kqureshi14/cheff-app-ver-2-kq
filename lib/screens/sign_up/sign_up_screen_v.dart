@@ -14,7 +14,6 @@ import '../sign_in/sign_in_screen_v.dart';
 import 'dart:developer' as developer;
 import '../sign_up/sign_up_screen_m.dart';
 
-// class SignUpScreen extends StatefulWidget {
 class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   SignUpScreen({Key? key}) : super(key: key);
 
@@ -24,11 +23,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     Api.devBaseURL,
   ];
 
-//   @override
-//   _SignUpScreenState createState() => _SignUpScreenState();
-// }
-//
-// class _SignUpScreenState extends State<SignUpScreen> {
+
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _brandController = TextController();
@@ -43,9 +38,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     required ScreenSizeData screenSizeData,
   }) {
     final appTheme = AppTheme.of(context).theme;
-
-    // viewModel.loadProfessions(baseUrl: baseURLs[0], context: context);
-    // viewModel.initialize();
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
         bloc: viewModel..initialize(),
         builder: (_, state) => state.when(
@@ -103,20 +95,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final appTheme = AppTheme.of(context).theme;
-  //
-  //   return Scaffold(
-  //     backgroundColor: appTheme.colors.primaryBackground,
-  //     bottomNavigationBar:
-  //     displayAlreadySignIn(appTheme),
-  //     body: SingleChildScrollView(
-  //       child: SafeArea(
-  //         child: Container(
-  //           padding: const EdgeInsets.symmetric(horizontal: 30),
-  //           child:
-
   Widget _buildMobileView({
     required BuildContext context,
     required SignUpScreenState state,
@@ -154,11 +132,11 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         const SizedBox(
           height: 24,
         ),
-        displayAddress(appTheme),
-        const SizedBox(
-          height: 24,
-        ),
         displayTownCity(appTheme),
+        const SizedBox(
+          height: 10,
+        ),
+        displayAddress(appTheme),
         const SizedBox(
           height: 10,
         ),
@@ -203,6 +181,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 brandName: _brandController.text,
                 mobileNumber: _mobileNumberController.text,
                 address: _addressController.text,
+                town: _townController.text,
+                city: _cityController.text
               )){
                 viewModel.changeButton(true);
               }else{
@@ -245,6 +225,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 brandName: _brandController.text,
                 mobileNumber: _mobileNumberController.text,
                 address: _addressController.text,
+                  town: _townController.text,
+                  city: _cityController.text
               )){
                 viewModel.changeButton(true);
               }else{
@@ -287,6 +269,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 brandName: _brandController.text,
                 mobileNumber: _mobileNumberController.text,
                 address: _addressController.text,
+                  town: _townController.text,
+                  city: _cityController.text
               )){
                 viewModel.changeButton(true);
               }else{
@@ -333,6 +317,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 brandName: _brandController.text,
                 mobileNumber: _mobileNumberController.text,
                 address: _addressController.text,
+                  town: _townController.text,
+                  city: _cityController.text
               )){
                 viewModel.changeButton(true);
               }else{
@@ -381,6 +367,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       brandName: _brandController.text,
                       mobileNumber: _mobileNumberController.text,
                       address: _addressController.text,
+                        town: _townController.text,
+                        city: _cityController.text
                     )){
                       viewModel.changeButton(true);
                     }else{
@@ -426,6 +414,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                       brandName: _brandController.text,
                       mobileNumber: _mobileNumberController.text,
                       address: _addressController.text,
+                        town: _townController.text,
+                        city: _cityController.text
                     )){
                       viewModel.changeButton(true);
                     }else{
@@ -480,6 +470,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     brandName: _brandController.text,
                     mobileNumber: _mobileNumberController.text,
                     address: _addressController.text,
+                    town: _townController.text,
+                    city: _cityController.text,
                     context: context,
                     baseUrl: baseURLs[0],
                   )) {
@@ -554,6 +546,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               brandName: _brandController.text,
               mobileNumber: _mobileNumberController.text,
               address: _addressController.text,
+              town: _townController.text,
+              city: _cityController.text,
               context: context,
               baseUrl: baseURLs[0],
             );
@@ -576,16 +570,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               // invalid phone number
                 return Toaster.infoToast(
                     context: context, message: 'Invalid phone number!');
-            // developer.log(' Response of Signup is null ' + '$response');
-            // return showSnackBar('Invalid phone number!');
               case 'invalid-verification-code':
               // invalid otp entered
-              //return TooashowSnackBar('The entered OTP is invalid!');
                 return Toaster.infoToast(
                     context: context, message: 'The entered OTP is invalid!');
             // handle other error codes
               default:
-              // showSnackBar('Something went wrong!');
                 Toaster.infoToast(
                     context: context, message: 'Something went wrong!');
             // handle error further if needed
@@ -602,7 +592,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             Toaster.infoToast(context: context, message: 'An error occurred!');
           },
           builder: (context, controller) {
-            //  dcontext = context;
             return verificationDesign(context, controller);
           },
         ));
@@ -690,6 +679,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   brandName: _brandController.text,
                   mobileNumber: _mobileNumberController.text,
                   address: _addressController.text,
+                    town: _townController.text,
+                    city: _cityController.text
                 )){
                   viewModel.changeButton(true);
                 }else{
@@ -710,6 +701,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     brandName: _brandController.text,
                     mobileNumber: _mobileNumberController.text,
                     address: _addressController.text,
+                    town: _townController.text,
+                    city: _cityController.text,
                     context: context,
                     baseUrl: baseURLs[0],
                   );
@@ -743,6 +736,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 brandName: _brandController.text,
                 mobileNumber: _mobileNumberController.text,
                 address: _addressController.text,
+                town: _townController.text,
+                city: _cityController.text,
                 context: context,
                 baseUrl: baseURLs[0],
               )) {
@@ -751,6 +746,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   brandName: _brandController.text,
                   mobileNumber: _mobileNumberController.text,
                   address: _addressController.text,
+                  town: _townController.text,
+                  city: _cityController.text,
                   context: context,
                   baseUrl: baseURLs[0],
                 );
@@ -903,6 +900,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     brandName: _brandController.text,
                     mobileNumber: _mobileNumberController.text,
                     address: _addressController.text,
+                      town: _townController.text,
+                      city: _cityController.text,
                   )){
                     viewModel.changeButton(true);
                   }else{

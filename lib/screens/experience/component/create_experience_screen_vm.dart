@@ -108,12 +108,6 @@ class CreateExperienceScreenViewModel
           getList(experienceHelper.selectedWowFactors, 'wow').toList(),
       experiencePreferences: getPreferenceList(
           experienceHelper.selectedPerferencesFactors, 'pref'),
-      // age: age.toString(),
-      // name: name,
-      // gender: gender,
-      // mobileNo: mobileNumber,
-      // professionalId: professionId,
-      // profileImageUrl: null,
     );
 
     final experienceData = experience_request.ExperienceRequest(

@@ -89,21 +89,23 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required String brandName,
     required String mobileNumber,
     required String address,
-    // required String town,
-    // required String city,
+    required String town,
+    required String city,
   }) =>
       name.trim().isNotEmpty &&
       brandName.trim().isNotEmpty &&
       mobileNumber.trim().isNotEmpty &&
-      address.trim().isNotEmpty;
-  // town.trim().isNotEmpty &&
-  // city.trim().isNotEmpty ;
+      address.trim().isNotEmpty&&
+  town.trim().isNotEmpty &&
+  city.trim().isNotEmpty ;
 
   bool verifyInput({
     required String name,
     required String brandName,
     required String mobileNumber,
     required String address,
+    required String city,
+    required String town,
     required String baseUrl,
     required BuildContext context,
   }) {
@@ -112,6 +114,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       mobileNumber: mobileNumber,
   address: address,
       brandName: brandName,
+      city: city,
+      town: town,
     );
     if (!isInputValid) {
       Toaster.errorToast(
@@ -129,12 +133,16 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required String brandName,
     required String mobileNumber,
     required String address,
+    required String city,
+    required String town,
   }) {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
       address: address,
       brandName: brandName,
+      city: city,
+      town: town,
     );
     if (!isInputValid) {
       return false;
@@ -176,8 +184,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     required String brandName,
     required String mobileNumber,
     required String address,
-    // required String town,
-    // required String city,
+    required String town,
+    required String city,
     required BuildContext context,
     required String baseUrl,
   }) async {
@@ -186,20 +194,14 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       brandName: brandName,
       mobileNumber: mobileNumber,
       address: address,
-      // town: town,
-      // city: city,
+      town: town,
+      city: city,
     );
     if (isInputValid) {
       emit(const Loading());
       try {
         final url =
             InfininHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
-        // signuprequest.T t = signuprequest.T(
-        //   name: name,
-        //   brandName: brandName,
-        //   mobileNo: mobileNumber,
-        //   address: address,
-        // );
         signuprequest.T t = signuprequest.T(
           name: name,
           brandName: brandName,
@@ -216,13 +218,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
               //   accessToken: false,
             )
             .whenComplete(() {});
-
-        // final response = await _network.get(
-        //   //below one is working
-        //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-        // );
         if (response != null) {
-          developer.log(' Response of Signup body is ' + '${response.body}');
+          developer.log(' Response of Signup body is ' '${response.body}');
 
           SignupResponse signupResponse = signupResponseFromJson(response.body);
 
@@ -232,11 +229,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
-          // await _cacheData(
-          //   context: context,
-          //   loginData: response.body,
-          //   baseUrl: baseUrl,
-          // );
           emit(const Loaded());
 
           developer.log(' Sign up Response is ' + signupResponse.message);
@@ -248,7 +240,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
           Toaster.infoToast(
               context: context,
               message: 'Something is wrong please content vendor');
-          developer.log(' Response of Signup is null ' + '$response');
+          developer.log(' Response of Signup is null ' '$response');
         }
 
         //  loading(isBusy: false);

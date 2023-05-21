@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/questionire_request.dart'
     as questionirerequest;
@@ -26,6 +28,18 @@ class SignUpQuestionireScreenViewModel
   final INetworkService _network;
   final IStorageService _storage;
   final ApplicationService _appService;
+
+
+  ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
+
+  bool isImageSelected = false;
+  void updateSelectedImage(File? image) {
+    if (image != null) {
+      selectedImageNotifier.value = image;
+      isImageSelected = true;
+    }
+  }
+
 
   Future<void> loadQuestion({
     required String baseUrl,

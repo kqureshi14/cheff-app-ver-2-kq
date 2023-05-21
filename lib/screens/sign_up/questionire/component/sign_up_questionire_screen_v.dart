@@ -2,14 +2,12 @@ import 'package:chef/helpers/helpers.dart';
 import 'package:chef/models/signup/questionire_response.dart';
 import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_m.dart';
 import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_vm.dart';
-// import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_m.dart';
-// import 'package:chef/screens/sign_up/questionire/sign_up_questionire_screen_vm.dart';
-
 import '../../../../helpers/color_helper.dart';
 import 'dart:developer' as developer;
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widget/question_view.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpQuestionireScreen
     extends BaseView<SignUpQuestionireScreenViewModel> {
@@ -22,7 +20,7 @@ class SignUpQuestionireScreen
     List<QuestionsList> questionsList,
   ) {
     for (int i = 0; i < questionsList.length; i++) {
-      developer.log(' Question id is ' + '${questionsList[i].name}');
+      developer.log(' Question id is ' '${questionsList[i].name}');
       // dropdownDetails[professionList[i].name] = professionList[i].id;
     }
   }
@@ -40,9 +38,6 @@ class SignUpQuestionireScreen
             SignUpQuestionireScreenState>(
         bloc: viewModel,
         builder: (_, state) => state.when(
-            // initialized:
-            //     (isBusy) =>
-            //     _initialized(),
             loading: _loading,
             loaded: (questionsList) => _displayLoadedData(
                 state: state,
@@ -52,14 +47,9 @@ class SignUpQuestionireScreen
                 screenSizeData: screenSizeData)));
   }
 
-  Widget _initialized() {
-    return Container();
-  }
-
   Widget _loading() => const GeneralLoading();
 
   void initState() {
-
     handlesList.addAll([
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
@@ -75,6 +65,18 @@ class SignUpQuestionireScreen
           socialMediaIcon: "assets/images/icons/tiktok.png")
     ]);
     // super.initState();
+  }
+
+  Future<File?> getImageFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    } else {
+      // User cancelled the selection
+      return null;
+    }
   }
 
   Widget _displayLoadedData({
@@ -161,15 +163,13 @@ class SignUpQuestionireScreen
                     height: 1050,
                     child: ListView.builder(
                         itemCount: questionList.length,
-                        physics:
-                            const NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
+                        // BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return QuestionView(
                               appTheme: appTheme,
                               questionObj: questionList[index]);
-
-                          // return Container();
                         }),
                   ),
                   const SizedBox(
@@ -179,29 +179,50 @@ class SignUpQuestionireScreen
                   const SizedBox(
                     height: 40,
                   ),
-                  Container(
-                    height: 70,
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GeneralText(
-                          Strings.labelProfilePicture,
-                          textAlign: TextAlign.center,
-                          style: appTheme.typographies.interFontFamily.headline4
-                              .copyWith(
-                                  color: appTheme.colors.primaryBackground,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w500),
-                        ),
-                        Image.asset(
-                          Resources.userProfilePicPng,
-                          height: 47,
-                        )
-                      ],
+                  InkWell(
+                    onTap: () async {
+                      // Open Gallery and add profile
+                      File? selectedImage = await getImageFromGallery();
+                      viewModel.updateSelectedImage(selectedImage);
+                      if (selectedImage != null) {
+                        viewModel.isImageSelected = true;
+                      }
+                    },
+                    child: Container(
+                      height: 70,
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GeneralText(
+                            Strings.labelProfilePicture,
+                            textAlign: TextAlign.center,
+                            style: appTheme
+                                .typographies.interFontFamily.headline4
+                                .copyWith(
+                                    color: appTheme.colors.primaryBackground,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w500),
+                          ),
+                          ValueListenableBuilder<File?>(
+                            valueListenable: viewModel.selectedImageNotifier,
+                            builder: (BuildContext context, File? selectedImage,
+                                Widget? child) {
+                              if (selectedImage != null) {
+                                return Image.file(selectedImage);
+                              } else {
+                                return Image.asset(
+                                  Resources.userProfilePicPng,
+                                  height: 47,
+                                );
+                              }
+                            },
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -240,7 +261,8 @@ class SignUpQuestionireScreen
               crossAxisSpacing: 20,
               childAspectRatio: 2.9,
             ),
-            itemCount: handlesList.length, //
+            itemCount: handlesList.length,
+            //
 
             itemBuilder: (BuildContext context, int index) {
               return Container(

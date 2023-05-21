@@ -2,7 +2,6 @@ import '../../../../helpers/helpers.dart';
 import '../../../../models/signup/questionire_response.dart';
 
 class QuestionView extends StatefulWidget {
-  // const QuestionView({Key? key}) : super(key: key);
   QuestionView({
     Key? key,
     required this.appTheme,
@@ -19,24 +18,6 @@ class QuestionView extends StatefulWidget {
 }
 
 class _QuestionViewState extends State<QuestionView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-//
-//
-// class QuestionView extends StatelessWidget {
-//   QuestionView({
-//     Key? key,
-//     required this.appTheme,
-//     required this.questionObj,
-//     // required this.answersIds,
-//   }) : super(key: key);
-//
-//   final IAppThemeData appTheme;
-//
-//   QuestionsList questionObj;
   List<int> answersIds = [];
 
   @override
@@ -50,7 +31,7 @@ class _QuestionViewState extends State<QuestionView> {
         Container(
           // padding: EdgeInsets.only(left: 30),
           child: GeneralText(
-            widget.questionObj.name ?? "",
+            widget.questionObj.name,
             maxLines: 2,
             textAlign: TextAlign.left,
             style: widget.appTheme.typographies.interFontFamily.headline6
@@ -64,14 +45,6 @@ class _QuestionViewState extends State<QuestionView> {
           height: 15,
         ),
 
-        // questionObj.type == "SINGLE_DROPDOWN" ?
-        // SingleOption(appTheme: appTheme, answerList: questionObj.answers, answersIds: answersIds)
-        //     : questionObj.type == "MULTI_CHIP" ?
-        // multiChipView(appTheme: appTheme, answerList: questionObj.answers)
-        //     :
-        // // // questionObj.type == "INPUT" ?
-        // InputField(appTheme: appTheme)
-
         widget.questionObj.type == "SINGLE_DROPDOWN"
             ? SingleOption(
                 appTheme: widget.appTheme,
@@ -82,7 +55,7 @@ class _QuestionViewState extends State<QuestionView> {
                     appTheme: widget.appTheme,
                     answerList: widget.questionObj.answers)
                 :
-                // // questionObj.type == "INPUT" ?
+        // questionObj.type == "INPUT" ?
                 InputField(appTheme: widget.appTheme)
       ],
     );
@@ -102,9 +75,8 @@ class multiChipView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 20, left: 20, top: 4),
+      margin: const EdgeInsets.only(right: 20, left: 20, top: 4),
       child: GridView.builder(
-        // padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -132,15 +104,12 @@ class InputField extends StatelessWidget {
   InputField({
     Key? key,
     required this.appTheme,
-    // this.widthContainer = 130,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
 
   final TextController _journeyController = TextController();
 
-  // final String title;
-  // final double widthContainer;
 
   @override
   Widget build(BuildContext context) {
@@ -155,13 +124,11 @@ class InputField extends StatelessWidget {
         hint: 'Please enter description here',
         hintStyle:
             TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
-        // valueStyle: valueStyle,
         onChanged: (newValue) {});
   }
 }
 
 class SingleOption extends StatefulWidget {
-  // const SingleOption({Key? key}) : super(key: key);
 
   SingleOption({
     Key? key,
@@ -184,30 +151,6 @@ class SingleOption extends StatefulWidget {
 }
 
 class _SingleOptionState extends State<SingleOption> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-//
-//
-// class SingleOption extends StatelessWidget {
-//   SingleOption({
-//     Key? key,
-//     required this.appTheme,
-//     required this.answerList,
-//     required this.answersIds,
-//     // required this.title,
-//     // this.selected = false,
-//     // this.widthContainer = 130,
-//   }) : super(key: key);
-
-  // final IAppThemeData appTheme;
-  // List<Answer> answerList;
-  // List<int> answersIds = [];
-  // final String title;
-  // final bool selected;
-  // final double widthContainer;
 
   @override
   Widget build(BuildContext context) {
@@ -215,11 +158,11 @@ class _SingleOptionState extends State<SingleOption> {
         height: 350,
         child: ListView.builder(
             itemCount: widget.answerList.length,
-            physics: NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return Container(
-                padding: EdgeInsets.only(bottom: 9),
+                padding: const EdgeInsets.only(bottom: 9),
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -227,7 +170,7 @@ class _SingleOptionState extends State<SingleOption> {
                       ),
                       color: widget.answersIds
                               .contains(widget.answerList[index].id)
-                          ? Color(0xfffee4a4)
+                          ? const Color(0xfffee4a4)
                           : Colors.white),
                   padding: const EdgeInsets.all(12),
                   child: TextButton(
@@ -240,7 +183,7 @@ class _SingleOptionState extends State<SingleOption> {
                                 : Resources.ringPNG,
                             height: 22,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                           Expanded(
@@ -260,7 +203,9 @@ class _SingleOptionState extends State<SingleOption> {
                       ),
                       onPressed: () async {
                         setState(() {
-                          widget.answersIds.contains(widget.answerList[index].id)? widget.answersIds.remove(widget.answerList[index].id) :widget.answersIds.add(widget.answerList[index].id);
+                          widget.answersIds.contains(widget.answerList[index].id)
+                              ? widget.answersIds.remove(widget.answerList[index].id)
+                              : (widget.answersIds..clear()).add(widget.answerList[index].id);
                         });
                       }),
                 ),

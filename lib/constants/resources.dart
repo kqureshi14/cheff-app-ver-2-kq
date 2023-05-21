@@ -1,6 +1,8 @@
 abstract class Resources {
   static const exto = 'assets/images/exto.svg';
 
+  static const onBoardingVideo = "assets/video/Clipped.mp4";
+
   static const chefLogo = 'assets/images/chef_logo.svg';
   static const getRightArrow = 'assets/images/icons/arrow_right.svg';
   static const getSignInLeftArrow =
