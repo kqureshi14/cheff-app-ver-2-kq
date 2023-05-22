@@ -34,11 +34,10 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
           body: Center(
             child: InkWell(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const GetStartedScreen()),
-                //   // MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GetStartedScreen()),
+                );
               },
               child: SvgPicture.asset(
                 Resources.chefLogo,
