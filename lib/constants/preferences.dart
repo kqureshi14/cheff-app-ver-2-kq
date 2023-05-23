@@ -10,6 +10,8 @@ abstract class PreferencesKeys {
   static const sCustomerTokenLegacy = 'customer_token_legacy';
   static const sRememberUser = 'remember_user';
 
+  static const isFirstTime = 'first_time';
+
   static const projectName = 'ProjectName';
   static const projectId = 'ProjectId';
   static const masterScheduleId = 'MasterScheduleId';

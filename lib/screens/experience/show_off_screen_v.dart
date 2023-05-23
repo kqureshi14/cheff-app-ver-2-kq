@@ -53,13 +53,13 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                         height: 400,
                         child: Image.asset(
                           'assets/images/icons/food_product_ring.png',
-                          color: Color(0xfff1c452).withOpacity(0.2),
+                          color: const Color(0xfff1c452).withOpacity(0.2),
                         ),
                       ),
                     ),
                     Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Row(
@@ -83,15 +83,15 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                               start: 29, end: 35),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 53,
                               ),
                               uploadVideos(appTheme),
-                              SizedBox(
+                              const SizedBox(
                                 height: 16,
                               ),
                               uploadPictures(appTheme),
-                              SizedBox(
+                              const SizedBox(
                                 height: 28,
                               ),
                               Center(child: keepInMindLink(appTheme)),
@@ -113,7 +113,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       decoration: BoxDecoration(
           color: HexColor.fromHex("#ffffff"),
           borderRadius: BorderRadius.circular(10)),
-      padding: EdgeInsets.only(left: 20, right: 24, top: 20.5),
+      padding: const EdgeInsets.only(left: 20, right: 24, top: 20.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -135,7 +135,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                         .copyWith(
                             fontSize: 12, color: HexColor.fromHex('#8ea659')),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5.5,
                   ),
                   Container(
@@ -146,7 +146,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13,
           ),
           Container(
@@ -166,7 +166,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       decoration: BoxDecoration(
           color: HexColor.fromHex("#ffffff"),
           borderRadius: BorderRadius.circular(10)),
-      padding: EdgeInsets.only(left: 20, right: 24, top: 20.5),
+      padding: const EdgeInsets.only(left: 20, right: 24, top: 20.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -188,7 +188,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                         .copyWith(
                             fontSize: 12, color: HexColor.fromHex('#8ea659')),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5.5,
                   ),
                   Container(
@@ -199,7 +199,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13,
           ),
           Container(
@@ -220,7 +220,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       children: [
         Container(
             width: 24, child: Image.asset("assets/images/icons/info_icon.png")),
-        SizedBox(
+        const SizedBox(
           width: 8,
         ),
         GeneralText(
@@ -256,13 +256,13 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
       barrierLabel: '',
       // title: 'Verification\nCode',
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(8.0),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             GeneralText(
@@ -274,7 +274,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                   fontSize: 25,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 38,
             ),
             Row(
@@ -301,7 +301,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 19,
             ),
             Row(
@@ -328,7 +328,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 19,
             ),
             Row(
@@ -355,7 +355,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 49,
             ),
             GeneralButton.button(
@@ -380,7 +380,7 @@ class _ShowOffTimeScreenState extends State<ShowOffTimeScreen> {
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],

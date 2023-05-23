@@ -140,7 +140,7 @@ class SignUpQuestionireScreen
               height: 20,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 27),
+              margin: const EdgeInsets.symmetric(horizontal: 27),
               //   alignment: Alignment.center,
               //  padding: const EdgeInsets.only(left: 29),
               child: Column(
@@ -268,7 +268,7 @@ class SignUpQuestionireScreen
               return Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xfff1c452), width: 2),
+                    border: Border.all(color: const Color(0xfff1c452), width: 2),
                     color: HexColor.fromHex("#4b4b52"),
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(

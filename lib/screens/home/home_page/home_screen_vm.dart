@@ -65,6 +65,18 @@ class HomeScreenViewModel extends BaseViewModel<home_model.HomeScreenState> {
     );
   }
 
+  bool checkIsFirstTime(){
+    String isFirstUser = _storage.readString(key: PreferencesKeys.isFirstTime);
+    if(isFirstUser == "user_exists"){
+      return false;
+    } else if(isFirstUser == "") {
+      _storage.writeString(key: PreferencesKeys.isFirstTime, data: "user_exists");
+      return true;
+    }else{
+      return true;
+    }
+  }
+
   void logout() async {
     _appService.logout();
   }

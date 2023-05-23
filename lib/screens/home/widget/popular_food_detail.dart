@@ -238,7 +238,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
               width: 61,
               padding: const EdgeInsetsDirectional.all(22),
               decoration: const BoxDecoration(
-                image: const DecorationImage(
+                image: DecorationImage(
                   image: AssetImage('assets/images/icons/black_image_ring.png'),
                 ),
               ),

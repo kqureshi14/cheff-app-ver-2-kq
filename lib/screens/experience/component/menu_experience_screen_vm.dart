@@ -30,6 +30,9 @@ class MenuExperienceScreenViewModel
   final TextController servingController = TextController();
   // MenuExperienceScreenViewModel(MenuExperienceScreenState state) : super(state);
 
+
+  bool isEnable = false;
+
   MenuExperienceScreenViewModel({
     required INavigationService navigation,
     required INetworkService network,
@@ -111,7 +114,7 @@ class MenuExperienceScreenViewModel
     exp_resp.ExperienceResponse experienceResponse =
         (_appService.state.experienceResponse)!;
 
-    developer.log(' Meal Id  ' + '${menuHelper.selectedMealId}');
+    developer.log(' Meal Id  ' '${menuHelper.selectedMealId}');
 
     // Navigator.push(
     //   context,
@@ -150,7 +153,7 @@ class MenuExperienceScreenViewModel
 
     if (response != null) {
       developer
-          .log(' Response of Menu Submited data is  ' + '${response.body}');
+          .log(' Response of Menu Submited data is  ' '${response.body}');
 
       menu_resp.MenuResponse menuResponse =
           menu_resp.menuResponseFromJson(response.body);
@@ -177,7 +180,7 @@ class MenuExperienceScreenViewModel
           context: context, message: 'Descriptions cannot be empty');
       return false;
     }
-    if ((menuHelper.givenPrice ?? 0.0) > 0) {
+    if ((menuHelper.givenPrice) > 0) {
     } else {
       isValidate = false;
       Toaster.infoToast(context: context, message: 'Price cannot be empty');
@@ -208,10 +211,16 @@ class MenuExperienceScreenViewModel
     servingController.clear();
 
     if ((_appService.state.experienceHelper!.priceExperience) != null) {
-      menuHelper.givenPrice =
-          (_appService.state.experienceHelper!.priceExperience)!;
-      priceController.text =
-          (_appService.state.experienceHelper!.priceExperience)!.toString();
+      if (_appService.state.experienceHelper!.priceExperience == 0.00001) {
+        priceController.text = "0.0";
+        menuHelper.givenPrice = 0.0;
+        isEnable = true;
+      } else {
+        menuHelper.givenPrice =
+        (_appService.state.experienceHelper!.priceExperience)!;
+        priceController.text =
+            (_appService.state.experienceHelper!.priceExperience)!.toString();
+      }
     }
 
     if ((_appService.state.experienceHelper!.personExperience) != null) {

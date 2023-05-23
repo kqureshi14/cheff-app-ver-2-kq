@@ -11,14 +11,17 @@ import '../account_settings/user_profile_v.dart';
 import '../booking/component/order_screen_v.dart';
 import '../booking/food_item_bookng.dart';
 import '../earnings/earning_screen_v.dart';
+import '../experience/component/create_experience_screen_v.dart';
 import 'experiences_details/experience_details_screen_v.dart';
 import 'home_page/home_screen_vm.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
-  LoungeHomeScreen({required BookingOverview bookingOverview, Key? key})
+  LoungeHomeScreen({required BookingOverview bookingOverview,required HomeScreenViewModel homeScreenViewModel, Key? key})
       : _bookingOverview = bookingOverview,
+  _homeScreenViewModel  = homeScreenViewModel,
         super(key: key);
   BookingOverview _bookingOverview;
+  HomeScreenViewModel _homeScreenViewModel;
 
   @override
   State<LoungeHomeScreen> createState() => _LoungeHomeScreenState();
@@ -421,8 +424,10 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ExperienceDetailsScreen()),
+                                                                widget._homeScreenViewModel.checkIsFirstTime()? CreateExperienceScreen():ExperienceDetailsScreen()
+                                                        ),
                                                       );
+
                                                       //
                                                     },
                                                     child: Container(
