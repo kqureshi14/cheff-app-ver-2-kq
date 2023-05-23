@@ -35,6 +35,7 @@ class HomeScreenView extends BaseView<HomeScreenViewModel> {
       HomeScreenViewModel viewModel, BookingOverview bookingOverview) {
     return LoungeHomeScreen(
       bookingOverview: bookingOverview,
+      homeScreenViewModel: viewModel,
     );
   }
 }

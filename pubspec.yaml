@@ -56,7 +56,7 @@ dependencies:
   package_info_plus: 1.4.2
   permission_handler: 9.2.0
 #  scan: 1.6.0
-  shared_preferences: 2.0.8
+  shared_preferences: ^2.1.1
   pin_code_fields: ^7.4.0
   flutter_rating_bar: ^4.0.1
   firebase_core: 2.5.0
