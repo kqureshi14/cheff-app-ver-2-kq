@@ -41,8 +41,8 @@ class GeneralDropdown<T> extends StatefulWidget {
         _borderWidth = borderWidth,
         _style = style,
         _initialValue = initialValue,
-      _dropDownHeight = dropDownHeight,
-  _hintWidget = hintWidget,
+        _dropDownHeight = dropDownHeight,
+        _hintWidget = hintWidget,
         super(key: key);
 
   final String _name;
@@ -75,7 +75,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
   @override
   void initState() {
     selectedValue = widget._selectedItem ?? '';
-    widget._initialValue == null? currentChoice = widget._items[0]: (){};
+    widget._initialValue == null ? currentChoice = widget._items[0] : () {};
     super.initState();
   }
 
@@ -101,7 +101,6 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                           }
                         }
                     : null,
-
                 onChanged: (values) {
                   widget._onChange.call(
                     key: widget._name,
@@ -127,7 +126,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                           isExpanded: true,
                           dropdownColor: Colors.grey,
                           style: widget._style,
-                          value:  currentChoice,
+                          value: currentChoice,
                           iconEnabledColor: widget._borderColor,
                           underline: Container(),
                           onChanged: (value) {
@@ -137,6 +136,14 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
                               value: value.toString(),
                             );
                           },
+
+                          // onSaved: (value) {
+                          //   setState(() => currentChoice = value!);
+                          //   widget._onChange.call(
+                          //     key: widget._name,
+                          //     value: value.toString(),
+                          //   );
+                          // },
                           items: widget._items
                               .map((data) => DropdownMenuItem(
                                   value: data,

@@ -23,7 +23,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     Api.devBaseURL,
   ];
 
-
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _brandController = TextController();
@@ -39,12 +38,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
   }) {
     final appTheme = AppTheme.of(context).theme;
     return BlocBuilder<SignUpScreenViewModel, SignUpScreenState>(
-        bloc: viewModel..initialize(),
+        bloc: viewModel..loadCityList(baseUrl: Api.baseURL),
         builder: (_, state) => state.when(
             initialized: (fullName, brandName, mobileNumber, address) =>
                 _initialized(),
             loading: _loading,
-            loaded: () => _displayLoadedData(
+            loaded: (cityList) => _displayLoadedData(
                 state: state,
                 appTheme: appTheme,
                 context: context,
@@ -176,16 +175,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(viewModel.verifyInputForm(
-                name: _nameController.text,
-                brandName: _brandController.text,
-                mobileNumber: _mobileNumberController.text,
-                address: _addressController.text,
-                town: _townController.text,
-                city: _cityController.text
-              )){
+              if (viewModel.verifyInputForm(
+                  name: _nameController.text,
+                  brandName: _brandController.text,
+                  mobileNumber: _mobileNumberController.text,
+                  address: _addressController.text,
+                  town: _townController.text,
+                  city: _cityController.text)) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
             }),
@@ -220,16 +218,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(viewModel.verifyInputForm(
-                name: _nameController.text,
-                brandName: _brandController.text,
-                mobileNumber: _mobileNumberController.text,
-                address: _addressController.text,
+              if (viewModel.verifyInputForm(
+                  name: _nameController.text,
+                  brandName: _brandController.text,
+                  mobileNumber: _mobileNumberController.text,
+                  address: _addressController.text,
                   town: _townController.text,
-                  city: _cityController.text
-              )){
+                  city: _cityController.text)) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
             }),
@@ -264,16 +261,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(viewModel.verifyInputForm(
-                name: _nameController.text,
-                brandName: _brandController.text,
-                mobileNumber: _mobileNumberController.text,
-                address: _addressController.text,
+              if (viewModel.verifyInputForm(
+                  name: _nameController.text,
+                  brandName: _brandController.text,
+                  mobileNumber: _mobileNumberController.text,
+                  address: _addressController.text,
                   town: _townController.text,
-                  city: _cityController.text
-              )){
+                  city: _cityController.text)) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
             }),
@@ -312,16 +308,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             onChanged: (newValue) {
-              if(viewModel.verifyInputForm(
-                name: _nameController.text,
-                brandName: _brandController.text,
-                mobileNumber: _mobileNumberController.text,
-                address: _addressController.text,
+              if (viewModel.verifyInputForm(
+                  name: _nameController.text,
+                  brandName: _brandController.text,
+                  mobileNumber: _mobileNumberController.text,
+                  address: _addressController.text,
                   town: _townController.text,
-                  city: _cityController.text
-              )){
+                  city: _cityController.text)) {
                 viewModel.changeButton(true);
-              }else{
+              } else {
                 viewModel.changeButton(false);
               }
             }),
@@ -349,32 +344,62 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              GeneralTextInput(
-                  height: 80,
-                  textFieldWidth: 145,
-                  controller: _townController,
-                  inputType: InputType.text,
-                  backgroundColor: appTheme.colors.textFieldFilledColor,
-                  inputBorder: appTheme.focusedBorder,
-                  valueStyle: const TextStyle(color: Colors.white),
-                  hint: 'Enter Town',
-                  hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.4), fontSize: 14),
-                  // valueStyle: valueStyle,
-                  onChanged: (newValue) {
-                    if(viewModel.verifyInputForm(
-                      name: _nameController.text,
-                      brandName: _brandController.text,
-                      mobileNumber: _mobileNumberController.text,
-                      address: _addressController.text,
-                        town: _townController.text,
-                        city: _cityController.text
-                    )){
-                      viewModel.changeButton(true);
-                    }else{
-                      viewModel.changeButton(false);
-                    }
-                  }),
+
+              viewModel.townDropDown.isNotEmpty
+                  // ? TownDisplay(
+                  //     appTheme: appTheme,
+                  //     townDropDown: viewModel.townDropDown,
+                  //   )
+                  ? GeneralDropdown(
+                      name: 'Select',
+                      items: viewModel.townDropDown,
+                      // initialValue: 'Select',
+
+                      borderColor: appTheme.colors.textFieldBorderColor,
+                      // selectedItem: dropdownItems.first,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400),
+                      onChange: ({
+                        required String key,
+                        required dynamic value,
+                      }) {
+                        developer.log(' Key is ' + '${key}');
+                        developer.log(' Value is ' + '${value}');
+                        _townController.text = value;
+                        // viewModel.selectedTownId =
+                        //  viewModel.getCityId(value);
+                        //   viewModel.professionID = viewModel.dropdownDetails[value];
+                      },
+                    )
+                  : Container(),
+              // GeneralTextInput(
+              //     height: 80,
+              //     textFieldWidth: 145,
+              //     controller: _townController,
+              //     inputType: InputType.text,
+              //     backgroundColor: appTheme.colors.textFieldFilledColor,
+              //     inputBorder: appTheme.focusedBorder,
+              //     valueStyle: const TextStyle(color: Colors.white),
+              //     hint: 'Enter Town',
+              //     hintStyle: TextStyle(
+              //         color: Colors.white.withOpacity(0.4), fontSize: 14),
+              //     // valueStyle: valueStyle,
+              //     onChanged: (newValue) {
+              //       if (viewModel.verifyInputForm(
+              //           name: _nameController.text,
+              //           brandName: _brandController.text,
+              //           mobileNumber: _mobileNumberController.text,
+              //           address: _addressController.text,
+              //           town: _townController.text,
+              //           city: _cityController.text)) {
+              //         viewModel.changeButton(true);
+              //       } else {
+              //         viewModel.changeButton(false);
+              //       }
+              //     }),
             ],
           ),
         ),
@@ -396,32 +421,54 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               const SizedBox(
                 height: 8,
               ),
-              GeneralTextInput(
-                  height: 80,
-                  textFieldWidth: 145,
-                  controller: _cityController,
-                  inputType: InputType.text,
-                  backgroundColor: appTheme.colors.textFieldFilledColor,
-                  inputBorder: appTheme.focusedBorder,
-                  valueStyle: const TextStyle(color: Colors.white),
-                  hint: 'Enter City',
-                  hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.4), fontSize: 14),
-                  // valueStyle: valueStyle,
-                  onChanged: (newValue) {
-                    if(viewModel.verifyInputForm(
-                      name: _nameController.text,
-                      brandName: _brandController.text,
-                      mobileNumber: _mobileNumberController.text,
-                      address: _addressController.text,
-                        town: _townController.text,
-                        city: _cityController.text
-                    )){
-                      viewModel.changeButton(true);
-                    }else{
-                      viewModel.changeButton(false);
-                    }
-                  }),
+
+              GeneralDropdown(
+                name: 'Select',
+                items: viewModel.cityDropDown,
+                borderColor: appTheme.colors.textFieldBorderColor,
+                // selectedItem: dropdownItems.first,
+                style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
+                onChange: ({
+                  required String key,
+                  required dynamic value,
+                }) {
+                  developer.log(' Key is ' + '${key}');
+                  developer.log(' Value is ' + '${value}');
+                  _cityController.text = value;
+                  viewModel.getCityId(value);
+
+                  //   viewModel.professionID = viewModel.dropdownDetails[value];
+                },
+              ),
+              // GeneralTextInput(
+              //     height: 80,
+              //     textFieldWidth: 145,
+              //     controller: _cityController,
+              //     inputType: InputType.text,
+              //     backgroundColor: appTheme.colors.textFieldFilledColor,
+              //     inputBorder: appTheme.focusedBorder,
+              //     valueStyle: const TextStyle(color: Colors.white),
+              //     hint: 'Enter City',
+              //     hintStyle: TextStyle(
+              //         color: Colors.white.withOpacity(0.4), fontSize: 14),
+              //     // valueStyle: valueStyle,
+              //     onChanged: (newValue) {
+              //       if(viewModel.verifyInputForm(
+              //         name: _nameController.text,
+              //         brandName: _brandController.text,
+              //         mobileNumber: _mobileNumberController.text,
+              //         address: _addressController.text,
+              //           town: _townController.text,
+              //           city: _cityController.text
+              //       )){
+              //         viewModel.changeButton(true);
+              //       }else{
+              //         viewModel.changeButton(false);
+              //       }
+              //     }),
             ],
           ),
         ),
@@ -431,7 +478,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
   Widget displayAlreadySignIn(IAppThemeData appTheme, BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -455,42 +502,44 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ValueListenableBuilder(
             builder: (context, value, _) {
               return InkWell(
-                onTap: value == true? () {
-                  //proceedVerification(context);
-                  developer
-                      .log(' Here Collected data is ' + '${_nameController.text}');
-                  developer.log(
-                      'Mobile Controller  ' + '${_mobileNumberController.text}');
+                onTap: value == true
+                    ? () {
+                        //proceedVerification(context);
+                        developer.log(' Here Collected data is ' +
+                            '${_nameController.text}');
+                        developer.log('Mobile Controller  ' +
+                            '${_mobileNumberController.text}');
 
-                  developer.log(' Brand Controller  ' + '${_brandController.text}');
+                        developer.log(
+                            ' Brand Controller  ' + '${_brandController.text}');
 
-                  developer.log('Address is  ' + _addressController.text);
-                  if (viewModel.verifyInput(
-                    name: _nameController.text,
-                    brandName: _brandController.text,
-                    mobileNumber: _mobileNumberController.text,
-                    address: _addressController.text,
-                    town: _townController.text,
-                    city: _cityController.text,
-                    context: context,
-                    baseUrl: baseURLs[0],
-                  )) {
-                    print(_mobileNumberController.text);
-                    // displayVerificationDisplay(context);
-                    displayVerificationDisplayBackup(context);
-                  }
-                }:null,
+                        developer.log('Address is  ' + _addressController.text);
+                        if (viewModel.verifyInput(
+                          name: _nameController.text,
+                          brandName: _brandController.text,
+                          mobileNumber: _mobileNumberController.text,
+                          address: _addressController.text,
+                          town: _townController.text,
+                          city: _cityController.text,
+                          context: context,
+                          baseUrl: baseURLs[0],
+                        )) {
+                          print(_mobileNumberController.text);
+                          // displayVerificationDisplay(context);
+                          displayVerificationDisplayBackup(context);
+                        }
+                      }
+                    : null,
                 child: ValueListenableBuilder(
                   valueListenable: viewModel.buttonEnabled,
-                  builder: (context, value, _){
-                    return value == true?
-                    SvgPicture.asset(
-                      Resources.getSignInRightArrow,
-                    )
-                        :
-                    SvgPicture.asset(
-                      Resources.getRightArrow,
-                    );
+                  builder: (context, value, _) {
+                    return value == true
+                        ? SvgPicture.asset(
+                            Resources.getSignInRightArrow,
+                          )
+                        : SvgPicture.asset(
+                            Resources.getRightArrow,
+                          );
                   },
                 ),
               );
@@ -507,10 +556,10 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     final appTheme = AppTheme.of(context).theme;
 
     DialogHelper.show(
-      // dcontext: context,
+        // dcontext: context,
         title: 'Verification code',
         isDismissible: true,
-        canDismiss: (){
+        canDismiss: () {
           return true;
         },
         barrierLabel: 'Verification code',
@@ -567,18 +616,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
 
             switch (authException.code) {
               case 'invalid-phone-number':
-              // invalid phone number
+                // invalid phone number
                 return Toaster.infoToast(
                     context: context, message: 'Invalid phone number!');
               case 'invalid-verification-code':
-              // invalid otp entered
+                // invalid otp entered
                 return Toaster.infoToast(
                     context: context, message: 'The entered OTP is invalid!');
-            // handle other error codes
+              // handle other error codes
               default:
                 Toaster.infoToast(
                     context: context, message: 'Something went wrong!');
-            // handle error further if needed
+              // handle error further if needed
             }
           },
           onError: (error, stackTrace) {
@@ -634,8 +683,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
-
-
             child: PinCodeTextField(
               controller: _otpController,
 
@@ -674,16 +721,15 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
               animationDuration: const Duration(milliseconds: 300),
               //errorAnimationController: errorController, // Pass it here
               onChanged: (value) {
-                if(viewModel.verifyInputForm(
-                  name: _nameController.text,
-                  brandName: _brandController.text,
-                  mobileNumber: _mobileNumberController.text,
-                  address: _addressController.text,
+                if (viewModel.verifyInputForm(
+                    name: _nameController.text,
+                    brandName: _brandController.text,
+                    mobileNumber: _mobileNumberController.text,
+                    address: _addressController.text,
                     town: _townController.text,
-                    city: _cityController.text
-                )){
+                    city: _cityController.text)) {
                   viewModel.changeButton(true);
-                }else{
+                } else {
                   viewModel.changeButton(false);
                 }
               },
@@ -729,8 +775,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             styleType: ButtonStyleType.fill,
             width: 170,
             onTap: () {
-
-
               if (viewModel.verifyInput(
                 name: _nameController.text,
                 brandName: _brandController.text,
@@ -767,7 +811,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   context: context, message: 'Verification Code Resent');
             },
             child: GeneralText(
-
               Strings.verificationPopupResendCode,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
@@ -781,7 +824,6 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       ),
     );
   }
-
 
   Widget _getStartedTitle({required IAppThemeData appTheme}) {
     return Center(
@@ -895,19 +937,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 animationDuration: const Duration(milliseconds: 300),
                 //errorAnimationController: errorController, // Pass it here
                 onChanged: (value) {
-                  if(viewModel.verifyInputForm(
+                  if (viewModel.verifyInputForm(
                     name: _nameController.text,
                     brandName: _brandController.text,
                     mobileNumber: _mobileNumberController.text,
                     address: _addressController.text,
-                      town: _townController.text,
-                      city: _cityController.text,
-                  )){
+                    town: _townController.text,
+                    city: _cityController.text,
+                  )) {
                     viewModel.changeButton(true);
-                  }else{
+                  } else {
                     viewModel.changeButton(false);
                   }
-
                 },
                 onSubmitted: (value) {},
                 appContext: context,
@@ -954,6 +995,39 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
       //   selectedItem: viewModel.getSelectedFormat(),
       //   bottomSheetType: BottomSheetType.dateFormat,
       // ),
+    );
+  }
+}
+
+class TownDisplay extends StatelessWidget {
+  const TownDisplay({
+    Key? key,
+    required this.appTheme,
+    required this.townDropDown,
+  }) : super(key: key);
+
+  final IAppThemeData appTheme;
+  final dynamic townDropDown;
+
+  @override
+  Widget build(BuildContext context) {
+    return GeneralDropdown(
+      name: 'Select',
+      items: townDropDown,
+      borderColor: appTheme.colors.textFieldBorderColor,
+      // selectedItem: dropdownItems.first,
+      style: appTheme.typographies.interFontFamily.headline6.copyWith(
+          color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
+      onChange: ({
+        required String key,
+        required dynamic value,
+      }) {
+        developer.log(' Key is ' + '${key}');
+        developer.log(' Value is ' + '${value}');
+
+        //  viewModel.getCityId(value);
+        //   viewModel.professionID = viewModel.dropdownDetails[value];
+      },
     );
   }
 }

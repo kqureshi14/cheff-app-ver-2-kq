@@ -6,6 +6,11 @@ import '../../helpers/data_request.dart' as signuprequest;
 
 import 'dart:developer' as developer;
 
+import '../../models/signup/city_response.dart';
+import 'package:chef/helpers/data_request.dart' as data_request;
+
+import '../../models/signup/town_response.dart';
+
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   SignUpScreenViewModel({
@@ -33,6 +38,19 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
+  late final cityDropDown = <String>[];
+  late final townDropDown = <String>[];
+
+  final cityInfo = {};
+  final townInfo = {};
+  late CityResponse cityResponse;
+  late TownResponse townResponse;
+
+  int selectedCityId = 0;
+  int selectedTownId = 0;
+
+  // List<ProfessionData> _cityData = [];
+
   // Future<void> loadAppVersion() async {
   //   final packageInfo = await PackageInfo.fromPlatform();
   //   emit(state.copyWith(appVersion: packageInfo.version));
@@ -50,13 +68,27 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   //     );
 
   void initialize() {
-    emit(const Loaded());
+    emit(Loaded(cityResponse));
+  }
+
+  void getCityId(String cityName) {
+    for (var i = 0; i < cityResponse.t.length; i++) {
+      if (cityName == cityResponse.t[i].name && cityResponse.t[i].id == 1) {
+        developer.log(' City Id is ' + '${cityResponse.t[i].id}');
+        // townDropDown.clear();
+        // townDropDown.add('Select');
+        //  townDropDown.clear();
+        //townDropDown.clear();
+        selectedCityId = cityResponse.t[i].id;
+        loadTownList(cityId: cityResponse.t[i].id);
+      }
+    }
   }
 
   ValueNotifier<bool> buttonEnabled = ValueNotifier(false);
 
   void changeButton(bool? value) {
-    buttonEnabled.value =  value??!buttonEnabled.value;
+    buttonEnabled.value = value ?? !buttonEnabled.value;
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;
@@ -95,9 +127,9 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       name.trim().isNotEmpty &&
       brandName.trim().isNotEmpty &&
       mobileNumber.trim().isNotEmpty &&
-      address.trim().isNotEmpty&&
-  town.trim().isNotEmpty &&
-  city.trim().isNotEmpty ;
+      address.trim().isNotEmpty &&
+      town.trim().isNotEmpty &&
+      city.trim().isNotEmpty;
 
   bool verifyInput({
     required String name,
@@ -112,7 +144,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     final isInputValid = _validateInput(
       name: name,
       mobileNumber: mobileNumber,
-  address: address,
+      address: address,
       brandName: brandName,
       city: city,
       town: town,
@@ -126,7 +158,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     }
     return true;
   }
-
 
   bool verifyInputForm({
     required String name,
@@ -150,6 +181,92 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     return true;
   }
 
+  Future<void> loadCityList({
+    required String baseUrl,
+  }) async {
+    developer.log(' Base Url is ' + '${baseUrl}');
+    final url = InfininHelpers.getRestApiURL(baseUrl + Api.cityList);
+
+    // emit(Loaded(_professionData));
+
+    //if (_professionData.isEmpty) {
+    //  final cityDataRequest = data_request.T();
+
+    // ProfessionRequest(
+    //   t: prorequest.T(),
+    // ).toJson();
+
+    data_request.T t = data_request.T(status: 'ACTIVE');
+
+    final dataRequest = data_request.DataRequest(
+      t: t,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: dataRequest,
+    );
+    cityResponse = cityResponseFromJson(response.body);
+    for (var i = 0; i < cityResponse.t.length; i++) {
+      developer.log(' City data is ' + cityResponse.t[i].name);
+      cityDropDown.add(cityResponse.t[i].name);
+      cityInfo[cityResponse.t[i].name] = cityResponse.t[i].id;
+      if (i == 0) {
+        getCityId(cityResponse.t[i].name);
+
+        //  townDropDown.add('Select');
+      }
+    }
+
+    //cityDropDown = currentProfessionData.t;
+
+    emit(Loaded(cityResponse));
+    // }
+  }
+
+  Future<void> loadTownList({cityId}) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.townList);
+
+    // emit(Loaded(_professionData));
+
+    //if (_professionData.isEmpty) {
+    //  final cityDataRequest = data_request.T();
+
+    // ProfessionRequest(
+    //   t: prorequest.T(),
+    // ).toJson();
+
+    data_request.T t = data_request.T(cityId: cityId);
+    // data_request.T t = data_request.T();
+    final dataRequest = data_request.DataRequest(
+      t: t,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: dataRequest,
+    );
+    townResponse = townResponseFromJson(response.body);
+    for (var i = 0; i < townResponse.t.length; i++) {
+      developer.log(' Town Name is ' + townResponse.t[i].name);
+
+      developer.log(' City Id is  ' + '${townResponse.t[i].cityId}');
+      if (!townDropDown.contains(townResponse.t[i].name)) {
+        if (i == 0) {
+          selectedTownId = townResponse.t[i].id;
+        }
+        townInfo[townResponse.t[i].name] = townResponse.t[i].id;
+        townDropDown.add(townResponse.t[i].name);
+
+        //menuItems
+      }
+    }
+
+    //cityDropDown = currentProfessionData.t;
+    emit(const Loading());
+    emit(Loaded(cityResponse));
+    // }
+  }
 
   Future<void> _cacheData({
     required BuildContext context,
@@ -200,13 +317,16 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     if (isInputValid) {
       emit(const Loading());
       try {
-        final url =
-            InfininHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
+        final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.chefSignUp);
         signuprequest.T t = signuprequest.T(
           name: name,
           brandName: brandName,
           mobileNo: mobileNumber,
           address: address,
+          townName: town,
+          cityName: city,
+          cityId: cityInfo[city],
+          townId: townInfo[town],
         );
         final signUpCredentials = signuprequest.DataRequest(
           t: t,
@@ -229,7 +349,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
-          emit(const Loaded());
+          // emit(const Loaded());
 
           developer.log(' Sign up Response is ' + signupResponse.message);
           Navigator.push(

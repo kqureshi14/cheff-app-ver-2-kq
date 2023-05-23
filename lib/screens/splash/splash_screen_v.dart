@@ -26,9 +26,10 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
     final appTheme = AppTheme.of(context).theme;
     viewModel.fetchLoginDetails(context);
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
+      // bloc: viewModel..splashNavigation(context),
       bloc: viewModel,
       builder: (_, state) {
-        viewModel.splashNavigation(context);
+        // viewModel.splashNavigation(context);
         return Scaffold(
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(
@@ -36,7 +37,8 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const GetStartedScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const GetStartedScreen()),
                 );
               },
               child: SvgPicture.asset(

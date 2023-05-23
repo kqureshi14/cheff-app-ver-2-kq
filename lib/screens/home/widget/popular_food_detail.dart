@@ -149,12 +149,13 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 32.2,
                         ),
                         GeneralRichText(
                           // title: Strings.popularFoodDetailTitle,
                           title: widget._expResponse.t[index].title,
+
                           titleStyle:
                               appTheme.typographies.interFontFamily.label11,
                         ),

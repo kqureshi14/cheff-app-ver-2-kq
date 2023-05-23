@@ -22,7 +22,7 @@ mixin _$SignUpScreenState {
             String mobileNumber, String address)
         initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(CityResponse? cityData) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -31,7 +31,7 @@ mixin _$SignUpScreenState {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,7 +40,7 @@ mixin _$SignUpScreenState {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -188,7 +188,7 @@ class _$Initialized implements Initialized {
             String mobileNumber, String address)
         initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(CityResponse? cityData) loaded,
   }) {
     return initialized(fullName, brandName, mobileNumber, address);
   }
@@ -200,7 +200,7 @@ class _$Initialized implements Initialized {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
   }) {
     return initialized?.call(fullName, brandName, mobileNumber, address);
   }
@@ -212,7 +212,7 @@ class _$Initialized implements Initialized {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -315,7 +315,7 @@ class _$Loading implements Loading {
             String mobileNumber, String address)
         initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(CityResponse? cityData) loaded,
   }) {
     return loading();
   }
@@ -327,7 +327,7 @@ class _$Loading implements Loading {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
   }) {
     return loading?.call();
   }
@@ -339,7 +339,7 @@ class _$Loading implements Loading {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -391,6 +391,7 @@ abstract class Loading implements SignUpScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
+  $Res call({CityResponse? cityData});
 }
 
 /// @nodoc
@@ -401,26 +402,49 @@ class __$$LoadedCopyWithImpl<$Res> extends _$SignUpScreenStateCopyWithImpl<$Res>
 
   @override
   _$Loaded get _value => super._value as _$Loaded;
+
+  @override
+  $Res call({
+    Object? cityData = freezed,
+  }) {
+    return _then(_$Loaded(
+      cityData == freezed
+          ? _value.cityData
+          : cityData // ignore: cast_nullable_to_non_nullable
+              as CityResponse?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded();
+  const _$Loaded(this.cityData);
+
+  @override
+  final CityResponse? cityData;
 
   @override
   String toString() {
-    return 'SignUpScreenState.loaded()';
+    return 'SignUpScreenState.loaded(cityData: $cityData)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Loaded);
+        (other.runtimeType == runtimeType &&
+            other is _$Loaded &&
+            const DeepCollectionEquality().equals(other.cityData, cityData));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(cityData));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -429,9 +453,9 @@ class _$Loaded implements Loaded {
             String mobileNumber, String address)
         initialized,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(CityResponse? cityData) loaded,
   }) {
-    return loaded();
+    return loaded(cityData);
   }
 
   @override
@@ -441,9 +465,9 @@ class _$Loaded implements Loaded {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
   }) {
-    return loaded?.call();
+    return loaded?.call(cityData);
   }
 
   @override
@@ -453,11 +477,11 @@ class _$Loaded implements Loaded {
             String address)?
         initialized,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(CityResponse? cityData)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(cityData);
     }
     return orElse();
   }
@@ -498,5 +522,10 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements SignUpScreenState {
-  const factory Loaded() = _$Loaded;
+  const factory Loaded(final CityResponse? cityData) = _$Loaded;
+
+  CityResponse? get cityData;
+  @JsonKey(ignore: true)
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

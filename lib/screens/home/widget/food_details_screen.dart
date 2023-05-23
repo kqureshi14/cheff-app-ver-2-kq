@@ -107,7 +107,10 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     // if (widget._foodMenuModel.t.isNotEmpty) {
     //   _price = widget._foodMenuModel.t[0].price.toString();
     // }
+    /// if(widget._experienceData.priceTypeId==1){
     _price = widget._experienceData.price.toString();
+    //   }
+
     // menuListItems.addAll([
     //   CustomModel(name: "Sindhi Biryani"),
     //   CustomModel(name: "Buritto"),
