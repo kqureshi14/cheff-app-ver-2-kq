@@ -8,6 +8,7 @@ import '../../../models/experience/experience_request.dart'
 import '../../../models/experience/experience_response.dart' as expresp;
 import '../../../models/preference.dart' as preference;
 import '../../../models/wow_factor/wow_factor_response.dart' as wowfactor;
+
 // import '../../../models/wow_factor/wow_factor_response.dart';
 import '../../../setup.dart';
 import 'menu_experience_screen_v.dart';
@@ -49,32 +50,31 @@ class CreateExperienceScreenViewModel
     final _appService = locateService<ApplicationService>();
     developer.log(' Ready to save');
     developer
-        .log(' Chef Id User Id is  ' + '${_appService.state.userInfo!.userId}');
+        .log(' Chef Id User Id is  ' '${_appService.state.userInfo!.userId}');
 
-    developer.log(' Chef Name is   ' + '${_appService.state.userInfo!.t.name}');
-
-    developer.log(' Chef Brand Name is   ' +
-        '${_appService.state.userInfo!.t.brandName}');
+    developer.log(' Chef Name is   ' + _appService.state.userInfo!.t.name);
 
     developer.log(
-        ' Chef Address is   ' + '${_appService.state.userInfo!.t.address}');
+        ' Chef Brand Name is   ' + _appService.state.userInfo!.t.brandName);
 
     developer
-        .log(' Chef Id In T is   ' + '${_appService.state.userInfo!.t.id}');
+        .log(' Chef Address is   ' + _appService.state.userInfo!.t.address);
+
+    developer.log(' Chef Id In T is   ' '${_appService.state.userInfo!.t.id}');
     ExperienceHelper experienceHelper = (_appService.state.experienceHelper)!;
 
-    developer.log(
-        ' priceExperience Details ' + '${experienceHelper.priceExperience}');
+    developer
+        .log(' priceExperience Details ' '${experienceHelper.priceExperience}');
 
     developer
-        .log(' numberOfPerson Details ' + '${experienceHelper.numberOfPerson}');
+        .log(' numberOfPerson Details ' '${experienceHelper.numberOfPerson}');
 
-    developer.log(' subHostName Details ' + '${experienceHelper.subHostName}');
+    developer.log(' subHostName Details ' '${experienceHelper.subHostName}');
 
-    developer.log(' selected WowFactors Number  Details ' +
+    developer.log(' selected WowFactors Number  Details '
         '${experienceHelper.selectedWowFactors.values}');
 
-    developer.log(' selected PerferencesFactors Number  Details ' +
+    developer.log(' selected PreferencesFactors Number  Details '
         '${experienceHelper.selectedPerferencesFactors.values}');
 
     // Navigator.push(
@@ -85,8 +85,7 @@ class CreateExperienceScreenViewModel
     if (!validateData(context, experienceHelper)) {
       return;
     }
-    final url =
-        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -99,7 +98,10 @@ class CreateExperienceScreenViewModel
       chefName: _appService.state.userInfo!.t.name,
       locationId: 1,
       price: (experienceHelper.priceExperience ?? 0.0).toInt(),
-      priceTypeId: 1,
+      priceTypeId:
+          (experienceHelper.priceExperience ?? 0.0).toString() == "0.00001"
+              ? 2
+              : 1,
       subHostMobileNo: experienceHelper.subHostMobileNumber ?? '',
       subHostName: experienceHelper.subHostName ?? '',
       wowFactorId: 1,
@@ -131,7 +133,7 @@ class CreateExperienceScreenViewModel
     // );
 
     if (response != null) {
-      developer.log(' Response of Signup body is ' + '${response.body}');
+      developer.log(' Response of Signup body is ' '${response.body}');
 
       expresp.ExperienceResponse experienceResponse =
           expresp.experienceResponseFromJson(response.body);
@@ -149,7 +151,7 @@ class CreateExperienceScreenViewModel
       Toaster.infoToast(
           context: context,
           message: 'Something is wrong please content vendor');
-      developer.log(' Response of Create Experience is ' + '$response');
+      developer.log(' Response of Create Experience is ' '$response');
     }
   }
 
@@ -174,9 +176,9 @@ class CreateExperienceScreenViewModel
       //  data = data + value.toString();
     });
 
-    developer.log('Data ready to send is ' + '${alignData.length}');
+    developer.log('Data ready to send is ' '${alignData.length}');
     for (int i = 0; i < alignData.length; i++) {
-      developer.log(' Wow factor is ' + '${alignData[i]}');
+      developer.log(' Wow factor is ' '${alignData[i]}');
     }
 
     return alignData;
@@ -205,9 +207,9 @@ class CreateExperienceScreenViewModel
     });
 
     developer
-        .log('Data ready to ExperiencePreference is ' + '${alignData.length}');
+        .log('Data ready to ExperiencePreference is ' '${alignData.length}');
     for (int i = 0; i < alignData.length; i++) {
-      developer.log(' ExperiencePreference factor is ' + '${alignData[i]}');
+      developer.log(' ExperiencePreference factor is ' '${alignData[i]}');
     }
 
     return alignData;
@@ -248,8 +250,7 @@ class CreateExperienceScreenViewModel
   void loadPerferences() async {
     //http://18.202.117.137:8080/feyst-service/wow-factor/list
 
-    final url =
-        InfininHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
 
     // T t = loginrequest.T(
     //   mobileNo: mobileNumber,
@@ -291,7 +292,7 @@ class CreateExperienceScreenViewModel
           context: context, message: 'Descriptions cannot be empty');
       return false;
     }
-    if ((experienceHelper.priceExperience ?? 0.0) > 0) {
+    if ((experienceHelper.priceExperience ?? 0.0) >= 0.00001) {
     } else {
       isValidate = false;
       Toaster.infoToast(context: context, message: 'Price cannot be empty');

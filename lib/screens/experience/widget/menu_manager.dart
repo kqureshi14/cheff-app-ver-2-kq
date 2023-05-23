@@ -50,13 +50,18 @@ class _MenuManagerState extends State<MenuManager> {
     loadItems();
     _appService.updateMenuHelper(menuHelper);
 
-    developer.log(' Experience pRice in menu section is ' +
-        '${_appService.state.experienceHelper!.priceExperience}');
+    developer.log(' Experience price in menu section is ' '${_appService.state.experienceHelper!.priceExperience}');
     if ((_appService.state.experienceHelper!.priceExperience) != null) {
-      menuHelper.givenPrice =
-          (_appService.state.experienceHelper!.priceExperience)!;
-      widget._viewModel.priceController.text =
-          (_appService.state.experienceHelper!.priceExperience)!.toString();
+      if(_appService.state.experienceHelper!.priceExperience == 0.00001){
+        widget._viewModel.priceController.text = "0.0";
+        menuHelper.givenPrice = 0.0;
+        widget._viewModel.isEnable = true;
+      }else{
+        menuHelper.givenPrice =
+        (_appService.state.experienceHelper!.priceExperience)!;
+        widget._viewModel.priceController.text =
+            (_appService.state.experienceHelper!.priceExperience)!.toString();
+      }
     }
 
     if ((_appService.state.experienceHelper!.personExperience) != null) {
@@ -209,8 +214,8 @@ class _MenuManagerState extends State<MenuManager> {
                               required String key,
                               required dynamic value,
                             }) {
-                              developer.log(' Dish Map key is ' + '${key}');
-                              developer.log(' Dish Map value is ' + '${value}');
+                              developer.log(' Dish Map key is ' '$key');
+                              developer.log(' Dish Map value is ' '$value');
                               menuHelper.selectedDishId = dishMap[value];
                               menuHelper.selectedBaseDishName = value;
                             },
@@ -285,7 +290,7 @@ class _MenuManagerState extends State<MenuManager> {
 
                       menuHelper.givenDescription = newValue.trim();
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Row(
@@ -311,7 +316,7 @@ class _MenuManagerState extends State<MenuManager> {
                               height: 51,
                               controller: widget._viewModel.priceController,
                               inputType: InputType.digit,
-                              isEnable: false,
+                              isEnable: widget._viewModel.isEnable,
                               backgroundColor:
                                   appTheme.colors.textFieldFilledColor,
                               inputBorder: appTheme.focusedBorder,
@@ -394,10 +399,10 @@ class _MenuManagerState extends State<MenuManager> {
                 ),
                 Container(
                   height: 51,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xfff1c452),
+                      color: const Color(0xfff1c452),
                       width: 2.5,
                     ),
                     borderRadius: BorderRadius.circular(

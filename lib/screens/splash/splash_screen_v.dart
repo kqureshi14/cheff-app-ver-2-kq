@@ -28,7 +28,7 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
       bloc: viewModel,
       builder: (_, state) {
-        viewModel.splashNavigation(context);
+        // viewModel.splashNavigation(context);
         return Scaffold(
           backgroundColor: appTheme.colors.primaryBackground,
           body: Center(

@@ -216,9 +216,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               } else {
                                 changePriceOption(" ");
                               }
-
+                              experienceHelper.priceExperience = double.parse('0.00001');
                               developer.log(
                                   ' Price selected value here  ' '$price');
+
+
                             },
                             child: Container(
                               child:
@@ -265,7 +267,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                 changePriceOption(
                                     Strings.createExperienceLabelTitle);
                               }
-                              developer.log(' Price selected is ' '${price}');
+                              developer.log(' Price selected is ' '$price');
+                              experienceHelper.priceExperience = double.parse('0.0');
                             },
                             child: Container(
                               child: price == Strings.createExperienceLabelTitle
