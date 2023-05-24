@@ -136,7 +136,7 @@ class _FoodieProfileRequiredPendingState
                     children: [
                       Container(
                         height: 209,
-                        padding: EdgeInsetsDirectional.only(start: 29),
+                        padding: const EdgeInsetsDirectional.only(start: 29),
                         decoration: BoxDecoration(
                           color: HexColor.fromHex("#4b4b52"),
                           borderRadius: const BorderRadius.only(
@@ -146,8 +146,8 @@ class _FoodieProfileRequiredPendingState
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 30),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 30),
                               child: GeneralNewAppBar(
                                 title: Strings.foodieProfileHeader,
                                 titleColor: Colors.white,
@@ -158,7 +158,7 @@ class _FoodieProfileRequiredPendingState
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 90,
                                     ),
                                     Container(
@@ -173,7 +173,7 @@ class _FoodieProfileRequiredPendingState
                                       child: Image.asset(
                                           "assets/images/icons/foodie_profile.png"),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 4,
                                     ),
                                     GeneralText(
@@ -185,7 +185,7 @@ class _FoodieProfileRequiredPendingState
                                         color: HexColor.fromHex('#f1c452'),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 4,
                                     ),
                                     Row(
@@ -215,7 +215,7 @@ class _FoodieProfileRequiredPendingState
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10.9,
                                     ),
                                   ]),
@@ -225,7 +225,7 @@ class _FoodieProfileRequiredPendingState
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 15, vertical: 4),
                                   decoration: BoxDecoration(
                                       color: HexColor.fromHex("#b0c18b"),
@@ -251,7 +251,7 @@ class _FoodieProfileRequiredPendingState
                         height: 33.9,
                       ),
                       Container(
-                        padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+                        padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -284,7 +284,7 @@ class _FoodieProfileRequiredPendingState
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex("#4b4b52"),
                                   borderRadius: BorderRadius.circular(15)),
-                              padding: EdgeInsetsDirectional.only(
+                              padding: const EdgeInsetsDirectional.only(
                                   start: 22.5, top: 30, bottom: 30),
                               child: GeneralText(
                                 // Strings.foodieProfileExperienceValue,
@@ -340,7 +340,7 @@ class _FoodieProfileRequiredPendingState
                         height: 47.9,
                       ),
                       productPriceInformation(appTheme),
-                      SizedBox(
+                      const SizedBox(
                         height: 189,
                       ),
                     ],
@@ -355,7 +355,7 @@ class _FoodieProfileRequiredPendingState
   Widget wowFactors(IAppThemeData appTheme) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.only(
+      padding: const EdgeInsetsDirectional.only(
           top: 16.9, bottom: 16.9, start: 38, end: 19.5),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
@@ -615,7 +615,7 @@ class _FoodieProfileRequiredPendingState
   Widget wowFactorsBackup(IAppThemeData appTheme) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsetsDirectional.only(
+      padding: const EdgeInsetsDirectional.only(
           top: 16.9, bottom: 16.9, start: 38, end: 19.5),
       decoration: BoxDecoration(
           color: HexColor.fromHex("#4b4b52"),
@@ -972,10 +972,10 @@ class _FoodieProfileRequiredPendingState
 
   Widget foodProductDetails(IAppThemeData appTheme) {
     return Padding(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 22, bottom: 29, start: 10, end: 10),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#4b4b52"),
@@ -983,7 +983,7 @@ class _FoodieProfileRequiredPendingState
           child: Column(
             children: [
               Container(
-                padding: EdgeInsetsDirectional.only(
+                padding: const EdgeInsetsDirectional.only(
                     top: 17, bottom: 17, start: 26, end: 48),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
@@ -1059,11 +1059,11 @@ class _FoodieProfileRequiredPendingState
                       ),
                     ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productRelatedNotes(appTheme),
-              SizedBox(
+              const SizedBox(
                 height: 29,
               ),
               productMenuDetails(appTheme),
@@ -1083,12 +1083,12 @@ class _FoodieProfileRequiredPendingState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         Container(
           width: double.infinity,
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
               top: 15, bottom: 15, start: 14, end: 14),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#212129"),
@@ -1119,7 +1119,7 @@ class _FoodieProfileRequiredPendingState
             color: HexColor.fromHex('#f1c452'),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 7,
         ),
         Wrap(
@@ -1130,7 +1130,7 @@ class _FoodieProfileRequiredPendingState
                 // height: 67,
                 padding: const EdgeInsetsDirectional.only(
                     top: 10, bottom: 10, start: 14, end: 14),
-                margin: EdgeInsets.only(right: 5, bottom: 7),
+                margin: const EdgeInsets.only(right: 5, bottom: 7),
                 decoration: BoxDecoration(
                     color: HexColor.fromHex("#212129"),
                     borderRadius: BorderRadius.circular(11)),
@@ -1161,7 +1161,7 @@ class _FoodieProfileRequiredPendingState
                             : Container(),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     GeneralText(
@@ -1245,7 +1245,7 @@ class _FoodieProfileRequiredPendingState
 
   Widget foodieInfo(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -1267,12 +1267,12 @@ class _FoodieProfileRequiredPendingState
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 19.1, bottom: 26.6, start: 16.5, end: 74.5),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -1288,7 +1288,7 @@ class _FoodieProfileRequiredPendingState
                           height: 18.8,
                           child: Image.asset(
                               "assets/images/icons/foodie_icon.png")),
-                      SizedBox(
+                      const SizedBox(
                         width: 13.5,
                       ),
                       Column(
@@ -1328,7 +1328,7 @@ class _FoodieProfileRequiredPendingState
                           height: 20,
                           child: Image.asset(
                               "assets/images/icons/group_icon.png")),
-                      SizedBox(
+                      const SizedBox(
                         width: 13.5,
                       ),
                       Column(
@@ -1369,7 +1369,7 @@ class _FoodieProfileRequiredPendingState
 
   Widget productPriceInformation(IAppThemeData appTheme) {
     return Container(
-      padding: EdgeInsetsDirectional.only(start: 25, end: 25),
+      padding: const EdgeInsetsDirectional.only(start: 25, end: 25),
       child: Column(
         children: [
           Row(
@@ -1391,12 +1391,12 @@ class _FoodieProfileRequiredPendingState
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13.1,
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsetsDirectional.only(
+            padding: const EdgeInsetsDirectional.only(
                 top: 22, bottom: 22, start: 23, end: 23),
             decoration: BoxDecoration(
                 color: HexColor.fromHex("#4b4b52"),
@@ -1424,7 +1424,7 @@ class _FoodieProfileRequiredPendingState
                         ),
                       ),
                     ]),
-                SizedBox(
+                const SizedBox(
                   height: 18.1,
                 ),
                 Container(
@@ -1432,7 +1432,7 @@ class _FoodieProfileRequiredPendingState
                   width: double.infinity,
                   height: 1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -1472,7 +1472,7 @@ class _FoodieProfileRequiredPendingState
                             color: HexColor.fromHex('#8ea659'),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Container(
@@ -1484,7 +1484,7 @@ class _FoodieProfileRequiredPendingState
                             shape: BoxShape.circle,
                             color: HexColor.fromHex('#8ea659'),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Icon(
                               Icons.check,
                               size: 10,
@@ -1598,14 +1598,14 @@ class _FoodieProfileRequiredPendingState
       body: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
-          padding: EdgeInsetsDirectional.only(
+          padding: const EdgeInsetsDirectional.only(
             start: 25,
             end: 28,
             top: 41,
           ),
           decoration: BoxDecoration(
               color: HexColor.fromHex("#212129"),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               )),
@@ -1619,7 +1619,7 @@ class _FoodieProfileRequiredPendingState
                     fontSize: 25,
                     fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 17,
               ),
               Align(
@@ -1749,7 +1749,7 @@ class _FoodieProfileRequiredPendingState
                   ),
                 ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 42,
               ),
               GeneralButton.button(
@@ -1761,7 +1761,7 @@ class _FoodieProfileRequiredPendingState
                   // Navigator.pop(context);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
             ],
@@ -1782,18 +1782,18 @@ class _FoodieProfileRequiredPendingState
       barrierLabel: '',
       // title: 'Verification\nCode',
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(8.0),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Image.asset(Resources.reviewCheckPNG,height: 63,),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             GeneralText(
@@ -1801,11 +1801,11 @@ class _FoodieProfileRequiredPendingState
               maxLines: 2,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                  color: Color(0xfff1c452),
+                  color: const Color(0xfff1c452),
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 29,
             ),
             GeneralText(
@@ -1818,7 +1818,7 @@ class _FoodieProfileRequiredPendingState
                   fontWeight: FontWeight.w500),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 33,
             ),
 
@@ -1836,7 +1836,7 @@ class _FoodieProfileRequiredPendingState
                     fontSize: 14),
                 // valueStyle: valueStyle,
                 onChanged: (newValue) {}),
-            SizedBox(
+            const SizedBox(
               height: 48,
             ),
 
@@ -1863,7 +1863,7 @@ class _FoodieProfileRequiredPendingState
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],
@@ -1888,18 +1888,18 @@ class _FoodieProfileRequiredPendingState
       barrierLabel: '',
       // title: 'Verification\nCode',
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(8.0),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Image.asset(Resources.reviewCheckPNG,height: 63,),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             GeneralText(
@@ -1907,11 +1907,11 @@ class _FoodieProfileRequiredPendingState
               maxLines: 2,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                  color: Color(0xff8ea659),
+                  color: const Color(0xff8ea659),
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 29,
             ),
             GeneralText(
@@ -1924,7 +1924,7 @@ class _FoodieProfileRequiredPendingState
                   fontWeight: FontWeight.w500),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 29,
             ),
             GeneralButton.button(
@@ -1939,7 +1939,7 @@ class _FoodieProfileRequiredPendingState
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],
@@ -1965,20 +1965,20 @@ class _FoodieProfileRequiredPendingState
       barrierLabel: '',
       // title: 'Verification\nCode',
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         padding: const EdgeInsets.all(8.0),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Image.asset(
               Resources.reviewCheckPNG,
               height: 63,
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             GeneralText(
@@ -1986,11 +1986,11 @@ class _FoodieProfileRequiredPendingState
               maxLines: 2,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline4.copyWith(
-                  color: Color(0xff8ea659),
+                  color: const Color(0xff8ea659),
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 29,
             ),
             GeneralText(
@@ -2002,7 +2002,7 @@ class _FoodieProfileRequiredPendingState
                   fontSize: 15,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 29,
             ),
             GeneralButton.button(
@@ -2017,7 +2017,7 @@ class _FoodieProfileRequiredPendingState
                 //    viewModel.goToForgotPasswordScreen();
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
           ],
