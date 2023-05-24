@@ -47,7 +47,8 @@ dependencies:
   google_fonts: 2.3.2
   http: 0.13.4
   image_picker: ^0.8.6
-  injectable: 1.5.3
+  injectable: ^1.5.3
+#  injectable:
   intl: 0.17.0
   json_serializable: 6.2.0
   move_to_background: 1.0.2
@@ -76,7 +77,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: 2.1.0+1
-  injectable_generator: 1.5.4
+ # injectable_generator: 1.5.4
+  injectable_generator:
   json_annotation: 4.5.0
   mockito: 5.2.0
 
