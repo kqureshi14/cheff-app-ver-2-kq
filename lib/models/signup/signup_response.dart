@@ -213,9 +213,9 @@ class SignupResponse {
   factory SignupResponse.fromJson(Map<String, dynamic> json) => SignupResponse(
         t: T.fromJson(json["t"]),
         userId: json["userId"],
-        message: json["message"],
-        error: json["error"],
-        code: json["code"],
+        message: json["message"] ?? '',
+        error: json["error"] ?? '',
+        code: json["code"] ?? '',
       );
 
   factory SignupResponse.empty() {
