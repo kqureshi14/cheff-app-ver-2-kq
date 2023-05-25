@@ -24,7 +24,7 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
     final _logoWidth = _screenSize.width * .3;
     final _logoHeight = _screenSize.height * .1;
     final appTheme = AppTheme.of(context).theme;
-    viewModel.fetchLoginDetails(context);
+    viewModel.splashNavigation(context);
     return BlocBuilder<SplashScreenViewModel, SplashScreenState>(
       // bloc: viewModel..splashNavigation(context),
       bloc: viewModel,
@@ -35,11 +35,11 @@ class SplashScreen extends BaseView<SplashScreenViewModel> {
           body: Center(
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const GetStartedScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => const GetStartedScreen()),
+                // );
               },
               child: SvgPicture.asset(
                 Resources.chefLogo,

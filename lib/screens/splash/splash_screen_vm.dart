@@ -44,12 +44,13 @@ class SplashScreenViewModel extends BaseViewModel<SplashScreenState> {
     }
   }
 
-  void splashNavigation(BuildContext context ){
-    Future.delayed(const Duration(seconds: 3),(){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const GetStartedScreen()),
-      );
+  void splashNavigation(BuildContext context) {
+    Future.delayed(const Duration(seconds: 3), () {
+      _navigationService.replace(route: const GetStartedRoute());
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const GetStartedScreen()),
+      // );
     });
   }
 
