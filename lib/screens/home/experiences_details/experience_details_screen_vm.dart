@@ -89,8 +89,7 @@ class ExperienceDetailsScreenViewModel
     if (!validateData(context, experienceHelper)) {
       return;
     }
-    final url =
-        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -171,7 +170,10 @@ class ExperienceDetailsScreenViewModel
     try {
       final url =
           InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceList);
-      data_request.T t = data_request.T();
+      // _appService.state.userInfo.t.
+      //  developer.log(' Chef id is ' + '${_appService.state.userInfo!.t.id}');
+      data_request.T t =
+          data_request.T(chefId: _appService.state.userInfo!.t.id);
 
       final dataRequest = data_request.DataRequest(
         t: t,
@@ -404,5 +406,14 @@ class ExperienceDetailsScreenViewModel
     }
 
     return isValidate;
+  }
+
+  String getValidUrlForImages(String imagePath) {
+    String baseUrl = Api.baseURL;
+    baseUrl = baseUrl
+        .replaceAll("feyst-service", "feyst-media")
+        .replaceAll(":8080", '');
+    baseUrl = baseUrl + imagePath;
+    return baseUrl;
   }
 }

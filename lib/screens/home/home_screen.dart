@@ -16,9 +16,12 @@ import 'experiences_details/experience_details_screen_v.dart';
 import 'home_page/home_screen_vm.dart';
 
 class LoungeHomeScreen extends StatefulWidget {
-  LoungeHomeScreen({required BookingOverview bookingOverview,required HomeScreenViewModel homeScreenViewModel, Key? key})
+  LoungeHomeScreen(
+      {required BookingOverview bookingOverview,
+      required HomeScreenViewModel homeScreenViewModel,
+      Key? key})
       : _bookingOverview = bookingOverview,
-  _homeScreenViewModel  = homeScreenViewModel,
+        _homeScreenViewModel = homeScreenViewModel,
         super(key: key);
   BookingOverview _bookingOverview;
   HomeScreenViewModel _homeScreenViewModel;
@@ -95,7 +98,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //         Strings.newOrder
                                               //             .substring(1)
                                               //             .toLowerCase());
-                                              _appService.updateTitlePage(Strings.bookingsLabel);
+                                              _appService.updateTitlePage(
+                                                  Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.newData,
@@ -105,8 +109,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                 height: 108,
                                                 width: 117,
                                                 padding:
-                                                    const EdgeInsetsDirectional.only(
-                                                        bottom: 10),
+                                                    const EdgeInsetsDirectional
+                                                        .only(bottom: 10),
                                                 decoration: BoxDecoration(
                                                     border: Border(
                                                         bottom: BorderSide(
@@ -159,7 +163,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                       ],
                                                     ),
                                                     GeneralText(
-                                                      Strings.loungePendingLabel.toUpperCase(),
+                                                      Strings.loungePendingLabel
+                                                          .toUpperCase(),
                                                       style: appTheme
                                                           .typographies
                                                           .interFontFamily
@@ -191,7 +196,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //         Strings.acceptData
                                               //             .substring(1)
                                               //             .toLowerCase());
-                                              _appService.updateTitlePage(Strings.bookingsLabel);
+                                              _appService.updateTitlePage(
+                                                  Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.acceptData,
@@ -267,7 +273,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //         Strings.confirmed
                                               //             .substring(1)
                                               //             .toLowerCase());
-                                              _appService.updateTitlePage(Strings.bookingsLabel);
+                                              _appService.updateTitlePage(
+                                                  Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.confirmed,
@@ -276,8 +283,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Container(
                                                 width: 117,
                                                 padding:
-                                                    const EdgeInsetsDirectional.only(
-                                                        bottom: 10),
+                                                    const EdgeInsetsDirectional
+                                                        .only(bottom: 10),
                                                 child: Column(
                                                   children: [
                                                     GeneralText(
@@ -333,7 +340,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                               //         Strings.inProgressTitle
                                               //             .substring(1)
                                               //             .toLowerCase());
-                                              _appService.updateTitlePage(Strings.bookingsLabel);
+                                              _appService.updateTitlePage(
+                                                  Strings.bookingsLabel);
                                               _navigation.navigateTo(
                                                   route: OrderRouteView(
                                                 type: Strings.inProgress,
@@ -342,8 +350,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                             child: Container(
                                                 width: 117,
                                                 padding:
-                                                    const EdgeInsetsDirectional.only(
-                                                        bottom: 10),
+                                                    const EdgeInsetsDirectional
+                                                        .only(bottom: 10),
                                                 child: Column(
                                                   children: [
                                                     GeneralText(
@@ -420,12 +428,19 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                 children: [
                                                   InkWell(
                                                     onTap: () {
+                                                      // Navigator.push(
+                                                      //   context,
+                                                      //   MaterialPageRoute(
+                                                      //       builder: (context) =>
+                                                      //           widget._homeScreenViewModel.checkIsFirstTime()? CreateExperienceScreen():ExperienceDetailsScreen()
+                                                      //   ),
+                                                      // );
+
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                widget._homeScreenViewModel.checkIsFirstTime()? CreateExperienceScreen():ExperienceDetailsScreen()
-                                                        ),
+                                                                ExperienceDetailsScreen()),
                                                       );
 
                                                       //
@@ -434,8 +449,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                         width: 121,
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .only(
-                                                                    bottom: 10),
+                                                                    .only(
+                                                                bottom: 10),
                                                         child: Column(
                                                           children: [
                                                             Container(
@@ -484,8 +499,8 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                         width: 121,
                                                         padding:
                                                             const EdgeInsetsDirectional
-                                                                .only(
-                                                                    bottom: 10),
+                                                                    .only(
+                                                                bottom: 10),
                                                         child: Column(
                                                           children: [
                                                             Container(
@@ -627,14 +642,15 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                     top: -50,
                                     child: Center(
                                       child: InkWell(
-                                        onTap:(){
+                                        onTap: () {
                                           _homeScreenViewModel.scanQr(context);
                                         },
                                         child: Container(
                                           height: 102,
                                           width: 102,
                                           decoration: BoxDecoration(
-                                              color: HexColor.fromHex("#f1c452"),
+                                              color:
+                                                  HexColor.fromHex("#f1c452"),
                                               borderRadius:
                                                   BorderRadius.circular(20)),
                                           child: Column(
@@ -659,11 +675,14 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                   },
                                                   child: GeneralText(
                                                     "Start",
-                                                    style: appTheme.typographies
-                                                        .interFontFamily.headline6
+                                                    style: appTheme
+                                                        .typographies
+                                                        .interFontFamily
+                                                        .headline6
                                                         .copyWith(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: HexColor.fromHex(
                                                           '#212129'),
                                                     ),
