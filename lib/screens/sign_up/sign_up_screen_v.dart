@@ -335,50 +335,157 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  // Widget displayCityList(){
-  //   return Container(
-  //     padding: EdgeInsets.only(left: 15, right: 15, top: 5),
-  //     color: Colors.white,
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: <Widget>[
-  //         Expanded(
-  //           child: DropdownButtonHideUnderline(
-  //             child: ButtonTheme(
-  //               alignedDropdown: true,
-  //               child: DropdownButton<String>(
-  //                 value: _myState,
-  //                 iconSize: 30,
-  //                 icon: (null),
-  //                 style: TextStyle(
-  //                   color: Colors.black54,
-  //                   fontSize: 16,
-  //                 ),
-  //                 hint: Text('Select State'),
-  //                 onChanged: (String newValue) {
-  //                //   setState(() {
-  //                     _myState = newValue;
-  //                    // _getCitiesList();
-  //                     print(_myState);
-  //                  // }
-  //                   );
-  //                 },
-  //                 items: viewModel.cityDropDown.map((item) {
-  //                   return new DropdownMenuItem(
-  //                     child: new Text(item),
-  //                     value: item,
-  //                     //value: item['id'].toString(),
-  //                   );
-  //                 }).toList() ??
-  //                     [],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget displayTownCity(IAppThemeData appTheme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signTownLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              viewModel.townDropDown.isNotEmpty
+                  // ? TownDisplay(
+                  //     appTheme: appTheme,
+                  //     townDropDown: viewModel.townDropDown,
+                  //   )
+                  ? GeneralDropdown(
+                      name: 'Select',
+                      items: viewModel.townDropDown,
+                      // initialValue: 'Select',
+
+                      borderColor: appTheme.colors.textFieldBorderColor,
+                      // selectedItem: dropdownItems.first,
+                      style: appTheme.typographies.interFontFamily.headline6
+                          .copyWith(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400),
+                      onChange: ({
+                        required String key,
+                        required dynamic value,
+                      }) {
+                        developer.log(' Key is ' + '${key}');
+                        developer.log(' Value is ' + '${value}');
+                        _townController.text = value;
+                        // viewModel.selectedTownId =
+                        //  viewModel.getCityId(value);
+                        //   viewModel.professionID = viewModel.dropdownDetails[value];
+                      },
+                    )
+                  : Container(),
+              // GeneralTextInput(
+              //     height: 80,
+              //     textFieldWidth: 145,
+              //     controller: _townController,
+              //     inputType: InputType.text,
+              //     backgroundColor: appTheme.colors.textFieldFilledColor,
+              //     inputBorder: appTheme.focusedBorder,
+              //     valueStyle: const TextStyle(color: Colors.white),
+              //     hint: 'Enter Town',
+              //     hintStyle: TextStyle(
+              //         color: Colors.white.withOpacity(0.4), fontSize: 14),
+              //     // valueStyle: valueStyle,
+              //     onChanged: (newValue) {
+              //       if (viewModel.verifyInputForm(
+              //           name: _nameController.text,
+              //           brandName: _brandController.text,
+              //           mobileNumber: _mobileNumberController.text,
+              //           address: _addressController.text,
+              //           town: _townController.text,
+              //           city: _cityController.text)) {
+              //         viewModel.changeButton(true);
+              //       } else {
+              //         viewModel.changeButton(false);
+              //       }
+              //     }),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GeneralText(
+                Strings.signCityLabel,
+                textAlign: TextAlign.center,
+                style: appTheme.typographies.interFontFamily.headline4.copyWith(
+                    color: const Color(0xfffbeccb),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+
+              GeneralDropdown(
+                name: 'Select',
+                items: viewModel.cityDropDown,
+                borderColor: appTheme.colors.textFieldBorderColor,
+                // selectedItem: dropdownItems.first,
+                style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
+                onChange: ({
+                  required String key,
+                  required dynamic value,
+                }) {
+                  developer.log(' Key is ' + '${key}');
+                  developer.log(' Value is ' + '${value}');
+                  _cityController.text = value;
+                  viewModel.getCityId(value);
+
+                  //   viewModel.professionID = viewModel.dropdownDetails[value];
+                },
+              ),
+              // GeneralTextInput(
+              //     height: 80,
+              //     textFieldWidth: 145,
+              //     controller: _cityController,
+              //     inputType: InputType.text,
+              //     backgroundColor: appTheme.colors.textFieldFilledColor,
+              //     inputBorder: appTheme.focusedBorder,
+              //     valueStyle: const TextStyle(color: Colors.white),
+              //     hint: 'Enter City',
+              //     hintStyle: TextStyle(
+              //         color: Colors.white.withOpacity(0.4), fontSize: 14),
+              //     // valueStyle: valueStyle,
+              //     onChanged: (newValue) {
+              //       if(viewModel.verifyInputForm(
+              //         name: _nameController.text,
+              //         brandName: _brandController.text,
+              //         mobileNumber: _mobileNumberController.text,
+              //         address: _addressController.text,
+              //           town: _townController.text,
+              //           city: _cityController.text
+              //       )){
+              //         viewModel.changeButton(true);
+              //       }else{
+              //         viewModel.changeButton(false);
+              //       }
+              //     }),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget displayAlreadySignIn(IAppThemeData appTheme, BuildContext context) {
     return Container(
