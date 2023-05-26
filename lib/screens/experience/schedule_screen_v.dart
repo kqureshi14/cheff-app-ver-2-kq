@@ -29,9 +29,16 @@ class SetupScheduleScreen extends StatefulWidget {
 class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
   bool repeatChecked = false;
 
+  callCalenderWidget(){
+    widget.scheduleScreenViewModel?.isOpenedDialog == false?WidgetsBinding.instance
+        .addPostFrameCallback((_) => selectStartDate(context)):null;
+    widget.scheduleScreenViewModel?.isOpenedDialog = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
+    callCalenderWidget();
     // return WillPopScope(
     //   onWillPop: ()async{
     //     return false;
@@ -52,7 +59,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInLeftArrow,
-                  color: Color(0xfff1c452),
+                  color: const Color(0xfff1c452),
                 ),
               ),
               InkWell(
@@ -71,7 +78,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                 },
                 child: SvgPicture.asset(
                   Resources.getSignInRightArrow,
-                  color: Color(0xfff1c452),
+                  color: const Color(0xfff1c452),
                 ),
               ),
             ],
@@ -85,7 +92,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
             width: double.infinity,
             child: Image.asset(Resources.expHeaderBGPNG),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -103,9 +110,9 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
             ],
           ),
           Container(
-            margin: EdgeInsetsDirectional.only(start: 40, bottom: 50),
+            margin: const EdgeInsetsDirectional.only(start: 40, bottom: 50),
             child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: widget.scheduleScreenViewModel?.scheduleList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -152,14 +159,14 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                                   fontSize: 40,
                                 ))
                           ]),
-                          SizedBox(
+                          const SizedBox(
                             width: 27,
                           ),
                           Expanded(
                             child: Container(
                               width: double.infinity,
                               padding:
-                                  EdgeInsets.only(left: 8, top: 10, bottom: 10),
+                                  const EdgeInsets.only(left: 8, top: 10, bottom: 10),
                               decoration: BoxDecoration(
                                   color: HexColor.fromHex('#2b2b33'),
                                   borderRadius: const BorderRadius.only(
@@ -169,42 +176,19 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                                   children: getChipsWigetsList(appTheme,
                                       context, item!.timeInHourAndAmPm)
 
-                                  // [
-                                  //   timeSelectorBox(appTheme,
-                                  //       showSelectedTime: false),
-                                  //   SizedBox(
-                                  //     width: 7,
-                                  //   ),
-                                  //   timeSelectorBox(appTheme,
-                                  //       showSelectedTime: false),
-                                  //   SizedBox(
-                                  //     width: 7,
-                                  //   ),
-                                  //   timeSelectorBox(appTheme,
-                                  //       showSelectedTime: false),
-                                  //   SizedBox(
-                                  //     width: 7,
-                                  //   ),
-                                  //   timeSelectorBox(appTheme,
-                                  //       showSelectedTime: false),
-                                  //   SizedBox(
-                                  //     width: 7,
-                                  //   ),
-                                  // ]
-
                                   ),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
                   );
                 }),
           ),
-          SizedBox(
+          const SizedBox(
             height: 37,
           ),
           Padding(
@@ -250,7 +234,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (context) => ShowOffTime()));
-                    selectStartDate(context, appTheme);
+                    selectStartDate(context);
                   },
                   child: Container(
                     width: 54,
@@ -270,10 +254,10 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 60,
           ),
-          SizedBox(
+          const SizedBox(
             height: 49.5,
           ),
         ]),
@@ -319,13 +303,14 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               : HexColor.fromHex('#2b2b33'),
           borderRadius: BorderRadius.circular(10)),
       padding:
-          EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
-      margin: EdgeInsetsDirectional.only(bottom: 8),
+          const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      margin: const EdgeInsetsDirectional.only(bottom: 8),
     );
   }
 
   Future<void> selectStartDate(
-      BuildContext context, IAppThemeData appTheme) async {
+      BuildContext context) async {
+    final appTheme = AppTheme.of(context).theme;
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -347,10 +332,6 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
           child: child!,
         );
       },
-      // initialDate: DateTime.now(),
-      // firstDate: DateTime(2015, 8),
-      // //lastDate: DateTime(2101),
-      // lastDate: DateTime.now(),
     );
 
     if (picked != null) {
@@ -451,7 +432,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           GeneralText('Are you Sure',
@@ -459,30 +440,30 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 25)),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           GeneralText(Strings.repeatPopupTitle,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                  color: Color(0xfffee4a4),
+                  color: const Color(0xfffee4a4),
                   fontWeight: FontWeight.w400,
                   fontSize: 14)),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _okButtonTitle(appTheme: appTheme),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               _cancelTitle(appTheme: appTheme),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 13,
           ),
         ],

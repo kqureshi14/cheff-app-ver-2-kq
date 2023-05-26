@@ -20,6 +20,8 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
         super(const Loading());
 
   final INetworkService _network;
+  bool isOpenedDialog = false;
+
 
   List<Schedule> scheduleList = [];
   final _appService = locateService<ApplicationService>();

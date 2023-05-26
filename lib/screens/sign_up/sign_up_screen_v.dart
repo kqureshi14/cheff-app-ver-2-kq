@@ -369,6 +369,17 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                         developer.log(' Key is ' + '${key}');
                         developer.log(' Value is ' + '${value}');
                         _townController.text = value;
+                        if (viewModel.verifyInputForm(
+                                  name: _nameController.text,
+                                  brandName: _brandController.text,
+                                  mobileNumber: _mobileNumberController.text,
+                                  address: _addressController.text,
+                                  town: _townController.text,
+                                  city: _cityController.text)) {
+                                viewModel.changeButton(true);
+                              } else {
+                                viewModel.changeButton(false);
+                              }
                         // viewModel.selectedTownId =
                         //  viewModel.getCityId(value);
                         //   viewModel.professionID = viewModel.dropdownDetails[value];
@@ -439,7 +450,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                   developer.log(' Value is ' + '${value}');
                   _cityController.text = value;
                   viewModel.getCityId(value);
-
+                  if(viewModel.verifyInputForm(
+                          name: _nameController.text,
+                          brandName: _brandController.text,
+                          mobileNumber: _mobileNumberController.text,
+                          address: _addressController.text,
+                            town: _townController.text,
+                            city: _cityController.text
+                        )){
+                          viewModel.changeButton(true);
+                        }else{
+                          viewModel.changeButton(false);
+                        }
                   //   viewModel.professionID = viewModel.dropdownDetails[value];
                 },
               ),

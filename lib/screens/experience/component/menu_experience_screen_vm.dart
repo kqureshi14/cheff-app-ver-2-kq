@@ -102,7 +102,7 @@ class MenuExperienceScreenViewModel
     emit(menu_exp.Loaded(_mealResponse, _dishResponse));
   }
 
-  void saveMenu(BuildContext context) async {
+  void saveMenu(BuildContext context,{Function? completion}) async {
     final _appService = locateService<ApplicationService>();
     developer.log(' Ready to save Menu');
     menuSaveCounter += 1;
@@ -161,6 +161,7 @@ class MenuExperienceScreenViewModel
       Toaster.infoToast(
           context: context, message: menuResponse.message.toString());
       clearEntries(menuHelper);
+      completion!();
     } else {
       Toaster.infoToast(context: context, message: 'Please fill the data');
       developer.log(' Response of Menu is ');

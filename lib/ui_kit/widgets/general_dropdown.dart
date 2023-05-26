@@ -82,76 +82,70 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(widget._margin),
-        child: widget._isMultiSelect
-            ? DropdownSearch<String>.multiSelection(
-                autoValidateMode: AutovalidateMode.always,
-                items: widget._items,
-                popupProps: PopupPropsMultiSelection.menu(
-                  showSearchBox: widget._isSearchable,
-                ),
-                selectedItems: widget._selectedItems ?? <String>[],
-                validator: widget._isMandatory
-                    ? widget._validator ??
-                        (List<String>? items) {
-                          if (items == null || items.isEmpty) {
-                            return Strings.requiredField;
-                          } else {
-                            return null;
-                          }
-                        }
-                    : null,
-                onChanged: (values) {
-                  widget._onChange.call(
-                    key: widget._name,
-                    value: values.toString(),
-                  );
-                },
-              )
-            : SizedBox(
-                height: widget._dropDownHeight,
-                child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: widget._borderColor ??
-                            const Color.fromRGBO(0, 0, 0, 0.57),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: DropdownButton<String>(
-                          hint: widget._hintWidget,
-                          isExpanded: true,
-                          dropdownColor: Colors.grey,
-                          style: widget._style,
-                          value: currentChoice,
-                          iconEnabledColor: widget._borderColor,
-                          underline: Container(),
-                          onChanged: (value) {
-                            setState(() => currentChoice = value!);
-                            widget._onChange.call(
-                              key: widget._name,
-                              value: value.toString(),
-                            );
-                          },
-
-                          // onSaved: (value) {
-                          //   setState(() => currentChoice = value!);
-                          //   widget._onChange.call(
-                          //     key: widget._name,
-                          //     value: value.toString(),
-                          //   );
-                          // },
-                          items: widget._items
-                              .map((data) => DropdownMenuItem(
-                                  value: data,
-                                  child: Text(
-                                    data,
-                                  )))
-                              .toList(),
-                        )))));
+      padding: EdgeInsets.all(widget._margin),
+      child: widget._isMultiSelect
+          ? DropdownSearch<String>.multiSelection(
+        autoValidateMode: AutovalidateMode.always,
+        items: widget._items,
+        popupProps: PopupPropsMultiSelection.menu(
+          showSearchBox: widget._isSearchable,
+        ),
+        selectedItems: widget._selectedItems ?? <String>[],
+        validator: widget._isMandatory
+            ? widget._validator ??
+                (List<String>? items) {
+              if (items == null || items.isEmpty) {
+                return Strings.requiredField;
+              } else {
+                return null;
+              }
+            }
+            : null,
+        onChanged: (values) {
+          widget._onChange.call(
+            key: widget._name,
+            value: values,
+          );
+        },
+      )
+          : SizedBox(
+        height: widget._dropDownHeight,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: widget._borderColor ?? const Color.fromRGBO(0, 0, 0, 0.57),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: DropdownButton<String>(
+              hint: widget._hintWidget,
+              isExpanded: true,
+              dropdownColor: Colors.grey,
+              style: widget._style,
+              value: currentChoice,
+              iconEnabledColor: widget._borderColor,
+              underline: Container(),
+              onChanged: (value) {
+                setState(() => currentChoice = value!);
+                widget._onChange.call(
+                  key: widget._name,
+                  value: value,
+                );
+              },
+              items: widget._items.map((data) {
+                return DropdownMenuItem<String>(
+                  value: data,
+                  child: Text(data),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   String? validatorFunctionMultiple(List<String?>? str) {
