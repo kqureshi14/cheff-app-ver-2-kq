@@ -4,7 +4,4 @@ import 'package:chef/services/services.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class SignUpScreenViewModel  {
-
-
-}
+class SignUpScreenViewModel {}
