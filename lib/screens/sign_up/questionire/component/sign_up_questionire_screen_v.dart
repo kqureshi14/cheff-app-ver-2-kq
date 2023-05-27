@@ -332,31 +332,29 @@ class ChipsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-            // width: widthContainer,
-            child: GeneralText(
-              title.capitalize(),
-              textAlign: TextAlign.center,
-              style: appTheme.typographies.interFontFamily.headline6.copyWith(
-                  color: selected ? Colors.black : Colors.white,
-                  fontSize: 15.0,
-                  fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: appTheme.colors.textFieldBorderColor,
-                width: 2.5,
-              ),
-              borderRadius: BorderRadius.circular(
-                30,
-              ),
-              color: selected
-                  ? appTheme.colors.textFieldBorderColor
-                  : Colors.transparent,
-            )));
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+        // width: widthContainer,
+        child: GeneralText(
+          title.capitalize(),
+          textAlign: TextAlign.center,
+          style: appTheme.typographies.interFontFamily.headline6.copyWith(
+              color: selected ? Colors.black : Colors.white,
+              fontSize: 15.0,
+              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: appTheme.colors.textFieldBorderColor,
+            width: 2.5,
+          ),
+          borderRadius: BorderRadius.circular(
+            30,
+          ),
+          color: selected
+              ? appTheme.colors.textFieldBorderColor
+              : Colors.transparent,
+        ));
   }
 }
 

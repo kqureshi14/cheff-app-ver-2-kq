@@ -1,6 +1,8 @@
 import '../../../../helpers/helpers.dart';
 import '../../../../models/signup/questionire_response.dart';
 
+import 'dart:developer' as developer;
+
 class QuestionView extends StatefulWidget {
   QuestionView({
     Key? key,
@@ -51,7 +53,7 @@ class _QuestionViewState extends State<QuestionView> {
                 answerList: widget.questionObj.answers,
                 answersIds: answersIds)
             : widget.questionObj.type == "MULTI_CHIP"
-                ? multiChipView(
+                ? MultiChipView(
                     appTheme: widget.appTheme,
                     answerList: widget.questionObj.answers)
                 :
@@ -76,10 +78,10 @@ class _QuestionViewState extends State<QuestionView> {
 //   }
 // }
 
-class multiChipView extends StatefulWidget {
+class MultiChipView extends StatefulWidget {
   // const multiChipView({Key? key}) : super(key: key);
 
-  multiChipView({
+  MultiChipView({
     Key? key,
     required this.appTheme,
     required this.answerList,
@@ -89,29 +91,11 @@ class multiChipView extends StatefulWidget {
   List<Answer> answerList;
 
   @override
-  _multiChipViewState createState() => _multiChipViewState();
+  _MultiChipViewState createState() => _MultiChipViewState();
 }
 
-class _multiChipViewState extends State<multiChipView> {
+class _MultiChipViewState extends State<MultiChipView> {
   Map<String, bool> selectedData = {};
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-//
-// class multiChipView extends StatelessWidget {
-//   multiChipView({
-//     Key? key,
-//     required this.appTheme,
-//     required this.answerList,
-//   }) : super(key: key);
-//
-//   final IAppThemeData appTheme;
-//   List<Answer> answerList;
-//
-//   Map<String, bool> selectedData = {};
 
   @override
   Widget build(BuildContext context) {
@@ -145,36 +129,26 @@ class _multiChipViewState extends State<multiChipView> {
                       selectedData[widget.answerList[index].name] = true;
                     }
                   }
+
+                  //  _selectedInterests.value.addAll(selectedData);
+                  developer.log(' Here test ');
                 });
               },
               child: SizedBox(
-                height: 50,
-                child: ChipsWidget(
-                  appTheme: widget.appTheme,
-                  title: widget.answerList[index].name,
-                  selected: isSelected(widget.answerList[index].name),
-                ),
-              ));
+                  height: 50,
+                  child: ChipsWidget(
+                    appTheme: widget.appTheme,
+                    title: widget.answerList[index].name,
+                    selected: selectedData != null &&
+                            selectedData.isNotEmpty &
+                                selectedData
+                                    .containsKey(widget.answerList[index].name)
+                        ? selectedData[widget.answerList[index].name]!
+                        : false,
+                  )));
         },
       ),
     );
-  }
-
-  bool isSelected(String nameOfItem) {
-    if (selectedData.isEmpty) {
-      selectedData[nameOfItem] = true;
-      return true;
-    } else if (selectedData.containsKey(nameOfItem)) {
-      selectedData[nameOfItem]!;
-    }
-    return false;
-    // if (experienceHelper.selectedWowFactors.containsKey(nameOfItem)) {
-    //   return true;
-    // } else if (experienceHelper.selectedPerferencesFactors
-    //     .containsKey(nameOfItem)) {
-    //   return true;
-    // }
-    // return false;
   }
 }
 
