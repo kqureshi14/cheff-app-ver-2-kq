@@ -241,17 +241,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   Future<void> loadTownList({cityId, required String cityName}) async {
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.townList);
 
-    // emit(Loaded(_professionData));
-
-    //if (_professionData.isEmpty) {
-    //  final cityDataRequest = data_request.T();
-
-    // ProfessionRequest(
-    //   t: prorequest.T(),
-    // ).toJson();
-
     data_request.T t = data_request.T(cityId: cityId);
-    // data_request.T t = data_request.T();
     final dataRequest = data_request.DataRequest(
       t: t,
     ).toJson();
@@ -269,35 +259,14 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     }
     cityTownInfo[cityName] = _townData;
     for (var i = 0; i < townResponse.t.length; i++) {
-      developer.log(' Town Name is ' + townResponse.t[i].name);
-
-      developer.log(' Name of city is  ' + '${cityName}');
-      developer.log(' City Id is  ' + '${townResponse.t[i].cityId}');
-      //cityTownInfo[cityName] = ;
       if (!townDropDown.contains(townResponse.t[i].name)) {
-        // if (i == 0) {
-        //   selectedTownId = townResponse.t[i].id;
-        // }
-        // townDropDown.clear();
         townInfo[townResponse.t[i].name] = townResponse.t[i].id;
         townDropDown.add(townResponse.t[i].name);
       }
-      //menuItems
-      // }
-
-      developer.log(' City Town Details are ');
-
-      cityTownInfo.forEach((key, value) {
-        developer.log(' City Details key are ' + '${key}');
-
-        developer.log(' City Details values are ' + '${key}');
-      });
     }
 
-    //cityDropDown = currentProfessionData.t;
     emit(const Loading());
     emit(Loaded(cityResponse));
-    // }
   }
 
   Future<void> _cacheData({
@@ -381,22 +350,19 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
             loginData: response.body,
             baseUrl: Api.baseURL,
           );
-          // emit(const Loaded());
 
           developer.log(' Sign up Response is ' + signupResponse.message);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => SignUpQuestionireScreen()),
+          // );
+
+          _navigation.replace(route: SignUpQuestionireRoute());
         } else {
           Toaster.infoToast(
               context: context,
               message: 'Something is wrong please content vendor');
-          developer.log(' Response of Signup is null ' '$response');
         }
-
-        //  loading(isBusy: false);
-        //   _navigation.replace(route: CustomerRoute());
       } catch (error) {
         // emit(
         //   // state.copyWith(

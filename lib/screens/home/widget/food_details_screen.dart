@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
+import '../../../helpers/function_helper.dart';
 import '../../../models/experience/schedule_list_display.dart';
 import '../../../models/home/food_details_menu_model.dart';
 import '../../../theme/app_theme_data/app_theme_data.dart';
@@ -522,7 +523,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: GeneralText(
-                                  widget._experienceData.priceTypeId == 1 ? 'per person' :"",
+                                  widget._experienceData.priceTypeId == 1
+                                      ? 'per person'
+                                      : "",
                                   style: appTheme
                                       .typographies.interFontFamily.headline4
                                       .copyWith(
@@ -1470,8 +1473,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               BorderRadius.circular(10)),
                                       // padding: EdgeInsetsDirectional.only(
                                       //     top: 8, bottom: 8, start: 16, end: 16),
-                                      margin:
-                                          const EdgeInsetsDirectional.only(bottom: 8),
+                                      margin: const EdgeInsetsDirectional.only(
+                                          bottom: 8),
                                       child: noOfPersonsField(
                                         appTheme: appTheme,
                                         valueStyle: appTheme
@@ -1503,8 +1506,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   HexColor.fromHex('#f1c452')),
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      margin:
-                                          const EdgeInsetsDirectional.only(bottom: 8),
+                                      margin: const EdgeInsetsDirectional.only(
+                                          bottom: 8),
                                       padding: const EdgeInsetsDirectional.only(
                                           top: 8, bottom: 8, start: 8, end: 8),
                                       child: /*ExtoDropdown(
@@ -1578,7 +1581,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       borderRadius: BorderRadius.circular(10)),
                                   // padding: EdgeInsetsDirectional.only(
                                   //     top: 8, bottom: 8, start: 16, end: 16),
-                                  margin: const EdgeInsetsDirectional.only(bottom: 8),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      bottom: 8),
                                   child: notesField(
                                     appTheme: appTheme,
                                     valueStyle: appTheme
@@ -1746,7 +1750,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     // bottomLeft: Radius.circular(40.0)
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Image.asset(
                   Resources.expDeleteIconPNG,
                   height: 16,
@@ -2006,7 +2011,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               child: Column(
                 children: [
                   Container(
-                    width: 58,
+                    width: 68,
                     padding: const EdgeInsetsDirectional.all(10),
                     decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -2017,17 +2022,21 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: Container(
-                      height: 50,
-                      padding: const EdgeInsetsDirectional.all(10),
-                      decoration: BoxDecoration(
-                        color: HexColor.fromHex("#f1c452"),
-                        shape: BoxShape.circle,
-                      ),
-                      // child: Image.asset(
-                      //     items[i].name != null ? items[i].name ?? "" : ''),
-                      child: SvgPicture.network(
-                          items[i].name != null ? items[i].name ?? "" : ''),
-                    ),
+                        height: 50,
+                        padding: const EdgeInsetsDirectional.all(10),
+                        decoration: BoxDecoration(
+                          color: HexColor.fromHex("#f1c452"),
+                          shape: BoxShape.circle,
+                        ),
+                        // child: Image.asset(
+                        //     items[i].name != null ? items[i].name ?? "" : ''),
+                        child: items[i].name != null
+                            ? SvgPicture.network(
+                                FunctionHelper.getValidUrlForImages(
+                                    items[i].name!))
+                            : Container()
+                        // items[i].name != null ? items[i].name ?? "" : ''),
+                        ),
                   ),
                   GeneralText(
                     items[i].icon ?? "",
@@ -2104,8 +2113,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     required TextStyle hintStyle,
   }) {
     return GeneralTextInput(
-      contentPadding:
-          const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      contentPadding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 8, start: 16, end: 16),
       controller: nOfPersons,
       hint: Strings.noOfPersonsHint,
       valueStyle: valueStyle,
@@ -2128,8 +2137,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }) {
     return GeneralTextInput(
       isMultiline: true,
-      contentPadding:
-          const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      contentPadding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 8, start: 16, end: 16),
       controller: notes,
       hint: Strings.notesHint,
       valueStyle: valueStyle,

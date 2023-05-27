@@ -17,13 +17,17 @@ class HomeScreenView extends BaseView<HomeScreenViewModel> {
         // bloc: viewModel..initialize(),
         bloc: viewModel..loadBookingOverview(),
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: appTheme.colors.primaryBackground,
-            body: state.when(
-                loading: _loading,
-                loaded: (bookingOverview) =>
-                    displayLoaded(viewModel, bookingOverview)),
-          );
+          return WillPopScope(
+              onWillPop: () async {
+                return false;
+              },
+              child: Scaffold(
+                backgroundColor: appTheme.colors.primaryBackground,
+                body: state.when(
+                    loading: _loading,
+                    loaded: (bookingOverview) =>
+                        displayLoaded(viewModel, bookingOverview)),
+              ));
         });
   }
 

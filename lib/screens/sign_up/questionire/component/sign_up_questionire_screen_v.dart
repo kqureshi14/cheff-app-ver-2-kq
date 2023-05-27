@@ -50,6 +50,9 @@ class SignUpQuestionireScreen
   Widget _loading() => const GeneralLoading();
 
   void initState() {
+    if (handlesList.isNotEmpty) {
+      handlesList.clear();
+    }
     handlesList.addAll([
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
@@ -87,151 +90,157 @@ class SignUpQuestionireScreen
     required ScreenSizeData screenSizeData,
   }) {
     final size = screenSizeData.size;
-    return Scaffold(
-      backgroundColor: appTheme.colors.primaryBackground,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: Container(
-          margin: const EdgeInsets.only(left: 32),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const SignUpLetsStartScreen()),
-                  // );
-                },
-                child: SvgPicture.asset(
-                  Resources.getSignInLeftArrow,
-                  color: Colors.grey,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: appTheme.colors.primaryBackground,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Container(
+            margin: const EdgeInsets.only(left: 32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const SignUpLetsStartScreen()),
+                    // );
+                  },
+                  child: SvgPicture.asset(
+                    Resources.getSignInLeftArrow,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignUpLetsStartScreen()),
-                  );
-                },
-                child: SvgPicture.asset(
-                  Resources.getSignInRightArrow,
-                  color: const Color(0xfff1c452),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpLetsStartScreen()),
+                    );
+                  },
+                  child: SvgPicture.asset(
+                    Resources.getSignInRightArrow,
+                    color: const Color(0xfff1c452),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 260,
-              width: double.infinity,
-              child: Image.asset(Resources.getSignUpQuestionireBgPng),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 27),
-              //   alignment: Alignment.center,
-              //  padding: const EdgeInsets.only(left: 29),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GeneralText(
-                    Strings.questionireLabel,
-                    textAlign: TextAlign.start,
-                    style: appTheme.typographies.interFontFamily.headline4
-                        .copyWith(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 260,
+                width: double.infinity,
+                child: Image.asset(Resources.getSignUpQuestionireBgPng),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 27),
+                //   alignment: Alignment.center,
+                //  padding: const EdgeInsets.only(left: 29),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GeneralText(
+                      Strings.questionireLabel,
+                      textAlign: TextAlign.start,
+                      style: appTheme.typographies.interFontFamily.headline4
+                          .copyWith(
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w500),
+                      //style: appTheme.typographies.interFontFamily.headline4,
+                    ),
+                    // const SizedBox(
+                    //   height: 27,
+                    // ),
+                    Container(
+                      height: 1050,
+                      child: ListView.builder(
+                          itemCount: questionList.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          // BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return QuestionView(
+                                appTheme: appTheme,
+                                questionObj: questionList[index]);
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    socialMediaHandles(appTheme),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        // Open Gallery and add profile
+                        File? selectedImage = await getImageFromGallery();
+                        viewModel.updateSelectedImage(selectedImage);
+                        if (selectedImage != null) {
+                          viewModel.isImageSelected = true;
+                        }
+                      },
+                      child: Container(
+                        height: 70,
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        decoration: const BoxDecoration(
                             color: Colors.white,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w500),
-                    //style: appTheme.typographies.interFontFamily.headline4,
-                  ),
-                  // const SizedBox(
-                  //   height: 27,
-                  // ),
-                  Container(
-                    height: 1050,
-                    child: ListView.builder(
-                        itemCount: questionList.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        // BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) {
-                          return QuestionView(
-                              appTheme: appTheme,
-                              questionObj: questionList[index]);
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  socialMediaHandles(appTheme),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      // Open Gallery and add profile
-                      File? selectedImage = await getImageFromGallery();
-                      viewModel.updateSelectedImage(selectedImage);
-                      if (selectedImage != null) {
-                        viewModel.isImageSelected = true;
-                      }
-                    },
-                    child: Container(
-                      height: 70,
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GeneralText(
-                            Strings.labelProfilePicture,
-                            textAlign: TextAlign.center,
-                            style: appTheme
-                                .typographies.interFontFamily.headline4
-                                .copyWith(
-                                    color: appTheme.colors.primaryBackground,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500),
-                          ),
-                          ValueListenableBuilder<File?>(
-                            valueListenable: viewModel.selectedImageNotifier,
-                            builder: (BuildContext context, File? selectedImage,
-                                Widget? child) {
-                              if (selectedImage != null) {
-                                return Image.file(selectedImage);
-                              } else {
-                                return Image.asset(
-                                  Resources.userProfilePicPng,
-                                  height: 47,
-                                );
-                              }
-                            },
-                          )
-                        ],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GeneralText(
+                              Strings.labelProfilePicture,
+                              textAlign: TextAlign.center,
+                              style: appTheme
+                                  .typographies.interFontFamily.headline4
+                                  .copyWith(
+                                      color: appTheme.colors.primaryBackground,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500),
+                            ),
+                            ValueListenableBuilder<File?>(
+                              valueListenable: viewModel.selectedImageNotifier,
+                              builder: (BuildContext context,
+                                  File? selectedImage, Widget? child) {
+                                if (selectedImage != null) {
+                                  return Image.file(selectedImage);
+                                } else {
+                                  return Image.asset(
+                                    Resources.userProfilePicPng,
+                                    height: 47,
+                                  );
+                                }
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 120,
-                  ),
-                ],
-              ),
-            )
-          ],
+                    const SizedBox(
+                      height: 120,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -268,7 +277,8 @@ class SignUpQuestionireScreen
               return Container(
                 padding: EdgeInsets.zero,
                 decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xfff1c452), width: 2),
+                    border:
+                        Border.all(color: const Color(0xfff1c452), width: 2),
                     color: HexColor.fromHex("#4b4b52"),
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
@@ -322,29 +332,31 @@ class ChipsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-        // width: widthContainer,
-        child: GeneralText(
-          title.capitalize(),
-          textAlign: TextAlign.center,
-          style: appTheme.typographies.interFontFamily.headline6.copyWith(
-              color: selected ? Colors.black : Colors.white,
-              fontSize: 15.0,
-              fontWeight: selected ? FontWeight.bold : FontWeight.w500),
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: appTheme.colors.textFieldBorderColor,
-            width: 2.5,
-          ),
-          borderRadius: BorderRadius.circular(
-            30,
-          ),
-          color: selected
-              ? appTheme.colors.textFieldBorderColor
-              : Colors.transparent,
-        ));
+    return InkWell(
+        onTap: () {},
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+            // width: widthContainer,
+            child: GeneralText(
+              title.capitalize(),
+              textAlign: TextAlign.center,
+              style: appTheme.typographies.interFontFamily.headline6.copyWith(
+                  color: selected ? Colors.black : Colors.white,
+                  fontSize: 15.0,
+                  fontWeight: selected ? FontWeight.bold : FontWeight.w500),
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: appTheme.colors.textFieldBorderColor,
+                width: 2.5,
+              ),
+              borderRadius: BorderRadius.circular(
+                30,
+              ),
+              color: selected
+                  ? appTheme.colors.textFieldBorderColor
+                  : Colors.transparent,
+            )));
   }
 }
 

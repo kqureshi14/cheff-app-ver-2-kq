@@ -9,6 +9,7 @@ import '../../screens/booking/component/order_screen_v.dart';
 import '../../screens/foodie_profile/component/foodie_profile_decision_screen_v.dart';
 import '../../screens/home/home_page/home_screen_v.dart';
 import '../../screens/qr_scanner/qr_scanner_screen_v.dart';
+import '../../screens/sign_up/questionire/component/sign_up_questionire_screen_v.dart';
 import '../../screens/sign_up/sign_up_screen_v.dart';
 
 export 'router.gr.dart';
@@ -38,6 +39,8 @@ abstract class Routes {
   static const changePassword = '/change_password';
   static const accountSettings = '/account_settings';
   static const getStartedScreen = '/get_started_screen';
+
+  static const signUpScreenQuestionaire = '/signup_screen_questionaire';
 
   static const orderScreenView = '/order_screen/:type';
 
@@ -81,6 +84,11 @@ abstract class Routes {
     AutoRoute(
       page: QrScannerScreen,
       path: Routes.qrScanner,
+    ),
+
+    AutoRoute(
+      page: SignUpQuestionireScreen,
+      path: Routes.signUpScreenQuestionaire,
     ),
 
     // AutoRoute(

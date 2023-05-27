@@ -1,6 +1,7 @@
 import 'package:chef/helpers/helpers.dart';
 import 'package:chef/screens/home/home_screen.dart';
 
+import '../../setup.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../experience/experience_questionire_v.dart';
 import '../home/home_page/home_screen_v.dart';
@@ -13,6 +14,8 @@ class SignUpLetsStartScreen extends StatefulWidget {
 }
 
 class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
+  final _navigation = locateService<INavigationService>();
+
   @override
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
@@ -98,7 +101,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     ),
                     Expanded(
                       child: GeneralText(
-                        Strings.letsStartScreenLabel2,
+                        Strings.letsStartScreenLabel3,
                         maxLines: 2,
                         textAlign: TextAlign.start,
                         style: appTheme.typographies.interFontFamily.headline4
@@ -124,7 +127,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
                     ),
                     Expanded(
                       child: GeneralText(
-                        Strings.letsStartScreenLabel2,
+                        Strings.letsStartScreenLabel4,
                         maxLines: 2,
                         textAlign: TextAlign.start,
                         style: appTheme.typographies.interFontFamily.headline4
@@ -183,16 +186,7 @@ class _SignUpLetsStartScreenState extends State<SignUpLetsStartScreen> {
       title: Strings.letsStartScreenBtnLabel.toUpperCase(),
       styleType: ButtonStyleType.fill,
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const ExperienceQuestionireScreen()),
-        // );
-        Navigator.push(
-          context,
-          // MaterialPageRoute(builder: (context) => const FoodDetailScreen()),
-          //  MaterialPageRoute(builder: (context) => LoungeHomeScreen()),
-          MaterialPageRoute(builder: (context) => HomeScreenView()),
-        );
+        _navigation.replace(route: HomeRouteView());
         //    viewModel.goToForgotPasswordScreen();
       },
     );

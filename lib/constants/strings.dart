@@ -299,9 +299,15 @@ abstract class Strings {
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor";
+      "Adherence to food safety regulations and standards";
   static const letsStartScreenLabel2 =
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+      "Responsibility for the quality and consistency of the dishes served";
+  static const letsStartScreenLabel3 =
+      "Respectful and professional communication with foodies and staff.";
+
+  static const letsStartScreenLabel4 =
+      "Compliance with local laws and regulations related to food service";
+
   static const letsStartScreenBtnLabel = "Let's Start";
 
   static const noOfPersonsHint = '0';
@@ -390,7 +396,6 @@ abstract class Strings {
   static const rsLabel = 'RS. ';
   static const personsLabel = ' Persons';
 
-
   static const labelTitleProfile = 'Profile';
 
   static const labelTitleReviews = 'Reviews';
@@ -424,8 +429,7 @@ abstract class Strings {
   static const infoPopupButtonTitle = "Okay";
 
   static const foodieVerifiedPopupTitle = "Foodie Verified";
-  static const foodieVerifiedSubPopupTitle =
-      "The foodie is verified";
+  static const foodieVerifiedSubPopupTitle = "The foodie is verified";
   static const foodieVerifiedPopupBtnTitle = "Okay";
 
   static const foodieVerificationPopupTitle = "Foodie Verification";

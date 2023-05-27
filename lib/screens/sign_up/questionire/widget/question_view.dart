@@ -55,14 +55,30 @@ class _QuestionViewState extends State<QuestionView> {
                     appTheme: widget.appTheme,
                     answerList: widget.questionObj.answers)
                 :
-        // questionObj.type == "INPUT" ?
+                // questionObj.type == "INPUT" ?
                 InputField(appTheme: widget.appTheme)
       ],
     );
   }
 }
 
-class multiChipView extends StatelessWidget {
+// class  extends StatefulWidget {
+//   const ({Key? key}) : super(key: key);
+//
+//   @override
+//   _State createState() => _State();
+// }
+//
+// class _State extends State<> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+
+class multiChipView extends StatefulWidget {
+  // const multiChipView({Key? key}) : super(key: key);
+
   multiChipView({
     Key? key,
     required this.appTheme,
@@ -71,6 +87,31 @@ class multiChipView extends StatelessWidget {
 
   final IAppThemeData appTheme;
   List<Answer> answerList;
+
+  @override
+  _multiChipViewState createState() => _multiChipViewState();
+}
+
+class _multiChipViewState extends State<multiChipView> {
+  Map<String, bool> selectedData = {};
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+//
+// class multiChipView extends StatelessWidget {
+//   multiChipView({
+//     Key? key,
+//     required this.appTheme,
+//     required this.answerList,
+//   }) : super(key: key);
+//
+//   final IAppThemeData appTheme;
+//   List<Answer> answerList;
+//
+//   Map<String, bool> selectedData = {};
 
   @override
   Widget build(BuildContext context) {
@@ -85,18 +126,55 @@ class multiChipView extends StatelessWidget {
           crossAxisSpacing: 20.0,
           mainAxisSpacing: 20.0,
         ),
-        itemCount: answerList.length,
+        itemCount: widget.answerList.length,
         itemBuilder: (context, index) {
-          return Container(
-            height: 50,
-            child: ChipsWidget(
-              appTheme: appTheme,
-              title: answerList[index].name,
-            ),
-          );
+          return InkWell(
+              onTap: () {
+                setState(() {
+                  if (selectedData.isEmpty) {
+                    selectedData[widget.answerList[index].name] = true;
+                  } else {
+                    if (selectedData
+                        .containsKey(widget.answerList[index].name)) {
+                      if (selectedData[widget.answerList[index].name]!) {
+                        selectedData[widget.answerList[index].name] = false;
+                      } else {
+                        selectedData[widget.answerList[index].name] = true;
+                      }
+                    } else {
+                      selectedData[widget.answerList[index].name] = true;
+                    }
+                  }
+                });
+              },
+              child: SizedBox(
+                height: 50,
+                child: ChipsWidget(
+                  appTheme: widget.appTheme,
+                  title: widget.answerList[index].name,
+                  selected: isSelected(widget.answerList[index].name),
+                ),
+              ));
         },
       ),
     );
+  }
+
+  bool isSelected(String nameOfItem) {
+    if (selectedData.isEmpty) {
+      selectedData[nameOfItem] = true;
+      return true;
+    } else if (selectedData.containsKey(nameOfItem)) {
+      selectedData[nameOfItem]!;
+    }
+    return false;
+    // if (experienceHelper.selectedWowFactors.containsKey(nameOfItem)) {
+    //   return true;
+    // } else if (experienceHelper.selectedPerferencesFactors
+    //     .containsKey(nameOfItem)) {
+    //   return true;
+    // }
+    // return false;
   }
 }
 
@@ -109,7 +187,6 @@ class InputField extends StatelessWidget {
   final IAppThemeData appTheme;
 
   final TextController _journeyController = TextController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +206,6 @@ class InputField extends StatelessWidget {
 }
 
 class SingleOption extends StatefulWidget {
-
   SingleOption({
     Key? key,
     required this.appTheme,
@@ -151,14 +227,14 @@ class SingleOption extends StatefulWidget {
 }
 
 class _SingleOptionState extends State<SingleOption> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
         height: 350,
         child: ListView.builder(
             itemCount: widget.answerList.length,
-            physics: const NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
+            physics:
+                const NeverScrollableScrollPhysics(), // BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return Container(
@@ -203,9 +279,12 @@ class _SingleOptionState extends State<SingleOption> {
                       ),
                       onPressed: () async {
                         setState(() {
-                          widget.answersIds.contains(widget.answerList[index].id)
-                              ? widget.answersIds.remove(widget.answerList[index].id)
-                              : (widget.answersIds..clear()).add(widget.answerList[index].id);
+                          widget.answersIds
+                                  .contains(widget.answerList[index].id)
+                              ? widget.answersIds
+                                  .remove(widget.answerList[index].id)
+                              : (widget.answersIds..clear())
+                                  .add(widget.answerList[index].id);
                         });
                       }),
                 ),

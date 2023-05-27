@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
+import '../../../helpers/function_helper.dart';
 import '../../../models/home/experience_list_response.dart';
 import '../../../setup.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
@@ -157,13 +158,26 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         const SizedBox(
                           height: 32.2,
                         ),
-                        GeneralRichText(
-                          // title: Strings.popularFoodDetailTitle,
-                          title: widget._expResponse.t[index].title,
 
-                          titleStyle:
-                              appTheme.typographies.interFontFamily.label11,
+                        SizedBox(
+                          width: 120,
+                          child: GeneralText(
+                            // title: Strings.popularFoodDetailTitle,
+                            widget._expResponse.t[index].title,
+
+                            //     width: 60.0,
+                            style:
+                                appTheme.typographies.interFontFamily.label11,
+                          ),
                         ),
+                        // GeneralRichText(
+                        //   // title: Strings.popularFoodDetailTitle,
+                        //   //   title: widget._expResponse.t[index].title,
+                        //   title: 'Desi Desi Desi Desi Desi Desi Desi Desi ',
+                        //   width: 60.0,
+                        //   titleStyle:
+                        //       appTheme.typographies.interFontFamily.label11,
+                        // ),
                         SizedBox(
                           height: 4,
                         ),
@@ -242,7 +256,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
           Padding(
             padding: const EdgeInsets.only(right: 8.1, bottom: 7.7),
             child: Container(
-              width: 61,
+              width: 71,
               padding: const EdgeInsetsDirectional.all(22),
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -254,7 +268,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                             .wowFactorIconPath !=
                         null
                     ? SvgPicture.network(
-                        (_experienceScreenViewModel.getValidUrlForImages(widget
+                        (FunctionHelper.getValidUrlForImages(widget
                             ._expResponse
                             .t[index]
                             .experienceWowFactors[i]
@@ -264,6 +278,8 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                         //     ? wowFactorsList[i].name ?? ""
                         //     : '',
                         color: HexColor.fromHex("#f1c452"),
+                        // height: 15.3,
+                        // width: 14.4,
                       )
                     : Image.asset('assets/images/icons/fireworks.png'),
               ),

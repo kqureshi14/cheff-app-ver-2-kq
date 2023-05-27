@@ -29,7 +29,6 @@ class SignUpQuestionireScreenViewModel
   final IStorageService _storage;
   final ApplicationService _appService;
 
-
   ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
 
   bool isImageSelected = false;
@@ -39,7 +38,6 @@ class SignUpQuestionireScreenViewModel
       isImageSelected = true;
     }
   }
-
 
   Future<void> loadQuestion({
     required String baseUrl,
@@ -55,6 +53,7 @@ class SignUpQuestionireScreenViewModel
     );
 
     final currentQuestionirData = questionireResponseFromJson(response.body);
+    developer.log(' Current Questionaire Data ' + '${response.body}');
     List<QuestionsList> data = currentQuestionirData.t;
     emit(signupquestion.Loaded(currentQuestionirData.t));
 

@@ -216,11 +216,10 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               } else {
                                 changePriceOption(" ");
                               }
-                              experienceHelper.priceExperience = double.parse('0.00001');
-                              developer.log(
-                                  ' Price selected value here  ' '$price');
-
-
+                              experienceHelper.priceExperience =
+                                  double.parse('0.00001');
+                              developer
+                                  .log(' Price selected value here  ' '$price');
                             },
                             child: Container(
                               child:
@@ -244,11 +243,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             textAlign: TextAlign.center,
                             style: price == Strings.createExperiencePerItemTitle
                                 ? appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500)
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -268,7 +267,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                                     Strings.createExperienceLabelTitle);
                               }
                               developer.log(' Price selected is ' '$price');
-                              experienceHelper.priceExperience = double.parse('0.0');
+                              experienceHelper.priceExperience =
+                                  double.parse('0.0');
                             },
                             child: Container(
                               child: price == Strings.createExperienceLabelTitle
@@ -290,11 +290,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             textAlign: TextAlign.center,
                             style: price == Strings.createExperienceLabelTitle
                                 ? appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500)
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -421,11 +421,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             textAlign: TextAlign.center,
                             style: location == Strings.createExperienceHomeTitle
                                 ? appTheme
-                                .typographies.interFontFamily.headline6
-                                .copyWith(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w500)
+                                    .typographies.interFontFamily.headline6
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w500)
                                 : appTheme
                                     .typographies.interFontFamily.headline6
                                     .copyWith(
@@ -467,11 +467,11 @@ class ExperienceManagerState extends State<ExperienceManager> {
                             style:
                                 location == Strings.createExperienceOtherTitle
                                     ? appTheme
-                                    .typographies.interFontFamily.headline6
-                                    .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w500)
+                                        .typographies.interFontFamily.headline6
+                                        .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w500)
                                     : appTheme
                                         .typographies.interFontFamily.headline6
                                         .copyWith(
@@ -954,8 +954,6 @@ class ExperienceManagerState extends State<ExperienceManager> {
               experienceHelper.selectedWowFactors[item.name] = item.id;
             }
           } else if (item is preference.T) {
-            developer.log(' item of preference factor is ' + item.name);
-
             if (experienceHelper.selectedPerferencesFactors
                 .containsKey(item.name)) {
               experienceHelper.selectedPerferencesFactors.remove(item.name);
