@@ -6,6 +6,7 @@ import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../models/home/experience_list_response.dart';
+import '../../../setup.dart';
 import '../../../ui_kit/widgets/general_new_appbar.dart';
 import '../../../ui_kit/widgets/general_rich_text.dart';
 import '../../../ui_kit/widgets/general_text.dart';
@@ -15,6 +16,7 @@ import 'dart:developer' as developer;
 
 import '../../experience/component/create_experience_screen_v.dart';
 import '../experience_menu_details/experience_menu_details_screen_v.dart';
+import '../experiences_details/experience_details_screen_vm.dart';
 
 class PopularFoodDetails extends StatefulWidget {
   const PopularFoodDetails({
@@ -31,6 +33,9 @@ class PopularFoodDetails extends StatefulWidget {
 
 class _PopularFoodDetailsState extends State<PopularFoodDetails> {
   List<CustomModel> wowFactorsList = [];
+
+  final _experienceScreenViewModel =
+      locateService<ExperienceDetailsScreenViewModel>();
 
   @override
   void initState() {
@@ -226,12 +231,14 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
   }
 
   Widget wowFactors(IAppThemeData appTheme, int index) {
+    int wowLength = widget._expResponse.t[index].experienceWowFactors.length > 3
+        ? 3
+        : widget._expResponse.t[index].experienceWowFactors.length;
+
     return Wrap(
       children: [
         //for (int i = 0; i <  wowFactorsList.length; i++)
-        for (int i = 0;
-            i < widget._expResponse.t[index].experienceWowFactors.length;
-            i++)
+        for (int i = 0; i < wowLength; i++)
           Padding(
             padding: const EdgeInsets.only(right: 8.1, bottom: 7.7),
             child: Container(
@@ -247,8 +254,11 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
                             .wowFactorIconPath !=
                         null
                     ? SvgPicture.network(
-                        (widget._expResponse.t[index].experienceWowFactors[i]
-                            .wowFactorIconPath)!,
+                        (_experienceScreenViewModel.getValidUrlForImages(widget
+                            ._expResponse
+                            .t[index]
+                            .experienceWowFactors[i]
+                            .wowFactorIconPath!)),
 
                         // wowFactorsList[i].name != null
                         //     ? wowFactorsList[i].name ?? ""

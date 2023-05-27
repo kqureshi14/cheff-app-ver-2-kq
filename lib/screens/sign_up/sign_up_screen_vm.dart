@@ -38,11 +38,16 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   final IStorageService _storage;
   final ApplicationService _appService;
 
+  final TextController townController = TextController();
+  final TextController cityController = TextController();
+
   late final cityDropDown = <String>[];
   late final townDropDown = <String>[];
 
   final cityInfo = {};
   final townInfo = {};
+
+  final Map<String, List<String>> cityTownInfo = {};
   late CityResponse cityResponse;
   late TownResponse townResponse;
 
@@ -71,17 +76,22 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     emit(Loaded(cityResponse));
   }
 
-  void getCityId(String cityName) {
+  void getCityId(String cityName, {CityResponse? cityDetails}) {
+    if (cityDetails != null) {
+      cityResponse = cityDetails;
+    }
     for (var i = 0; i < cityResponse.t.length; i++) {
-      if (cityName == cityResponse.t[i].name && cityResponse.t[i].id == 1) {
-        developer.log(' City Id is ' + '${cityResponse.t[i].id}');
-        // townDropDown.clear();
-        // townDropDown.add('Select');
-        //  townDropDown.clear();
-        //townDropDown.clear();
-        selectedCityId = cityResponse.t[i].id;
-        loadTownList(cityId: cityResponse.t[i].id);
-      }
+      //  if (cityName == cityResponse.t[i].name && cityResponse.t[i].id == 1) {
+      //  if (cityName == cityResponse.t[i].name) {
+      developer.log(' City Id is ' + '${cityResponse.t[i].id}');
+      // townDropDown.clear();
+      // townDropDown.add('Select');
+      //  townDropDown.clear();
+      //townDropDown.clear();
+      selectedCityId = cityResponse.t[i].id;
+      loadTownList(
+          cityId: cityResponse.t[i].id, cityName: cityResponse.t[i].name);
+      //  }
     }
   }
 
@@ -196,7 +206,8 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     //   t: prorequest.T(),
     // ).toJson();
 
-    data_request.T t = data_request.T(status: 'ACTIVE');
+    //   data_request.T t = data_request.T(status: 'ACTIVE');
+    data_request.T t = data_request.T();
 
     final dataRequest = data_request.DataRequest(
       t: t,
@@ -211,11 +222,14 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       developer.log(' City data is ' + cityResponse.t[i].name);
       cityDropDown.add(cityResponse.t[i].name);
       cityInfo[cityResponse.t[i].name] = cityResponse.t[i].id;
-      if (i == 0) {
-        getCityId(cityResponse.t[i].name);
 
-        //  townDropDown.add('Select');
+      //  if (i == 0) {
+      if (cityTownInfo.isEmpty) {
+        getCityId(cityResponse.t[i].name);
       }
+
+      //  townDropDown.add('Select');
+      // }
     }
 
     //cityDropDown = currentProfessionData.t;
@@ -224,7 +238,7 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
     // }
   }
 
-  Future<void> loadTownList({cityId}) async {
+  Future<void> loadTownList({cityId, required String cityName}) async {
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.townList);
 
     // emit(Loaded(_professionData));
@@ -247,19 +261,37 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       data: dataRequest,
     );
     townResponse = townResponseFromJson(response.body);
+
+    List<String> _townData = [];
+
+    for (var i = 0; i < townResponse.t.length; i++) {
+      _townData.add(townResponse.t[i].name);
+    }
+    cityTownInfo[cityName] = _townData;
     for (var i = 0; i < townResponse.t.length; i++) {
       developer.log(' Town Name is ' + townResponse.t[i].name);
 
+      developer.log(' Name of city is  ' + '${cityName}');
       developer.log(' City Id is  ' + '${townResponse.t[i].cityId}');
+      //cityTownInfo[cityName] = ;
       if (!townDropDown.contains(townResponse.t[i].name)) {
-        if (i == 0) {
-          selectedTownId = townResponse.t[i].id;
-        }
+        // if (i == 0) {
+        //   selectedTownId = townResponse.t[i].id;
+        // }
+        // townDropDown.clear();
         townInfo[townResponse.t[i].name] = townResponse.t[i].id;
         townDropDown.add(townResponse.t[i].name);
-
-        //menuItems
       }
+      //menuItems
+      // }
+
+      developer.log(' City Town Details are ');
+
+      cityTownInfo.forEach((key, value) {
+        developer.log(' City Details key are ' + '${key}');
+
+        developer.log(' City Details values are ' + '${key}');
+      });
     }
 
     //cityDropDown = currentProfessionData.t;

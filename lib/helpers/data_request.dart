@@ -79,6 +79,7 @@ class T {
   String? townName;
   String? twitter;
   String? status;
+  int? chefId;
 
   T({
     this.address,
@@ -98,6 +99,7 @@ class T {
     this.townName,
     this.twitter,
     this.status,
+    this.chefId,
   });
 
   factory T.fromJson(Map<String, dynamic> json) => T(
@@ -118,6 +120,7 @@ class T {
         townName: json["townName"],
         twitter: json["twitter"],
         status: json["status"],
+        chefId: json["chefId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -138,5 +141,6 @@ class T {
         "townName": townName,
         "twitter": twitter,
         "status": status,
+        "chefId": chefId,
       };
 }
