@@ -51,6 +51,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   final TextController nOfPersons = TextController();
   final TextController notes = TextController();
   late List<DropdownMenuItem<String>> statusList = [];
+
   // late List<DropdownMenuItem<String>> items = [];
 
   final items = <String>[];
@@ -81,78 +82,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   @override
   void initState() {
-    var newItem = const DropdownMenuItem(
-      child: Text('Scientist'),
-      value: 'Scientist',
-      alignment: Alignment.centerLeft,
-    );
-    var newItem1 = const DropdownMenuItem(
-      child: Text('Couple'),
-      value: 'Couple',
-      alignment: Alignment.centerLeft,
-    );
-    var newItem2 = const DropdownMenuItem(
-      child: Text('Single'),
-      value: 'Single',
-      alignment: Alignment.centerLeft,
-    );
-    // items.add(newItem);
-    // items.add(newItem1);
-    // items.add(newItem2);
-
     items.add('Scientist');
     items.add('Couple');
     items.add('Single');
-
-    // if (widget._foodMenuModel.t.isNotEmpty) {
-    //   _price = widget._foodMenuModel.t[0].price.toString();
-    // }
-    /// if(widget._experienceData.priceTypeId==1){
     _price = widget._experienceData.price.toString();
-    //   }
-
-    // menuListItems.addAll([
-    //   CustomModel(name: "Sindhi Biryani"),
-    //   CustomModel(name: "Buritto"),
-    //   CustomModel(name: "Vegetable Salad"),
-    //   CustomModel(name: "Hyderabadi Rice"),
-    //   CustomModel(name: "Soft Drinks"),
-    // ]);
-    // wowFactorsList.addAll([
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorGarden,
-    //       name: "assets/images/icons/garden.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorFireworks,
-    //       name: "assets/images/icons/fireworks.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorPetFriendly,
-    //       name: "assets/images/icons/pet_friendly.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorWifi,
-    //       name: "assets/images/icons/wifi_2.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorMusic,
-    //       name: "assets/images/icons/music.png"),
-    //   CustomModel(
-    //       icon: Strings.productDetailWowFactorParking,
-    //       name: "assets/images/icons/parking.png")
-    // ]);
     loadMenuItems();
     loadWowFactor();
     loadPerferences();
     loadMenuHeader();
-    // preferencesList.addAll([
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceCouple,
-    //       name: "assets/images/icons/couple.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFamily,
-    //       name: "assets/images/icons/family.png"),
-    //   CustomModel(
-    //       icon: Strings.foodDetailPreferenceFnf,
-    //       name: "assets/images/icons/fnf.png"),
-    // ]);
     super.initState();
   }
 
@@ -166,22 +103,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void loadMenuItems() {
-    developer.log(' Length of Menu is ' + '${widget._foodMenuModel.t.length}');
+    developer.log(' Length of Menu is ' '${widget._foodMenuModel.t.length}');
     for (int i = 0; i < widget._foodMenuModel.t.length; i++) {
-      // widget._foodMenuModel.t[i].
       menuListItems.addAll([
         CustomModel(name: widget._foodMenuModel.t[i].dish),
-        // CustomModel(name: "Buritto"),
-        // CustomModel(name: "Vegetable Salad"),
-        // CustomModel(name: "Hyderabadi Rice"),
-        // CustomModel(name: "Soft Drinks"),
       ]);
     }
   }
 
   void loadWowFactor() {
     developer.log(
-        ' Wow factors are ' + '${widget._experienceData.experienceWowFactors}');
+        ' Wow factors are ' '${widget._experienceData.experienceWowFactors}');
     var experienceWowFactor = widget._experienceData.experienceWowFactors;
     //
     for (int i = 0; i < experienceWowFactor.length; i++) {
@@ -194,7 +126,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void loadPerferences() {
-    developer.log(' loadPerferences factors are ' +
+    developer.log(' loadPerferences factors are '
         '${widget._experienceData.experiencePreferences}');
     var experiencePreferences = widget._experienceData.experiencePreferences;
 
@@ -236,10 +168,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       backgroundColor: HexColor.fromHex('#212129'),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: getStartedButtonTitle(appTheme: appTheme),
       body: Stack(
-        // clipBehavior: Clip.none,
         children: [
           Column(
             children: [
@@ -261,54 +190,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             height: 40,
                           ),
                         if (selectedTab == TabBars.menu) ...[
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       color: HexColor.fromHex('#f1c452'),
-                          //       width: 16,
-                          //       height: 1,
-                          //     ),
-                          //     const SizedBox(
-                          //       width: 2,
-                          //     ),
-                          //     getFoodItemHeading(
-                          //       appTheme: appTheme,
-                          //       title: Strings.foodDetailHeading,
-                          //     ),
-                          //   ],
-                          // ),
-                          // displayMenuHeader(appTheme),
-                          // const SizedBox(
-                          //   height: 11,
-                          // ),
-                          //    for (var i in menuHeaderList)
                           displayMenuHeader(
                             appTheme,
                           ),
-
-                          // menuTabView(context, appTheme),
-                          // const SizedBox(
-                          //   height: 25,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     Container(
-                          //       color: HexColor.fromHex('#f1c452'),
-                          //       width: 16,
-                          //       height: 1,
-                          //     ),
-                          //     const SizedBox(
-                          //       width: 2,
-                          //     ),
-                          //     getFoodItemHeading(
-                          //         appTheme: appTheme,
-                          //         title: Strings.foodDetailHeading2),
-                          //   ],
-                          // ),
-                          // const SizedBox(
-                          //   height: 11,
-                          // ),
-                          // menuTabView(context, appTheme),
                         ],
                         const SizedBox(
                           height: 15,
@@ -522,7 +406,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: GeneralText(
-                                  widget._experienceData.priceTypeId == 1 ? 'per person' :"",
+                                  widget._experienceData.priceTypeId == 1
+                                      ? 'per person'
+                                      : "",
                                   style: appTheme
                                       .typographies.interFontFamily.headline4
                                       .copyWith(
@@ -565,7 +451,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   Widget menuTabView(
       BuildContext context, IAppThemeData appTheme, String headerName) {
     //menuHeaderList();
-    developer.log(' HEader name is in Menu tab ' + '${headerName}');
+    developer.log(' Header name is in Menu tab ' '${headerName}');
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 12),
       child: Container(
@@ -1470,8 +1356,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               BorderRadius.circular(10)),
                                       // padding: EdgeInsetsDirectional.only(
                                       //     top: 8, bottom: 8, start: 16, end: 16),
-                                      margin:
-                                          const EdgeInsetsDirectional.only(bottom: 8),
+                                      margin: const EdgeInsetsDirectional.only(
+                                          bottom: 8),
                                       child: noOfPersonsField(
                                         appTheme: appTheme,
                                         valueStyle: appTheme
@@ -1503,17 +1389,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                                   HexColor.fromHex('#f1c452')),
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      margin:
-                                          const EdgeInsetsDirectional.only(bottom: 8),
+                                      margin: const EdgeInsetsDirectional.only(
+                                          bottom: 8),
                                       padding: const EdgeInsetsDirectional.only(
                                           top: 8, bottom: 8, start: 8, end: 8),
-                                      child: /*ExtoDropdown(
-                                        name: _wfActions.first ?? "",
-                                        items: _wfActions,
-                                        // isMandatory: true,
-                                        onChange: ({required key, value}) {},
-                                      ),*/
-                                          GeneralDropdown(
+                                      child: GeneralDropdown(
                                         borderColor: Colors.transparent,
                                         name: 'Select',
                                         // margin: 22.0,
@@ -1523,17 +1403,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                           required dynamic value,
                                         }) {},
                                       ),
-                                      /*GeneralDropdown(
-                                          borderColor: Colors.transparent,
-                                          name: 'Select',
-                                          // margin: 22.0,
-                                          items: statusList,
-                                          onChange: ({
-                                            required String key,
-                                            required dynamic value,
-                                          }) {
-                                          },
-                                        )*/
                                     ),
                                   ],
                                 ),
@@ -1578,7 +1447,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       borderRadius: BorderRadius.circular(10)),
                                   // padding: EdgeInsetsDirectional.only(
                                   //     top: 8, bottom: 8, start: 16, end: 16),
-                                  margin: const EdgeInsetsDirectional.only(bottom: 8),
+                                  margin: const EdgeInsetsDirectional.only(
+                                      bottom: 8),
                                   child: notesField(
                                     appTheme: appTheme,
                                     valueStyle: appTheme
@@ -1746,7 +1616,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     // bottomLeft: Radius.circular(40.0)
                   ),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Image.asset(
                   Resources.expDeleteIconPNG,
                   height: 16,
@@ -1846,29 +1717,64 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                     color: HexColor.fromHex('#f1c452'),
                   ),
                 ),
-                const Spacer(),
-                Image.asset(
-                  Resources.userIconPNG,
-                  height: 12,
-                ),
-                GeneralText(
-                  widget._experienceData.persons,
-                  //    '22',
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 16,
-                    color: HexColor.fromHex('#f1c452'),
-                  ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
+                // const Spacer(),
               ],
             ),
             const SizedBox(
               height: 12,
             ),
-            wowFactors(appTheme, preferencesList),
+            Row(
+              children: [
+                Expanded(
+                  child:wowFactors(appTheme, preferencesList),
+                ),
+                Container(
+                  height: 166,
+                  width: 1,
+                  color: Colors.grey,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18,right: 18),
+                  child: Column(
+                    children: [
+                      GeneralText(
+                        widget._experienceData.persons,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                          fontSize: 47,
+                          color: HexColor.fromHex('#b0c18b'),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            Resources.userIconPNG,
+                            height: 12,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 5.7,
+                          ),
+                          GeneralText(
+                            "Persons",
+                            style: appTheme.typographies.interFontFamily.headline6
+                                .copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                              // fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // const SizedBox(
+                //   width: 12,
+                // ),
+              ],
+            ),
             const SizedBox(
               height: 12,
             ),
@@ -1978,19 +1884,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             //
           ],
         ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: const Color(0xffbb3127),
-              child: Image.asset(
-                Resources.expEditPenPNG,
-                height: 20,
-              ),
-            ),
-          ),
-        )
+        // Positioned.fill(
+        //   child: Align(
+        //     alignment: Alignment.centerRight,
+        //     child: FloatingActionButton(
+        //       onPressed: () {},
+        //       backgroundColor: const Color(0xffbb3127),
+        //       child: Image.asset(
+        //         Resources.expEditPenPNG,
+        //         height: 20,
+        //       ),
+        //     ),
+        //   ),
+        // )
       ],
     );
   }
@@ -2075,6 +1981,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           ),
         ));
   }
+
   // Widget timeSelectorBox(IAppThemeData appTheme,
   //     {bool showSelectedTime = false}) {
   //   return Container(
@@ -2104,8 +2011,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     required TextStyle hintStyle,
   }) {
     return GeneralTextInput(
-      contentPadding:
-          const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      contentPadding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 8, start: 16, end: 16),
       controller: nOfPersons,
       hint: Strings.noOfPersonsHint,
       valueStyle: valueStyle,
@@ -2128,8 +2035,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }) {
     return GeneralTextInput(
       isMultiline: true,
-      contentPadding:
-          const EdgeInsetsDirectional.only(top: 8, bottom: 8, start: 16, end: 16),
+      contentPadding: const EdgeInsetsDirectional.only(
+          top: 8, bottom: 8, start: 16, end: 16),
       controller: notes,
       hint: Strings.notesHint,
       valueStyle: valueStyle,
