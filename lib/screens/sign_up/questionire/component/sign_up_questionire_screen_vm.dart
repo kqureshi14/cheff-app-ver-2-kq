@@ -1,14 +1,21 @@
 import 'dart:io';
 
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/models/signup/questionire_request.dart'
+import 'package:chef/models/signup/requests/questionire_request.dart'
     as questionirerequest;
-import 'package:chef/models/signup/questionire_response.dart';
+
+import '../../../../models/signup/requests/save_chef_request.dart' as save_chef_request;
+
+import 'package:chef/models/signup/responses/questionire_response.dart';
 
 import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_m.dart'
     as signupquestion;
 
 import 'dart:developer' as developer;
+
+import '../../../../models/signup/requests/save_chef_request.dart';
+import '../../../../models/signup/responses/question_answer_response.dart';
+
 
 @injectable
 class SignUpQuestionireScreenViewModel
@@ -29,7 +36,19 @@ class SignUpQuestionireScreenViewModel
   final IStorageService _storage;
   final ApplicationService _appService;
 
+  List<QuestionsList> questionsResponseData = [];
+
+  List<int> answerIdsInterests = [];
+  List<int> answerIdSingleOption = [];
+
+List<ChefQuestionAnswers> chefQuestionAnswersList = [];
+  SocialHandles? socialHandles;
+
   ValueNotifier<File?> selectedImageNotifier = ValueNotifier<File?>(null);
+
+  final TextController journeyQuestion1Controller = TextController();
+  final TextController journeyQuestion2Controller = TextController();
+
 
   bool isImageSelected = false;
   void updateSelectedImage(File? image) {
@@ -53,11 +72,52 @@ class SignUpQuestionireScreenViewModel
     );
 
     final currentQuestionirData = questionireResponseFromJson(response.body);
-    developer.log(' Current Questionaire Data ' + '${response.body}');
-    List<QuestionsList> data = currentQuestionirData.t;
+    developer.log(' Current Questionnaire Data ' '${response.body}');
+    questionsResponseData = currentQuestionirData.t;
     emit(signupquestion.Loaded(currentQuestionirData.t));
 
     // emit(Loaded(currentQuestionirData.t));
+  }
+
+
+  Future<void> saveChef({
+    required String baseUrl,
+    required BuildContext context,
+    Function? completion,
+  }) async {
+    final url = InfininHelpers.getRestApiURL(baseUrl + Api.saveChef);
+
+    final saveChefRequest = save_chef_request.SaveChefRequest(
+      userId: _appService.state.userInfo?.t.id,
+      t: save_chef_request.T(chefQuestionAnswers: chefQuestionAnswersList,socialHandles: socialHandles),
+    ).toJson();
+    final response = await _network.post(
+      path: url,
+      data: saveChefRequest,
+    );
+    // final currentQuestionirData = questionireResponseFromJson(response.body);
+    if (response != null) {
+      developer
+          .log(' Response of Save Chef is  ' '${response.body}');
+      ChefQuestionAnswerResponse chefQuestionAnswerResponse = chefQuestionAnswerResponseFromJson(response.body);
+      Toaster.infoToast(
+          context: context, message: chefQuestionAnswerResponse.message.toString());
+      completion!();
+    } else {
+      Toaster.infoToast(context: context, message: 'Error in calling the Api');
+    }
+  }
+
+  void addModelsFromQuestions({Function? completion, required BuildContext context}){
+    if(answerIdsInterests.isNotEmpty&&answerIdSingleOption.isNotEmpty&&journeyQuestion1Controller.text.isNotEmpty&&journeyQuestion2Controller.text.isNotEmpty){
+      chefQuestionAnswersList.add(ChefQuestionAnswers(answerIds: answerIdsInterests, chefId: _appService.state.userInfo!.t.id,id: 7,inputAnswer: '',questionId: 7));
+      chefQuestionAnswersList.add(ChefQuestionAnswers(answerIds: answerIdSingleOption,id: 4,inputAnswer: '',chefId: _appService.state.userInfo!.t.id,questionId: 4));
+      chefQuestionAnswersList.add(ChefQuestionAnswers(id: 5,inputAnswer: journeyQuestion1Controller.text,chefId: _appService.state.userInfo!.t.id,answerIds: [],));
+      chefQuestionAnswersList.add(ChefQuestionAnswers(id: 6,inputAnswer: journeyQuestion2Controller.text,chefId: _appService.state.userInfo!.t.id,answerIds: [],));
+      completion!();
+    }else{
+      Toaster.errorToast(context: context, message: 'Please fill all the fields');
+    }
   }
 
   bool isValidUrl(String url) => Uri.tryParse(url)?.hasAbsolutePath ?? false;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chef/models/signup/signup_response.dart';
+import 'package:chef/models/signup/responses/signup_response.dart';
 import 'package:http/http.dart';
 
 import 'package:chef/constants/constants.dart';

@@ -8,7 +8,7 @@ import 'dart:developer' as developer;
 
 import '../../models/login/login_request.dart' as loginrequest;
 import '../../models/login/login_response_chef.dart';
-import '../../models/signup/signup_response.dart';
+import '../../models/signup/responses/signup_response.dart';
 
 import 'package:chef/screens/sign_in/sign_in_screen_m.dart';
 

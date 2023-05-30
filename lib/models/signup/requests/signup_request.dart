@@ -1,4 +1,4 @@
-import '../../helpers/data_request.dart';
+import '../../../helpers/data_request.dart';
 
 class SignupRequest {
   SignupRequest({

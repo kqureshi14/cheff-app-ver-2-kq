@@ -6,7 +6,7 @@ import '../../helpers/helpers.dart';
 
 import 'dart:developer' as developer;
 
-import '../../models/signup/city_response.dart';
+import '../../models/signup/responses/city_response.dart';
 
 class CityTownHelper extends StatefulWidget {
   const CityTownHelper(

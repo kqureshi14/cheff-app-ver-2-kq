@@ -1,15 +1,15 @@
 import 'package:chef/helpers/helpers.dart';
 
 // import '../../models/signup/signup_request.dart' as signuprequest;
-import 'package:chef/models/signup/signup_response.dart';
+import 'package:chef/models/signup/responses/signup_response.dart';
 import '../../helpers/data_request.dart' as signuprequest;
 
 import 'dart:developer' as developer;
 
-import '../../models/signup/city_response.dart';
+import '../../models/signup/responses/city_response.dart';
 import 'package:chef/helpers/data_request.dart' as data_request;
 
-import '../../models/signup/town_response.dart';
+import '../../models/signup/responses/town_response.dart';
 
 @injectable
 class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
