@@ -20,7 +20,6 @@ import 'package:chef/helpers/data_request.dart' as data_request;
 
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 
-
 import 'dart:developer' as developer;
 
 @injectable
@@ -46,57 +45,17 @@ class ExperienceMenuDetailsScreenViewModel
   late FoodMenuModel foodMenuData;
   late ScheduleData scheduleData;
 
-  initialize() {
-    // if (_wowFactorResponse.t.isNotEmpty) {
-    //  emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse));
-    // } else {
-    // emit(const create_experience.Loading());
-    // loadWowFactors();
-    // }
-  }
+  initialize() {}
 
   void saveExperience(BuildContext context) async {
     final _appService = locateService<ApplicationService>();
-    developer.log(' Ready to save');
-    developer
-        .log(' Chef Id User Id is  ' + '${_appService.state.userInfo!.userId}');
 
-    developer.log(' Chef Name is   ' + '${_appService.state.userInfo!.t.name}');
-
-    developer.log(' Chef Brand Name is   ' +
-        '${_appService.state.userInfo!.t.brandName}');
-
-    developer.log(
-        ' Chef Address is   ' + '${_appService.state.userInfo!.t.address}');
-
-    developer
-        .log(' Chef Id In T is   ' + '${_appService.state.userInfo!.t.id}');
     ExperienceHelper experienceHelper = (_appService.state.experienceHelper)!;
-
-    developer.log(
-        ' priceExperience Details ' + '${experienceHelper.priceExperience}');
-
-    developer
-        .log(' numberOfPerson Details ' + '${experienceHelper.numberOfPerson}');
-
-    developer.log(' subHostName Details ' + '${experienceHelper.subHostName}');
-
-    developer.log(' selected WowFactors Number  Details ' +
-        '${experienceHelper.selectedWowFactors.values}');
-
-    developer.log(' selected PerferencesFactors Number  Details ' +
-        '${experienceHelper.selectedPerferencesFactors.values}');
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const MenuExperienceScreen()),
-    // );
 
     if (!validateData(context, experienceHelper)) {
       return;
     }
-    final url =
-        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
     //getList(experienceHelper.selectedWowFactors,'wow');
     experience_request.T t = experience_request.T(
@@ -230,8 +189,7 @@ class ExperienceMenuDetailsScreenViewModel
   }
 
   Future<void> getExperienceMenu({required String experienceId}) async {
-    final url =
-        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenu);
     // emit(const Loading());
 
     emit(const exp_menu_details.Loading());

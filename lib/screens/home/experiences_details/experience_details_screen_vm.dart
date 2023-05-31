@@ -283,71 +283,6 @@ class ExperienceDetailsScreenViewModel
     return alignData;
   }
 
-  // void loadWowFactors() async {
-  //   //http://18.202.117.137:8080/feyst-service/wow-factor/list
-  //
-  //   final url = InfininURLHelpers.getRestApiURL(Api.baseURL + Api.wowFactorAPI);
-  //
-  //   // T t = loginrequest.T(
-  //   //   mobileNo: mobileNumber,
-  //   // );
-  //
-  //   final requestWowFactor = LoginRequest(
-  //     t: T(),
-  //   ).toJson();
-  //
-  //   final _header = <String, String>{
-  //     Api.headerAcceptKey: Api.headerAcceptTypeValue
-  //   };
-  //
-  //   // final questionsDataRequest = questionirerequest.QuestionireRequest(
-  //   //   t: questionirerequest.T(category: "CHEF_PROFILE"),
-  //   // ).toJson();
-  //   final response = await _network.post(
-  //     path: url,
-  //     data: requestWowFactor,
-  //   );
-  //
-  //   _wowFactorResponse = wowfactor.wowFactorResponseFromJson(response.body);
-  //   loadPerferences();
-  //   //  emit(create_experience.Loaded(_wowFactorResponse));
-  //   //List<QuestionsList> data = currentQuestionirData.t;
-  //   //emit(signupquestion.Loaded(currentQuestionirData.t));
-  // }
-
-  // void loadPerferences() async {
-  //   //http://18.202.117.137:8080/feyst-service/wow-factor/list
-  //
-  //   final url =
-  //       InfininURLHelpers.getRestApiURL(Api.baseURL + Api.preferenceAPI);
-  //
-  //   // T t = loginrequest.T(
-  //   //   mobileNo: mobileNumber,
-  //   // );
-  //
-  //   final requestWowFactor = LoginRequest(
-  //     t: T(),
-  //   ).toJson();
-  //
-  //   final _header = <String, String>{
-  //     Api.headerAcceptKey: Api.headerAcceptTypeValue
-  //   };
-  //
-  //   // final questionsDataRequest = questionirerequest.QuestionireRequest(
-  //   //   t: questionirerequest.T(category: "CHEF_PROFILE"),
-  //   // ).toJson();
-  //   final response = await _network.post(
-  //     path: url,
-  //     data: requestWowFactor,
-  //   );
-  //
-  //   // final preferenceResponse =
-  //   _preferenceResponse = preference.preferenceResponseFromJson(response.body);
-  //   emit(exp_details.Loaded());
-  //   //List<QuestionsList> data = currentQuestionirData.t;
-  //   //emit(signupquestion.Loaded(currentQuestionirData.t));
-  // }
-
   bool validateData(BuildContext context, ExperienceHelper experienceHelper) {
     var isValidate = true;
     if ((experienceHelper.titleExperience ?? '').isEmpty) {
@@ -380,19 +315,6 @@ class ExperienceDetailsScreenViewModel
       Toaster.infoToast(context: context, message: 'Location cannot be empty');
       return false;
     }
-    // if ((experienceHelper.subHostName ?? '').isEmpty) {
-    //   isValidate = false;
-    //   Toaster.infoToast(
-    //       context: context, message: 'SubHost Name cannot be empty');
-    //   return false;
-    // }
-    // if ((experienceHelper.subHostMobileNumber ?? '').isEmpty) {
-    //   isValidate = false;
-    //   Toaster.infoToast(
-    //       context: context, message: 'SubHost Mobile Number cannot be empty');
-    //   return false;
-    // }
-
     if (experienceHelper.selectedWowFactors.isEmpty) {
       isValidate = false;
       Toaster.infoToast(context: context, message: 'Select Wow Factor');

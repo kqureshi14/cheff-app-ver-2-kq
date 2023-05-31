@@ -1727,7 +1727,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             Row(
               children: [
                 Expanded(
-                  child:wowFactors(appTheme, preferencesList),
+                  child: wowFactors(appTheme, preferencesList),
                 ),
                 Container(
                   height: 166,
@@ -1735,7 +1735,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   color: Colors.grey,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18,right: 18),
+                  padding: const EdgeInsets.only(left: 18, right: 18),
                   child: Column(
                     children: [
                       GeneralText(
@@ -1759,7 +1759,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           ),
                           GeneralText(
                             "Persons",
-                            style: appTheme.typographies.interFontFamily.headline6
+                            style: appTheme
+                                .typographies.interFontFamily.headline6
                                 .copyWith(
                               fontSize: 14,
                               color: Colors.white,
