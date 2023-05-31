@@ -48,6 +48,10 @@ List<ChefQuestionAnswers> chefQuestionAnswersList = [];
 
   final TextController journeyQuestion1Controller = TextController();
   final TextController journeyQuestion2Controller = TextController();
+  final TextController facebookController = TextController();
+  final TextController instagramController = TextController();
+  final TextController twitterController = TextController();
+  final TextController tiktokController = TextController();
 
 
   bool isImageSelected = false;
@@ -95,6 +99,7 @@ List<ChefQuestionAnswers> chefQuestionAnswersList = [];
       path: url,
       data: saveChefRequest,
     );
+    developer.log("${saveChefRequest}");
     // final currentQuestionirData = questionireResponseFromJson(response.body);
     if (response != null) {
       developer
@@ -114,6 +119,7 @@ List<ChefQuestionAnswers> chefQuestionAnswersList = [];
       chefQuestionAnswersList.add(ChefQuestionAnswers(answerIds: answerIdSingleOption,id: 4,inputAnswer: '',chefId: _appService.state.userInfo!.t.id,questionId: 4));
       chefQuestionAnswersList.add(ChefQuestionAnswers(id: 5,inputAnswer: journeyQuestion1Controller.text,chefId: _appService.state.userInfo!.t.id,answerIds: [],));
       chefQuestionAnswersList.add(ChefQuestionAnswers(id: 6,inputAnswer: journeyQuestion2Controller.text,chefId: _appService.state.userInfo!.t.id,answerIds: [],));
+      socialHandles = SocialHandles(facebook: facebookController.text,instagram: instagramController.text,tiktok: tiktokController.text,twitter: twitterController.text);
       completion!();
     }else{
       Toaster.errorToast(context: context, message: 'Please fill all the fields');

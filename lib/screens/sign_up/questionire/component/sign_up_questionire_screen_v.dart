@@ -57,16 +57,20 @@ class SignUpQuestionireScreen
     handlesList.addAll([
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/instagram_1.png"),
+          socialMediaIcon: "assets/images/icons/instagram_1.png",
+      textController: viewModel.instagramController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/facebook.png"),
+          socialMediaIcon: "assets/images/icons/facebook.png",
+      textController: viewModel.facebookController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/twitter.png"),
+          socialMediaIcon: "assets/images/icons/twitter.png",
+      textController: viewModel.twitterController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
-          socialMediaIcon: "assets/images/icons/tiktok.png")
+          socialMediaIcon: "assets/images/icons/tiktok.png",
+      textController: viewModel.tiktokController)
     ]);
     // super.initState();
   }
@@ -257,6 +261,7 @@ class SignUpQuestionireScreen
   }
 
   Widget socialMediaHandles(IAppThemeData appTheme) {
+    TextController _socialController = TextController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -307,20 +312,22 @@ class SignUpQuestionireScreen
                       width: 5,
                     ),
                     Flexible(
-                      child: GeneralText(
-                        handlesList[index].socialMediaName ?? "",
-                        style: appTheme.typographies.interFontFamily.headline6
-                            .copyWith(
-                          fontSize: 14.0,
-                          color: HexColor.fromHex('#ffffff'),
+                      child: GeneralTextInput(
+                        controller: handlesList[index].textController ?? _socialController,
+                        // height: 16,
+                        backgroundColor: HexColor.fromHex("#4b4b52"),
+                        hint: handlesList[index].socialMediaName ?? "",
+                        hintStyle: appTheme.typographies.interFontFamily.body2R.copyWith(
+                          color: appTheme.colors.mainBlack100,
                         ),
-                        maxLines: 2,
+                        inputBorder: appTheme.searchbarBorder,
                       ),
                     ),
                   ],
                 ),
               );
             }),
+
       ],
     );
   }
@@ -371,6 +378,7 @@ class ChipsWidget extends StatelessWidget {
 class SocialMediaHandles {
   String? socialMediaName;
   String? socialMediaIcon;
+  TextController? textController;
 
-  SocialMediaHandles({this.socialMediaIcon, this.socialMediaName});
+  SocialMediaHandles({this.socialMediaIcon, this.socialMediaName, this.textController});
 }
