@@ -19,7 +19,7 @@ import 'package:chef/models/custom_forms/workflow_template_current_step.dart'
 import '../helpers/experience_helper.dart';
 import '../helpers/menu_helper.dart';
 import '../models/login/login_response.dart';
-import '../models/signup/signup_response.dart';
+import '../models/signup/responses/signup_response.dart';
 
 class ApplicationState extends Equatable {
   const ApplicationState({

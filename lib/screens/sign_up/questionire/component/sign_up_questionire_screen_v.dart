@@ -1,5 +1,5 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:chef/models/signup/questionire_response.dart';
+import 'package:chef/models/signup/responses/questionire_response.dart';
 import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_m.dart';
 import 'package:chef/screens/sign_up/questionire/component/sign_up_questionire_screen_vm.dart';
 import '../../../../helpers/color_helper.dart';
@@ -15,6 +15,7 @@ class SignUpQuestionireScreen
 
   List<SocialMediaHandles> handlesList = [];
   List<int> answersIds = [];
+  List<int> answerIdsInterests = [];
 
   void loadQuestionList(
     List<QuestionsList> questionsList,
@@ -118,11 +119,15 @@ class SignUpQuestionireScreen
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignUpLetsStartScreen()),
-                    );
+                    viewModel.addModelsFromQuestions(context: context,completion: (){
+                      viewModel.saveChef(baseUrl: Api.baseURL, context: context,completion: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpLetsStartScreen()),
+                        );
+                      });
+                    });
                   },
                   child: SvgPicture.asset(
                     Resources.getSignInRightArrow,
@@ -175,8 +180,13 @@ class SignUpQuestionireScreen
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             return QuestionView(
+                              q1Controller: viewModel.journeyQuestion1Controller,
+                              q2Controller: viewModel.journeyQuestion2Controller,
+                              answerIdsInterests: viewModel.answerIdsInterests,
+                                singleOptionAnswerId: viewModel.answerIdSingleOption,
                                 appTheme: appTheme,
-                                questionObj: questionList[index]);
+                                questionObj: questionList[index],
+                            );
                           }),
                     ),
                     const SizedBox(

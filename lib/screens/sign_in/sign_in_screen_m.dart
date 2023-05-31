@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:chef/base/base.dart';
 
-import '../../models/signup/profession_request.dart';
+import '../../models/signup/requests/profession_request.dart';
 
 part 'sign_in_screen_m.freezed.dart';
 

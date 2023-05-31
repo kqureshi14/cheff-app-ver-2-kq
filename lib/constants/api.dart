@@ -104,6 +104,7 @@ abstract class Api {
   static const chefSignUp = 'chef/save';
   static const loginAPI = 'chef/login';
   static const questionListAPI = 'question/list';
+  static const saveChef = 'chef-question-answer/save-profile';
 
   static const wowFactorAPI = 'wow-factor/list';
 

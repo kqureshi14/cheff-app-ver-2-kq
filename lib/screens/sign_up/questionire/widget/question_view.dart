@@ -1,26 +1,35 @@
 import '../../../../helpers/helpers.dart';
-import '../../../../models/signup/questionire_response.dart';
+import '../../../../models/signup/responses/questionire_response.dart';
 
 import 'dart:developer' as developer;
 
 class QuestionView extends StatefulWidget {
+
   QuestionView({
     Key? key,
     required this.appTheme,
     required this.questionObj,
-    // required this.answersIds,
+    required this.answerIdsInterests,
+    required this.singleOptionAnswerId,
+    required this.q1Controller, required this.q2Controller,
+
   }) : super(key: key);
 
   final IAppThemeData appTheme;
 
   QuestionsList questionObj;
-  // List<int> answersIds = [];
+  List<int> answerIdsInterests;
+  List<int> singleOptionAnswerId;
+  final TextController q1Controller;
+  final TextController q2Controller;
+  final TextController regularController = TextController();
+
+
   @override
   _QuestionViewState createState() => _QuestionViewState();
 }
 
 class _QuestionViewState extends State<QuestionView> {
-  List<int> answersIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +60,15 @@ class _QuestionViewState extends State<QuestionView> {
             ? SingleOption(
                 appTheme: widget.appTheme,
                 answerList: widget.questionObj.answers,
-                answersIds: answersIds)
+                answersIds: widget.singleOptionAnswerId)
             : widget.questionObj.type == "MULTI_CHIP"
                 ? MultiChipView(
+                    answerIdsInterests: widget.answerIdsInterests,
                     appTheme: widget.appTheme,
                     answerList: widget.questionObj.answers)
                 :
                 // questionObj.type == "INPUT" ?
-                InputField(appTheme: widget.appTheme)
+                InputField(appTheme: widget.appTheme,textValueController: widget.questionObj.id==5?widget.q1Controller:widget.questionObj.id==6?widget.q2Controller:widget.regularController,)
       ],
     );
   }
@@ -85,10 +95,12 @@ class MultiChipView extends StatefulWidget {
     Key? key,
     required this.appTheme,
     required this.answerList,
+    required this.answerIdsInterests,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
   List<Answer> answerList;
+  List<int> answerIdsInterests;
 
   @override
   _MultiChipViewState createState() => _MultiChipViewState();
@@ -130,8 +142,13 @@ class _MultiChipViewState extends State<MultiChipView> {
                     }
                   }
 
+                  widget.answerIdsInterests
+                      .contains(widget.answerList[index].id)
+                      ? widget.answerIdsInterests
+                      .remove(widget.answerList[index].id)
+                      : widget.answerIdsInterests.add(widget.answerList[index].id);
                   //  _selectedInterests.value.addAll(selectedData);
-                  developer.log(' Here test ');
+                  developer.log("$selectedData"' Here test ' "${widget.answerIdsInterests}");
                 });
               },
               child: SizedBox(
@@ -155,18 +172,18 @@ class _MultiChipViewState extends State<MultiChipView> {
 class InputField extends StatelessWidget {
   InputField({
     Key? key,
-    required this.appTheme,
+    required this.appTheme, required this.textValueController,
   }) : super(key: key);
 
   final IAppThemeData appTheme;
+  final TextController textValueController;
 
-  final TextController _journeyController = TextController();
 
   @override
   Widget build(BuildContext context) {
     return GeneralTextInput(
         height: 80,
-        controller: _journeyController,
+        controller: textValueController,
         inputType: InputType.text,
         isMultiline: true,
         backgroundColor: appTheme.colors.textFieldFilledColor,
@@ -191,7 +208,7 @@ class SingleOption extends StatefulWidget {
   }) : super(key: key);
   final IAppThemeData appTheme;
   List<Answer> answerList;
-  List<int> answersIds = [];
+  List<int> answersIds;
 
   final String title;
   final bool selected;
