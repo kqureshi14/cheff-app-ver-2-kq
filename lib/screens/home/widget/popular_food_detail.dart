@@ -16,6 +16,7 @@ import '../../booking/food_item_bookng.dart';
 import 'dart:developer' as developer;
 
 import '../../experience/component/create_experience_screen_v.dart';
+import '../../experience/component/experience_starting_screen.dart';
 import '../experience_menu_details/experience_menu_details_screen_v.dart';
 import '../experiences_details/experience_details_screen_vm.dart';
 
@@ -34,6 +35,7 @@ class PopularFoodDetails extends StatefulWidget {
 
 class _PopularFoodDetailsState extends State<PopularFoodDetails> {
   List<CustomModel> wowFactorsList = [];
+  final _navigation = locateService<INavigationService>();
 
   final _experienceScreenViewModel =
       locateService<ExperienceDetailsScreenViewModel>();
@@ -62,14 +64,11 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
       backgroundColor: HexColor.fromHex("#212129"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _navigation.navigateTo(route: ExperienceStartingRoute());
           // Navigator.push(
           //   context,
-          //   MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
+          //   MaterialPageRoute(builder: (context) => ExperienceStartingScreen()),
           // );
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CreateExperienceScreen()),
-          );
         },
         backgroundColor: Color(0xffbb3127),
         child: const Icon(
