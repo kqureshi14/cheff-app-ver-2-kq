@@ -22,6 +22,9 @@ import 'dart:developer' as developer;
 
 import '../experience_menu_details/experience_menu_details_screen_vm.dart';
 
+import '../../../models/home/food_details_menu_model.dart'
+    as food_details_menu_model;
+
 enum TabBars { details, menu, schedule, media }
 
 class FoodDetailScreen extends StatefulWidget {
@@ -1920,27 +1923,29 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               height: 22,
             ),
 
-            widget._experienceData.subHostName.isNotEmpty? Row(
-              children: [
-                Container(
-                  color: HexColor.fromHex('#f1c452'),
-                  width: 16,
-                  height: 1,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                GeneralText(
-                  Strings.foodDetailSubHost,
-                  // widget._experienceData.subHostName,
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 20,
-                    color: HexColor.fromHex('#f1c452'),
-                  ),
-                ),
-              ],
-            ):Container(),
+            widget._experienceData.subHostName.isNotEmpty
+                ? Row(
+                    children: [
+                      Container(
+                        color: HexColor.fromHex('#f1c452'),
+                        width: 16,
+                        height: 1,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GeneralText(
+                        Strings.foodDetailSubHost,
+                        // widget._experienceData.subHostName,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                          fontSize: 20,
+                          color: HexColor.fromHex('#f1c452'),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
 
             widget._experienceData.subHostName.isNotEmpty
                 ? Padding(
@@ -2160,18 +2165,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  void performEditMenu(foodMenuModel) {
+  void performEditMenu(food_details_menu_model.T foodMenuModel) {
     setState(() {
       editEnable = !editEnable;
     });
-    if(!editEnable)
-      {
-        widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
-            foodTitle: foodTitleController.text,
-            foodSubtitle: foodSubTitleController.text,
-            foodDescription: foodDescriptionController.text);
-      }
-
+    if (!editEnable) {
+      widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
+        foodTitle: foodTitleController.text,
+        foodSubtitle: foodSubTitleController.text,
+        foodDescription: foodDescriptionController.text,
+        foodMenuModel: foodMenuModel,
+      );
+    }
 
     print(foodTitleController.text);
     print(foodSubTitleController.text);

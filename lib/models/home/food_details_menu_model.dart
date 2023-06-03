@@ -128,6 +128,23 @@ class FoodMenuModel {
       };
 }
 
+class MenuRequestUpdate {
+  MenuRequestUpdate({
+    required this.t,
+  });
+
+  T t;
+
+  factory MenuRequestUpdate.fromJson(Map<String, dynamic> json) =>
+      MenuRequestUpdate(
+        t: T.fromJson(json["t"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "t": t.toJson(),
+      };
+}
+
 class T {
   T({
     required this.id,
