@@ -213,6 +213,46 @@ class ExperienceMenuDetailsScreenViewModel
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
   }
+  Future<void> updateExperienceMenu({
+
+    required String foodTitle,
+    required String foodSubtitle,required String foodDescription
+  }) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuUpdate);
+    // emit(const Loading());
+
+    //emit(const exp_menu_details.Loading());
+    //
+    // final foodMenuRequest = FoodMenuRequest(
+    //   t: int.parse(experienceId),
+    // ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: {
+    "baseDishId": 0,
+    "baseDishName": foodSubtitle,
+    "description": foodDescription,
+    // "dish": "string",
+    // "experienceId": 0,
+    "id": 0,
+    "mealId": 0,
+    "mealName": foodTitle,
+    // "pictureUrl": "string",
+    // "price": 0
+    },
+    );
+
+    developer.log(' Food Details Data is ' + '${response.body}');
+   // foodMenuData = foodMenuModelFromJson(response.body);
+
+    // emit(exp_menu_details.Loaded(foodMenuData));
+    //  getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData);
+    //  emit(Loaded(foodMenuData));
+
+    // List<ProfessionData> data = currentProfessionData.t;
+    // emit(Loaded(currentProfessionData));
+  }
 
   Future<void> getScheduleData({
     required String experienceId,

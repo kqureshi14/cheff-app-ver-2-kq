@@ -20,6 +20,8 @@ import '../../../models/home/experience_list_response.dart' as experience_data;
 
 import 'dart:developer' as developer;
 
+import '../experience_menu_details/experience_menu_details_screen_vm.dart';
+
 enum TabBars { details, menu, schedule, media }
 
 class FoodDetailScreen extends StatefulWidget {
@@ -29,15 +31,21 @@ class FoodDetailScreen extends StatefulWidget {
     required FoodMenuModel foodMenuModel,
     required experience_data.T experienceData,
     required ScheduleData scheduleData,
+    required ExperienceMenuDetailsScreenViewModel
+        experienceMenuDetailsScreenViewModel,
     Key? key,
   })  : _foodMenuModel = foodMenuModel,
         _experienceData = experienceData,
         _scheduleData = scheduleData,
+        _experienceMenuDetailsScreenViewModel =
+            experienceMenuDetailsScreenViewModel,
         super(key: key);
 
   final FoodMenuModel _foodMenuModel;
   final experience_data.T _experienceData;
   final ScheduleData _scheduleData;
+  final ExperienceMenuDetailsScreenViewModel
+      _experienceMenuDetailsScreenViewModel;
 
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
@@ -80,6 +88,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     'Dec'
   ];
   String _price = '';
+  bool editEnable = false;
+
+  TextEditingController foodTitleController = TextEditingController();
+  TextEditingController foodSubTitleController = TextEditingController();
+  TextEditingController foodDescriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -521,9 +534,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                               appTheme: appTheme,
                                               itemTitle: widget._foodMenuModel
                                                   .t[index].baseDishName),
-                                          Image.asset(
-                                            Resources.expEditPenPNG,
-                                            height: 17,
+                                          InkWell(
+                                            onTap: () {
+                                              performEditMenu(widget
+                                                  ._foodMenuModel.t[index]);
+                                            },
+                                            child: Image.asset(
+                                              editEnable
+                                                  ? Resources
+                                                      .getSignUpLetsStartScreenTickPng
+                                                  : Resources.expEditPenPNG,
+                                              height: 17,
+                                            ),
                                           )
                                           // getFoodItemAmount(appTheme: appTheme),
                                         ],
@@ -669,23 +691,76 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemTitle(
       {required IAppThemeData appTheme, required String itemTitle}) {
-    return GeneralText(
-      //     Strings.foodProductTitle,
-      itemTitle,
-      // 'here',
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
-    );
+    foodTitleController.text = itemTitle;
+    return editEnable
+        ? Container(
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodTitleController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+              ),
+            ),
+          )
+        : GeneralText(
+            itemTitle,
+            // 'here',
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
+          );
   }
 
   Widget getFoodItemSubTitle(
       {required IAppThemeData appTheme, required String subItemTitle}) {
-    return GeneralText(
-      //   Strings.foodProductSubTitle,
-      subItemTitle,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#b0c18b')),
-    );
+    foodSubTitleController.text = subItemTitle;
+    return editEnable
+        ? Container(
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodSubTitleController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+              ),
+            ),
+          )
+        : GeneralText(
+            //   Strings.foodProductSubTitle,
+            subItemTitle,
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 15, color: HexColor.fromHex('#b0c18b')),
+          );
   }
 
   Widget getFoodItemAmount(
@@ -702,14 +777,41 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemDescription(
       {required IAppThemeData appTheme, required String foodDescription}) {
-    return GeneralText(
-      //  Strings.foodProductItemDescription,
-      foodDescription,
-      maxLines: 3,
-      textAlign: TextAlign.start,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 14, color: HexColor.fromHex('#ffffff')),
-    );
+    foodDescriptionController.text = foodDescription;
+    return editEnable
+        ? Container(
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodDescriptionController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+              ),
+            ),
+          )
+        : GeneralText(
+            //  Strings.foodProductItemDescription,
+            foodDescription,
+            maxLines: 3,
+            textAlign: TextAlign.start,
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 14, color: HexColor.fromHex('#ffffff')),
+          );
   }
 
   Widget getFoodItemUsers(
@@ -2056,6 +2158,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         });
       },
     );
+  }
+
+  void performEditMenu(foodMenuModel) {
+    setState(() {
+      editEnable = !editEnable;
+    });
+    if(!editEnable)
+      {
+        widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
+            foodTitle: foodTitleController.text,
+            foodSubtitle: foodSubTitleController.text,
+            foodDescription: foodDescriptionController.text);
+      }
+
+
+    print(foodTitleController.text);
+    print(foodSubTitleController.text);
+    print(foodDescriptionController.text);
   }
 }
 
