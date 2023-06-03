@@ -109,10 +109,6 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
               onTap: () {
                 developer.log(
                     ' Clicked data is ' + '${widget._expResponse.t[index].id}');
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (BuildContext context) {
-                //   return FoodDetailScreen();
-                // }));
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return ExperienceMenuDetailsScreen(

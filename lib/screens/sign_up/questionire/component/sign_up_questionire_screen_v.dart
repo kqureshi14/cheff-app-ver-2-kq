@@ -58,19 +58,19 @@ class SignUpQuestionireScreen
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
           socialMediaIcon: "assets/images/icons/instagram_1.png",
-      textController: viewModel.instagramController),
+          textController: viewModel.instagramController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
           socialMediaIcon: "assets/images/icons/facebook.png",
-      textController: viewModel.facebookController),
+          textController: viewModel.facebookController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
           socialMediaIcon: "assets/images/icons/twitter.png",
-      textController: viewModel.twitterController),
+          textController: viewModel.twitterController),
       SocialMediaHandles(
           socialMediaName: Strings.userProfileSocialMediaHandle,
           socialMediaIcon: "assets/images/icons/tiktok.png",
-      textController: viewModel.tiktokController)
+          textController: viewModel.tiktokController)
     ]);
     // super.initState();
   }
@@ -123,15 +123,21 @@ class SignUpQuestionireScreen
                 ),
                 InkWell(
                   onTap: () {
-                    viewModel.addModelsFromQuestions(context: context,completion: (){
-                      viewModel.saveChef(baseUrl: Api.baseURL, context: context,completion: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpLetsStartScreen()),
-                        );
-                      });
-                    });
+                    viewModel.addModelsFromQuestions(
+                        context: context,
+                        completion: () {
+                          viewModel.saveChef(
+                              baseUrl: Api.baseURL,
+                              context: context,
+                              completion: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpLetsStartScreen()),
+                                );
+                              });
+                        });
                   },
                   child: SvgPicture.asset(
                     Resources.getSignInRightArrow,
@@ -184,12 +190,15 @@ class SignUpQuestionireScreen
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             return QuestionView(
-                              q1Controller: viewModel.journeyQuestion1Controller,
-                              q2Controller: viewModel.journeyQuestion2Controller,
+                              q1Controller:
+                                  viewModel.journeyQuestion1Controller,
+                              q2Controller:
+                                  viewModel.journeyQuestion2Controller,
                               answerIdsInterests: viewModel.answerIdsInterests,
-                                singleOptionAnswerId: viewModel.answerIdSingleOption,
-                                appTheme: appTheme,
-                                questionObj: questionList[index],
+                              singleOptionAnswerId:
+                                  viewModel.answerIdSingleOption,
+                              appTheme: appTheme,
+                              questionObj: questionList[index],
                             );
                           }),
                     ),
@@ -202,12 +211,28 @@ class SignUpQuestionireScreen
                     ),
                     InkWell(
                       onTap: () async {
-                        // Open Gallery and add profile
                         File? selectedImage = await getImageFromGallery();
+                        // selectedImage != null
+                        //     ? () async {
                         viewModel.updateSelectedImage(selectedImage);
-                        if (selectedImage != null) {
-                          viewModel.isImageSelected = true;
-                        }
+                        List<int> bytes = await selectedImage!.readAsBytes();
+                        String binaryString = bytes
+                            .map(
+                                (byte) => byte.toRadixString(2).padLeft(8, '0'))
+                            .join();
+                        developer
+                            .log("this is converted image + $binaryString");
+                        binaryString.isNotEmpty
+                            ? viewModel.savePicture(
+                                baseUrl: Api.baseURL,
+                                context: context,
+                                image: binaryString)
+                            : null;
+                        viewModel.isImageSelected = true;
+                        //   }
+                        // : Toaster.infoToast(
+                        //     context: context,
+                        //     message: "Please select picture");
                       },
                       child: Container(
                         height: 70,
@@ -234,7 +259,10 @@ class SignUpQuestionireScreen
                               builder: (BuildContext context,
                                   File? selectedImage, Widget? child) {
                                 if (selectedImage != null) {
-                                  return Image.file(selectedImage);
+                                  return CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage: FileImage(selectedImage),
+                                  );
                                 } else {
                                   return Image.asset(
                                     Resources.userProfilePicPng,
@@ -313,11 +341,13 @@ class SignUpQuestionireScreen
                     ),
                     Flexible(
                       child: GeneralTextInput(
-                        controller: handlesList[index].textController ?? _socialController,
+                        controller: handlesList[index].textController ??
+                            _socialController,
                         // height: 16,
                         backgroundColor: HexColor.fromHex("#4b4b52"),
                         hint: handlesList[index].socialMediaName ?? "",
-                        hintStyle: appTheme.typographies.interFontFamily.body2R.copyWith(
+                        hintStyle: appTheme.typographies.interFontFamily.body2R
+                            .copyWith(
                           color: appTheme.colors.mainBlack100,
                         ),
                         inputBorder: appTheme.searchbarBorder,
@@ -327,7 +357,6 @@ class SignUpQuestionireScreen
                 ),
               );
             }),
-
       ],
     );
   }
@@ -380,5 +409,6 @@ class SocialMediaHandles {
   String? socialMediaIcon;
   TextController? textController;
 
-  SocialMediaHandles({this.socialMediaIcon, this.socialMediaName, this.textController});
+  SocialMediaHandles(
+      {this.socialMediaIcon, this.socialMediaName, this.textController});
 }

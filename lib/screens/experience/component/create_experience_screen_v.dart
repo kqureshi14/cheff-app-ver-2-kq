@@ -62,7 +62,9 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(ctx);
+              },
               child: SvgPicture.asset(
                 Resources.getSignInLeftArrow,
                 color: const Color(0xfff1c452),

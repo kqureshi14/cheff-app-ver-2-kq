@@ -1818,7 +1818,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               height: 22,
             ),
 
-            Row(
+            widget._experienceData.subHostName.isNotEmpty? Row(
               children: [
                 Container(
                   color: HexColor.fromHex('#f1c452'),
@@ -1838,7 +1838,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   ),
                 ),
               ],
-            ),
+            ):Container(),
 
             widget._experienceData.subHostName.isNotEmpty
                 ? Padding(

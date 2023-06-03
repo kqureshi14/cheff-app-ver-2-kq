@@ -99,7 +99,7 @@ List<ChefQuestionAnswers> chefQuestionAnswersList = [];
       path: url,
       data: saveChefRequest,
     );
-    developer.log("${saveChefRequest}");
+    developer.log("$saveChefRequest");
     // final currentQuestionirData = questionireResponseFromJson(response.body);
     if (response != null) {
       developer
@@ -107,6 +107,37 @@ List<ChefQuestionAnswers> chefQuestionAnswersList = [];
       ChefQuestionAnswerResponse chefQuestionAnswerResponse = chefQuestionAnswerResponseFromJson(response.body);
       Toaster.infoToast(
           context: context, message: chefQuestionAnswerResponse.message.toString());
+      completion!();
+    } else {
+      Toaster.infoToast(context: context, message: 'Error in calling the Api');
+    }
+  }
+
+
+  Future<void> savePicture({
+    required String baseUrl,
+    required BuildContext context,
+    required String image,
+    Function? completion,
+  }) async {
+    final url = InfininHelpers.getRestApiURL(baseUrl + "chef/profile-image/${_appService.state.userInfo!.t.id}");
+
+    final savePicRequest = {
+      "image":image,
+    };
+    developer.log("this is savePicReq""$savePicRequest");
+
+    final response = await _network.post(
+      path: url,
+      data: savePicRequest,
+    );
+
+    if (response != null) {
+      developer
+          .log(' Response of Save Pic is  ' '${response.body}');
+      // ChefQuestionAnswerResponse chefQuestionAnswerResponse = chefQuestionAnswerResponseFromJson(response.body);
+      Toaster.infoToast(
+          context: context, message: response.message);
       completion!();
     } else {
       Toaster.infoToast(context: context, message: 'Error in calling the Api');
