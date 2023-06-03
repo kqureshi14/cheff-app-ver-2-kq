@@ -113,6 +113,7 @@ class ExperienceMenuDetailsScreen
     return FoodDetailScreen(
       foodMenuModel: foodMenuModel, experienceData: _experienceData,
       scheduleData: scheduleData,
+      experienceMenuDetailsScreenViewModel: viewModel,
       // expResponse: expResp,
       // wowFactor: wowFactor,
       // preferences: preferences,
