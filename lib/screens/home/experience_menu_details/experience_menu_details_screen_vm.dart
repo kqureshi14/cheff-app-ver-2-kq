@@ -86,9 +86,6 @@ class ExperienceMenuDetailsScreenViewModel
       t: t,
     ).toJson();
 
-    // final signUpCredentials = SignupRequest(
-    //   t: t,
-    // ).toJson();
     final response = await _network
         .post(
           path: url,
@@ -247,6 +244,8 @@ class ExperienceMenuDetailsScreenViewModel
         .whenComplete(() {});
 
     developer.log(' Food Details Data is ' + '${response.body}');
+
+    getExperienceMenu(experienceId: foodMenuModel.experienceId.toString());
     // emit(Loaded(currentProfessionData));
   }
 
