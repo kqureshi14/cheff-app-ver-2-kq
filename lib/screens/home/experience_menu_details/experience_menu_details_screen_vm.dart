@@ -224,11 +224,12 @@ class ExperienceMenuDetailsScreenViewModel
       baseDishId: foodMenuModel.baseDishId,
       baseDishName: foodSubtitle,
       description: foodDescription,
-       dish: foodMenuModel.dish,
+      // dish: foodMenuModel.dish,
+      dish: foodSubtitle,
       experienceId: foodMenuModel.experienceId,
       id: foodMenuModel.id,
       mealId: foodMenuModel.mealId,
-       mealName: foodTitle,
+      mealName: foodTitle,
       price: price,
       pictureUrl: "",
     );
@@ -237,7 +238,6 @@ class ExperienceMenuDetailsScreenViewModel
       t: t,
     ).toJson();
     developer.log(' Food Details Request is ' + '${menuRequestUpdate}');
-
 
     final response = await _network
         .post(
@@ -253,31 +253,25 @@ class ExperienceMenuDetailsScreenViewModel
     // emit(Loaded(currentProfessionData));
   }
 
-  Future<void> updateScheduleData({Function? completion, ScheduleModel? scheduleModel}
+  Future<void> updateScheduleData(
+      {Function? completion, ScheduleModel? scheduleModel}) async {
+    final url =
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.scheduleDataUpdate);
 
-  ) async {
-    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.scheduleDataUpdate);
-
-   // emit(const Loading());
+    // emit(const Loading());
 
     final scheduleData = schedule_data.T(
       chefId: _appService.state.userInfo!.t.id,
       reservedStatus: 'open',
-      //experienceId: _appService.state.experienceResponse!.t!.id,
+      // experienceId:foodMenuModel.experienceId ,
+      // experienceId: _appService.state.experienceResponse!.t!.id,
+      experienceId: 175,
       hourOfDay: 3,
       id: 3,
-      hourEndTime:schedule_data.HourEndTime(
-           hour : 10,
-           minute : 45,
-           nano : 0,
-           second : 2
-      ) ,
-      hourStartTime: schedule_data.HourEndTime(
-        hour : 10,
-        minute : 45,
-        nano : 0,
-        second : 2
-    ),
+      hourEndTime:
+          schedule_data.HourEndTime(hour: 10, minute: 45, nano: 0, second: 2),
+      hourStartTime:
+          schedule_data.HourEndTime(hour: 10, minute: 45, nano: 0, second: 2),
       dayOfMonth: 3,
       hourId: 0,
       scheduledDate: scheduleModel!.scheduledDate.toString(),
@@ -297,11 +291,9 @@ class ExperienceMenuDetailsScreenViewModel
     //
     completion!();
 
-
     developer.log(' Food Details Data is ' + '${response.body}');
 
     //getExperienceMenu(experienceId: foodMenuModel.experienceId.toString());
-
 
     // print(response.body);
     // if (response.body != null) {
@@ -321,7 +313,6 @@ class ExperienceMenuDetailsScreenViewModel
 
     //  }
   }
-
 
   Future<void> getScheduleData({
     required String experienceId,
