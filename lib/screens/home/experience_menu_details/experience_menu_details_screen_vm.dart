@@ -15,6 +15,7 @@ import '../../../models/preference.dart' as preference;
 import '../../../models/wow_factor/wow_factor_response.dart' as wowfactor;
 // import '../../../models/wow_factor/wow_factor_response.dart';
 import '../../../setup.dart';
+import '../widget/schedule_data_model.dart' as schedule_data;
 import 'experience_menu_details_screen_m.dart' as exp_menu_details;
 
 import 'package:chef/helpers/data_request.dart' as data_request;
@@ -251,6 +252,76 @@ class ExperienceMenuDetailsScreenViewModel
     getExperienceMenu(experienceId: foodMenuModel.experienceId.toString());
     // emit(Loaded(currentProfessionData));
   }
+
+  Future<void> updateScheduleData({Function? completion, ScheduleModel? scheduleModel}
+
+  ) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.scheduleDataUpdate);
+
+   // emit(const Loading());
+
+    final scheduleData = schedule_data.T(
+      chefId: _appService.state.userInfo!.t.id,
+      reservedStatus: 'open',
+      //experienceId: _appService.state.experienceResponse!.t!.id,
+      hourOfDay: 3,
+      id: 3,
+      hourEndTime:schedule_data.HourEndTime(
+           hour : 10,
+           minute : 45,
+           nano : 0,
+           second : 2
+      ) ,
+      hourStartTime: schedule_data.HourEndTime(
+        hour : 10,
+        minute : 45,
+        nano : 0,
+        second : 2
+    ),
+      dayOfMonth: 3,
+      hourId: 0,
+      scheduledDate: scheduleModel!.scheduledDate.toString(),
+    );
+
+    final scheduleRequest = schedule_data.ScheduleRequestUpdate(
+      t: scheduleData,
+    ).toJson();
+
+    var duration = const Duration(seconds: 2); // set the duration to 5 seconds
+    var response = await Future.delayed(duration, () {
+      return _network.post(
+        path: url,
+        data: scheduleRequest,
+      );
+    });
+    //
+    completion!();
+
+
+    developer.log(' Food Details Data is ' + '${response.body}');
+
+    //getExperienceMenu(experienceId: foodMenuModel.experienceId.toString());
+
+
+    // print(response.body);
+    // if (response.body != null) {
+    //   ScheduleResponse scheduleResponse =
+    //   scheduleResponseFromJson(response.body);
+    //   if (scheduleResponse.code == 200) {
+    //     scheduleSaveCounter++;
+    //
+    //     emit(const Loaded());
+    //   } else {
+    //     emit(const Loading());
+    //   }
+    // } else {
+    //   emit(const Loaded());
+    // }
+    //response.body.code == 200) {
+
+    //  }
+  }
+
 
   Future<void> getScheduleData({
     required String experienceId,

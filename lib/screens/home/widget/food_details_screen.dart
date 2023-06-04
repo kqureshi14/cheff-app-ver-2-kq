@@ -78,6 +78,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
   List<FoodListModel> foodMenuListItems = [];
+  List<ScheduleModel> scheduleListItems = [];
 
   List months = [
     'Jan',
@@ -98,7 +99,6 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   TextEditingController priceController = TextEditingController();
 
-
   @override
   void initState() {
     items.add('Scientist');
@@ -111,6 +111,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     loadPerferences();
     loadMenuHeader();
     loadFoodMenuList();
+    loadScheduleDate();
     super.initState();
   }
 
@@ -146,6 +147,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
   }
 
+  void loadScheduleDate() {
+    for (int i = 0; i < widget._scheduleData.t.daysGroups.length; i++) {
+      scheduleListItems.add(ScheduleModel(
+          scheduledDate: widget._scheduleData.t.daysGroups[i].scheduledDate));
+    }
+  }
+
   void loadPerferences() {
     developer.log(' loadPerferences factors are '
         '${widget._experienceData.experiencePreferences}');
@@ -160,22 +168,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     }
   }
 
-  void loadFoodMenuList(){
-    for(int i=0;i<widget._foodMenuModel.t.length;i++)
-    {
-      foodMenuListItems.add(
-          FoodListModel(enableEdit: false,
-
-              foodMenuModel: widget._foodMenuModel.t[i],
-              foodTitleController: TextEditingController(),
-              foodSubTitleController: TextEditingController(),
-              foodDescriptionController: TextEditingController()
-
-          )
-      );
+  void loadFoodMenuList() {
+    for (int i = 0; i < widget._foodMenuModel.t.length; i++) {
+      foodMenuListItems.add(FoodListModel(
+          enableEdit: false,
+          foodMenuModel: widget._foodMenuModel.t[i],
+          foodTitleController: TextEditingController(),
+          foodSubTitleController: TextEditingController(),
+          foodDescriptionController: TextEditingController()));
     }
-
   }
+
   addQuantity() {
     if (foodItemQuantity != null && foodItemQuantity.toString().isNotEmpty) {
       setState(() {
@@ -431,49 +434,45 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                             InkWell(
-
-                                 onTap: (){
-                                   performEditPrice();
-                                 },
-
-                                 child: Icon(
-                                   editPriceEnable?
-                                   Icons.check:
-                                   Icons.edit
-                                   ,
-
-                                   color: Colors.white,size: 20,)),
-
-                              editPriceEnable?
-                              SizedBox(
-                                height: 30,
-                                width: 90,
-                                child: TextField(
-                                  controller:  priceController,
-
-                                  onChanged: (value) {},
-                                  style: appTheme
-                                      .typographies.interFontFamily.headline4
-                                      .copyWith(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: HexColor.fromHex('#ffffff')),
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(vertical: 2.0),
-
-                                  ),
-                                ),
-                              ):
-                              GeneralText(
-                                Strings.appCurrency + "." + " " + _price,
-                                style: appTheme
-                                    .typographies.interFontFamily.headline4
-                                    .copyWith(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: HexColor.fromHex('#ffffff')),
-                              ),
+                              InkWell(
+                                  onTap: () {
+                                    performEditPrice();
+                                  },
+                                  child: Icon(
+                                    editPriceEnable ? Icons.check : Icons.edit,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )),
+                              editPriceEnable
+                                  ? SizedBox(
+                                      height: 30,
+                                      width: 90,
+                                      child: TextField(
+                                        controller: priceController,
+                                        onChanged: (value) {},
+                                        style: appTheme.typographies
+                                            .interFontFamily.headline4
+                                            .copyWith(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: HexColor.fromHex(
+                                                    '#ffffff')),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                        ),
+                                      ),
+                                    )
+                                  : GeneralText(
+                                      Strings.appCurrency + "." + " " + _price,
+                                      style: appTheme.typographies
+                                          .interFontFamily.headline4
+                                          .copyWith(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  HexColor.fromHex('#ffffff')),
+                                    ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: GeneralText(
@@ -538,11 +537,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
                 return headerName.trim().toString().toLowerCase() ==
-                    foodMenuListItems[index].foodMenuModel.mealName
-                        .toString()
-                        .trim()
-                        .toLowerCase()
-
+                        foodMenuListItems[index]
+                            .foodMenuModel
+                            .mealName
+                            .toString()
+                            .trim()
+                            .toLowerCase()
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -590,15 +590,20 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         children: [
                                           getFoodItemTitle(
                                               appTheme: appTheme,
-                                              foodListModel:  foodMenuListItems[index],
-                                              itemTitle:  foodMenuListItems[index].foodMenuModel.baseDishName),
+                                              foodListModel:
+                                                  foodMenuListItems[index],
+                                              itemTitle:
+                                                  foodMenuListItems[index]
+                                                      .foodMenuModel
+                                                      .baseDishName),
                                           InkWell(
                                             onTap: () {
-                                              performEditMenu(foodMenuListItems[index]);
-
+                                              performEditMenu(
+                                                  foodMenuListItems[index]);
                                             },
                                             child: Image.asset(
-                                              foodMenuListItems[index].enableEdit
+                                              foodMenuListItems[index]
+                                                      .enableEdit
                                                   ? Resources
                                                       .getSignUpLetsStartScreenTickPng
                                                   : Resources.expEditPenPNG,
@@ -610,14 +615,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       ),
                                       getFoodItemSubTitle(
                                           appTheme: appTheme,
-                                          foodListModel:  foodMenuListItems[index],
-
-                                          subItemTitle:   foodMenuListItems[index].foodMenuModel.dish),
+                                          foodListModel:
+                                              foodMenuListItems[index],
+                                          subItemTitle: foodMenuListItems[index]
+                                              .foodMenuModel
+                                              .dish),
                                       getFoodItemDescription(
                                           appTheme: appTheme,
-                                          foodListModel:  foodMenuListItems[index],
-
-                                          foodDescription:  foodMenuListItems[index].foodMenuModel.description),
+                                          foodListModel:
+                                              foodMenuListItems[index],
+                                          foodDescription:
+                                              foodMenuListItems[index]
+                                                  .foodMenuModel
+                                                  .description),
                                     ],
                                   ),
                                 ),
@@ -751,68 +761,67 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemTitle(
       {required IAppThemeData appTheme,
-        required FoodListModel foodListModel,
-        required String itemTitle}) {
-
+      required FoodListModel foodListModel,
+      required String itemTitle}) {
     foodListModel.foodTitleController!.text = itemTitle;
     return foodListModel.enableEdit
         ? Container(
-      height: 30,
-      width: 90,
-      child: TextField(
-        controller:  foodListModel.foodTitleController,
-        onChanged: (value) {},
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 2.0),
-
-        ),
-      ),
-    )
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodListModel.foodTitleController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+              ),
+            ),
+          )
         : GeneralText(
-      itemTitle,
-      // 'here',
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
-    );
+            itemTitle,
+            // 'here',
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 15, color: HexColor.fromHex('#f7dc99')),
+          );
   }
+
   Widget getFoodItemSubTitle(
       {required IAppThemeData appTheme,
-        required FoodListModel foodListModel,
-        required String subItemTitle}) {
+      required FoodListModel foodListModel,
+      required String subItemTitle}) {
     foodListModel.foodSubTitleController!.text = subItemTitle;
     return foodListModel.enableEdit
         ? Container(
-      height: 30,
-      width: 90,
-      child: TextField(
-        controller: foodListModel.foodSubTitleController,
-        onChanged: (value) {},
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 2.0),
-          // border: OutlineInputBorder(
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide:
-          //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-          // focusedBorder: OutlineInputBorder(
-          //   borderSide:
-          //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-        ),
-      ),
-    )
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodListModel.foodSubTitleController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+              ),
+            ),
+          )
         : GeneralText(
-      //   Strings.foodProductSubTitle,
-      subItemTitle,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 15, color: HexColor.fromHex('#b0c18b')),
-    );
+            //   Strings.foodProductSubTitle,
+            subItemTitle,
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 15, color: HexColor.fromHex('#b0c18b')),
+          );
   }
 
   Widget getFoodItemAmount(
@@ -829,44 +838,45 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   Widget getFoodItemDescription(
       {required IAppThemeData appTheme,
-        required FoodListModel foodListModel,
-        required String foodDescription}) {
+      required FoodListModel foodListModel,
+      required String foodDescription}) {
     foodListModel.foodDescriptionController!.text = foodDescription;
     return foodListModel.enableEdit
         ? Container(
-      height: 30,
-      width: 90,
-      child: TextField(
-        controller:  foodListModel.foodDescriptionController ,
-        onChanged: (value) {},
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 2.0),
-          // border: OutlineInputBorder(
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-          // enabledBorder: OutlineInputBorder(
-          //   borderSide:
-          //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-          // focusedBorder: OutlineInputBorder(
-          //   borderSide:
-          //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-          //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          // ),
-        ),
-      ),
-    )
+            height: 30,
+            width: 90,
+            child: TextField(
+              controller: foodListModel.foodDescriptionController,
+              onChanged: (value) {},
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                // border: OutlineInputBorder(
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // enabledBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+                // focusedBorder: OutlineInputBorder(
+                //   borderSide:
+                //   BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                //   borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                // ),
+              ),
+            ),
+          )
         : GeneralText(
-      //  Strings.foodProductItemDescription,
-      foodDescription,
-      maxLines: 3,
-      textAlign: TextAlign.start,
-      style: appTheme.typographies.interFontFamily.headline6
-          .copyWith(fontSize: 14, color: HexColor.fromHex('#ffffff')),
-    );
+            //  Strings.foodProductItemDescription,
+            foodDescription,
+            maxLines: 3,
+            textAlign: TextAlign.start,
+            style: appTheme.typographies.interFontFamily.headline6
+                .copyWith(fontSize: 14, color: HexColor.fromHex('#ffffff')),
+          );
   }
+
   Widget getFoodItemUsers(
       {required IAppThemeData appTheme, String? numberOfUserServed}) {
     return GeneralText(
@@ -1227,27 +1237,34 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: widget._scheduleData.t.daysGroups.length, // 4,
+              // itemCount: widget._scheduleData.t.daysGroups.length, // 4,
+              itemCount: scheduleListItems.length, // 4,
               itemBuilder: (BuildContext context, int index) {
-                var item = widget._scheduleData.t.daysGroups[index];
+                 // var item = widget._scheduleData.t.daysGroups[index];
+                var item = scheduleListItems[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Align(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Image.asset(
-                          Resources.expEditPenPNG,
-                          height: 20,
+                    InkWell(
+                      onTap: () {
+                        selectScheduleDate(context,item);
+                      },
+                      child: Align(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(
+                            Resources.expEditPenPNG,
+                            height: 20,
+                          ),
                         ),
+                        alignment: Alignment.centerRight,
                       ),
-                      alignment: Alignment.centerRight,
                     ),
                     InkWell(
                       onTap: () {
                         setState(() {
-                          scheduleForm = !scheduleForm;
+                          //   scheduleForm = !scheduleForm;
                         });
                       },
                       child: Row(
@@ -1279,7 +1296,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           const SizedBox(
                             width: 27,
                           ),
-                          displayScheduleTime(item.hours),
+                           displayScheduleTime( DateFormat.jm().format(item.scheduledDate)),
+                         //displayScheduleTime(widget._scheduleData.t.daysGroups[index].hours),
                           // Expanded(
                           //   child: Container(
                           //     width: double.infinity,
@@ -1347,7 +1365,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget displayScheduleTime(List<Hour> _hours) {
+  Widget displayScheduleTime(//List<Hour> _hours,
+      String date
+      ) {
     final appTheme = AppTheme.of(context).theme;
     return Expanded(
       child: Container(
@@ -1361,11 +1381,15 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-              for (var i in _hours) //displayTimeData(i),
+             // for (var i in _hours) //displayTimeData(i),
                 timeSelectorBox(
                   appTheme,
-                  i.startTime,
-                  i,
+              date
+
+              //    i.startTime,
+             //     i,
+
+
                   //  false,
                   // showSelectedTime: _appService.state.orderHelper!.scheduleId ==
                   //     i.scheduleId.toString()
@@ -2114,10 +2138,11 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime, Hour _hour,
+  Widget timeSelectorBox(IAppThemeData appTheme, String displayTime,
+      //Hour _hour,
       {bool showSelectedTime = false}) {
     var finalDate = '';
-    finalDate = InfininHelpers.getAmPm(displayTime);
+    finalDate = displayTime;//InfininHelpers.getAmPm(displayTime);
     return Padding(
         padding: const EdgeInsets.only(right: 7),
         child: Container(
@@ -2215,21 +2240,145 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
+  Future<void> selectScheduleDate(BuildContext context,ScheduleModel scheduleModel) async {
+     final appTheme = AppTheme.of(context).theme;
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+                primary: appTheme.colors.primaryBackground // <-- SEE HERE
+
+                ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      print(picked.toString());
+      final TimeOfDay? pickedTime =
+          await showTimePicker(context: context, initialTime: TimeOfDay.now());
+      if (pickedTime != null) {
+        var _selectedDateTime = DateTime(picked.year, picked.month, picked.day,
+            pickedTime.hour, pickedTime.minute);
+        setState(() {
+          scheduleModel.scheduledDate=_selectedDateTime;
+
+        });
+         final selectedDateTime =
+            SelectedDateTime.fromDateTime(_selectedDateTime);
+
+        String date = (selectedDateTime.dateTime.toString().substring(0, 10));
+        String time = (selectedDateTime.dateTime.toString().substring(11, 16));
+
+        String dayString = DateFormat.E().format(picked); //
+
+        String timeString = DateFormat('h a').format(
+            DateTime(picked.year, picked.month, picked.day, pickedTime.hour));
+
+        String dateOfMonthString = DateFormat.d().format(picked);
 
 
+        widget._experienceMenuDetailsScreenViewModel.updateScheduleData(
+         scheduleModel: scheduleModel,
+            completion: (){
+           setState(() {
+
+           });
+            }
+
+        );
+
+        print(dayString);
+        print(timeString);
+        print(dateOfMonthString);
+
+        // widget.scheduleScreenViewModel?.setDayValue(dayString.toUpperCase());
+        // widget.scheduleScreenViewModel?.setTimeValue(
+        //     widget.scheduleScreenViewModel!.convertTo24HourFormat(timeString));
+        // String pickedDate = picked.toString().substring(0, 10);
+        // widget.scheduleScreenViewModel?.datePicked = pickedDate;
+        //
+        // if (widget.scheduleScreenViewModel!.scheduleList.isNotEmpty) {
+        //   var dateTimeAlreadyExist = false;
+        //   var matchedIndex = 0;
+        //   for (int i = 0;
+        //   i < widget.scheduleScreenViewModel!.scheduleList.length;
+        //   i++) {
+        //     var element = widget.scheduleScreenViewModel!.scheduleList[i];
+        //     if (element.dayOfWeek == dayString &&
+        //         element.dateOfMonth == dateOfMonthString) {
+        //       dateTimeAlreadyExist = true;
+        //       matchedIndex = i;
+        //     }
+        //   }
+        //   if (dateTimeAlreadyExist) {
+        //     var timeAlreadyExist = false;
+        //     widget.scheduleScreenViewModel?.scheduleList[matchedIndex]
+        //         .timeInHourAndAmPm
+        //         .forEach((element) {
+        //       if (element == timeString) {
+        //         timeAlreadyExist = true;
+        //       }
+        //     });
+        //     if (!timeAlreadyExist) {
+        //       widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
+        //         widget.scheduleScreenViewModel?.scheduleList[matchedIndex]
+        //             .timeInHourAndAmPm
+        //             .add(timeString);
+        //       });
+        //       setState(() {});
+        //     }
+        //   } else {
+        //     widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
+        //       widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
+        //           date: date,
+        //           time: time,
+        //           dayOfWeek: dayString,
+        //           dateOfMonth: dateOfMonthString,
+        //           timeInHourAndAmPm: [timeString]));
+        //     });
+        //     setState(() {});
+        //   }
+        //   return;
+        // } else {
+        //   widget.scheduleScreenViewModel?.sendScheduleData(completion: () {
+        //     widget.scheduleScreenViewModel?.scheduleList.add(Schedule(
+        //         date: date,
+        //         time: time,
+        //         dayOfWeek: dayString,
+        //         dateOfMonth: dateOfMonthString,
+        //         timeInHourAndAmPm: [timeString]));
+        //   });
+        // }
+        // print(widget.scheduleScreenViewModel?.scheduleList.length);
+        // setState(() {});
+      }
+    }
+  }
 
   void performEditMenu(FoodListModel foodMenuModel) {
     setState(() {
       foodMenuModel.enableEdit = !foodMenuModel.enableEdit;
     });
-    if (! foodMenuModel.enableEdit) {
+    if (!foodMenuModel.enableEdit) {
       widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
-        foodTitle: foodMenuModel.foodTitleController!.text,
-        foodSubtitle: foodMenuModel.foodSubTitleController!.text,
-        foodDescription: foodMenuModel.foodDescriptionController!.text,
-        foodMenuModel: foodMenuModel.foodMenuModel,
-        price: int.parse(_price)
-      );
+          foodTitle: foodMenuModel.foodTitleController!.text,
+          foodSubtitle: foodMenuModel.foodSubTitleController!.text,
+          foodDescription: foodMenuModel.foodDescriptionController!.text,
+          foodMenuModel: foodMenuModel.foodMenuModel,
+          price: int.parse(_price));
     }
 
     print(foodMenuModel.foodTitleController!.text);
@@ -2239,15 +2388,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
   void performEditPrice() {
     setState(() {
-      editPriceEnable=!editPriceEnable;
+      editPriceEnable = !editPriceEnable;
 
-      if(!editPriceEnable){
-        _price=priceController.text;
-
+      if (!editPriceEnable) {
+        _price = priceController.text;
       }
     });
-
-
   }
 }
 
@@ -2257,11 +2403,25 @@ class CustomModel {
 
   CustomModel({this.name, this.icon});
 }
+
+class SelectedDateTime {
+  DateTime dateTime;
+  String dayOfWeek;
+
+  SelectedDateTime({required this.dateTime, required this.dayOfWeek});
+
+  factory SelectedDateTime.fromDateTime(DateTime dateTime) {
+    final daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    final dayOfWeek = daysOfWeek[dateTime.weekday - 1];
+    return SelectedDateTime(dateTime: dateTime, dayOfWeek: dayOfWeek);
+  }
+}
+
 class FoodListModel {
   bool enableEdit = false;
   TextEditingController? foodTitleController;
-  TextEditingController ?foodSubTitleController;
-  TextEditingController ?foodDescriptionController;
+  TextEditingController? foodSubTitleController;
+  TextEditingController? foodDescriptionController;
   fdm.T foodMenuModel;
   FoodListModel({
     required this.enableEdit,
@@ -2269,9 +2429,11 @@ class FoodListModel {
     required this.foodTitleController,
     required this.foodSubTitleController,
     required this.foodDescriptionController,
-
-
-
-
   });
+}
+
+class ScheduleModel {
+    DateTime scheduledDate;
+
+  ScheduleModel({required this.scheduledDate});
 }

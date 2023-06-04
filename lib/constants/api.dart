@@ -48,6 +48,7 @@ abstract class Api {
   static const experienceMenu = 'experience-menu/find-by-experience-id';
   static const experienceMenuUpdate = 'experience-menu/update';
   static const scheduleData = 'experience-schedule/find-by-experience-id';
+  static const scheduleDataUpdate = 'experience-schedule/update';
 
   static const bookingsByChefId = 'experience-booking/bookings-by-chef-id';
   static const processBooking = 'experience-booking/in-progress-booking';
