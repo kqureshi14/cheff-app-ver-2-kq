@@ -1,13 +1,12 @@
 import 'package:chef/helpers/helpers.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../../constants/resources.dart';
 import '../../../constants/strings.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../helpers/function_helper.dart';
 import '../../../models/experience/schedule_list_display.dart';
-import '../../../models/home/food_details_menu_model.dart';
+ import '../../../models/home/food_details_menu_model.dart' as fdm;
 import '../../../theme/app_theme_data/app_theme_data.dart';
 import '../../../theme/app_theme_widget.dart';
 import '../../../ui_kit/widgets/general_button.dart';
@@ -28,7 +27,7 @@ class FoodDetailScreen extends StatefulWidget {
   // const FoodDetailScreen({Key? key}) : super(key: key);
 
   const FoodDetailScreen({
-    required FoodMenuModel foodMenuModel,
+    required fdm.FoodMenuModel foodMenuModel,
     required experience_data.T experienceData,
     required ScheduleData scheduleData,
     required ExperienceMenuDetailsScreenViewModel
@@ -41,7 +40,7 @@ class FoodDetailScreen extends StatefulWidget {
             experienceMenuDetailsScreenViewModel,
         super(key: key);
 
-  final FoodMenuModel _foodMenuModel;
+  final fdm.FoodMenuModel _foodMenuModel;
   final experience_data.T _experienceData;
   final ScheduleData _scheduleData;
   final ExperienceMenuDetailsScreenViewModel
@@ -72,6 +71,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   List<CustomModel> wowFactorsList = [];
   List<CustomModel> preferencesList = [];
   List<CustomModel> menuListItems = [];
+  
+  List<FoodListModel> foodMenuListItems = [];
 
   List months = [
     'Jan',
@@ -104,6 +105,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     loadWowFactor();
     loadPerferences();
     loadMenuHeader();
+    // foodMenuListItems.clear();
+    loadFoodMenuList();
     super.initState();
   }
 
@@ -151,6 +154,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             name: experiencePreferences[i].preferenceIconPath),
       ]);
     }
+  }
+  
+  void loadFoodMenuList(){
+    for(int i=0;i<widget._foodMenuModel.t.length;i++)
+      {
+        foodMenuListItems.add(
+          FoodListModel(enableEdit: false,
+
+              foodMenuModel: widget._foodMenuModel.t[i],
+              foodTitleController: TextEditingController(),
+              foodSubTitleController: TextEditingController(),
+              foodDescriptionController: TextEditingController()
+
+          )
+        );
+      }
+      
   }
 
   addQuantity() {
@@ -477,11 +497,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: widget._foodMenuModel.t.length,
+              itemCount: foodMenuListItems.length,
               padding: EdgeInsets.zero,
               itemBuilder: (BuildContext context, int index) {
+
                 return headerName.trim().toString().toLowerCase() ==
-                        widget._foodMenuModel.t[index].mealName
+                    foodMenuListItems[index].foodMenuModel.mealName
                             .toString()
                             .trim()
                             .toLowerCase()
@@ -532,15 +553,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                         children: [
                                           getFoodItemTitle(
                                               appTheme: appTheme,
-                                              itemTitle: widget._foodMenuModel
-                                                  .t[index].baseDishName),
+                                            foodListModel:  foodMenuListItems[index],
+                                              itemTitle:  foodMenuListItems[index].foodMenuModel.baseDishName),
                                           InkWell(
                                             onTap: () {
-                                              performEditMenu(widget
-                                                  ._foodMenuModel.t[index]);
+                                              performEditMenu(foodMenuListItems[index]);
                                             },
                                             child: Image.asset(
-                                              editEnable
+                                              foodMenuListItems[index].enableEdit
                                                   ? Resources
                                                       .getSignUpLetsStartScreenTickPng
                                                   : Resources.expEditPenPNG,
@@ -552,12 +572,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                       ),
                                       getFoodItemSubTitle(
                                           appTheme: appTheme,
-                                          subItemTitle: widget
-                                              ._foodMenuModel.t[index].dish),
+                                          foodListModel:  foodMenuListItems[index],
+
+                                          subItemTitle:   foodMenuListItems[index].foodMenuModel.dish),
                                       getFoodItemDescription(
                                           appTheme: appTheme,
-                                          foodDescription: widget._foodMenuModel
-                                              .t[index].description),
+                                          foodListModel:  foodMenuListItems[index],
+
+                                          foodDescription:  foodMenuListItems[index].foodMenuModel.description),
                                     ],
                                   ),
                                 ),
@@ -690,14 +712,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget getFoodItemTitle(
-      {required IAppThemeData appTheme, required String itemTitle}) {
-    foodTitleController.text = itemTitle;
-    return editEnable
+      {required IAppThemeData appTheme,
+        required FoodListModel foodListModel,
+        required String itemTitle}) {
+
+ foodListModel.foodTitleController!.text = itemTitle;
+    return foodListModel.enableEdit
         ? Container(
             height: 30,
             width: 90,
             child: TextField(
-              controller: foodTitleController,
+              controller:  foodListModel.foodTitleController,
               onChanged: (value) {},
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
@@ -727,14 +752,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget getFoodItemSubTitle(
-      {required IAppThemeData appTheme, required String subItemTitle}) {
-    foodSubTitleController.text = subItemTitle;
-    return editEnable
+      {required IAppThemeData appTheme,
+        required FoodListModel foodListModel,
+        required String subItemTitle}) {
+    foodListModel.foodSubTitleController!.text = subItemTitle;
+    return foodListModel.enableEdit
         ? Container(
             height: 30,
             width: 90,
             child: TextField(
-              controller: foodSubTitleController,
+              controller: foodListModel.foodSubTitleController,
               onChanged: (value) {},
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
@@ -776,14 +803,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   Widget getFoodItemDescription(
-      {required IAppThemeData appTheme, required String foodDescription}) {
-    foodDescriptionController.text = foodDescription;
-    return editEnable
+      {required IAppThemeData appTheme,
+        required FoodListModel foodListModel,
+        required String foodDescription}) {
+    foodListModel.foodDescriptionController!.text = foodDescription;
+    return foodListModel.enableEdit
         ? Container(
             height: 30,
             width: 90,
             child: TextField(
-              controller: foodDescriptionController,
+              controller:  foodListModel.foodDescriptionController ,
               onChanged: (value) {},
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
@@ -1920,27 +1949,29 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               height: 22,
             ),
 
-            widget._experienceData.subHostName.isNotEmpty? Row(
-              children: [
-                Container(
-                  color: HexColor.fromHex('#f1c452'),
-                  width: 16,
-                  height: 1,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                GeneralText(
-                  Strings.foodDetailSubHost,
-                  // widget._experienceData.subHostName,
-                  style:
-                      appTheme.typographies.interFontFamily.headline6.copyWith(
-                    fontSize: 20,
-                    color: HexColor.fromHex('#f1c452'),
-                  ),
-                ),
-              ],
-            ):Container(),
+            widget._experienceData.subHostName.isNotEmpty
+                ? Row(
+                    children: [
+                      Container(
+                        color: HexColor.fromHex('#f1c452'),
+                        width: 16,
+                        height: 1,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GeneralText(
+                        Strings.foodDetailSubHost,
+                        // widget._experienceData.subHostName,
+                        style: appTheme.typographies.interFontFamily.headline6
+                            .copyWith(
+                          fontSize: 20,
+                          color: HexColor.fromHex('#f1c452'),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
 
             widget._experienceData.subHostName.isNotEmpty
                 ? Padding(
@@ -2160,18 +2191,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  void performEditMenu(foodMenuModel) {
+  void performEditMenu(FoodListModel foodMenuModel) {
     setState(() {
-      editEnable = !editEnable;
+      foodMenuModel.enableEdit = !foodMenuModel.enableEdit;
     });
-    if(!editEnable)
-      {
-        widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
-            foodTitle: foodTitleController.text,
-            foodSubtitle: foodSubTitleController.text,
-            foodDescription: foodDescriptionController.text);
-      }
-
+    if (! foodMenuModel.enableEdit) {
+      widget._experienceMenuDetailsScreenViewModel.updateExperienceMenu(
+          foodTitle: foodTitleController.text,
+          foodSubtitle: foodSubTitleController.text,
+          foodDescription: foodDescriptionController.text);
+    }
 
     print(foodTitleController.text);
     print(foodSubTitleController.text);
@@ -2184,4 +2213,23 @@ class CustomModel {
   String? icon;
 
   CustomModel({this.name, this.icon});
+}
+
+class FoodListModel {
+  bool enableEdit = false;
+  TextEditingController? foodTitleController;
+  TextEditingController ?foodSubTitleController;
+  TextEditingController ?foodDescriptionController;
+  fdm.T foodMenuModel;
+  FoodListModel({
+    required this.enableEdit,
+     required this.foodMenuModel,
+     required this.foodTitleController,
+     required this.foodSubTitleController,
+     required this.foodDescriptionController,
+
+
+
+
+  });
 }
