@@ -1,3 +1,4 @@
+import 'package:chef/app.dart';
 import 'package:chef/models/experience/experience_request.dart' as expreq;
 
 import '../../../helpers/experience_helper.dart';
@@ -21,6 +22,8 @@ import 'package:chef/helpers/data_request.dart' as data_request;
 import 'package:chef/models/home/food_menu_request.dart' as menurequest;
 
 import 'dart:developer' as developer;
+import '../../../models/home/food_details_menu_model.dart'
+    as food_details_menu_model;
 
 @injectable
 class ExperienceMenuDetailsScreenViewModel
@@ -77,21 +80,12 @@ class ExperienceMenuDetailsScreenViewModel
           getList(experienceHelper.selectedWowFactors, 'wow').toList(),
       experiencePreferences: getPreferenceList(
           experienceHelper.selectedPerferencesFactors, 'pref'),
-      // age: age.toString(),
-      // name: name,
-      // gender: gender,
-      // mobileNo: mobileNumber,
-      // professionalId: professionId,
-      // profileImageUrl: null,
     );
 
     final experienceData = experience_request.ExperienceRequest(
       t: t,
     ).toJson();
 
-    // final signUpCredentials = SignupRequest(
-    //   t: t,
-    // ).toJson();
     final response = await _network
         .post(
           path: url,
@@ -213,44 +207,45 @@ class ExperienceMenuDetailsScreenViewModel
     // List<ProfessionData> data = currentProfessionData.t;
     // emit(Loaded(currentProfessionData));
   }
-  Future<void> updateExperienceMenu({
 
+  Future<void> updateExperienceMenu({
     required String foodTitle,
-    required String foodSubtitle,required String foodDescription
+    required String foodSubtitle,
+    required String foodDescription,
+    required food_details_menu_model.T foodMenuModel,
   }) async {
-    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuUpdate);
+    final url =
+        InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceMenuUpdate);
     // emit(const Loading());
 
-    //emit(const exp_menu_details.Loading());
-    //
-    // final foodMenuRequest = FoodMenuRequest(
-    //   t: int.parse(experienceId),
-    // ).toJson();
-
-    final response = await _network.post(
-      path: url,
-      data: {
-    "baseDishId": 0,
-    "baseDishName": foodSubtitle,
-    "description": foodDescription,
-    // "dish": "string",
-    // "experienceId": 0,
-    "id": 0,
-    "mealId": 0,
-    "mealName": foodTitle,
-    // "pictureUrl": "string",
-    // "price": 0
-    },
+    food_details_menu_model.T t = food_details_menu_model.T(
+      baseDishId: foodMenuModel.baseDishId,
+      baseDishName: foodSubtitle,
+      description: foodDescription,
+      dish: foodMenuModel.dish,
+      experienceId: foodMenuModel.experienceId,
+      id: foodMenuModel.id,
+      mealId: foodMenuModel.mealId,
+      mealName: foodTitle,
+      price: 3000,
+      pictureUrl: "",
     );
 
+    final menuRequestUpdate = food_details_menu_model.MenuRequestUpdate(
+      t: t,
+    ).toJson();
+
+    final response = await _network
+        .post(
+          path: url,
+          data: menuRequestUpdate,
+          //   accessToken: false,
+        )
+        .whenComplete(() {});
+
     developer.log(' Food Details Data is ' + '${response.body}');
-   // foodMenuData = foodMenuModelFromJson(response.body);
 
-    // emit(exp_menu_details.Loaded(foodMenuData));
-    //  getScheduleData(experienceId: experienceId, foodMenuModel: foodMenuData);
-    //  emit(Loaded(foodMenuData));
-
-    // List<ProfessionData> data = currentProfessionData.t;
+    getExperienceMenu(experienceId: foodMenuModel.experienceId.toString());
     // emit(Loaded(currentProfessionData));
   }
 

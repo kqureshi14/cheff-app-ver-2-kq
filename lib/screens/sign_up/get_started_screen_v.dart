@@ -2,6 +2,7 @@ import 'package:chef/helpers/helpers.dart';
 
 import '../home/experiences_details/experience_details_screen_v.dart';
 import 'package:video_player/video_player.dart';
+
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
 
@@ -24,6 +25,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   @override
   void initState() {
     super.initState();
+
+    // _controller = VideoPlayerController.network(_test);
     _controller = VideoPlayerController.asset(Resources.onBoardingVideo);
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
@@ -102,19 +105,18 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
           ) /* add child content here */,
         ],
 
-
-      // Container(
-      //   width: double.infinity,
-      //   height: double.infinity,
-      //   decoration: const BoxDecoration(
-      //     image: DecorationImage(
-      //       image: AssetImage(
-      //         Resources.getStartedBgPng,
-      //       ),
-      //       fit: BoxFit.cover,
-      //     ),
-      //   ),
-      //   child:
+        // Container(
+        //   width: double.infinity,
+        //   height: double.infinity,
+        //   decoration: const BoxDecoration(
+        //     image: DecorationImage(
+        //       image: AssetImage(
+        //         Resources.getStartedBgPng,
+        //       ),
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        //   child:
       ),
     );
   }
