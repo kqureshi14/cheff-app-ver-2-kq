@@ -104,8 +104,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Scientist');
     items.add('Couple');
     items.add('Single');
-    // _price = widget._experienceData.price.toString();
-    _price = widget._foodMenuModel.t[0].price.toString();
+    _price = widget._experienceData.price.toString();
+    // _price = widget._foodMenuModel.t.elementAt(0).price.toString();
     loadMenuItems();
     loadWowFactor();
     loadPerferences();
