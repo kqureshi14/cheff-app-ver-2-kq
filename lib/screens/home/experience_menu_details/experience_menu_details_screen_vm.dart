@@ -212,6 +212,7 @@ class ExperienceMenuDetailsScreenViewModel
     required String foodTitle,
     required String foodSubtitle,
     required String foodDescription,
+    required int price,
     required food_details_menu_model.T foodMenuModel,
   }) async {
     final url =
@@ -222,18 +223,20 @@ class ExperienceMenuDetailsScreenViewModel
       baseDishId: foodMenuModel.baseDishId,
       baseDishName: foodSubtitle,
       description: foodDescription,
-      dish: foodMenuModel.dish,
+       dish: foodMenuModel.dish,
       experienceId: foodMenuModel.experienceId,
       id: foodMenuModel.id,
       mealId: foodMenuModel.mealId,
-      mealName: foodTitle,
-      price: 3000,
+       mealName: foodTitle,
+      price: price,
       pictureUrl: "",
     );
 
     final menuRequestUpdate = food_details_menu_model.MenuRequestUpdate(
       t: t,
     ).toJson();
+    developer.log(' Food Details Request is ' + '${menuRequestUpdate}');
+
 
     final response = await _network
         .post(
