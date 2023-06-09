@@ -7,7 +7,8 @@ import '../../models/booking/booking_overview.dart';
 import '../../setup.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../account_settings/user_profile_v.dart';
+import '../profile/component/chef_profile_screen_v.dart';
+import '../profile/user_profile_v.dart';
 import '../booking/component/order_screen_v.dart';
 import '../booking/food_item_bookng.dart';
 import '../earnings/earning_screen_v.dart';
@@ -594,7 +595,7 @@ class _LoungeHomeScreenState extends State<LoungeHomeScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const UserProfileScreen()),
+                                                              ChefProfileDetailsScreenView()),
                                                     );
                                                   },
                                                   child: Container(

@@ -45,6 +45,7 @@ import 'services/renderer/field_renderer.dart' as _i11;
 import 'services/services.dart' as _i3;
 import 'services/storage/storage_service.dart' as _i29;
 import 'setup.dart' as _i36;
+import 'screens/profile/component/chef_profile_screen_vm.dart' as _i37;
 import 'theme/theme.dart' as _i15; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
@@ -127,6 +128,11 @@ Future<_i1.GetIt> $initGetIt(
           ));
   gh.factory<_i20.QrScannerScreenViewModel>(
       () => _i20.QrScannerScreenViewModel());
+  gh.factory<_i37.ChefProfileDetailsScreenViewModel>(
+      () => _i37.ChefProfileDetailsScreenViewModel(
+        network: get<_i5.INetworkService<dynamic>>(),
+        navigation: get<_i5.INavigationService<dynamic>>(),
+      ));
   gh.factory<_i21.ScheduleScreenViewModel>(() => _i21.ScheduleScreenViewModel(
       network: get<_i13.INetworkService<dynamic>>()));
   gh.factory<_i22.ScreenLayoutBaseViewModel>(

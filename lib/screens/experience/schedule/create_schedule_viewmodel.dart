@@ -101,7 +101,7 @@ class ScheduleScreenViewModel extends BaseViewModel<ScheduleScreenState> {
       hour = 0;
     }
     // Return the time in 24-hour format as a string
-    return '${hour.toString().padLeft(2, '0')}';
+    return hour.toString().padLeft(2, '0');
   }
 
   Future<void> sendScheduleData({Function? completion}) async {

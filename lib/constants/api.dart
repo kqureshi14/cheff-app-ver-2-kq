@@ -56,6 +56,7 @@ abstract class Api {
   static const findByChefId = 'experience-booking/find-by-chef-id';
 
   static const findById = 'experience-booking/find-by-id';
+  static const chefFindById = 'chef/find-by-id';
   static const billedBooking = 'experience-booking/bill-booking';
 
   static const findByFoodieId = 'foodie/find-by-id';
