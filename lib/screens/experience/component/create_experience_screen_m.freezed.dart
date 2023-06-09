@@ -20,7 +20,7 @@ mixin _$CreateExperienceScreenState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)
+            PreferenceResponse preferenceResponse, CityResponse? cityData)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$CreateExperienceScreenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$CreateExperienceScreenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
     required TResult orElse(),
   }) =>
@@ -121,7 +121,7 @@ class _$Loading implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)
+            PreferenceResponse preferenceResponse, CityResponse? cityData)
         loaded,
   }) {
     return loading();
@@ -132,7 +132,7 @@ class _$Loading implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
   }) {
     return loading?.call();
@@ -143,7 +143,7 @@ class _$Loading implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
     required TResult orElse(),
   }) {
@@ -195,7 +195,8 @@ abstract class _$$LoadedCopyWith<$Res> {
       __$$LoadedCopyWithImpl<$Res>;
   $Res call(
       {WowFactorResponse wowFactorResponse,
-      PreferenceResponse preferenceResponse});
+      PreferenceResponse preferenceResponse,
+      CityResponse? cityData});
 }
 
 /// @nodoc
@@ -212,6 +213,7 @@ class __$$LoadedCopyWithImpl<$Res>
   $Res call({
     Object? wowFactorResponse = freezed,
     Object? preferenceResponse = freezed,
+    Object? cityData = freezed,
   }) {
     return _then(_$Loaded(
       wowFactorResponse == freezed
@@ -222,6 +224,10 @@ class __$$LoadedCopyWithImpl<$Res>
           ? _value.preferenceResponse
           : preferenceResponse // ignore: cast_nullable_to_non_nullable
               as PreferenceResponse,
+      cityData == freezed
+          ? _value.cityData
+          : cityData // ignore: cast_nullable_to_non_nullable
+              as CityResponse?,
     ));
   }
 }
@@ -229,16 +235,19 @@ class __$$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(this.wowFactorResponse, this.preferenceResponse);
+  const _$Loaded(
+      this.wowFactorResponse, this.preferenceResponse, this.cityData);
 
   @override
   final WowFactorResponse wowFactorResponse;
   @override
   final PreferenceResponse preferenceResponse;
+  @override
+  final CityResponse? cityData;
 
   @override
   String toString() {
-    return 'CreateExperienceScreenState.loaded(wowFactorResponse: $wowFactorResponse, preferenceResponse: $preferenceResponse)';
+    return 'CreateExperienceScreenState.loaded(wowFactorResponse: $wowFactorResponse, preferenceResponse: $preferenceResponse, cityData: $cityData)';
   }
 
   @override
@@ -249,14 +258,16 @@ class _$Loaded implements Loaded {
             const DeepCollectionEquality()
                 .equals(other.wowFactorResponse, wowFactorResponse) &&
             const DeepCollectionEquality()
-                .equals(other.preferenceResponse, preferenceResponse));
+                .equals(other.preferenceResponse, preferenceResponse) &&
+            const DeepCollectionEquality().equals(other.cityData, cityData));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(wowFactorResponse),
-      const DeepCollectionEquality().hash(preferenceResponse));
+      const DeepCollectionEquality().hash(preferenceResponse),
+      const DeepCollectionEquality().hash(cityData));
 
   @JsonKey(ignore: true)
   @override
@@ -268,10 +279,10 @@ class _$Loaded implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)
+            PreferenceResponse preferenceResponse, CityResponse? cityData)
         loaded,
   }) {
-    return loaded(wowFactorResponse, preferenceResponse);
+    return loaded(wowFactorResponse, preferenceResponse, cityData);
   }
 
   @override
@@ -279,10 +290,10 @@ class _$Loaded implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
   }) {
-    return loaded?.call(wowFactorResponse, preferenceResponse);
+    return loaded?.call(wowFactorResponse, preferenceResponse, cityData);
   }
 
   @override
@@ -290,12 +301,12 @@ class _$Loaded implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse)?
+            PreferenceResponse preferenceResponse, CityResponse? cityData)?
         loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(wowFactorResponse, preferenceResponse);
+      return loaded(wowFactorResponse, preferenceResponse, cityData);
     }
     return orElse();
   }
@@ -333,11 +344,14 @@ class _$Loaded implements Loaded {
 }
 
 abstract class Loaded implements CreateExperienceScreenState {
-  const factory Loaded(final WowFactorResponse wowFactorResponse,
-      final PreferenceResponse preferenceResponse) = _$Loaded;
+  const factory Loaded(
+      final WowFactorResponse wowFactorResponse,
+      final PreferenceResponse preferenceResponse,
+      final CityResponse? cityData) = _$Loaded;
 
   WowFactorResponse get wowFactorResponse;
   PreferenceResponse get preferenceResponse;
+  CityResponse? get cityData;
   @JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;

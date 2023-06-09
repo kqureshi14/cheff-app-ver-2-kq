@@ -2,14 +2,16 @@ import 'package:chef/models/experience/experience_request.dart' as expreq;
 
 import '../../../helpers/experience_helper.dart';
 import '../../../helpers/helpers.dart';
+import 'package:chef/helpers/data_request.dart' as data_request;
 
 import '../../../models/experience/experience_request.dart'
-    as experience_request;
+as experience_request;
 import '../../../models/experience/experience_response.dart' as expresp;
 import '../../../models/preference.dart' as preference;
+import '../../../models/signup/responses/city_response.dart' as city_resp;
+import '../../../models/signup/responses/town_response.dart' as town_resp;
 import '../../../models/wow_factor/wow_factor_response.dart' as wowfactor;
 
-// import '../../../models/wow_factor/wow_factor_response.dart';
 import '../../../setup.dart';
 import 'menu_experience_screen_v.dart';
 import 'create_experience_screen_m.dart' as create_experience;
@@ -37,13 +39,46 @@ class CreateExperienceScreenViewModel
   late final wowfactor.WowFactorResponse _wowFactorResponse;
   late final preference.PreferenceResponse _preferenceResponse;
 
+  late city_resp.CityResponse cityResponse;
+  late town_resp.TownResponse townResponse;
+
+
+  final TextController townController = TextController();
+  final TextController cityController = TextController();
+
+  late final cityDropDown = <String>[];
+  late final townDropDown = <String>[];
+
+  final cityInfo = {};
+  final townInfo = {};
+
+  final Map<String, List<String>> cityTownInfo = {};
+
+  int selectedCityId = 0;
+  int selectedTownId = 0;
+
+  void getCityId(String cityName, {city_resp.CityResponse? cityDetails}) {
+    if (cityDetails != null) {
+      cityResponse = cityDetails;
+    }
+    for (var i = 0; i < cityResponse.t.length; i++) {
+      //  if (cityName == cityResponse.t[i].name && cityResponse.t[i].id == 1) {
+      //  if (cityName == cityResponse.t[i].name) {
+      developer.log(' City Id is ' '${cityResponse.t[i].id}');
+      // townDropDown.clear();
+      // townDropDown.add('Select');
+      //  townDropDown.clear();
+      //townDropDown.clear();
+      selectedCityId = cityResponse.t[i].id;
+      loadTownList(
+          cityId: cityResponse.t[i].id, cityName: cityResponse.t[i].name);
+      //  }
+    }
+  }
+
+
   initialize() {
-    // if (_wowFactorResponse.t.isNotEmpty) {
-    //  emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse));
-    // } else {
-    // emit(const create_experience.Loading());
     loadWowFactors();
-    // }
   }
 
   void saveExperience(BuildContext context) async {
@@ -77,72 +112,60 @@ class CreateExperienceScreenViewModel
     developer.log(' selected PreferencesFactors Number  Details '
         '${experienceHelper.selectedPerferencesFactors.values}');
 
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const MenuExperienceScreen()),
-    // );
-
     if (!validateData(context, experienceHelper)) {
       return;
     }
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
-    //getList(experienceHelper.selectedWowFactors,'wow');
+
     experience_request.T t = experience_request.T(
       title: experienceHelper.titleExperience ?? '',
       description: experienceHelper.experienceDetails ?? '',
       persons: experienceHelper.numberOfPerson.toString(),
       chefId: _appService.state.userInfo!.t.id,
-      chefAddress: _appService.state.userInfo!.t.address,
+      chefAddress: experienceHelper.address!.isEmpty? _appService.state.userInfo!.t.address: experienceHelper.address,
       chefBrandName: _appService.state.userInfo!.t.address,
       chefName: _appService.state.userInfo!.t.name,
       locationId: 1,
       price: (experienceHelper.priceExperience ?? 0.0).toInt(),
       priceTypeId:
-          (experienceHelper.priceExperience ?? 0.0).toString() == "0.00001"
-              ? 2
-              : 1,
+      (experienceHelper.priceExperience ?? 0.0).toString() == "0.00001"
+          ? 2
+          : 1,
       subHostMobileNo: experienceHelper.subHostMobileNumber ?? '',
       subHostName: experienceHelper.subHostName ?? '',
       wowFactorId: 1,
       preferenceId: 1,
       experienceWowFactors:
-          getList(experienceHelper.selectedWowFactors, 'wow').toList(),
+      getList(experienceHelper.selectedWowFactors, 'wow').toList(),
       experiencePreferences: getPreferenceList(
           experienceHelper.selectedPerferencesFactors, 'pref'),
+      townName: townController.text,
+      cityName: cityController.text,
+      cityId: cityInfo[cityController.text],
+      townId: townInfo[townController.text],
+
     );
 
     final experienceData = experience_request.ExperienceRequest(
       t: t,
     ).toJson();
 
-    // final signUpCredentials = SignupRequest(
-    //   t: t,
-    // ).toJson();
     final response = await _network
         .post(
-          path: url,
-          data: experienceData,
-          //   accessToken: false,
-        )
+      path: url,
+      data: experienceData,
+      //   accessToken: false,
+    )
         .whenComplete(() {});
 
-    // final response = await _network.get(
-    //   //below one is working
-    //   path: 'https://run.mocky.io/v3/80289cbe-aa47-491e-9eb2-56126289c8a4',
-    // );
-
     if (response != null) {
-      developer.log(' Response of Signup body is ' '${response.body}');
+      developer.log(' Response of response body is ' '${response.body}');
 
       expresp.ExperienceResponse experienceResponse =
-          expresp.experienceResponseFromJson(response.body);
+      expresp.experienceResponseFromJson(response.body);
       _appService.updateSaveExperience(experienceResponse);
-      //   SignupResponse signupResponse = signupResponseFromJson(response.body);
-//
-      //   Toaster.infoToast(context: context, message: signupResponse.message);
 
-      //   developer.log(' Sign up Response is ' + signupResponse.message);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MenuExperienceScreen()),
@@ -155,11 +178,65 @@ class CreateExperienceScreenViewModel
     }
   }
 
+  Future<void> loadCityList({
+    required String baseUrl,
+  }) async {
+    developer.log(' Base Url is ' '$baseUrl');
+    final url = InfininHelpers.getRestApiURL(baseUrl + Api.cityList);
+    data_request.T t = data_request.T();
+
+    final dataRequest = data_request.DataRequest(
+      t: t,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: dataRequest,
+    );
+    cityResponse = city_resp.cityResponseFromJson(response.body);
+    for (var i = 0; i < cityResponse.t.length; i++) {
+      developer.log(' City data is ' + cityResponse.t[i].name);
+      cityDropDown.add(cityResponse.t[i].name);
+      cityInfo[cityResponse.t[i].name] = cityResponse.t[i].id;
+
+      if (cityTownInfo.isEmpty) {
+        getCityId(cityResponse.t[i].name);
+      }
+    }
+
+    // emit(Loaded(cityResponse));
+  }
+
+  Future<void> loadTownList({cityId, required String cityName}) async {
+    final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.townList);
+
+    data_request.T t = data_request.T(cityId: cityId);
+    final dataRequest = data_request.DataRequest(
+      t: t,
+    ).toJson();
+
+    final response = await _network.post(
+      path: url,
+      data: dataRequest,
+    );
+    townResponse = town_resp.townResponseFromJson(response.body);
+
+    List<String> _townData = [];
+
+    for (var i = 0; i < townResponse.t.length; i++) {
+      _townData.add(townResponse.t[i].name);
+    }
+    cityTownInfo[cityName] = _townData;
+    for (var i = 0; i < townResponse.t.length; i++) {
+      if (!townDropDown.contains(townResponse.t[i].name)) {
+        townInfo[townResponse.t[i].name] = townResponse.t[i].id;
+        townDropDown.add(townResponse.t[i].name);
+      }
+    }
+    emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse,cityResponse));
+  }
+
   List<expreq.ExperienceWowFactor> getList(Map data, String type) {
-    // Map obj = experienceHelper.selectedWowFactors;
-
-    // developer.log(' In List wow factors are ' + '${obj.keys}');
-
     List<expreq.ExperienceWowFactor> alignData = [];
 
     data.forEach((key, value) {
@@ -167,13 +244,11 @@ class CreateExperienceScreenViewModel
 
       if (type == 'wow') {
         expreq.ExperienceWowFactor dataHere =
-            expreq.ExperienceWowFactor(wowFactorId: value);
+        expreq.ExperienceWowFactor(wowFactorId: value);
         alignData.add(dataHere);
       } else {
         alignData.add(_localEntry['preferenceId'] = value);
       }
-
-      //  data = data + value.toString();
     });
 
     developer.log('Data ready to send is ' '${alignData.length}');
@@ -199,7 +274,7 @@ class CreateExperienceScreenViewModel
         //alignData.add(_localEntry['preferenceId'] = value);
 
         expreq.ExperiencePreference dataHere =
-            expreq.ExperiencePreference(preferenceId: value);
+        expreq.ExperiencePreference(preferenceId: value);
         alignData.add(dataHere);
       }
 
@@ -242,9 +317,6 @@ class CreateExperienceScreenViewModel
 
     _wowFactorResponse = wowfactor.wowFactorResponseFromJson(response.body);
     loadPerferences();
-    //  emit(create_experience.Loaded(_wowFactorResponse));
-    //List<QuestionsList> data = currentQuestionirData.t;
-    //emit(signupquestion.Loaded(currentQuestionirData.t));
   }
 
   void loadPerferences() async {
@@ -274,9 +346,8 @@ class CreateExperienceScreenViewModel
 
     // final preferenceResponse =
     _preferenceResponse = preference.preferenceResponseFromJson(response.body);
-    emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse));
-    //List<QuestionsList> data = currentQuestionirData.t;
-    //emit(signupquestion.Loaded(currentQuestionirData.t));
+    loadCityList(baseUrl:  Api.baseURL);
+
   }
 
   bool validateData(BuildContext context, ExperienceHelper experienceHelper) {

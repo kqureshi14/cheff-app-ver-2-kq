@@ -196,17 +196,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }) async {
     developer.log(' Base Url is ' + '${baseUrl}');
     final url = InfininHelpers.getRestApiURL(baseUrl + Api.cityList);
-
-    // emit(Loaded(_professionData));
-
-    //if (_professionData.isEmpty) {
-    //  final cityDataRequest = data_request.T();
-
-    // ProfessionRequest(
-    //   t: prorequest.T(),
-    // ).toJson();
-
-    //   data_request.T t = data_request.T(status: 'ACTIVE');
     data_request.T t = data_request.T();
 
     final dataRequest = data_request.DataRequest(
@@ -223,19 +212,12 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       cityDropDown.add(cityResponse.t[i].name);
       cityInfo[cityResponse.t[i].name] = cityResponse.t[i].id;
 
-      //  if (i == 0) {
       if (cityTownInfo.isEmpty) {
         getCityId(cityResponse.t[i].name);
       }
-
-      //  townDropDown.add('Select');
-      // }
     }
 
-    //cityDropDown = currentProfessionData.t;
-
     emit(Loaded(cityResponse));
-    // }
   }
 
   Future<void> loadTownList({cityId, required String cityName}) async {

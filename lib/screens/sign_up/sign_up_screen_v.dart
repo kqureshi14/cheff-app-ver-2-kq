@@ -365,12 +365,12 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     ? () {
                         //proceedVerification(context);
                         developer.log(' Here Collected data is ' +
-                            '${_nameController.text}');
+                            _nameController.text);
                         developer.log('Mobile Controller  ' +
-                            '${_mobileNumberController.text}');
+                            _mobileNumberController.text);
 
                         developer.log(
-                            ' Brand Controller  ' + '${_brandController.text}');
+                            ' Brand Controller  ' + _brandController.text);
 
                         developer.log('Address is  ' + _addressController.text);
                         if (viewModel.verifyInput(
@@ -959,7 +959,7 @@ class TownDisplay extends StatelessWidget {
         required String key,
         required dynamic value,
       }) {
-        developer.log(' Key is ' + '${key}');
+        developer.log(' Key is ' + key);
         developer.log(' Value is ' + '${value}');
 
         //  viewModel.getCityId(value);
