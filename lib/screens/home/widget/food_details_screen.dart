@@ -104,6 +104,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     items.add('Scientist');
     items.add('Couple');
     items.add('Single');
+    //_price =  widget._experienceData.price.toString();
+
     _price = widget._experienceData.price.toString();
     // _price = widget._foodMenuModel.t.elementAt(0).price.toString();
     loadMenuItems();
@@ -434,15 +436,17 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              InkWell(
-                                  onTap: () {
-                                    performEditPrice();
-                                  },
-                                  child: Icon(
-                                    editPriceEnable ? Icons.check : Icons.edit,
-                                    color: Colors.white,
-                                    size: 20,
-                                  )),
+                              // InkWell(
+                              //     onTap: () {
+                              //       //performEditPrice();
+                              //     },
+                              //     child: Icon(
+                              //       //  editPriceEnable ? Icons.check : Icons.edit,
+                              //       Icons.edit,
+                              //       color: Colors.white,
+                              //       size: 20,
+                              //     )
+                              // ),
                               editPriceEnable
                                   ? SizedBox(
                                       height: 30,
@@ -1240,7 +1244,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
               // itemCount: widget._scheduleData.t.daysGroups.length, // 4,
               itemCount: scheduleListItems.length, // 4,
               itemBuilder: (BuildContext context, int index) {
-                 // var item = widget._scheduleData.t.daysGroups[index];
+                // var item = widget._scheduleData.t.daysGroups[index];
                 var item = scheduleListItems[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1248,7 +1252,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        selectScheduleDate(context,item);
+                        selectScheduleDate(context, item);
                       },
                       child: Align(
                         child: Padding(
@@ -1296,8 +1300,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           const SizedBox(
                             width: 27,
                           ),
-                           displayScheduleTime( DateFormat.jm().format(item.scheduledDate)),
-                         //displayScheduleTime(widget._scheduleData.t.daysGroups[index].hours),
+                          displayScheduleTime(
+                              DateFormat.jm().format(item.scheduledDate)),
+                          //displayScheduleTime(widget._scheduleData.t.daysGroups[index].hours),
                           // Expanded(
                           //   child: Container(
                           //     width: double.infinity,
@@ -1365,9 +1370,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Widget displayScheduleTime(//List<Hour> _hours,
-      String date
-      ) {
+  Widget displayScheduleTime(
+      //List<Hour> _hours,
+      String date) {
     final appTheme = AppTheme.of(context).theme;
     return Expanded(
       child: Container(
@@ -1381,21 +1386,18 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
           child: Wrap(
             direction: Axis.horizontal,
             children: [
-             // for (var i in _hours) //displayTimeData(i),
-                timeSelectorBox(
-                  appTheme,
-              date
+              // for (var i in _hours) //displayTimeData(i),
+              timeSelectorBox(appTheme, date
 
-              //    i.startTime,
-             //     i,
-
+                  //    i.startTime,
+                  //     i,
 
                   //  false,
                   // showSelectedTime: _appService.state.orderHelper!.scheduleId ==
                   //     i.scheduleId.toString()
                   //     ? true
                   //     : false,
-                ),
+                  ),
               // const SizedBox(
               //   width: 7,
               // ),
@@ -2142,7 +2144,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       //Hour _hour,
       {bool showSelectedTime = false}) {
     var finalDate = '';
-    finalDate = displayTime;//InfininHelpers.getAmPm(displayTime);
+    finalDate = displayTime; //InfininHelpers.getAmPm(displayTime);
     return Padding(
         padding: const EdgeInsets.only(right: 7),
         child: Container(
@@ -2240,8 +2242,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
     );
   }
 
-  Future<void> selectScheduleDate(BuildContext context,ScheduleModel scheduleModel) async {
-     final appTheme = AppTheme.of(context).theme;
+  Future<void> selectScheduleDate(
+      BuildContext context, ScheduleModel scheduleModel) async {
+    final appTheme = AppTheme.of(context).theme;
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -2273,10 +2276,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
         var _selectedDateTime = DateTime(picked.year, picked.month, picked.day,
             pickedTime.hour, pickedTime.minute);
         setState(() {
-          scheduleModel.scheduledDate=_selectedDateTime;
-
+          scheduleModel.scheduledDate = _selectedDateTime;
         });
-         final selectedDateTime =
+        final selectedDateTime =
             SelectedDateTime.fromDateTime(_selectedDateTime);
 
         String date = (selectedDateTime.dateTime.toString().substring(0, 10));
@@ -2289,16 +2291,12 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
 
         String dateOfMonthString = DateFormat.d().format(picked);
 
-
         widget._experienceMenuDetailsScreenViewModel.updateScheduleData(
-         scheduleModel: scheduleModel,
-            completion: (){
-           setState(() {
-
-           });
-            }
-
-        );
+            scheduleModel: scheduleModel,
+            //foodMenuModel.
+            completion: () {
+              setState(() {});
+            });
 
         print(dayString);
         print(timeString);
@@ -2433,7 +2431,7 @@ class FoodListModel {
 }
 
 class ScheduleModel {
-    DateTime scheduledDate;
+  DateTime scheduledDate;
 
   ScheduleModel({required this.scheduledDate});
 }
