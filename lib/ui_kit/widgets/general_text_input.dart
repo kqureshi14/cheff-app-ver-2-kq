@@ -14,6 +14,7 @@ enum InputType {
   password,
   email,
   digit,
+  alphabetsOnly
 }
 
 class GeneralTextInput extends StatefulWidget {
@@ -34,6 +35,7 @@ class GeneralTextInput extends StatefulWidget {
     IconData? prefixIcon,
     IconData? suffixIcon,
     String? prefixText,
+    int? maxValue,
     Widget? suffix,
     void Function()? onSuffixIconClick,
     Color? backgroundColor,
@@ -65,7 +67,8 @@ class GeneralTextInput extends StatefulWidget {
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
   _prefixText = prefixText,
-        super(key: key) {
+        _maxValue = maxValue,
+      super(key: key) {
     _selectInputType();
   }
 
@@ -83,6 +86,7 @@ class GeneralTextInput extends StatefulWidget {
   final ValueChanged<void>? _onEditingComplete;
   final TextEditingController _controller;
   final bool _isMultiline;
+  final int? _maxValue;
   final bool _isEnable;
   final Color? _backgroundColor;
   final String? Function(String?)? _validator;
@@ -159,12 +163,15 @@ class _GeneralTextInputState extends State<GeneralTextInput> {
         keyboardType: widget._keyboardType,
         obscureText: _isPasswordHidden,
         controller: widget._controller,
+        maxLength: widget._maxValue,
         maxLines: widget._isMultiline ? 3 : 1,
         textInputAction: TextInputAction.done,
         cursorColor: appTheme.colors.defaultBorder,
         inputFormatters: [
           if (widget._inputType == InputType.digit)
-            FilteringTextInputFormatter.digitsOnly
+            FilteringTextInputFormatter.digitsOnly,
+          if (widget._inputType == InputType.alphabetsOnly)
+            FilteringTextInputFormatter.deny(RegExp(r'\d')),
         ],
         style: widget._valueStyle,
         decoration: InputDecoration(

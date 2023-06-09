@@ -26,6 +26,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     Api.devBaseURL,
   ];
 
+  bool numberValidated= false;
+
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _brandController = TextController();
@@ -177,13 +179,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         ),
         GeneralTextInput(
             controller: _nameController,
-            inputType: InputType.text,
+            inputType: InputType.alphabetsOnly,
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+
             // valueStyle: valueStyle,
             onChanged: (newValue) {
               if (viewModel.verifyInputForm(
@@ -262,6 +265,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           height: 8,
         ),
         GeneralTextInput(
+          prefixText: "+92 ",
             controller: _mobileNumberController,
             inputType: InputType.digit,
             backgroundColor: appTheme.colors.textFieldFilledColor,
@@ -271,6 +275,20 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
+            maxValue: 10,
+            validator: (value){
+              // final phoneNumberRegex = RegExp(r'^3\d{10}$');
+              if(int.parse(value![0])!=3){
+                numberValidated = false;
+                return 'Invalid phone number';
+              } else if (value.isNotEmpty && value.length != 10) {
+                numberValidated = false;
+                return 'Please enter your full number';
+              } else {
+                numberValidated = true;
+                return null;
+                }
+            },
             onChanged: (newValue) {
               if (viewModel.verifyInputForm(
                   name: _nameController.text,
@@ -373,19 +391,21 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                             ' Brand Controller  ' + _brandController.text);
 
                         developer.log('Address is  ' + _addressController.text);
-                        if (viewModel.verifyInput(
-                          name: _nameController.text,
-                          brandName: _brandController.text,
-                          mobileNumber: _mobileNumberController.text,
-                          address: _addressController.text,
-                          town: viewModel.townController.text,
-                          city: viewModel.cityController.text,
-                          context: context,
-                          baseUrl: baseURLs[0],
-                        )) {
-                          print(_mobileNumberController.text);
-                          // displayVerificationDisplay(context);
-                          displayVerificationDisplayBackup(context);
+                        if(numberValidated){
+                          if (viewModel.verifyInput(
+                            name: _nameController.text,
+                            brandName: _brandController.text,
+                            mobileNumber: _mobileNumberController.text,
+                            address: _addressController.text,
+                            town: viewModel.townController.text,
+                            city: viewModel.cityController.text,
+                            context: context,
+                            baseUrl: baseURLs[0],
+                          )) {
+                            print(_mobileNumberController.text);
+                            // displayVerificationDisplay(context);
+                            displayVerificationDisplayBackup(context);
+                          }
                         }
                       }
                     : null,
@@ -425,7 +445,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         context: context,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         body: FirebasePhoneAuthHandler(
-          phoneNumber: "+" + _mobileNumberController.text,
+          phoneNumber: "+92" + _mobileNumberController.text,
           signOutOnSuccessfulVerification: false,
           linkWithExistingUser: false,
           autoRetrievalTimeOutDuration: const Duration(seconds: 60),
