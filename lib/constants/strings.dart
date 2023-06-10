@@ -329,6 +329,10 @@ abstract class Strings {
   static const userProfileTravellingLabel = 'Your Intrests';
   static const userProfileSocialMediaLabel = 'Social Media handles';
   static const userProfileSocialMediaHandle = 'sugarplum';
+  static const userProfileSocialMediaHandleTikTok = 'TikTok';
+  static const userProfileSocialMediaHandleTwitter = 'Twitter';
+  static const userProfileSocialMediaHandleFacebook = 'Facebook';
+  static const userProfileSocialMediaHandleInstagram = 'Instagram';
   static const productDetailTitle = 'BBQ \nExperience';
   static const productDetailSubTitle = 'by Zee Lounge';
   static const productDetailReview = '4.2';
