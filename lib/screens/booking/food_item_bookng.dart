@@ -78,7 +78,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   titleColor: Colors.white,
                 ),
               ),
-              Expanded(child: bookingDetails(appTheme)),
+              Expanded(child: Container()),
             ]),
       ),
     );

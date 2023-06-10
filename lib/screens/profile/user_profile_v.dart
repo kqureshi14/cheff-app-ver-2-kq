@@ -152,9 +152,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           width: 129,
                           child: widget._chefProfileDetailsScreenViewModel.profileDetails.t?.profileImageUrl!=null?Image.network(
                               widget._chefProfileDetailsScreenViewModel.profileDetails.t?.profileImageUrl??"",
-                              fit: BoxFit.fill):Image.asset(
-                              'assets/images/icons/userProfile.png',
-                              fit: BoxFit.fill),
+                              fit: BoxFit.fill):Container(
+                            height: 100,
+                              width: 100,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/images/icons/user-profile-icon.png'),
+                                ),
+                              ),
+                              ),
                         ),
                         const SizedBox(
                           height: 10,

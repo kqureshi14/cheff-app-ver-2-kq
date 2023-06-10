@@ -345,7 +345,7 @@ class SignUpQuestionireScreen
                             .copyWith(
                           color: Colors.white,),
                         backgroundColor: HexColor.fromHex("#4b4b52"),
-                        // hint: handlesList[index].socialMediaName ?? "",
+                        hint: handlesList[index].socialMediaName ?? "",
                         hintStyle: appTheme.typographies.interFontFamily.body2R
                             .copyWith(
                           color: Colors.white,
@@ -379,7 +379,7 @@ class ChipsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 3),
         // width: widthContainer,
         child: GeneralText(
           title.capitalize(),
