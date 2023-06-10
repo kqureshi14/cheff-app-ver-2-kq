@@ -15,6 +15,7 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
   MenuExperienceScreen({Key? key}) : super(key: key);
 
   final _appService = locateService<ApplicationService>();
+  final _navigation = locateService<INavigationService>();
 
   @override
   Widget buildScreen({
@@ -94,12 +95,8 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
                 //_appService.updateExperienceHelper(viewModel.);
                // if(viewModel.menuSaveCounter>0   && viewModel.menueResponseCode==200){
                  if(viewModel.dishController.text.isNotEmpty||viewModel.descriptionController.text.isNotEmpty){
-                   viewModel.saveMenu(ctx,completion: (){
-                     Navigator.push(
-                       ctx,
-                       MaterialPageRoute(builder: (context) => ScheduleScreen()),
-                     );
-                   });
+                   _navigation.navigateTo(route: ScheduleRoute());
+                 });
                  }else{
                    Toaster.infoToast(
                        context: ctx,

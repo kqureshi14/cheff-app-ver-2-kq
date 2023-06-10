@@ -39,12 +39,13 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
   Widget build(BuildContext context) {
     final appTheme = AppTheme.of(context).theme;
     callCalenderWidget();
-    // return WillPopScope(
-    //   onWillPop: ()async{
-    //     return false;
-    //   },
-    //   child:
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: ()async{
+        return false;
+      },
+      child:
+    // return
+        Scaffold(
       backgroundColor: HexColor.fromHex("#212129"),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 12),
@@ -262,8 +263,8 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
           ),
         ]),
       ),
+    ),
     );
-    // );
   }
 
   List<Widget> getChipsWigetsList(IAppThemeData appTheme, BuildContext context,

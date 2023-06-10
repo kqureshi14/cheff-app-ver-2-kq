@@ -156,8 +156,7 @@ class CreateExperienceScreenViewModel
       path: url,
       data: experienceData,
       //   accessToken: false,
-    )
-        .whenComplete(() {});
+    ).whenComplete(() {});
 
     if (response != null) {
       developer.log(' Response of response body is ' '${response.body}');

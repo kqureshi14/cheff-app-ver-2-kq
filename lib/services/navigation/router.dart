@@ -8,6 +8,7 @@ import 'package:chef/screens/sign_up/get_started_screen_v.dart';
 import '../../screens/booking/component/order_screen_v.dart';
 import '../../screens/experience/component/create_experience_screen_v.dart';
 import '../../screens/experience/component/experience_starting_screen.dart';
+import '../../screens/experience/schedule/create_schedule_view.dart';
 import '../../screens/experience/show_off_screen_v.dart';
 import '../../screens/foodie_profile/component/foodie_profile_decision_screen_v.dart';
 import '../../screens/home/home_page/home_screen_v.dart';
@@ -45,6 +46,7 @@ abstract class Routes {
   static const experienceStartingScreen = '/experience_starting_screen';
   static const createExperienceScreen = '/create_experience_screen_v';
   static const showOffScreen = '/show_off_screen_v';
+  static const scheduleScreen = '/schedule_screen_v';
 
   static const signUpScreenQuestionaire = '/signup_screen_questionaire';
 
@@ -107,6 +109,10 @@ abstract class Routes {
     AutoRoute(
       page: ShowOffTimeScreen,
       path: Routes.showOffScreen,
+    ),
+    AutoRoute(
+      page: ScheduleScreen,
+      path: Routes.scheduleScreen,
     ),
 
     // AutoRoute(

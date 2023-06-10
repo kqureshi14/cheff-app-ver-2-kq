@@ -21,9 +21,14 @@ class ScheduleScreen extends BaseView<ScheduleScreenViewModel> {
         ScheduleScreenState>(
         bloc: viewModel..initialize(),
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: appTheme.colors.primaryBackground,
-            body: state.when(loading: _loading, loaded: () => displayLoaded(viewModel)),
+          return WillPopScope(
+            onWillPop: () async {
+              return false;
+            },
+            child: Scaffold(
+              backgroundColor: appTheme.colors.primaryBackground,
+              body: state.when(loading: _loading, loaded: () => displayLoaded(viewModel)),
+            ),
           );
         });
   }
