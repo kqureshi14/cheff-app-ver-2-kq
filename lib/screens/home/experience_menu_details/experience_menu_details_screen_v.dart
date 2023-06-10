@@ -46,14 +46,6 @@ class ExperienceMenuDetailsScreen
               return false;
             },
             child: Scaffold(
-              floatingActionButton:FloatingActionButton(
-                onPressed: () {},
-                backgroundColor: const Color(0xffbb3127),
-                child: Image.asset(
-                  Resources.expEditPenPNG,
-                  height: 20,
-                ),
-              ),
               // displayActionButton(context),
               body: state.when(
                   loading: displayLoader,

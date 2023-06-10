@@ -37,7 +37,7 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
               floatingActionButton: displayActionButton(context),
               body: state.when(
                   loading: displayLoader,
-                  loaded: (wowFactor, preferences) => _displayLoadedData(
+                  loaded: (wowFactor, preferences, cityResponse) => _displayLoadedData(
                         context,
                         appTheme,
                         state,
@@ -93,11 +93,12 @@ class CreateExperienceScreen extends BaseView<CreateExperienceScreenViewModel> {
     appTheme,
     state,
     WowFactorResponse wowFactor,
-    PreferenceResponse preferences,
+    PreferenceResponse preferences
   ) {
     return ExperienceManager(
       wowFactor: wowFactor,
       preferences: preferences,
+      viewModel: viewModel,
     );
   }
 }

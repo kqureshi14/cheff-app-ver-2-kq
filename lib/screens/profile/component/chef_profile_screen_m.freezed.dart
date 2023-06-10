@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'create_experience_screen_m.dart';
+part of 'chef_profile_screen_m.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,29 +15,23 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CreateExperienceScreenState {
+mixin _$ChefProfileDetailsScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)
-        loaded,
+    required TResult Function(ProfileDetails profileDetails) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,21 +57,21 @@ mixin _$CreateExperienceScreenState {
 }
 
 /// @nodoc
-abstract class $CreateExperienceScreenStateCopyWith<$Res> {
-  factory $CreateExperienceScreenStateCopyWith(
-          CreateExperienceScreenState value,
-          $Res Function(CreateExperienceScreenState) then) =
-      _$CreateExperienceScreenStateCopyWithImpl<$Res>;
+abstract class $ChefProfileDetailsScreenStateCopyWith<$Res> {
+  factory $ChefProfileDetailsScreenStateCopyWith(
+          ChefProfileDetailsScreenState value,
+          $Res Function(ChefProfileDetailsScreenState) then) =
+      _$ChefProfileDetailsScreenStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$CreateExperienceScreenStateCopyWithImpl<$Res>
-    implements $CreateExperienceScreenStateCopyWith<$Res> {
-  _$CreateExperienceScreenStateCopyWithImpl(this._value, this._then);
+class _$ChefProfileDetailsScreenStateCopyWithImpl<$Res>
+    implements $ChefProfileDetailsScreenStateCopyWith<$Res> {
+  _$ChefProfileDetailsScreenStateCopyWithImpl(this._value, this._then);
 
-  final CreateExperienceScreenState _value;
+  final ChefProfileDetailsScreenState _value;
   // ignore: unused_field
-  final $Res Function(CreateExperienceScreenState) _then;
+  final $Res Function(ChefProfileDetailsScreenState) _then;
 }
 
 /// @nodoc
@@ -88,7 +82,7 @@ abstract class _$$LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingCopyWithImpl<$Res>
-    extends _$CreateExperienceScreenStateCopyWithImpl<$Res>
+    extends _$ChefProfileDetailsScreenStateCopyWithImpl<$Res>
     implements _$$LoadingCopyWith<$Res> {
   __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
       : super(_value, (v) => _then(v as _$Loading));
@@ -104,7 +98,7 @@ class _$Loading implements Loading {
 
   @override
   String toString() {
-    return 'CreateExperienceScreenState.loading()';
+    return 'ChefProfileDetailsScreenState.loading()';
   }
 
   @override
@@ -120,9 +114,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)
-        loaded,
+    required TResult Function(ProfileDetails profileDetails) loaded,
   }) {
     return loading();
   }
@@ -131,9 +123,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
   }) {
     return loading?.call();
   }
@@ -142,9 +132,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -185,7 +173,7 @@ class _$Loading implements Loading {
   }
 }
 
-abstract class Loading implements CreateExperienceScreenState {
+abstract class Loading implements ChefProfileDetailsScreenState {
   const factory Loading() = _$Loading;
 }
 
@@ -193,15 +181,12 @@ abstract class Loading implements CreateExperienceScreenState {
 abstract class _$$LoadedCopyWith<$Res> {
   factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
       __$$LoadedCopyWithImpl<$Res>;
-  $Res call(
-      {WowFactorResponse wowFactorResponse,
-      PreferenceResponse preferenceResponse,
-      CityResponse? cityData});
+  $Res call({ProfileDetails profileDetails});
 }
 
 /// @nodoc
 class __$$LoadedCopyWithImpl<$Res>
-    extends _$CreateExperienceScreenStateCopyWithImpl<$Res>
+    extends _$ChefProfileDetailsScreenStateCopyWithImpl<$Res>
     implements _$$LoadedCopyWith<$Res> {
   __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
       : super(_value, (v) => _then(v as _$Loaded));
@@ -211,23 +196,13 @@ class __$$LoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? wowFactorResponse = freezed,
-    Object? preferenceResponse = freezed,
-    Object? cityData = freezed,
+    Object? profileDetails = freezed,
   }) {
     return _then(_$Loaded(
-      wowFactorResponse == freezed
-          ? _value.wowFactorResponse
-          : wowFactorResponse // ignore: cast_nullable_to_non_nullable
-              as WowFactorResponse,
-      preferenceResponse == freezed
-          ? _value.preferenceResponse
-          : preferenceResponse // ignore: cast_nullable_to_non_nullable
-              as PreferenceResponse,
-      cityData == freezed
-          ? _value.cityData
-          : cityData // ignore: cast_nullable_to_non_nullable
-              as CityResponse?,
+      profileDetails == freezed
+          ? _value.profileDetails
+          : profileDetails // ignore: cast_nullable_to_non_nullable
+              as ProfileDetails,
     ));
   }
 }
@@ -235,19 +210,14 @@ class __$$LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Loaded implements Loaded {
-  const _$Loaded(
-      this.wowFactorResponse, this.preferenceResponse, this.cityData);
+  const _$Loaded(this.profileDetails);
 
   @override
-  final WowFactorResponse wowFactorResponse;
-  @override
-  final PreferenceResponse preferenceResponse;
-  @override
-  final CityResponse? cityData;
+  final ProfileDetails profileDetails;
 
   @override
   String toString() {
-    return 'CreateExperienceScreenState.loaded(wowFactorResponse: $wowFactorResponse, preferenceResponse: $preferenceResponse, cityData: $cityData)';
+    return 'ChefProfileDetailsScreenState.loaded(profileDetails: $profileDetails)';
   }
 
   @override
@@ -256,18 +226,12 @@ class _$Loaded implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$Loaded &&
             const DeepCollectionEquality()
-                .equals(other.wowFactorResponse, wowFactorResponse) &&
-            const DeepCollectionEquality()
-                .equals(other.preferenceResponse, preferenceResponse) &&
-            const DeepCollectionEquality().equals(other.cityData, cityData));
+                .equals(other.profileDetails, profileDetails));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(wowFactorResponse),
-      const DeepCollectionEquality().hash(preferenceResponse),
-      const DeepCollectionEquality().hash(cityData));
+      runtimeType, const DeepCollectionEquality().hash(profileDetails));
 
   @JsonKey(ignore: true)
   @override
@@ -278,35 +242,29 @@ class _$Loaded implements Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)
-        loaded,
+    required TResult Function(ProfileDetails profileDetails) loaded,
   }) {
-    return loaded(wowFactorResponse, preferenceResponse, cityData);
+    return loaded(profileDetails);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
   }) {
-    return loaded?.call(wowFactorResponse, preferenceResponse, cityData);
+    return loaded?.call(profileDetails);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(WowFactorResponse wowFactorResponse,
-            PreferenceResponse preferenceResponse, CityResponse? cityData)?
-        loaded,
+    TResult Function(ProfileDetails profileDetails)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(wowFactorResponse, preferenceResponse, cityData);
+      return loaded(profileDetails);
     }
     return orElse();
   }
@@ -343,15 +301,10 @@ class _$Loaded implements Loaded {
   }
 }
 
-abstract class Loaded implements CreateExperienceScreenState {
-  const factory Loaded(
-      final WowFactorResponse wowFactorResponse,
-      final PreferenceResponse preferenceResponse,
-      final CityResponse? cityData) = _$Loaded;
+abstract class Loaded implements ChefProfileDetailsScreenState {
+  const factory Loaded(final ProfileDetails profileDetails) = _$Loaded;
 
-  WowFactorResponse get wowFactorResponse;
-  PreferenceResponse get preferenceResponse;
-  CityResponse? get cityData;
+  ProfileDetails get profileDetails;
   @JsonKey(ignore: true)
   _$$LoadedCopyWith<_$Loaded> get copyWith =>
       throw _privateConstructorUsedError;

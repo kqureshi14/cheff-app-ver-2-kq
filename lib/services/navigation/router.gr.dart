@@ -11,15 +11,16 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:flutter/material.dart' as _i12;
+import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 
-import '../../helpers/helpers.dart' as _i13;
+import '../../helpers/helpers.dart' as _i14;
 import '../../screens/booking/component/order_screen_v.dart' as _i7;
 import '../../screens/experience/component/create_experience_screen_v.dart'
     as _i4;
 import '../../screens/experience/component/experience_starting_screen.dart'
     as _i3;
+import '../../screens/experience/show_off_screen_v.dart' as _i11;
 import '../../screens/foodie_profile/component/foodie_profile_decision_screen_v.dart'
     as _i8;
 import '../../screens/home/home_page/home_screen_v.dart' as _i6;
@@ -30,22 +31,22 @@ import '../../screens/sign_up/questionire/component/sign_up_questionire_screen_v
     as _i10;
 import '../../screens/sign_up/sign_up_screen_v.dart' as _i5;
 
-class AppRouter extends _i11.RootStackRouter {
-  AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
+class AppRouter extends _i12.RootStackRouter {
+  AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i11.PageFactory> pagesMap = {
+  final Map<String, _i12.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
       final args = routeData.argsAs<SplashRouteArgs>(
           orElse: () => const SplashRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SplashScreen(key: args.key),
       );
     },
     GetStartedRoute.name: (routeData) {
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.GetStartedScreen(),
       );
@@ -53,7 +54,7 @@ class AppRouter extends _i11.RootStackRouter {
     ExperienceStartingRoute.name: (routeData) {
       final args = routeData.argsAs<ExperienceStartingRouteArgs>(
           orElse: () => const ExperienceStartingRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i3.ExperienceStartingScreen(key: args.key),
       );
@@ -61,7 +62,7 @@ class AppRouter extends _i11.RootStackRouter {
     CreateExperienceRoute.name: (routeData) {
       final args = routeData.argsAs<CreateExperienceRouteArgs>(
           orElse: () => const CreateExperienceRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i4.CreateExperienceScreen(key: args.key),
       );
@@ -69,7 +70,7 @@ class AppRouter extends _i11.RootStackRouter {
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i5.SignUpScreen(key: args.key),
       );
@@ -77,14 +78,14 @@ class AppRouter extends _i11.RootStackRouter {
     HomeRouteView.name: (routeData) {
       final args = routeData.argsAs<HomeRouteViewArgs>(
           orElse: () => const HomeRouteViewArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i6.HomeScreenView(key: args.key),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>();
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.ForgotPasswordScreen(
           baseUrl: args.baseUrl,
@@ -94,7 +95,7 @@ class AppRouter extends _i11.RootStackRouter {
     },
     OrderRouteView.name: (routeData) {
       final args = routeData.argsAs<OrderRouteViewArgs>();
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i7.OrderScreenView(
           type: args.type,
@@ -104,7 +105,7 @@ class AppRouter extends _i11.RootStackRouter {
     },
     FoodieProfileDecisionRouteView.name: (routeData) {
       final args = routeData.argsAs<FoodieProfileDecisionRouteViewArgs>();
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i8.FoodieProfileDecisionScreenView(
           bookingId: args.bookingId,
@@ -115,7 +116,7 @@ class AppRouter extends _i11.RootStackRouter {
     QrScannerRoute.name: (routeData) {
       final args = routeData.argsAs<QrScannerRouteArgs>(
           orElse: () => const QrScannerRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i9.QrScannerScreen(key: args.key),
       );
@@ -123,60 +124,70 @@ class AppRouter extends _i11.RootStackRouter {
     SignUpQuestionireRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpQuestionireRouteArgs>(
           orElse: () => const SignUpQuestionireRouteArgs());
-      return _i11.MaterialPageX<dynamic>(
+      return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i10.SignUpQuestionireScreen(key: args.key),
+      );
+    },
+    ShowOffTimeRoute.name: (routeData) {
+      return _i12.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i11.ShowOffTimeScreen(),
       );
     },
   };
 
   @override
-  List<_i11.RouteConfig> get routes => [
-        _i11.RouteConfig(
+  List<_i12.RouteConfig> get routes => [
+        _i12.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           GetStartedRoute.name,
           path: '/get_started_screen',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           ExperienceStartingRoute.name,
           path: '/experience_starting_screen',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           CreateExperienceRoute.name,
           path: '/create_experience_screen_v',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           SignUpRoute.name,
           path: '/signUp',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           HomeRouteView.name,
           path: '/home',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           OrderRouteView.name,
           path: '/order_screen/:type',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           FoodieProfileDecisionRouteView.name,
           path: '/foodie_decision_pending/:bookingId',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           QrScannerRoute.name,
           path: '/qr_scanner',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
           SignUpQuestionireRoute.name,
           path: '/signup_screen_questionaire',
         ),
-        _i11.RouteConfig(
+        _i12.RouteConfig(
+          ShowOffTimeRoute.name,
+          path: '/show_off_screen_v',
+        ),
+        _i12.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/',
@@ -187,8 +198,8 @@ class AppRouter extends _i11.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashRoute extends _i11.PageRouteInfo<SplashRouteArgs> {
-  SplashRoute({_i13.Key? key})
+class SplashRoute extends _i12.PageRouteInfo<SplashRouteArgs> {
+  SplashRoute({_i14.Key? key})
       : super(
           SplashRoute.name,
           path: '/',
@@ -201,7 +212,7 @@ class SplashRoute extends _i11.PageRouteInfo<SplashRouteArgs> {
 class SplashRouteArgs {
   const SplashRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -211,7 +222,7 @@ class SplashRouteArgs {
 
 /// generated route for
 /// [_i2.GetStartedScreen]
-class GetStartedRoute extends _i11.PageRouteInfo<void> {
+class GetStartedRoute extends _i12.PageRouteInfo<void> {
   const GetStartedRoute()
       : super(
           GetStartedRoute.name,
@@ -224,8 +235,8 @@ class GetStartedRoute extends _i11.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.ExperienceStartingScreen]
 class ExperienceStartingRoute
-    extends _i11.PageRouteInfo<ExperienceStartingRouteArgs> {
-  ExperienceStartingRoute({_i13.Key? key})
+    extends _i12.PageRouteInfo<ExperienceStartingRouteArgs> {
+  ExperienceStartingRoute({_i14.Key? key})
       : super(
           ExperienceStartingRoute.name,
           path: '/experience_starting_screen',
@@ -238,7 +249,7 @@ class ExperienceStartingRoute
 class ExperienceStartingRouteArgs {
   const ExperienceStartingRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -249,8 +260,8 @@ class ExperienceStartingRouteArgs {
 /// generated route for
 /// [_i4.CreateExperienceScreen]
 class CreateExperienceRoute
-    extends _i11.PageRouteInfo<CreateExperienceRouteArgs> {
-  CreateExperienceRoute({_i13.Key? key})
+    extends _i12.PageRouteInfo<CreateExperienceRouteArgs> {
+  CreateExperienceRoute({_i14.Key? key})
       : super(
           CreateExperienceRoute.name,
           path: '/create_experience_screen_v',
@@ -263,7 +274,7 @@ class CreateExperienceRoute
 class CreateExperienceRouteArgs {
   const CreateExperienceRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -273,8 +284,8 @@ class CreateExperienceRouteArgs {
 
 /// generated route for
 /// [_i5.SignUpScreen]
-class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({_i13.Key? key})
+class SignUpRoute extends _i12.PageRouteInfo<SignUpRouteArgs> {
+  SignUpRoute({_i14.Key? key})
       : super(
           SignUpRoute.name,
           path: '/signUp',
@@ -287,7 +298,7 @@ class SignUpRoute extends _i11.PageRouteInfo<SignUpRouteArgs> {
 class SignUpRouteArgs {
   const SignUpRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -297,8 +308,8 @@ class SignUpRouteArgs {
 
 /// generated route for
 /// [_i6.HomeScreenView]
-class HomeRouteView extends _i11.PageRouteInfo<HomeRouteViewArgs> {
-  HomeRouteView({_i13.Key? key})
+class HomeRouteView extends _i12.PageRouteInfo<HomeRouteViewArgs> {
+  HomeRouteView({_i14.Key? key})
       : super(
           HomeRouteView.name,
           path: '/home',
@@ -311,7 +322,7 @@ class HomeRouteView extends _i11.PageRouteInfo<HomeRouteViewArgs> {
 class HomeRouteViewArgs {
   const HomeRouteViewArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -321,10 +332,10 @@ class HomeRouteViewArgs {
 
 /// generated route for
 /// [_i1.ForgotPasswordScreen]
-class ForgotPasswordRoute extends _i11.PageRouteInfo<ForgotPasswordRouteArgs> {
+class ForgotPasswordRoute extends _i12.PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
     required String baseUrl,
-    _i13.Key? key,
+    _i14.Key? key,
   }) : super(
           ForgotPasswordRoute.name,
           path: '/forgotPassword',
@@ -345,7 +356,7 @@ class ForgotPasswordRouteArgs {
 
   final String baseUrl;
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -355,10 +366,10 @@ class ForgotPasswordRouteArgs {
 
 /// generated route for
 /// [_i7.OrderScreenView]
-class OrderRouteView extends _i11.PageRouteInfo<OrderRouteViewArgs> {
+class OrderRouteView extends _i12.PageRouteInfo<OrderRouteViewArgs> {
   OrderRouteView({
     required String type,
-    _i13.Key? key,
+    _i14.Key? key,
   }) : super(
           OrderRouteView.name,
           path: '/order_screen/:type',
@@ -379,7 +390,7 @@ class OrderRouteViewArgs {
 
   final String type;
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -390,10 +401,10 @@ class OrderRouteViewArgs {
 /// generated route for
 /// [_i8.FoodieProfileDecisionScreenView]
 class FoodieProfileDecisionRouteView
-    extends _i11.PageRouteInfo<FoodieProfileDecisionRouteViewArgs> {
+    extends _i12.PageRouteInfo<FoodieProfileDecisionRouteViewArgs> {
   FoodieProfileDecisionRouteView({
     required String bookingId,
-    _i13.Key? key,
+    _i14.Key? key,
   }) : super(
           FoodieProfileDecisionRouteView.name,
           path: '/foodie_decision_pending/:bookingId',
@@ -414,7 +425,7 @@ class FoodieProfileDecisionRouteViewArgs {
 
   final String bookingId;
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -424,8 +435,8 @@ class FoodieProfileDecisionRouteViewArgs {
 
 /// generated route for
 /// [_i9.QrScannerScreen]
-class QrScannerRoute extends _i11.PageRouteInfo<QrScannerRouteArgs> {
-  QrScannerRoute({_i13.Key? key})
+class QrScannerRoute extends _i12.PageRouteInfo<QrScannerRouteArgs> {
+  QrScannerRoute({_i14.Key? key})
       : super(
           QrScannerRoute.name,
           path: '/qr_scanner',
@@ -438,7 +449,7 @@ class QrScannerRoute extends _i11.PageRouteInfo<QrScannerRouteArgs> {
 class QrScannerRouteArgs {
   const QrScannerRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
@@ -449,8 +460,8 @@ class QrScannerRouteArgs {
 /// generated route for
 /// [_i10.SignUpQuestionireScreen]
 class SignUpQuestionireRoute
-    extends _i11.PageRouteInfo<SignUpQuestionireRouteArgs> {
-  SignUpQuestionireRoute({_i13.Key? key})
+    extends _i12.PageRouteInfo<SignUpQuestionireRouteArgs> {
+  SignUpQuestionireRoute({_i14.Key? key})
       : super(
           SignUpQuestionireRoute.name,
           path: '/signup_screen_questionaire',
@@ -463,10 +474,22 @@ class SignUpQuestionireRoute
 class SignUpQuestionireRouteArgs {
   const SignUpQuestionireRouteArgs({this.key});
 
-  final _i13.Key? key;
+  final _i14.Key? key;
 
   @override
   String toString() {
     return 'SignUpQuestionireRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [_i11.ShowOffTimeScreen]
+class ShowOffTimeRoute extends _i12.PageRouteInfo<void> {
+  const ShowOffTimeRoute()
+      : super(
+          ShowOffTimeRoute.name,
+          path: '/show_off_screen_v',
+        );
+
+  static const String name = 'ShowOffTimeRoute';
 }

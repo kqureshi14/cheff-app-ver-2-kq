@@ -1348,24 +1348,24 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                 );
               }),
         ),
-        Positioned.fill(
-          right: 20,
-          bottom: 40,
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              elevation: 6,
-              onPressed: () {
-                selectStartDate(context, appTheme);
-              },
-              child: Image.asset(
-                Resources.calendarPNG,
-                height: 23,
-              ),
-              backgroundColor: appTheme.colors.filledButtonColor,
-            ),
-          ),
-        ),
+        // Positioned.fill(
+        //   right: 20,
+        //   bottom: 40,
+        //   child: Align(
+        //     alignment: Alignment.bottomRight,
+        //     child: FloatingActionButton(
+        //       elevation: 6,
+        //       onPressed: () {
+        //         selectStartDate(context, appTheme);
+        //       },
+        //       child: Image.asset(
+        //         Resources.calendarPNG,
+        //         height: 23,
+        //       ),
+        //       backgroundColor: appTheme.colors.filledButtonColor,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -2069,19 +2069,19 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
             //
           ],
         ),
-        // Positioned.fill(
-        //   child: Align(
-        //     alignment: Alignment.centerRight,
-        //     child: FloatingActionButton(
-        //       onPressed: () {},
-        //       backgroundColor: const Color(0xffbb3127),
-        //       child: Image.asset(
-        //         Resources.expEditPenPNG,
-        //         height: 20,
-        //       ),
-        //     ),
-        //   ),
-        // )
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment(0.9,0.8),
+            child: FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: const Color(0xffbb3127),
+              child: Image.asset(
+                Resources.expEditPenPNG,
+                height: 20,
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

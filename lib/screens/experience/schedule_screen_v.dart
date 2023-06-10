@@ -65,7 +65,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               InkWell(
                 onTap: () {
                   if (widget.scheduleScreenViewModel!.scheduleSaveCounter > 0) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ShowOffTimeScreen()),

@@ -11,12 +11,20 @@ import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/widgets/general_new_appbar.dart';
 import '../../ui_kit/widgets/general_text.dart';
-import '../food_product_experience_details/bbq_experience_details.dart';
 import '../home/home_page/home_screen_v.dart';
-import '../home/home_screen.dart';
+import 'component/chef_profile_screen_vm.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  UserProfileScreen(
+      {required ChefProfileDetailsScreenViewModel
+      chefProfileDetailsScreenViewModel,
+        Key? key})
+      : _chefProfileDetailsScreenViewModel =
+      chefProfileDetailsScreenViewModel,
+        super(key: key);
+
+
+  final ChefProfileDetailsScreenViewModel _chefProfileDetailsScreenViewModel;
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -54,7 +62,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final appTheme = AppTheme.of(context).theme;
     return Scaffold(
       floatingActionButton: SpeedDial(
-          buttonSize: Size(54, 54),
+          buttonSize: const Size(54, 54),
           activeChild: Container(
             width: 14.9,
             height: 14.9,
@@ -64,7 +72,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ),
           backgroundColor: HexColor.fromHex("#bb3127"),
           overlayOpacity: 0.0,
-          child: Icon(
+          child: const Icon(
             Icons.edit,
             size: 20.8,
           ),
@@ -115,7 +123,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 // decoration: BoxDecoration(
                 //   color: HexColor.fromHex("#212129").withOpacity(0.8),
                 // ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image:
                             AssetImage('assets/images/icons/user_blurred.jpeg'),
@@ -131,8 +139,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         const SizedBox(
                           height: 70,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18.0),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 18.0),
                           child: GeneralNewAppBar(
                             rightIcon: Resources.homeIconSvg,
                           ),
@@ -142,7 +150,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         Container(
                           width: 129,
-                          child: Image.asset(
+                          child: widget._chefProfileDetailsScreenViewModel.profileDetails.t?.profileImageUrl!=null?Image.network(
+                              widget._chefProfileDetailsScreenViewModel.profileDetails.t?.profileImageUrl??"",
+                              fit: BoxFit.fill):Image.asset(
                               'assets/images/icons/userProfile.png',
                               fit: BoxFit.fill),
                         ),
@@ -155,11 +165,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      HomeScreenView /*FoodProductExperienceDetails*/ ()),
+                                      HomeScreenView()),
                             );
                           },
                           child: GeneralText(
-                            Strings.userProfileName,
+                            widget._chefProfileDetailsScreenViewModel.profileDetails.t?.brandName??"Brand name is empty",
                             style: appTheme
                                 .typographies.interFontFamily.headline6
                                 .copyWith(
@@ -172,7 +182,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GeneralText(
-                              Strings.userProfileDetailAddress,
+                              widget._chefProfileDetailsScreenViewModel.profileDetails.t?.address??"Address is empty",
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -186,7 +196,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GeneralText(
-                              Strings.userProfileDetailAddressPhone,
+                              widget._chefProfileDetailsScreenViewModel.profileDetails.t?.mobileNo??"No mobile number available",
                               style: appTheme
                                   .typographies.interFontFamily.headline6
                                   .copyWith(
@@ -196,7 +206,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 27,
                         ),
                         Row(
@@ -231,7 +241,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 28,
                         ),
                       ],
@@ -240,7 +250,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 )),
             Container(
               padding:
-                  EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 23),
+                  const EdgeInsetsDirectional.only(top: 10, bottom: 10, start: 23),
               color: HexColor.fromHex("#2c292b"),
               child: Row(
                 children: [
@@ -258,7 +268,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Container(
                 color: HexColor.fromHex("#212129"),
                 padding:
-                    EdgeInsetsDirectional.only(start: 23, end: 23, top: 18),
+                    const EdgeInsetsDirectional.only(start: 23, end: 23, top: 18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -425,7 +435,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
         GridView.builder(
             padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

@@ -14,6 +14,7 @@ enum InputType {
   password,
   email,
   digit,
+  alphabetsOnly
 }
 
 class GeneralTextInput extends StatefulWidget {
@@ -34,6 +35,7 @@ class GeneralTextInput extends StatefulWidget {
     IconData? prefixIcon,
     IconData? suffixIcon,
     String? prefixText,
+    int? maxValue,
     Widget? suffix,
     void Function()? onSuffixIconClick,
     Color? backgroundColor,
@@ -64,8 +66,9 @@ class GeneralTextInput extends StatefulWidget {
         _contentPadding = contentPadding,
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
-        _prefixText = prefixText,
-        super(key: key) {
+  _prefixText = prefixText,
+        _maxValue = maxValue,
+      super(key: key) {
     _selectInputType();
   }
 

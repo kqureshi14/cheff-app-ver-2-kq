@@ -2,6 +2,8 @@ import 'package:chef/helpers/helpers.dart';
 
 // import '../../models/signup/signup_request.dart' as signuprequest;
 import 'package:chef/models/signup/responses/signup_response.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../helpers/data_request.dart' as signuprequest;
 
 import 'dart:developer' as developer;
@@ -54,23 +56,71 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   int selectedCityId = 0;
   int selectedTownId = 0;
 
-  // List<ProfessionData> _cityData = [];
+  String? currentAddress;
+  Position? _currentPosition;
 
-  // Future<void> loadAppVersion() async {
-  //   final packageInfo = await PackageInfo.fromPlatform();
-  //   emit(state.copyWith(appVersion: packageInfo.version));
-  // }
+  Future<bool> _handleLocationPermission({BuildContext? context}) async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  // void updateBaseUrl({
-  //   required int selectedUrlIndex,
-  //   required String baseURL,
-  // }) =>
-  //     emit(
-  //       state.copyWith(
-  //         baseUrlIndex: selectedUrlIndex,
-  //         baseURL: baseURL,
-  //       ),
-  //     );
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Toaster.errorToast(
+        context: context!,
+        message: 'Location services are disabled. Please enable the services',
+      );
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Toaster.errorToast(
+          context: context!,
+          message: 'Location permissions are denied',
+        );
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      Toaster.errorToast(
+        context: context!,
+        message: 'Location permissions are permanently denied, we cannot request permissions.',
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> getCurrentPosition({BuildContext? context,Function? completion}) async {
+    final hasPermission = await _handleLocationPermission(context:context);
+    if (!hasPermission) return;
+    // emit(const Loading());
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      // setState(() => _currentPosition = position);
+      _currentPosition = position;
+      _getAddressFromLatLng(_currentPosition!);
+      // emit(Loaded(cityResponse));
+      completion!();
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+        _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      // setState(() {
+        currentAddress = '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+      // });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
 
   void initialize() {
     emit(Loaded(cityResponse));
@@ -196,17 +246,6 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
   }) async {
     developer.log(' Base Url is ' + '${baseUrl}');
     final url = InfininHelpers.getRestApiURL(baseUrl + Api.cityList);
-
-    // emit(Loaded(_professionData));
-
-    //if (_professionData.isEmpty) {
-    //  final cityDataRequest = data_request.T();
-
-    // ProfessionRequest(
-    //   t: prorequest.T(),
-    // ).toJson();
-
-    //   data_request.T t = data_request.T(status: 'ACTIVE');
     data_request.T t = data_request.T();
 
     final dataRequest = data_request.DataRequest(
@@ -223,19 +262,12 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
       cityDropDown.add(cityResponse.t[i].name);
       cityInfo[cityResponse.t[i].name] = cityResponse.t[i].id;
 
-      //  if (i == 0) {
       if (cityTownInfo.isEmpty) {
         getCityId(cityResponse.t[i].name);
       }
-
-      //  townDropDown.add('Select');
-      // }
     }
 
-    //cityDropDown = currentProfessionData.t;
-
     emit(Loaded(cityResponse));
-    // }
   }
 
   Future<void> loadTownList({cityId, required String cityName}) async {
@@ -322,12 +354,14 @@ class SignUpScreenViewModel extends BaseViewModel<SignUpScreenState> {
         signuprequest.T t = signuprequest.T(
           name: name,
           brandName: brandName,
-          mobileNo: mobileNumber,
+          mobileNo: "+92$mobileNumber",
           address: address,
           townName: town,
           cityName: city,
           cityId: cityInfo[city],
           townId: townInfo[town],
+          latitude: _currentPosition?.latitude.toInt(),
+          longitude: _currentPosition?.longitude.toInt(),
         );
         final signUpCredentials = signuprequest.DataRequest(
           t: t,
