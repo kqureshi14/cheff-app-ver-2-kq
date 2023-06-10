@@ -157,7 +157,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   }
 
   void loadPerferences() {
-    developer.log(' loadPerferences factors are '
+    developer.log(' load Perferences factors are '
         '${widget._experienceData.experiencePreferences}');
     var experiencePreferences = widget._experienceData.experiencePreferences;
 

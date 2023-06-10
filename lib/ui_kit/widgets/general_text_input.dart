@@ -64,7 +64,7 @@ class GeneralTextInput extends StatefulWidget {
         _contentPadding = contentPadding,
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
-  _prefixText = prefixText,
+        _prefixText = prefixText,
         super(key: key) {
     _selectInputType();
   }
