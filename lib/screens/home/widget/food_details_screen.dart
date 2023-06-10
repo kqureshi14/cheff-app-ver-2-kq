@@ -175,9 +175,9 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
       foodMenuListItems.add(FoodListModel(
           enableEdit: false,
           foodMenuModel: widget._foodMenuModel.t[i],
-          foodTitleController: TextEditingController(),
-          foodSubTitleController: TextEditingController(),
-          foodDescriptionController: TextEditingController()));
+          foodTitleController: TextEditingController(text: widget._foodMenuModel.t[i].mealName),
+          foodSubTitleController: TextEditingController(text: widget._foodMenuModel.t[i].baseDishName),
+          foodDescriptionController: TextEditingController(text: widget._foodMenuModel.t[i].description)));
     }
   }
 
@@ -547,7 +547,8 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                             .toString()
                             .trim()
                             .toLowerCase()
-                    ? Column(
+                    ?
+                Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
