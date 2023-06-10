@@ -96,7 +96,6 @@ class MenuExperienceScreen extends BaseView<MenuExperienceScreenViewModel> {
                // if(viewModel.menuSaveCounter>0   && viewModel.menueResponseCode==200){
                  if(viewModel.dishController.text.isNotEmpty||viewModel.descriptionController.text.isNotEmpty){
                    _navigation.navigateTo(route: ScheduleRoute());
-                 });
                  }else{
                    Toaster.infoToast(
                        context: ctx,
