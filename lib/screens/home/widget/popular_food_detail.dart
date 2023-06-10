@@ -64,11 +64,7 @@ class _PopularFoodDetailsState extends State<PopularFoodDetails> {
       backgroundColor: HexColor.fromHex("#212129"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _navigation.navigateTo(route: ExperienceStartingRoute());
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => ExperienceStartingScreen()),
-          // );
+          widget._expResponse.t.isEmpty?_navigation.navigateTo(route: ExperienceStartingRoute()):_navigation.navigateTo(route: CreateExperienceRoute());
         },
         backgroundColor: Color(0xffbb3127),
         child: const Icon(

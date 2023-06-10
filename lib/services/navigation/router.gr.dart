@@ -31,7 +31,6 @@ import '../../screens/sign_up/questionire/component/sign_up_questionire_screen_v
     as _i10;
 import '../../screens/sign_up/sign_up_screen_v.dart' as _i5;
 
-
 class AppRouter extends _i12.RootStackRouter {
   AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
       : super(navigatorKey);

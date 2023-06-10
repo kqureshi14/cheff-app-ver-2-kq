@@ -27,6 +27,7 @@ class ExperienceHelper {
    String? dishDescription='';
    double? dishPrice=0.0;
    int? dishServingNoOfPerson=0;
+   String? address="";
 
   // final selectedWowFactors = {};
   final selectedPerferencesFactors = {};

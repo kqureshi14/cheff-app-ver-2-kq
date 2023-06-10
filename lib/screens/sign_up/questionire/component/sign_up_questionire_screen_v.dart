@@ -56,19 +56,19 @@ class SignUpQuestionireScreen
     }
     handlesList.addAll([
       SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
+          socialMediaName: Strings.userProfileSocialMediaHandleInstagram,
           socialMediaIcon: "assets/images/icons/instagram_1.png",
           textController: viewModel.instagramController),
       SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
+          socialMediaName: Strings.userProfileSocialMediaHandleFacebook,
           socialMediaIcon: "assets/images/icons/facebook.png",
           textController: viewModel.facebookController),
       SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
+          socialMediaName: Strings.userProfileSocialMediaHandleTwitter,
           socialMediaIcon: "assets/images/icons/twitter.png",
           textController: viewModel.twitterController),
       SocialMediaHandles(
-          socialMediaName: Strings.userProfileSocialMediaHandle,
+          socialMediaName: Strings.userProfileSocialMediaHandleTikTok,
           socialMediaIcon: "assets/images/icons/tiktok.png",
           textController: viewModel.tiktokController)
     ]);
@@ -182,7 +182,7 @@ class SignUpQuestionireScreen
                     //   height: 27,
                     // ),
                     Container(
-                      height: 1050,
+                      height: 900,
                       child: ListView.builder(
                           itemCount: questionList.length,
                           physics: const NeverScrollableScrollPhysics(),
@@ -336,19 +336,19 @@ class SignUpQuestionireScreen
                         handlesList[index].socialMediaIcon ?? "",
                       ),
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
                     Flexible(
                       child: GeneralTextInput(
                         controller: handlesList[index].textController ??
                             _socialController,
                         // height: 16,
+                        valueStyle: appTheme.typographies.interFontFamily.body2R
+                            .copyWith(
+                          color: Colors.white,),
                         backgroundColor: HexColor.fromHex("#4b4b52"),
-                        hint: handlesList[index].socialMediaName ?? "",
+                        // hint: handlesList[index].socialMediaName ?? "",
                         hintStyle: appTheme.typographies.interFontFamily.body2R
                             .copyWith(
-                          color: appTheme.colors.mainBlack100,
+                          color: Colors.white,
                         ),
                         inputBorder: appTheme.searchbarBorder,
                       ),

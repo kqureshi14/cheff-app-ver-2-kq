@@ -6,18 +6,24 @@ import '../../../setup.dart';
 
 import 'dart:developer' as developer;
 
+import '../../sign_up/city_town_helper.dart';
+import '../component/create_experience_screen_vm.dart';
+
 @injectable
 class ExperienceManager extends StatefulWidget {
   const ExperienceManager({
     required wow.WowFactorResponse wowFactor,
     required preference.PreferenceResponse preferences,
+    required CreateExperienceScreenViewModel viewModel,
     Key? key,
   })  : _wowFactor = wowFactor,
         _preferences = preferences,
+        _viewModel = viewModel,
         super(key: key);
 
   final _wowFactor;
   final _preferences;
+  final _viewModel;
 
   @override
   State<ExperienceManager> createState() => ExperienceManagerState();
@@ -218,6 +224,8 @@ class ExperienceManagerState extends State<ExperienceManager> {
                               }
                               experienceHelper.priceExperience =
                                   double.parse('0.00001');
+                              _priceController.text = "";
+                              setState(() {});
                               developer
                                   .log(' Price selected value here  ' '$price');
                             },
@@ -485,7 +493,28 @@ class ExperienceManagerState extends State<ExperienceManager> {
                         height: 17,
                       ),
                       location == Strings.createExperienceOtherTitle
-                          ? address(appTheme)
+                          ? Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Column(
+                                children: [
+                                  CityTownHelper(
+                                    cityDropDown:
+                                        widget._viewModel.cityDropDown,
+                                    cityResponse:
+                                        widget._viewModel.cityResponse,
+                                    townDropDown:
+                                        widget._viewModel.townDropDown,
+                                    cityTownInfo:
+                                        widget._viewModel.cityTownInfo,
+                                    townController:
+                                        widget._viewModel.townController,
+                                    cityController:
+                                        widget._viewModel.cityController,
+                                  ),
+                                  address(appTheme),
+                                ],
+                              ),
+                            )
                           : Container(
                               margin: const EdgeInsets.only(right: 29),
                               child: Row(
@@ -780,7 +809,7 @@ class ExperienceManagerState extends State<ExperienceManager> {
   Widget address(IAppThemeData appTheme) {
     return Column(
       children: [
-        displayTownCity(appTheme),
+        // displayTownCity(appTheme),
         const SizedBox(
           height: 10,
         ),
@@ -920,21 +949,9 @@ class ExperienceManagerState extends State<ExperienceManager> {
           hint: 'Enter Address',
           hintStyle:
               TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
-          // valueStyle: valueStyle,
-          // onChanged: (newValue) {
-          //   if(viewModel.verifyInputForm(
-          //       name: _nameController.text,
-          //       brandName: _brandController.text,
-          //       mobileNumber: _mobileNumberController.text,
-          //       address: _addressController.text,
-          //       town: _townController.text,
-          //       city: _cityController.text
-          //   )){
-          //     viewModel.changeButton(true);
-          //   }else{
-          //     viewModel.changeButton(false);
-          //   }
-          // }
+          onChanged: (newValue) {
+            experienceHelper.address = newValue;
+          },
         ),
       ],
     );

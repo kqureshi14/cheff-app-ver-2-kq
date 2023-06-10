@@ -26,6 +26,8 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     Api.devBaseURL,
   ];
 
+  bool numberValidated= false;
+
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
   final TextController _brandController = TextController();
@@ -146,7 +148,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         const SizedBox(
           height: 10,
         ),
-        displayAddress(appTheme),
+        displayAddress(appTheme,context),
         const SizedBox(
           height: 10,
         ),
@@ -177,13 +179,14 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         ),
         GeneralTextInput(
             controller: _nameController,
-            inputType: InputType.text,
+            inputType: InputType.alphabetsOnly,
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
             valueStyle: const TextStyle(color: Colors.white),
             hint: 'Enter name',
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
+
             // valueStyle: valueStyle,
             onChanged: (newValue) {
               if (viewModel.verifyInputForm(
@@ -262,6 +265,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           height: 8,
         ),
         GeneralTextInput(
+          prefixText: "+92 ",
             controller: _mobileNumberController,
             inputType: InputType.digit,
             backgroundColor: appTheme.colors.textFieldFilledColor,
@@ -271,6 +275,20 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             hintStyle:
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
+            maxValue: 10,
+            validator: (value){
+              // final phoneNumberRegex = RegExp(r'^3\d{10}$');
+              if(int.parse(value![0])!=3){
+                numberValidated = false;
+                return 'Invalid phone number';
+              } else if (value.isNotEmpty && value.length != 10) {
+                numberValidated = false;
+                return 'Please enter your full number';
+              } else {
+                numberValidated = true;
+                return null;
+                }
+            },
             onChanged: (newValue) {
               if (viewModel.verifyInputForm(
                   name: _nameController.text,
@@ -288,7 +306,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayAddress(IAppThemeData appTheme) {
+  Widget displayAddress(IAppThemeData appTheme, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,9 +325,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         GeneralTextInput(
             controller: _addressController,
             inputType: InputType.text,
-            suffix: Image.asset(
-              Resources.locationIconPNG,
-              height: 20,
+            suffix: InkWell(
+              onTap: (){
+              viewModel.getCurrentPosition(context: context,completion: (){
+                viewModel.getCurrentPosition(context: context,completion: (){
+                  _addressController.text = viewModel.currentAddress;
+                });
+              });
+              },
+              child: Image.asset(
+                Resources.locationIconPNG,
+                height: 20,
+              ),
             ),
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
@@ -365,27 +392,29 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                     ? () {
                         //proceedVerification(context);
                         developer.log(' Here Collected data is ' +
-                            '${_nameController.text}');
+                            _nameController.text);
                         developer.log('Mobile Controller  ' +
-                            '${_mobileNumberController.text}');
+                            _mobileNumberController.text);
 
                         developer.log(
-                            ' Brand Controller  ' + '${_brandController.text}');
+                            ' Brand Controller  ' + _brandController.text);
 
                         developer.log('Address is  ' + _addressController.text);
-                        if (viewModel.verifyInput(
-                          name: _nameController.text,
-                          brandName: _brandController.text,
-                          mobileNumber: _mobileNumberController.text,
-                          address: _addressController.text,
-                          town: viewModel.townController.text,
-                          city: viewModel.cityController.text,
-                          context: context,
-                          baseUrl: baseURLs[0],
-                        )) {
-                          print(_mobileNumberController.text);
-                          // displayVerificationDisplay(context);
-                          displayVerificationDisplayBackup(context);
+                        if(numberValidated){
+                          if (viewModel.verifyInput(
+                            name: _nameController.text,
+                            brandName: _brandController.text,
+                            mobileNumber: _mobileNumberController.text,
+                            address: _addressController.text,
+                            town: viewModel.townController.text,
+                            city: viewModel.cityController.text,
+                            context: context,
+                            baseUrl: baseURLs[0],
+                          )) {
+                            print(_mobileNumberController.text);
+                            // displayVerificationDisplay(context);
+                            displayVerificationDisplayBackup(context);
+                          }
                         }
                       }
                     : null,
@@ -425,7 +454,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         context: context,
         maxHeight: MediaQuery.of(context).size.height * 0.6,
         body: FirebasePhoneAuthHandler(
-          phoneNumber: "+" + _mobileNumberController.text,
+          phoneNumber: "+92" + _mobileNumberController.text,
           signOutOnSuccessfulVerification: false,
           linkWithExistingUser: false,
           autoRetrievalTimeOutDuration: const Duration(seconds: 60),
@@ -959,7 +988,7 @@ class TownDisplay extends StatelessWidget {
         required String key,
         required dynamic value,
       }) {
-        developer.log(' Key is ' + '${key}');
+        developer.log(' Key is ' + key);
         developer.log(' Value is ' + '${value}');
 
         //  viewModel.getCityId(value);
