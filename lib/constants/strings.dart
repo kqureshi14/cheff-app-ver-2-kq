@@ -296,6 +296,7 @@ abstract class Strings {
   static const nextButtonTitle = "NEXT";
   static const experienceScreenTitle = "04 Steps";
   static const experienceScreenButtonTitle = "Okay";
+  static const menuScreenSaveButtonTitle = "save";
 
   static const letsStartScreenLabel = "Last but not the least!";
   static const letsStartScreenLabel1 =
