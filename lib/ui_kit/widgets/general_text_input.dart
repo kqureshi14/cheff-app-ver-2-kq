@@ -9,13 +9,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:chef/constants/resources.dart';
 
-enum InputType {
-  text,
-  password,
-  email,
-  digit,
-  alphabetsOnly
-}
+enum InputType { text, password, email, digit, alphabetsOnly }
 
 class GeneralTextInput extends StatefulWidget {
   GeneralTextInput({
@@ -66,9 +60,9 @@ class GeneralTextInput extends StatefulWidget {
         _contentPadding = contentPadding,
         _textFieldHeight = height,
         _textFieldWidth = textFieldWidth,
-  _prefixText = prefixText,
+        _prefixText = prefixText,
         _maxValue = maxValue,
-      super(key: key) {
+        super(key: key) {
     _selectInputType();
   }
 

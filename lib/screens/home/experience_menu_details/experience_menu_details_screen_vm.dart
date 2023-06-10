@@ -224,7 +224,6 @@ class ExperienceMenuDetailsScreenViewModel
       baseDishId: foodMenuModel.baseDishId,
       baseDishName: foodSubtitle,
       description: foodDescription,
-      // dish: foodMenuModel.dish,
       dish: foodSubtitle,
       experienceId: foodMenuModel.experienceId,
       id: foodMenuModel.id,
