@@ -148,7 +148,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         const SizedBox(
           height: 10,
         ),
-        displayAddress(appTheme),
+        displayAddress(appTheme,context),
         const SizedBox(
           height: 10,
         ),
@@ -306,7 +306,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     );
   }
 
-  Widget displayAddress(IAppThemeData appTheme) {
+  Widget displayAddress(IAppThemeData appTheme, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,9 +325,18 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         GeneralTextInput(
             controller: _addressController,
             inputType: InputType.text,
-            suffix: Image.asset(
-              Resources.locationIconPNG,
-              height: 20,
+            suffix: InkWell(
+              onTap: (){
+              viewModel.getCurrentPosition(context: context,completion: (){
+                viewModel.getCurrentPosition(context: context,completion: (){
+                  _addressController.text = viewModel.currentAddress;
+                });
+              });
+              },
+              child: Image.asset(
+                Resources.locationIconPNG,
+                height: 20,
+              ),
             ),
             backgroundColor: appTheme.colors.textFieldFilledColor,
             inputBorder: appTheme.focusedBorder,
