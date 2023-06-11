@@ -140,9 +140,7 @@ class CreateExperienceScreenViewModel
       experiencePreferences: getPreferenceList(
           experienceHelper.selectedPerferencesFactors, 'pref'),
       townName: townController.text.isNotEmpty ? townController.text : null,
-      cityName: cityController.text != null && cityController.text.isNotEmpty
-          ? cityController.text
-          : null,
+      cityName: cityController.text.isNotEmpty ? cityController.text : null,
       cityId: cityInfo[cityController.text] != null
           ? cityInfo[cityController.text]
           : null,
