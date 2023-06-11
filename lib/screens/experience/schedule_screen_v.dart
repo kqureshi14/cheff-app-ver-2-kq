@@ -9,6 +9,9 @@ import 'package:intl/intl.dart';
 import '../../constants/resources.dart';
 import '../../constants/strings.dart';
 import '../../helpers/color_helper.dart';
+import '../../services/navigation/navigation_service.dart';
+import '../../services/navigation/router.gr.dart';
+import '../../setup.dart';
 import '../../theme/app_theme_data/app_theme_data.dart';
 import '../../theme/app_theme_widget.dart';
 import '../../ui_kit/helpers/dialog_helper.dart';
@@ -34,6 +37,8 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
         .addPostFrameCallback((_) => selectStartDate(context)):null;
     widget.scheduleScreenViewModel?.isOpenedDialog = true;
   }
+  final _navigation = locateService<INavigationService>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +71,7 @@ class _SetupScheduleScreenState extends State<SetupScheduleScreen> {
               InkWell(
                 onTap: () {
                   if (widget.scheduleScreenViewModel!.scheduleSaveCounter > 0) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ShowOffTimeScreen()),
-                    );
+                    _navigation.navigateTo(route: const ShowOffTimeRoute());
                   } else {
                     Toaster.infoToast(
                         context: context,
