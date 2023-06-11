@@ -5,7 +5,7 @@ import '../../../helpers/helpers.dart';
 import 'package:chef/helpers/data_request.dart' as data_request;
 
 import '../../../models/experience/experience_request.dart'
-as experience_request;
+    as experience_request;
 import '../../../models/experience/experience_response.dart' as expresp;
 import '../../../models/preference.dart' as preference;
 import '../../../models/signup/responses/city_response.dart' as city_resp;
@@ -42,7 +42,6 @@ class CreateExperienceScreenViewModel
   late city_resp.CityResponse cityResponse;
   late town_resp.TownResponse townResponse;
 
-
   final TextController townController = TextController();
   final TextController cityController = TextController();
 
@@ -75,7 +74,6 @@ class CreateExperienceScreenViewModel
       //  }
     }
   }
-
 
   initialize() {
     loadWowFactors();
@@ -117,34 +115,40 @@ class CreateExperienceScreenViewModel
     }
     final url = InfininHelpers.getRestApiURL(Api.baseURL + Api.experienceSave);
 
-
     experience_request.T t = experience_request.T(
       title: experienceHelper.titleExperience ?? '',
       description: experienceHelper.experienceDetails ?? '',
       persons: experienceHelper.numberOfPerson.toString(),
       chefId: _appService.state.userInfo!.t.id,
-      chefAddress: experienceHelper.address!.isEmpty? _appService.state.userInfo!.t.address: experienceHelper.address,
-      chefBrandName: _appService.state.userInfo!.t.address,
+      // chefAddress: experienceHelper.address!.isEmpty
+      //     ? _appService.state.userInfo!.t.address
+      //     : experienceHelper.address,
+      // chefBrandName: _appService.state.userInfo!.t.address,
       chefName: _appService.state.userInfo!.t.name,
       locationId: 1,
       price: (experienceHelper.priceExperience ?? 0.0).toInt(),
       priceTypeId:
-      (experienceHelper.priceExperience ?? 0.0).toString() == "0.00001"
-          ? 2
-          : 1,
+          (experienceHelper.priceExperience ?? 0.0).toString() == "0.00001"
+              ? 2
+              : 1,
       subHostMobileNo: experienceHelper.subHostMobileNumber ?? '',
       subHostName: experienceHelper.subHostName ?? '',
       wowFactorId: 1,
       preferenceId: 1,
       experienceWowFactors:
-      getList(experienceHelper.selectedWowFactors, 'wow').toList(),
+          getList(experienceHelper.selectedWowFactors, 'wow').toList(),
       experiencePreferences: getPreferenceList(
           experienceHelper.selectedPerferencesFactors, 'pref'),
-      townName: townController.text,
-      cityName: cityController.text,
-      cityId: cityInfo[cityController.text],
-      townId: townInfo[townController.text],
-
+      townName: townController.text.isNotEmpty ? townController.text : null,
+      cityName: cityController.text != null && cityController.text.isNotEmpty
+          ? cityController.text
+          : null,
+      cityId: cityInfo[cityController.text] != null
+          ? cityInfo[cityController.text]
+          : null,
+      townId: townInfo[townController.text] != null
+          ? townInfo[townController.text]
+          : null,
     );
 
     final experienceData = experience_request.ExperienceRequest(
@@ -153,16 +157,17 @@ class CreateExperienceScreenViewModel
 
     final response = await _network
         .post(
-      path: url,
-      data: experienceData,
-      //   accessToken: false,
-    ).whenComplete(() {});
+          path: url,
+          data: experienceData,
+          //   accessToken: false,
+        )
+        .whenComplete(() {});
 
     if (response != null) {
       developer.log(' Response of response body is ' '${response.body}');
 
       expresp.ExperienceResponse experienceResponse =
-      expresp.experienceResponseFromJson(response.body);
+          expresp.experienceResponseFromJson(response.body);
       _appService.updateSaveExperience(experienceResponse);
 
       Navigator.push(
@@ -232,7 +237,8 @@ class CreateExperienceScreenViewModel
         townDropDown.add(townResponse.t[i].name);
       }
     }
-    emit(create_experience.Loaded(_wowFactorResponse, _preferenceResponse,cityResponse));
+    emit(create_experience.Loaded(
+        _wowFactorResponse, _preferenceResponse, cityResponse));
   }
 
   List<expreq.ExperienceWowFactor> getList(Map data, String type) {
@@ -243,7 +249,7 @@ class CreateExperienceScreenViewModel
 
       if (type == 'wow') {
         expreq.ExperienceWowFactor dataHere =
-        expreq.ExperienceWowFactor(wowFactorId: value);
+            expreq.ExperienceWowFactor(wowFactorId: value);
         alignData.add(dataHere);
       } else {
         alignData.add(_localEntry['preferenceId'] = value);
@@ -273,7 +279,7 @@ class CreateExperienceScreenViewModel
         //alignData.add(_localEntry['preferenceId'] = value);
 
         expreq.ExperiencePreference dataHere =
-        expreq.ExperiencePreference(preferenceId: value);
+            expreq.ExperiencePreference(preferenceId: value);
         alignData.add(dataHere);
       }
 
@@ -345,8 +351,7 @@ class CreateExperienceScreenViewModel
 
     // final preferenceResponse =
     _preferenceResponse = preference.preferenceResponseFromJson(response.body);
-    loadCityList(baseUrl:  Api.baseURL);
-
+    loadCityList(baseUrl: Api.baseURL);
   }
 
   bool validateData(BuildContext context, ExperienceHelper experienceHelper) {
