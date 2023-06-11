@@ -6,12 +6,8 @@ import 'chef_profile_screen_m.dart';
 import 'chef_profile_screen_vm.dart';
 
 class ChefProfileDetailsScreenView
-    extends BaseView<ChefProfileDetailsScreenViewModel>
-
-{
-  ChefProfileDetailsScreenView( {Key? key})
-      : super(key: key);
-
+    extends BaseView<ChefProfileDetailsScreenViewModel> {
+  ChefProfileDetailsScreenView({Key? key}) : super(key: key);
 
   Widget _loading() {
     return const Center(child: CircularProgressIndicator());
@@ -19,7 +15,10 @@ class ChefProfileDetailsScreenView
 
   Widget displayLoaded(ChefProfileDetailsScreenViewModel viewModel,
       ProfileDetails profileDetails) {
-    return UserProfileScreen(chefProfileDetailsScreenViewModel: viewModel,);
+    return UserProfileScreen(
+      chefProfileDetailsScreenViewModel: viewModel,
+      profileDetails: profileDetails,
+    );
   }
 
   @override
@@ -28,7 +27,7 @@ class ChefProfileDetailsScreenView
     // TODO: implement body
     final appTheme = AppTheme.of(context).theme;
     return BlocBuilder<ChefProfileDetailsScreenViewModel,
-        ChefProfileDetailsScreenState>(
+            ChefProfileDetailsScreenState>(
         bloc: viewModel..initialize(),
         builder: (context, state) {
           return Scaffold(
@@ -40,5 +39,4 @@ class ChefProfileDetailsScreenView
           );
         });
   }
-
 }
