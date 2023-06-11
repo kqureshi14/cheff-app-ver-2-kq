@@ -26,7 +26,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
     Api.devBaseURL,
   ];
 
-  bool numberValidated= false;
+  bool numberValidated = false;
 
   late List<DropdownMenuItem<String>> items = [];
   final TextController _nameController = TextController();
@@ -148,7 +148,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
         const SizedBox(
           height: 10,
         ),
-        displayAddress(appTheme,context),
+        displayAddress(appTheme, context),
         const SizedBox(
           height: 10,
         ),
@@ -265,7 +265,7 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
           height: 8,
         ),
         GeneralTextInput(
-          prefixText: "+92 ",
+            prefixText: "+92 ",
             controller: _mobileNumberController,
             inputType: InputType.digit,
             backgroundColor: appTheme.colors.textFieldFilledColor,
@@ -276,18 +276,21 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
             // valueStyle: valueStyle,
             maxValue: 10,
-            validator: (value){
+            validator: (value) {
               // final phoneNumberRegex = RegExp(r'^3\d{10}$');
-              if(int.parse(value![0])!=3){
+
+              if (value != null &&
+                  value.isNotEmpty &&
+                  int.parse(value[0]) != 3) {
                 numberValidated = false;
                 return 'Invalid phone number';
-              } else if (value.isNotEmpty && value.length != 10) {
+              } else if (value!.isNotEmpty && value.length != 10) {
                 numberValidated = false;
                 return 'Please enter your full number';
               } else {
                 numberValidated = true;
                 return null;
-                }
+              }
             },
             onChanged: (newValue) {
               if (viewModel.verifyInputForm(
@@ -326,12 +329,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
             controller: _addressController,
             inputType: InputType.text,
             suffix: InkWell(
-              onTap: (){
-              viewModel.getCurrentPosition(context: context,completion: (){
-                viewModel.getCurrentPosition(context: context,completion: (){
-                  _addressController.text = viewModel.currentAddress;
-                });
-              });
+              onTap: () {
+                viewModel.getCurrentPosition(
+                    context: context,
+                    completion: () {
+                      viewModel.getCurrentPosition(
+                          context: context,
+                          completion: () {
+                            _addressController.text = viewModel.currentAddress;
+                          });
+                    });
               },
               child: Image.asset(
                 Resources.locationIconPNG,
@@ -391,16 +398,16 @@ class SignUpScreen extends BaseView<SignUpScreenViewModel> {
                 onTap: value == true
                     ? () {
                         //proceedVerification(context);
-                        developer.log(' Here Collected data is ' +
-                            _nameController.text);
+                        developer.log(
+                            ' Here Collected data is ' + _nameController.text);
                         developer.log('Mobile Controller  ' +
                             _mobileNumberController.text);
 
-                        developer.log(
-                            ' Brand Controller  ' + _brandController.text);
+                        developer
+                            .log(' Brand Controller  ' + _brandController.text);
 
                         developer.log('Address is  ' + _addressController.text);
-                        if(numberValidated){
+                        if (numberValidated) {
                           if (viewModel.verifyInput(
                             name: _nameController.text,
                             brandName: _brandController.text,
